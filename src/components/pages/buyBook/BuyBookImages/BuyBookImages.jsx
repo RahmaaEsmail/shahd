@@ -6,13 +6,13 @@ import { motion } from 'framer-motion'
 
 export default function BuyBookImages() {
   const thumbnails = [
-    { id: 1, src: "/images/Buy-book/Rectangle 42.png", alt: "Book thumbnail 1" },
-    { id: 2, src: "/images/Buy-book/Rectangle 40.png", alt: "Book thumbnail 2" },
-    { id: 3, src: "/images/Buy-book/Group 30.png", alt: "Book thumbnail 3" },
-    { id: 4, src: "/images/Buy-book/Rectangle 40.png", alt: "Book thumbnail 4" },
-    { id: 5, src: "/images/Buy-book/Group 30.png", alt: "Book thumbnail 5" },
-    { id: 6, src: "/images/Buy-book/Rectangle 42.png", alt: "Book thumbnail 6" },
-    { id: 7, src: "/images/Buy-book/Rectangle 40.png", alt: "Book thumbnail 7" },
+    { id: 1, src: "/SHAHD-IMAGE/Buy-book/Rectangle 42.webp", alt: "Book thumbnail 1" },
+    { id: 2, src: "/SHAHD-IMAGE/Buy-book/Rectangle 40.webp", alt: "Book thumbnail 2" },
+    { id: 3, src: "/SHAHD-IMAGE/Buy-book/Group 30.webp", alt: "Book thumbnail 3" },
+    { id: 4, src: "/SHAHD-IMAGE/Buy-book/Rectangle 40.webp", alt: "Book thumbnail 4" },
+    { id: 5, src: "/SHAHD-IMAGE/Buy-book/Group 30.webp", alt: "Book thumbnail 5" },
+    { id: 6, src: "/SHAHD-IMAGE/Buy-book/Rectangle 42.webp", alt: "Book thumbnail 6" },
+    { id: 7, src: "/SHAHD-IMAGE/Buy-book/Rectangle 40.webp", alt: "Book thumbnail 7" },
   ];
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -45,7 +45,7 @@ export default function BuyBookImages() {
 
   return (
     <motion.div
-      className="flex flex-col-reverse lg:grid lg:grid-cols-[140px_1fr] xl:grid-cols-[180px_1fr] gap-4 lg:h-[600px] xl:h-[700px]"
+      className="flex flex-col-reverse lg:grid lg:grid-cols-[140px_1fr] xl:grid-cols-[180px_1fr] gap-4 lg:h-[500px]"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}

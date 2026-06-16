@@ -1,13 +1,8 @@
 "use client";
 import React from 'react'
 import { motion } from 'framer-motion';
-
-const quickDetails = [
-  { label: "DURATION", value: "(45-60) m" },
-  { label: "TYPE", value: "non-surgical treatment" },
-  { label: "DOWNTIME", value: "none" },
-  { label: "RECOMMENDED SESSIONS", value: "3-6" },
-];
+import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 // Animation Variants
 const containerVariants = {
@@ -30,7 +25,7 @@ const itemVariants = {
   },
   visible: { 
     opacity: 1, 
-    y: 0,
+    y: 0, 
     scale: 1,
     transition: {
       type: "spring",
@@ -228,6 +223,16 @@ const valueVariants = {
 };
 
 export default function ServiceQuickDetailsContent({ service }) {
+  const { t } = useTranslation();
+  const router = useRouter();
+
+  const quickDetails = [
+    { labelKey: "DURATION", value: "(45-60) m" },
+    { labelKey: "TYPE", value: "non-surgical treatment" },
+    { labelKey: "DOWNTIME", value: "none" },
+    { labelKey: "RECOMMENDED SESSIONS", value: "3-6" },
+  ];
+
   return (
     <div className="w-full pt-4 overflow-hidden">
       <motion.div
@@ -243,25 +248,25 @@ export default function ServiceQuickDetailsContent({ service }) {
         {/* Main Header */}
         <motion.h2 
           variants={headerVariants}
-          className="text-[32px] md:text-[60px] font-normal text-primary uppercase mb-4 leading-tight"
+          className="text-[25px] font-normal text-primary uppercase mb-4 leading-tight"
         >
-          {service?.title || "Revive Your Beauty, Naturally."}
+          {service?.titleKey ? t(service.titleKey) : (service?.title || t("Revive Your Beauty, Naturally."))}
         </motion.h2>
 
         {/* Description Paragraph */}
         <motion.p 
           variants={paragraphVariants}
-          className="text-[#414141] text-lg md:text-2xl font-poppins font-normal mb-8 leading-relaxed"
+          className="text-[#414141] text-lg font-poppins font-normal mb-8 leading-relaxed"
         >
-          {service?.desc || "Experience the power of your own body's healing potential."}
+          {service?.descKey ? t(service.descKey) : (service?.desc || t("Experience the power of your own body's healing potential."))}
         </motion.p>
 
         {/* Sub Header */}
         <motion.h3 
           variants={subHeaderVariants}
-          className="text-[28px] md:text-[40px] font-bold text-secondary mb-4 uppercase"
+          className="text-[28px] font-bold text-secondary mb-4 uppercase"
         >
-          Quick Details:
+          {t("Quick Details:")}
         </motion.h3>
 
         {/* Details Grid */}
@@ -278,24 +283,24 @@ export default function ServiceQuickDetailsContent({ service }) {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, amount: 0.3 }}
-              className="border border-[#B6C7D6] rounded-[30px] p-8 flex flex-col gap-2 items-center justify-center text-center bg-white cursor-default relative overflow-hidden group"
+              className="border border-[#B6C7D6] rounded-[30px] p-3 flex flex-col gap-2 items-center justify-center text-center bg-white cursor-default relative overflow-hidden group"
             >
               {/* Label with staggered animation */}
               <motion.span
                 custom={index}
                 variants={labelVariants}
-                className="text-xl md:text-2xl font-semibold font-poppins text-[#40464B] relative z-10"
+                className="text-xl font-semibold font-poppins text-[#40464B] relative z-10"
               >
-                {detail.label}
+                {t(detail.labelKey)}
               </motion.span>
               
               {/* Value with staggered animation */}
               <motion.span
                 custom={index}
                 variants={valueVariants}
-                className="text-xl md:text-2xl font-poppins text-[#8995A1] font-normal relative z-10"
+                className="text-xl font-poppins text-[#8995A1] font-normal relative z-10"
               >
-                {detail.value}
+                {t(detail.value)}
               </motion.span>
 
               {/* Decorative corner accent */}
@@ -314,7 +319,7 @@ export default function ServiceQuickDetailsContent({ service }) {
             <motion.span 
               variants={priceVariants}
               whileHover="hover"
-              className="text-[40px] md:text-[48px] font-poppins font-bold text-[#4D3E3F] cursor-default"
+              className="text-[40px] font-poppins font-bold text-[#4D3E3F] cursor-default"
             >
               $250
             </motion.span>
@@ -322,18 +327,19 @@ export default function ServiceQuickDetailsContent({ service }) {
             {/* Price Description */}
             <motion.p 
               variants={priceTextVariants}
-              className="text-lg md:text-2xl font-poppins font-normal text-[#4D3E3F] uppercase"
+              className="text-lg font-poppins font-normal text-[#4D3E3F] uppercase"
             >
-              per session <span className="text-gray-400 uppercase">(varies depending on treatment area)</span>
+              {t("per session")} <span className="text-gray-400 uppercase">{t("(varies depending on treatment area)")}</span>
             </motion.p>
           </div>
 
           {/* Book Now Button */}
           <motion.button 
+          onClick={() => router.push("/booking")}
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"
-            className="w-full sm:w-fit text-xl md:text-[32px] font-normal px-16 py-5 bg-secondary text-white rounded-full uppercase tracking-widest shadow-lg relative overflow-hidden group"
+            className="w-full sm:w-fit text-xl md:text-[26px] font-normal px-10 py-3 bg-secondary text-white rounded-full uppercase tracking-widest shadow-lg relative overflow-hidden group"
           >
             {/* Button shine effect */}
             <motion.span
@@ -349,7 +355,7 @@ export default function ServiceQuickDetailsContent({ service }) {
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 400 }}
             >
-              Book Now
+              {t("Book Now")}
             </motion.span>
 
             {/* Decorative dots animation */}

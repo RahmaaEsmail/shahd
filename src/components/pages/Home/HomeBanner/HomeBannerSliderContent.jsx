@@ -1,10 +1,10 @@
 "use client";
-
 import { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Play } from 'lucide-react';
 import ReactPlayer from 'react-player';
+import { useTranslation } from 'react-i18next';
 import {
   Dialog,
   DialogContent,
@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog"; // Adjust path based on your setup
 
 export default function HomeBannerSliderContent() {
+  const { t } = useTranslation();
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -28,8 +29,8 @@ export default function HomeBannerSliderContent() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.5 }}
       >
-        <h2 className="text-xl sm:text-2xl lg:text-[32px] font-normal tracking-[1px] sm:tracking-[2px] text-[#DDB2B5] uppercase leading-tight">
-          Meet Dr. Shahd Awad — The Face Behind the Confidence
+        <h2 className="text-xl sm:text-2xl lg:text-[28px] font-normal tracking-[1px] sm:tracking-[2px] text-[#DDB2B5] uppercase leading-tight">
+          {t("Meet Dr. Shahd Awad")}
         </h2>
       </motion.div>
 
@@ -40,8 +41,7 @@ export default function HomeBannerSliderContent() {
         transition={{ delay: 0.6, duration: 0.5 }}
         className="text-[#414141] font-poppins! text-sm sm:text-base lg:text-[18px] font-normal leading-relaxed"
       >
-        Dr. Shahd Awad is a leading cosmetic specialist known for her artistic approach to beauty and patient-centered care.
-        With years of experience and a passion for enhancing natural features, she helps every client feel radiant — inside and out.
+        {t("Dr. Shahd Awad Specialist")}
       </motion.p>
 
       {/* Video/Image Card wrapped in Dialog */}
@@ -53,10 +53,10 @@ export default function HomeBannerSliderContent() {
             transition={{ delay: 0.7, duration: 0.6 }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="relative w-full h-[220px] xs:h-[260px] sm:h-[340px] md:h-[420px] lg:h-104 rounded-[24px] sm:rounded-[40px] overflow-hidden group cursor-pointer"
+            className="relative w-full h-[220px] xs:h-[260px] sm:h-[340px] md:h-[420px] lg:h-74 rounded-[24px] sm:rounded-[40px] overflow-hidden group cursor-pointer"
           >
             <Image
-              src="/images/BannerImage/banner-image-2.jpg"
+              src="/SHAHD-IMAGE/BannerImage/banner-image-2.webp"
               alt="Dr. Shahd Awad"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -81,7 +81,7 @@ export default function HomeBannerSliderContent() {
               whileTap={{ scale: 0.95 }}
               className="absolute border border-white/20 bottom-4 right-4 sm:bottom-6 sm:right-6 flex items-center gap-2 sm:gap-3 bg-white/20 backdrop-blur-lg px-3 sm:px-5 py-2 sm:py-3 rounded-full transition-all duration-300 group/btn"
             >
-              <span className="text-md font-normal font-noto! text-white">watch video</span>
+              <span className="text-md font-normal font-noto! text-white">{t("watch video")}</span>
               <motion.div
                 className="w-5 h-5 rounded-full flex items-center justify-center"
                 animate={{

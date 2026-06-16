@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import React from 'react'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next';
 
 // Animation variants
 const contentVariants = {
@@ -64,24 +65,25 @@ const headingVariants = {
 }
 
 export default function HorseAboutContent() {
+  const { t  , i18n} = useTranslation();
   return (
     <motion.div
       variants={contentVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: false, amount: 0.3 }}
-      className='flex w-full flex-col  gap-6'
+      className='flex w-full flex-col  gap-2'
     >
       <motion.p
         variants={itemVariants}
-        className='text-lg text-center sm:text-xl lg:text-[27px] font-bold font-poppins text-dark-primary'
+        className='text-lg text-center sm:text-2xl font-bold font-poppins text-dark-primary'
       >
-        Where Strength Meets Freedom
+        {t("Where Strength Meets Freedom")}
       </motion.p>
 
       <motion.h1
         variants={headingVariants}
-        className='text-[32px] text-center lg:text-left sm:text-[44px] lg:text-[60px] xl:text-[80px] flex flex-wrap lg:flex-col gap-x-3 gap-y-0 font-normal leading-tight'
+        className={`text-[32px] text-center lg:text-left ${i18n?.language == "ar" ? "lg:text-right" : "lg:text-left"} sm:text-[44px] lg:text-[60px]  flex flex-wrap lg:flex-col gap-x-3 gap-y-0 font-normal leading-tight`}
       >
         <motion.span
           style={{
@@ -96,19 +98,19 @@ export default function HorseAboutContent() {
           }}
         >
           {/* Use 'hidden lg:block' to only break lines on large screens */}
-          <span>Horse Riding &mdash;</span>
+          <span>{t("Horse Riding &mdash;")}</span>
           <br className="hidden lg:block" />
 
-          <span className="ml-1 lg:ml-0">A Passion Beyond</span>
+          <span className="ml-1 lg:ml-0">{t("A Passion Beyond")}</span>
           <br className="hidden lg:block" />
 
           <motion.div
             whileHover="hover"
             className="inline-flex lg:flex gap-3 items-center"
           >
-            <span>Medicine</span>
+            <span>{t("Medicine")}</span>
             <Image
-              src="/images/horse/heading.jpg"
+              src="/SHAHD-IMAGE/horse/heading.webp"
               alt="small about image"
               width={157}
               height={69}
@@ -120,9 +122,9 @@ export default function HorseAboutContent() {
 
       <motion.p
         variants={itemVariants}
-        className="text-sm sm:text-base lg:text-lg font-poppins text-[#414141] font-normal tracking-[-0.3px] leading-7"
+        className={`text-sm sm:text-base font-poppins text-[#414141] font-normal tracking-[-0.3px] leading-7 ${i18n?.language == "ar" ? "text-right" : "text-left"}`}
       >
-        Through riding, she finds focus, discipline, and calm — values that mirror her approach to medicine and wellness. This passion reminds her that true wellbeing comes from movement, trust, and understanding rhythm, whether with patients or horses.
+        {t("Horse About Desc")}
       </motion.p>
     </motion.div>
   )

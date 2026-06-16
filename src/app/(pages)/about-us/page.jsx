@@ -8,8 +8,8 @@ import AboutJourney from "@/components/pages/Aboutus/AboutJourney/AboutJourney";
 
 export default function page() {
   return (
-    <div className="mt-17">
-      <div className="main-container overflow-hidden mx-auto px-4 lg:px-8">
+    <div className="mt-25">
+      <div className="main-container overflow-hidden mx-auto">
         <HomeAbout />
       </div>
       <AboutUsStatistics />

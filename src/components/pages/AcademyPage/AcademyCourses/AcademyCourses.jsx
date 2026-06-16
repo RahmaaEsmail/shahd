@@ -2,30 +2,32 @@
 import React, { useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { motion, useInView } from 'framer-motion'
+import { useTranslation } from 'react-i18next';
 import CourseCard from './CourseCard';
 
 const courses = [
   {
     id: 1,
-    title: "PRP & Regenerative Medicine",
-    desc: "A practical, science-driven course covering PRP protocols for skin, hair, and facial rejuvenation with a focus on patient safety and outcomes.",
-    image: "/images/Academy/Rectangle 59.png",
+    titleKey: "PRP & Regenerative Medicine",
+    descKey: "PRP Course Desc",
+    image: "/SHAHD-IMAGE/Academy/Rectangle 59.webp",
   },
   {
     id: 2,
-    title: "PRP & Regenerative Medicine",
-    desc: "A practical, science-driven course covering PRP protocols for skin, hair, and facial rejuvenation with a focus on patient safety and outcomes.",
-    image: "/images/Academy/Rectangle 60.png",
+    titleKey: "PRP & Regenerative Medicine",
+    descKey: "PRP Course Desc",
+    image: "/SHAHD-IMAGE/Academy/Rectangle 60.webp",
   },
   {
     id: 3,
-    title: "PRP & Regenerative Medicine",
-    desc: "A practical, science-driven course covering PRP protocols for skin, hair, and facial rejuvenation with a focus on patient safety and outcomes.",
-    image: "/images/Academy/Rectangle 61.png",
+    titleKey: "PRP & Regenerative Medicine",
+    descKey: "PRP Course Desc",
+    image: "/SHAHD-IMAGE/Academy/Rectangle 61.webp",
   }
 ]
 
 export default function AcademyCourses() {
+  const { t } = useTranslation();
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: false, amount: 0.2 })
 
@@ -57,7 +59,7 @@ export default function AcademyCourses() {
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       style={{
-        background: "url('/images/Academy/Desktop - 20.jpg')",
+        background: "url('/SHAHD-IMAGE/Academy/Desktop - 20.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -67,17 +69,17 @@ export default function AcademyCourses() {
       className='relative overflow-hidden'
     >
 
-      <div className='main-container py-12 md:py-20 lg:py-24 mx-auto px-4 relative z-10'>
+      <div className='main-container py-8 mx-auto px-4 relative z-10'>
         {/* Header Section */}
         <motion.div
           variants={containerVariants}
-          className='mb-12 lg:mb-16'
+          className='mb-6'
         >
           <motion.p
             variants={itemVariants}
-            className='text-secondary font-poppins font-bold text-lg md:text-xl lg:text-[27px] mb-2'
+            className='text-secondary font-poppins font-bold text-2xl  mb-2'
           >
-            From Foundation to Mastery
+            {t('From Foundation to Mastery')}
           </motion.p>
 
           <motion.div
@@ -86,9 +88,9 @@ export default function AcademyCourses() {
           >
             <motion.h1
               variants={itemVariants}
-              className='text-3xl md:text-5xl lg:text-[64px] max-w-3xl text-primary leading-tight font-normal'
+              className='text-3xl max-w-3xl text-primary leading-tight font-normal'
             >
-              Everything you need to practice with confidence.
+              {t('Academy Courses Heading')}
             </motion.h1>
 
             <motion.div
@@ -99,9 +101,9 @@ export default function AcademyCourses() {
             >
               <Button
                 variant='secondary'
-                className={"text-white px-8 py-6 md:px-10 md:py-8 rounded-full text-lg md:text-xl lg:text-2xl font-normal! flex justify-center items-center shadow-lg shadow-secondary/30 hover:shadow-xl transition-all"}
+                className={"text-white px-5 py-4 rounded-full text-lg  font-normal! flex justify-center items-center shadow-lg shadow-secondary/30 hover:shadow-xl transition-all"}
               >
-                Explore our courses
+                {t('Explore our courses')}
               </Button>
             </motion.div>
           </motion.div>

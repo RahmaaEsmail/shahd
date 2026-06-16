@@ -5,17 +5,18 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { motion } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 // Swiper Styles
 import 'swiper/css';
 import { useRouter } from 'next/navigation';
 
 const data = [
-  { id: 1, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/images/product-details/Rectangle 34.png" },
-  { id: 2, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/images/product-details/Rectangle 34.png" },
-  { id: 3, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/images/product-details/Rectangle 34.png" },
-  { id: 4, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/images/product-details/Rectangle 34.png" },
-  { id: 5, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/images/product-details/Rectangle 34.png" }
+  { id: 1, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/SHAHD-IMAGE/product-details/Rectangle 34.webp" },
+  { id: 2, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/SHAHD-IMAGE/product-details/Rectangle 34.webp" },
+  { id: 3, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/SHAHD-IMAGE/product-details/Rectangle 34.webp" },
+  { id: 4, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/SHAHD-IMAGE/product-details/Rectangle 34.webp" },
+  { id: 5, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/SHAHD-IMAGE/product-details/Rectangle 34.webp" }
 ];
 
 // Animation Variants
@@ -205,6 +206,7 @@ const sparkleVariants = {
 };
 
 export default function ProductDetailsRoutine() {
+  const { t , i18n } = useTranslation();
   const swiperRef = useRef(null);
   const router = useRouter();
   return (
@@ -213,7 +215,7 @@ export default function ProductDetailsRoutine() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: false, amount: 0.2 }}
-      className="py-20 main-container overflow-hidden relative"
+      className="py-4 main-container overflow-hidden relative"
     >
       {/* Animated background sparkles */}
       <motion.div
@@ -235,23 +237,23 @@ export default function ProductDetailsRoutine() {
       {/* Header Section */}
       <motion.div
         variants={headerVariants}
-        className="mb-8 md:mb-12 px-6 text-center md:text-left"
+        className={`mb-8 px-6 text-center md:${i18n?.language == "ar" ? "text-right" :"text-left"}`}
       >
         <motion.div className="relative inline-block">
           <motion.h4
             variants={titleVariants}
             whileHover="hover"
-            className='text-primary text-4xl md:text-5xl lg:text-[64px] font-normal leading-tight relative z-10'
+            className={`text-primary text-4xl  font-normal leading-tight relative z-10 ${i18n?.language == "ar" ? "text-right" :"text-left"}`}
           >
-            build a routine
+            {t('build a routine')}
           </motion.h4>
         </motion.div>
  
         <motion.p
           variants={subtitleVariants}
-          className='font-medium font-poppins text-sm md:text-base text-[#414141] mt-2 max-w-2xl mx-auto md:mx-0'
+          className={`font-medium font-poppins text-sm md:text-base text-[#414141] mt-2 max-w-2xl mx-auto md:mx-0 ${i18n?.language =="ar" ? "text-right" :"text-left"}`}
         >
-          For optimal skin results, pair this cleanser with:
+          {t('For optimal skin results, pair this cleanser with:')}
         </motion.p>
       </motion.div>
  
@@ -320,13 +322,13 @@ export default function ProductDetailsRoutine() {
                         variants={textVariants}
                         className='text-lg md:text-xl font-medium leading-snug text-[#4D3E3F] mb-1'
                       >
-                        {item.title}
+                        {t(item.title)}
                       </motion.h4>
                       <motion.p
                         variants={textVariants}
                         className='text-xs md:text-sm font-poppins text-[#6A6A6A]'
                       >
-                        {item.desc}
+                        {t(item.desc)}
                       </motion.p>
                     </div>
  
@@ -335,7 +337,7 @@ export default function ProductDetailsRoutine() {
                       whileHover="hover"
                       className='text-xl md:text-2xl font-poppins text-primary font-semibold'
                     >
-                      {item.price}
+                      {t(item.price)}
                     </motion.p>
  
                     <motion.button
@@ -352,7 +354,7 @@ export default function ProductDetailsRoutine() {
                         transition={{ type: "spring", stiffness: 400 }}
                         className="flex items-center gap-2"
                       >
-                        Add To Cart
+                        {t('Add To Cart')}
                       </motion.span>
                     </motion.button>
                   </motion.div>

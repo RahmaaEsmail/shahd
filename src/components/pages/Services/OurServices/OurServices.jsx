@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { cn } from "../../../../lib/utils";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -16,7 +17,7 @@ import OurServiceTabs from "./OurServiceTabs";
 const data = [
   {
     id: 1,
-    image: "/images/Services/our-service-1.jpg",
+    image: "/SHAHD-IMAGE/Services/our-service-1.webp",
     type: "face",
     mainColor: "#E8EEF2",
     bgColor: "#B6C7D6",
@@ -25,7 +26,7 @@ const data = [
   },
   {
     id: 2,
-    image: "/images/Services/our-service-2.jpg",
+    image: "/SHAHD-IMAGE/Services/our-service-2.webp",
     type: "hair",
     bgColor: "#F1E0E0",
     title: "PRP Hair Therapy",
@@ -34,7 +35,7 @@ const data = [
   },
   {
     id: 3,
-    image: "/images/Services/our-service-3.jpg",
+    image: "/SHAHD-IMAGE/Services/our-service-3.webp",
     type: "skin",
     bgColor: "#D7CDDB",
     title: "Dermal Fillers",
@@ -43,7 +44,7 @@ const data = [
   },
   {
     id: 4,
-    image: "/images/Services/our-service-4.jpg",
+    image: "/SHAHD-IMAGE/Services/our-service-4.webp",
     type: "body",
     bgColor: "#E8E9F2",
     title: "Hydra Facial Glow",
@@ -52,7 +53,7 @@ const data = [
   },
   {
     id: 5,
-    image: "/images/Services/our-service-1.jpg",
+    image: "/SHAHD-IMAGE/Services/our-service-1.webp",
     type: "face",
     mainColor: "#E8EEF2",
     bgColor: "#B6C7D6",
@@ -61,7 +62,7 @@ const data = [
   },
   {
     id: 6,
-    image: "/images/Services/our-service-2.jpg",
+    image: "/SHAHD-IMAGE/Services/our-service-2.webp",
     type: "hair",
     bgColor: "#F1E0E0",
     title: "PRP Hair Therapy",
@@ -70,7 +71,7 @@ const data = [
   },
   {
     id: 7,
-    image: "/images/Services/our-service-3.jpg",
+    image: "/SHAHD-IMAGE/Services/our-service-3.webp",
     type: "skin",
     bgColor: "#D7CDDB",
     title: "Dermal Fillers",
@@ -79,7 +80,7 @@ const data = [
   },
   {
     id: 8,
-    image: "/images/Services/our-service-4.jpg",
+    image: "/SHAHD-IMAGE/Services/our-service-4.webp",
     type: "body",
     bgColor: "#E8E9F2",
     title: "Hydra Facial Glow",
@@ -111,8 +112,27 @@ const tabs = [
 ];
 
 
+import { useTranslation } from "react-i18next";
+
 export default function OurServices() {
+  const { t , i18n} = useTranslation();
+  const isRtl = i18n.language === 'ar' || i18n.dir() === 'rtl';
+  const currentDir = isRtl ? "rtl" : "ltr";
+
   const [activeTab, setActiveTab] = useState(1);
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get('category');
+
+  useEffect(() => {
+    if (categoryParam) {
+      const foundTab = tabs.find(t => t.name.toLowerCase() === categoryParam.toLowerCase());
+      if (foundTab) {
+        setActiveTab(foundTab.id);
+      }
+    } else {
+      setActiveTab(1); // Default to "All" if no category is present
+    }
+  }, [categoryParam]);
 
   // Filter data based on active tab
   const filteredData = activeTab === 1
@@ -134,24 +154,24 @@ export default function OurServices() {
   };
 
   return (
-    <div className="min-h-screen relative">
+    <div id="our-services" dir={currentDir} className="min-h-[85vh] relative scroll-mt-24">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: "url('/images/Services/Desktop - 20.jpg')",
+          backgroundImage: "url('/SHAHD-IMAGE/Services/Desktop - 20.webp')",
         }}
       ></div>
 
-      <div className="relative z-30 py-16 lg:py-26">
-        <div className="max-w-4xl flex flex-col justify-between items-center gap-7 mx-auto px-4">
+      <div className="relative z-30 py-5">
+        <div className="max-w-4xl flex flex-col justify-between items-center gap-3 mx-auto px-4">
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.6 }}
-            className="text-secondary font-poppins font-bold text-center text-3xl"
+            className="text-secondary font-poppins font-bold text-center text-2xl"
           >
-            Our Services
+            {t("Our Services Title")}
           </motion.h1>
 
           <OurServiceTabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -167,6 +187,7 @@ export default function OurServices() {
         >
           <AnimatePresence mode="wait">
             <Swiper
+              dir={currentDir}
               key={activeTab}
               modules={[Autoplay, Pagination, Navigation]}
               spaceBetween={16}

@@ -6,7 +6,10 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 
+import { useTranslation } from "react-i18next";
+
 export default function SignupPage() {
+  const { t } = useTranslation();
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -25,93 +28,100 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <div className="min-h-screen relative flex items-center justify-center py-16 px-4 sm:px-6 overflow-hidden">
       {/* Background with decorative elements */}
       <div 
-        className="absolute inset-0 z-0"
-        style={{
-          background: "linear-gradient(135deg, #fff9f7 0%, #ffffff 50%, #f3e5e6 100%)"
-        }}
-      >
-        <div className="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-5%] w-[40%] h-[40%] bg-secondary/5 rounded-full blur-[120px]" />
-      </div>
+  className="absolute inset-0 z-0 bg-cover bg-center opacity-40 bg-no-repeat"
+  style={{
+    backgroundImage: `url("/SHAHD-IMAGE/Untitled design.png")`
+  }}
+>
+  {/* <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px]" />
+  <div className="absolute bottom-[-10%] left-[-5%] w-[40%] h-[40%] bg-secondary/5 rounded-full blur-[120px]" /> */}
+</div>
 
       {/* Main Content */}
       <motion.div
         initial="hidden"
         animate="visible"
         variants={containerVariants}
-        className="relative z-10 w-full max-w-lg"
+        className="relative z-10 mt-20 w-full max-w-lg"
       >
-        <div className="bg-white/40 backdrop-blur-xl border border-white/60 p-8 md:p-12 rounded-[40px] shadow-[0_20px_50px_rgba(221,178,181,0.15)] flex flex-col items-center">
-          
+        <div className="bg-white backdrop-blur-xl border-[2px] border-primary p-8 md:p-12 rounded-[40px] shadow-[0_20px_50px_rgba(221,178,181,0.15)] flex flex-col items-center">
+
           {/* Logo/Brand */}
           <motion.div variants={itemVariants} className="mb-8">
-             <h2 className="text-secondary font-poppins font-bold text-2xl tracking-[0.2em] uppercase">
-              Shahd
-            </h2>
+            <img src="/SHAHD-IMAGE/6 (1).webp" className="aspect-auto p-3 rounded-full  border-primary" />
           </motion.div>
 
           {/* Header */}
           <div className="text-center mb-10">
-            <motion.h1 
+            <motion.h1
               variants={itemVariants}
-              className="text-primary font-main text-5xl md:text-6xl mb-2 uppercase"
+              className="text-primary font-main text-4xl mb-2 uppercase"
             >
-              Start Your Journey
+              {t('Start Your Journey')}
             </motion.h1>
-            <motion.p 
+            <motion.p
               variants={itemVariants}
               className="text-text/60 font-poppins text-sm"
             >
-              Sign up to unlock personalized aesthetic treatments
+              {t('Sign up to unlock personalized aesthetic treatments')}
             </motion.p>
           </div>
 
           {/* Form */}
-          <form className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
-            <motion.div variants={itemVariants} className="space-y-2 md:col-span-2">
-              <label className="text-primary font-poppins font-medium text-sm ml-1">Full Name</label>
-              <Input 
-                type="text" 
-                placeholder="Jane Doe"
-                className="rounded-2xl border-primary/20 focus-visible:ring-primary/30 h-12 bg-white/50"
+          <form className="w-full grid grid-cols-1 md:grid-cols-2 gap-3">
+            <motion.div variants={itemVariants} className="space-y-2 md:col-span-1">
+              <label className="text-primary font-poppins font-medium text-sm ml-1">{t('Full Name')}</label>
+              <Input
+                type="text"
+                placeholder={t('Jane Doe')}
+                className="rounded-2xl font-poppins border-primary/20 focus-visible:ring-primary/30 h-12 bg-white/50"
+              />
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="space-y-2 md:col-span-1">
+              <label className="text-primary font-poppins font-medium text-sm ml-1">{t('Email Address')}</label>
+              <Input
+                type="email"
+                placeholder="jane@example.com"
+                className="rounded-2xl font-poppins border-primary/20 focus-visible:ring-primary/30 h-12 bg-white/50"
               />
             </motion.div>
 
             <motion.div variants={itemVariants} className="space-y-2 md:col-span-2">
-              <label className="text-primary font-poppins font-medium text-sm ml-1">Email Address</label>
-              <Input 
-                type="email" 
-                placeholder="jane@example.com"
-                className="rounded-2xl border-primary/20 focus-visible:ring-primary/30 h-12 bg-white/50"
+              <label className="text-primary font-poppins font-medium text-sm ml-1">{t('phone Number')}</label>
+              <Input
+                type="phone"
+                placeholder="+20 112 123 4567"
+                className="rounded-2xl font-poppins border-primary/20 focus-visible:ring-primary/30 h-12 bg-white/50"
               />
             </motion.div>
 
             <motion.div variants={itemVariants} className="space-y-2">
-              <label className="text-primary font-poppins font-medium text-sm ml-1">Password</label>
-              <Input 
-                type="password" 
+              <label className="text-primary font-poppins font-medium text-sm ml-1">{t('Password')}</label>
+              <Input
+                type="password"
                 placeholder="••••••••"
                 className="rounded-2xl border-primary/20 focus-visible:ring-primary/30 h-12 bg-white/50"
               />
             </motion.div>
 
             <motion.div variants={itemVariants} className="space-y-2">
-              <label className="text-primary font-poppins font-medium text-sm ml-1">Confirm Password</label>
-              <Input 
-                type="password" 
+              <label className="text-primary font-poppins font-medium text-sm ml-1">{t('Confirm Password')}</label>
+              <Input
+                type="password"
                 placeholder="••••••••"
                 className="rounded-2xl border-primary/20 focus-visible:ring-primary/30 h-12 bg-white/50"
               />
             </motion.div>
 
             <motion.div variants={itemVariants} className="pt-6 md:col-span-2">
-              <Button 
+              <Button
                 className="w-full h-14 rounded-2xl text-lg font-poppins font-semibold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
-                Create Account
+                {t('Create Account')}
               </Button>
             </motion.div>
           </form>
@@ -119,23 +129,15 @@ export default function SignupPage() {
           {/* Footer */}
           <motion.div variants={itemVariants} className="mt-10 text-center">
             <p className="text-text/60 font-poppins text-sm">
-              Already have an account?{" "}
+              {t('Already have an account?')}{" "}
               <Link href="/login" className="text-primary font-bold hover:underline decoration-primary/30">
-                Sign In
+                {t('Sign In')}
               </Link>
             </p>
           </motion.div>
 
         </div>
-      </motion.div>
-
-      {/* Decorative stars/spots like in the banner */}
-      <div className="absolute top-1/4 right-10 opacity-20 pointer-events-none animate-pulse">
-        <Image src="/images/Services/Frame 1000005622.png" width={100} height={100} alt="" />
-      </div>
-      <div className="absolute bottom-1/4 left-10 opacity-20 pointer-events-none animate-pulse delay-700">
-        <Image src="/images/Services/Frame 1000005621.png" width={150} height={150} alt="" />
-      </div>
+      </motion.div>     
     </div>
   );
 }

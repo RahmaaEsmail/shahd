@@ -3,6 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import ProductDetailsBundleCard from './ProductDetailsBundleCard';
+import { useTranslation } from 'react-i18next';
 
 const data = [
     {
@@ -11,7 +12,8 @@ const data = [
         title: "12 days of dr.shahd advent calendar",
         price: "23.00 S.R",
         is_best: true,
-        img: "/images/product-details/Rectangle 71.png",   
+        img: "/SHAHD-IMAGE/product-details/Rectangle 71.webp",   
+        hoverImg: "/SHAHD-IMAGE/product-details/Rectangle 70.webp",
     },
     {
         id: "bundle-2",
@@ -19,7 +21,8 @@ const data = [
         title: "12 days of dr.shahd advent calendar",
         price: "23.00 S.R",
         is_best: false,
-        img: "/images/product-details/Rectangle 71.png",   
+        img: "/SHAHD-IMAGE/product-details/Rectangle 71.webp",   
+        hoverImg: "/SHAHD-IMAGE/product-details/Rectangle 70.webp",
     },
     {
         id: "bundle-3",
@@ -27,7 +30,8 @@ const data = [
         title: "12 days of dr.shahd advent calendar",
         price: "23.00 S.R",
         is_best: false,
-        img: "/images/product-details/Rectangle 71.png",   
+        img: "/SHAHD-IMAGE/product-details/Rectangle 71.webp",   
+        hoverImg: "/SHAHD-IMAGE/product-details/Rectangle 70.webp",
     },
     {
         id: "bundle-4",
@@ -35,7 +39,8 @@ const data = [
         title: "12 days of dr.shahd advent calendar",
         price: "23.00 S.R",
         is_best: false,
-        img: "/images/product-details/Rectangle 71.png",   
+        img: "/SHAHD-IMAGE/product-details/Rectangle 71.webp",   
+        hoverImg: "/SHAHD-IMAGE/product-details/Rectangle 70.webp",
     },
 ];
 
@@ -71,9 +76,10 @@ const headerVariants = {
 };
 
 export default function ProductDetailsBundles() {
+  const { t , i18n } = useTranslation();
   const router = useRouter();
   return (
-    <section className='main-container py-16 overflow-hidden'>
+    <section className='main-container py-5 overflow-hidden'>
       <motion.h3 
         variants={headerVariants}
         initial="hidden"
@@ -83,9 +89,9 @@ export default function ProductDetailsBundles() {
           amount: 0.3,
           margin: "-50px"
         }}
-        className='text-4xl md:text-5xl lg:text-[64px] font-normal text-primary uppercase mb-8 md:mb-10 text-center md:text-left'
+        className={`text-3xl font-normal text-primary uppercase mb-2 text-center md:${i18n?.language == "ar" ? "text-right" :"text-left"}`}
       >
-        Bundles & sets
+        {t('Bundles & sets')}
       </motion.h3>
 
       <motion.div 

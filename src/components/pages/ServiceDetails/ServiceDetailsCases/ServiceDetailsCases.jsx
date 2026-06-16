@@ -6,25 +6,25 @@ import { motion } from 'framer-motion';
 const data = [
   {
     id: 1,
-    img: "/images/service-details/63dca66b0e22df555f6fa459b4aa3d00585b7e5b.jpg",
+    img: "/SHAHD-IMAGE/service-details/63dca66b0e22df555f6fa459b4aa3d00585b7e5b.webp",
     title: "CONSULTATION & HAIR ANALYSIS",
     desc: "YOUR JOURNEY BEGINS WITH A PERSONAL CONSULTATION WITH DR. SHAHD AWAD."
   },
   {
     id: 2,
-    img: "/images/service-details/63dca66b0e22df555f6fa459b4aa3d00585b7e5b.jpg",
+    img: "/SHAHD-IMAGE/service-details/63dca66b0e22df555f6fa459b4aa3d00585b7e5b.webp",
     title: "BLOOD COLLECTION & PREPARATION",
     desc: "A SMALL SAMPLE OF YOUR BLOOD IS DRAWN SAFELY AND PLACED IN A SPECIAL CENTRIFUGE."
   },
   {
     id: 3,
-    img: "/images/service-details/63dca66b0e22df555f6fa459b4aa3d00585b7e5b.jpg",
+    img: "/SHAHD-IMAGE/service-details/63dca66b0e22df555f6fa459b4aa3d00585b7e5b.webp",
     title: "PRP INJECTION SESSION",
     desc: "THE PREPARED PRP IS GENTLY INJECTED INTO TARGETED AREAS OF THE SCALP USING FINE TECHNIQUES."
   },
   {
     id: 4,
-    img: "/images/service-details/63dca66b0e22df555f6fa459b4aa3d00585b7e5b.jpg",
+    img: "/SHAHD-IMAGE/service-details/63dca66b0e22df555f6fa459b4aa3d00585b7e5b.webp",
     title: "NOURISHMENT & RECOVERY",
     desc: "AFTER TREATMENT, YOUR SCALP BEGINS TO NATURALLY ACTIVATE COLLAGEN AND NEW CELL GROWTH."
   }
@@ -141,7 +141,7 @@ export default function ServiceDetailsCases({ service }) {
         <motion.div 
           key={item.id}
           variants={itemVariants}
-          className="relative min-h-[500px] sm:min-h-[600px] md:h-[725px] flex flex-col group border-b md:border-b-0 md:border-r border-[#EBEBEB] last:border-b-0 lg:last:border-r-0 overflow-hidden cursor-pointer"
+          className="relative min-h-[500px] sm:min-h-[600px] flex flex-col group border-b md:border-b-0 md:border-r border-[#EBEBEB] last:border-b-0 lg:last:border-r-0 overflow-hidden cursor-pointer"
           initial="rest"
           whileHover="hover"
           animate="rest"
@@ -167,7 +167,7 @@ export default function ServiceDetailsCases({ service }) {
             variants={patternVariants}
           >
             <Image 
-              src="/images/service-details/0eebc8d3f65aa5f9625acdfffa3556590d320721.png" 
+              src="/SHAHD-IMAGE/service-details/0eebc8d3f65aa5f9625acdfffa3556590d320721.webp" 
               alt='pattern'
               fill 
               className='object-cover opacity-60'
@@ -179,7 +179,7 @@ export default function ServiceDetailsCases({ service }) {
             <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 items-center text-center">
               <motion.p 
                 variants={numberVariants}
-                className='text-[150px] sm:text-[200px] md:text-[250px] lg:text-[350px] font-poppins font-275 leading-none select-none'
+                className='text-[150px] sm:text-[200px] md:text-[250px] font-poppins font-275 leading-none select-none'
               >
                 {item.id}
               </motion.p>
@@ -187,7 +187,7 @@ export default function ServiceDetailsCases({ service }) {
               {/* Title Button-style */}
               <motion.button 
                 variants={buttonVariants}
-                className='w-full border rounded-full py-3 px-4 text-lg sm:text-xl lg:text-2xl font-normal uppercase tracking-wide transition-colors'
+                className='w-full border rounded-full py-3 px-4 text-lg sm:text-xl  font-normal uppercase tracking-wide transition-colors'
               >
                 {item.title}
               </motion.button>

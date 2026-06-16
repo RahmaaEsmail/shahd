@@ -3,67 +3,79 @@ import Image from "next/image";
 import React from "react";
 import ChooseUsCard from "./ChooseUsCard";
 import { motion } from "framer-motion";
-
-const data = [
-  {
-    id: 1,
-    img: "/images/About/icon_2-removebg-preview.png",
-    title: "Personalized Care for Every Client",
-    desc: "Our clinic is equipped with the latest aesthetic technologies and follows the highest international standards.",
-  },
-  {
-    id: 2,
-    img: "/images/About/icon_4-removebg-preview.png",
-    title: "Natural, Elegant Results",
-    desc: "We believe in subtle transformations that enhance your beauty without losing your natural essence.",
-  },
-  {
-    id: 3,
-    img: "/images/About/icon_1-removebg-preview.png",
-    title: "Expert Hands, Trusted Results",
-    desc: "Led by Dr. Shahd Awad, a certified aesthetic specialist with years of experience in non-surgical treatments.",
-  },
-  {
-    id: 4,
-    img: "/images/About/icon_6__1_-removebg-preview.png",
-    title: "Comfort, Privacy & Care",
-    desc: "From the first consultation to your post-treatment follow-up, we provide a luxurious, relaxing experience.",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 export default function AboutChooseUs() {
+  const { t } = useTranslation();
+
+  const data = [
+    {
+      id: 1,
+      img: "/SHAHD-IMAGE/About/icon_2-removebg-preview.webp",
+      title: t("Personalized Care"),
+      desc: t("Personalized Care Desc"),
+    },
+    {
+      id: 2,
+      img: "/SHAHD-IMAGE/About/icon_4-removebg-preview.webp",
+      title: t("Natural Results"),
+      desc: t("Natural Results Desc"),
+    },
+    {
+      id: 3,
+      img: "/SHAHD-IMAGE/About/icon_1-removebg-preview.webp",
+      title: t("Expert Hands"),
+      desc: t("Expert Hands Desc"),
+    },
+    {
+      id: 4,
+      img: "/SHAHD-IMAGE/About/icon_6__1_-removebg-preview.webp",
+      title: t("Comfort Privacy"),
+      desc: t("Comfort Privacy Desc"),
+    },
+  ];
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: false }}
       transition={{ duration: 0.8 }}
-      className="py-10 px-4 overflow-hidden"
+      className="px-4 main-container  mx-auto overflow-hidden"
     >
       {/* Header Section */}
-      <motion.div className="flex flex-col justify-center items-center mx-auto max-w-7xl text-center mb-12">
+      <motion.div className="flex flex-col justify-center items-center mx-auto text-center mb-6">
         <motion.h3
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
-          className="font-bold text-secondary font-poppins text-2xl md:text-3xl"
+          className="font-bold text-secondary font-poppins text-2xl"
         >
-          Why Choose Us?
+          {t("Why Choose Us?")}
         </motion.h3>
         <motion.p
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-primary font-normal text-3xl md:text-[64px] leading-tight mt-5 max-w-4xl"
+          className="text-primary font-normal text-3xl leading-tight mt-2"
         >
-          Experience beauty, care, and confidence
+          {t("Experience beauty")}
+        </motion.p>
+
+         <motion.p
+          initial={{ y: 30, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="text-[#414141] font-normal text-base font-poppins leading-[32px] mt-2 max-w-7xl"
+        >
+          {t("Clinic Desc")}
         </motion.p>
       </motion.div>
 
       {/* Responsive Grid: 2 Cards | Image | 2 Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 items-stretch mx-auto">
         
         {/* First 2 Cards */}
-        <div className="flex flex-col gap-6 order-2 lg:order-1">
+        <div className="flex flex-col gap-3 order-2 lg:order-1">
           {data.slice(0, 2).map((item) => (
             <ChooseUsCard key={item.id} {...item} />
           ))}
@@ -78,10 +90,10 @@ export default function AboutChooseUs() {
         >
           <div className="relative w-full max-w-[450px]">
             <Image
-              src="/images/About/4da149cfda6278d6384ebe6833b5097f3ced57b9.png"
+              src="/SHAHD-IMAGE/About/4da149cfda6278d6384ebe6833b5097f3ced57b9.webp"
               width={400}
               height={600}
-              className="rounded-[40px] w-full h-auto object-cover shadow-2xl border-4 border-white/10"
+              className="rounded-[40px] w-full h-full object-cover"
               alt="Clinic"
               priority
             />
@@ -89,7 +101,7 @@ export default function AboutChooseUs() {
         </motion.div>
 
         {/* Last 2 Cards */}
-        <div className="flex flex-col gap-6 order-3">
+        <div className="flex flex-col gap-3 order-3">
           {data.slice(2, 4).map((item) => (
             <ChooseUsCard key={item.id} {...item} />
           ))}
@@ -97,4 +109,4 @@ export default function AboutChooseUs() {
       </div>
     </motion.div>
   );
-}
+}

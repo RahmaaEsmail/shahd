@@ -5,6 +5,7 @@ import { Badge } from '../../../../ui/badge'
 import { Heart, Star, ShoppingCart, Check, Minus, Plus } from 'lucide-react'
 import Toast from '../../../../shared/Toast';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 // Animation variants
 const containerVariants = {
@@ -149,8 +150,13 @@ const quantityVariants = {
   }
 };
 
+import useWishlistStore from '@/zustandStore/WishlistStore';
+
+// ... (keep constants)
+
 export default function ProductDetailsContent() {
-  const [isLiked, setIsLiked] = useState(false);
+  const { toggleWishlist, isInWishlist } = useWishlistStore();
+  const { t } = useTranslation();
   const [selectedSize, setSelectedSize] = useState('30 ml');
   const [quantity, setQuantity] = useState(1);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
@@ -160,6 +166,7 @@ export default function ProductDetailsContent() {
 
   // Mock product data
   const product = {
+    id: 1, // Added ID for store consistency
     name: "Gentle Foaming Cleanser",
     category: "Skin",
     inStock: true,
@@ -167,11 +174,14 @@ export default function ProductDetailsContent() {
     originalPrice: 29.00,
     rating: 5,
     reviewCount: 245,
+    img: "/SHAHD-IMAGE/horse/206c8be48988ac5b9bce6352927ab9782f8d48d8.webp", // Added img
     description: "A gentle yet effective formula designed to nourish, hydrate, and enhance your natural glow. This product delivers smooth, radiant skin while supporting your overall skin health — perfect for daily use and all skin types."
   };
 
+  const isLiked = isInWishlist(product.id);
+
   const handleLike = () => {
-    setIsLiked(!isLiked);
+    toggleWishlist(product);
   };
 
   const handleSizeSelect = (size) => {
@@ -214,15 +224,18 @@ export default function ProductDetailsContent() {
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      className='flex flex-col gap-6'
+      className='flex flex-col mb-3  w-full! gap-2'
     >
-      {/* Category Badge */}
+    
+      
+      <div className="flex justify-between items-center">
+         {/* Category Badge */}
       <motion.div variants={itemVariants}>
         <motion.div
           variants={badgeVariants}
           whileHover="hover"
         >
-          <Badge className={"w-[75px] h-[34px] p-[4px_12px] font-poppins text-[22px] font-normal cursor-pointer"}>
+          <Badge className={"w-[70px] h-[30px] p-[2px_10px] font-poppins text-[20px] font-normal cursor-pointer"}>
             {product.category}
           </Badge>
         </motion.div>
@@ -234,28 +247,28 @@ export default function ProductDetailsContent() {
           variants={badgeVariants}
           whileHover="hover"
         >
-          <Badge className={"min-w-[100px] text-[#95BCAA] h-[34px] p-[4px_12px] bg-[#DAF4E7] border-[#95BCAA] font-poppins text-[22px] font-normal cursor-pointer"}>
-            {product.inStock ? 'In Stock' : 'Out of Stock'}
+          <Badge className={"min-w-[100px] text-[#95BCAA] h-[30px] p-[2px_10px] bg-[#DAF4E7] border-[#95BCAA] font-poppins text-[18px] font-normal cursor-pointer"}>
+            {product.inStock ? t('In Stock') : t('Out of Stock')}
           </Badge>
         </motion.div>
         <motion.div
           variants={badgeVariants}
           whileHover="hover"
         >
-          <Badge className={"min-w-[100px] text-[#95BCAA] h-[34px] p-[4px_12px] bg-[#DAF4E7] border-[#95BCAA] font-poppins text-[22px] font-normal cursor-pointer"}>
-            Best Seller
+          <Badge className={"min-w-[100px] text-[#95BCAA] h-[30px] p-[2px_10px] bg-[#DAF4E7] border-[#95BCAA] font-poppins text-[18px] font-normal cursor-pointer"}>
+            {t('Best Seller')}
           </Badge>
         </motion.div>
       </motion.div>
-
+      </div>
       {/* Title and Wishlist */}
       <motion.div variants={itemVariants} className="flex flex-row justify-between items-start gap-4">
         <motion.h3
-          className='font-normal leading-tight text-3xl md:text-4xl lg:text-[40px] text-[#4D3E3F] flex-1'
+          className='font-normal leading-tight text-3xl  text-[#4D3E3F] flex-1'
           whileHover={{ scale: 1.01, color: "#DDB2B5" }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          {product.name}
+          {t(product.name)}
         </motion.h3>
         <motion.button
           variants={heartVariants}
@@ -264,7 +277,7 @@ export default function ProductDetailsContent() {
           whileTap="tap"
           whileInView={isLiked ? "liked" : "initial"}
           onClick={handleLike}
-          className={`w-10 h-10 md:w-12 md:h-12 border border-primary shrink-0 ${isLiked ? "bg-primary" : "bg-white"} rounded-full flex justify-center items-center transition-colors duration-300`}
+          className={`w-10 h-10  border border-primary shrink-0 ${isLiked ? "bg-primary" : "bg-white"} rounded-full flex justify-center items-center transition-colors duration-300`}
         >
           <Heart
             className={`${isLiked ? 'text-white fill-white' : 'text-primary'}`}
@@ -288,14 +301,14 @@ export default function ProductDetailsContent() {
               <Star
                 className='text-[#F7C128]'
                 fill='#F7C128'
-                size={20}
+                size={18}
               />
             </motion.div>
           ))}
         </div>
-        <div className='flex gap-2 text-sm md:text-base lg:text-lg font-light font-poppins text-[#6A6A6A]'>
-          <motion.p whileHover={{ color: "#DDB2B5" }}>{product.rating} stars</motion.p>
-          <motion.p whileHover={{ color: "#DDB2B5" }}>({product.reviewCount} Reviews)</motion.p>
+        <div className='flex gap-2 text-sm md:text-base  font-light font-poppins text-[#6A6A6A]'>
+          <motion.p whileHover={{ color: "#DDB2B5" }}>{product.rating} {t('stars')}</motion.p>
+          <motion.p whileHover={{ color: "#DDB2B5" }}>({product.reviewCount} {t('Reviews')})</motion.p>
         </div>
       </motion.div>
  
@@ -305,30 +318,30 @@ export default function ProductDetailsContent() {
         className='flex flex-wrap gap-4 items-baseline'
       >
         <motion.h3
-          className='text-3xl md:text-4xl font-poppins font-semibold text-primary'
+          className='text-3xl font-poppins font-semibold text-primary'
           whileHover={{ scale: 1.05 }}
         >
-          {product.price.toFixed(2)} S.R
+          {product.price.toFixed(2)} {t('S.R')}
         </motion.h3>
         <motion.p
-          className='text-xl md:text-2xl font-poppins font-light text-[#6A6A6A] line-through'
+          className='text-xl font-poppins font-light text-[#6A6A6A] line-through'
           whileHover={{ scale: 1.05 }}
         >
-          {product.originalPrice.toFixed(2)} S.R
+          {product.originalPrice.toFixed(2)} {t('S.R')}
         </motion.p>
       </motion.div>
  
       {/* Description */}
       <motion.p
         variants={itemVariants}
-        className='text-[#6A6A6A] text-base md:text-lg lg:text-xl font-poppins font-normal leading-relaxed max-w-3xl'
+        className='text-[#6A6A6A] text-base md:text-lg  font-poppins font-normal leading-relaxed max-w-3xl'
       >
-        {product.description}
+        {t(product.description)}
       </motion.p>
  
       {/* Size Selection */}
-      <motion.div variants={itemVariants} className='flex flex-col gap-3'>
-        <p className='text-lg md:text-xl font-medium font-poppins'>Size / Volume</p>
+      <motion.div variants={itemVariants} className='flex flex-col gap-2'>
+        <p className='text-lg font-medium font-poppins'>{t('Size / Volume')}</p>
         <div className='flex flex-wrap gap-2 items-center'>
           {sizes.map((size) => (
             <motion.button
@@ -339,7 +352,7 @@ export default function ProductDetailsContent() {
               whileHover="hover"
               whileTap="tap"
               onClick={() => handleSizeSelect(size)}
-              className={`rounded-full flex font-poppins justify-center items-center h-9 md:h-10 px-4 md:px-6 text-sm md:text-base transition-all duration-300 ${selectedSize === size
+              className={`rounded-full flex font-poppins justify-center items-center h-9  px-4 md:px-6 text-sm md:text-base transition-all duration-300 ${selectedSize === size
                 ? 'bg-primary text-white shadow-md'
                 : 'border border-gray-300 text-gray-600 hover:bg-primary/5 hover:border-primary'
                 }`}
@@ -351,8 +364,8 @@ export default function ProductDetailsContent() {
       </motion.div>
  
       {/* Quantity and Add to Cart */}
-      <motion.div variants={itemVariants} className='flex flex-col gap-4 mt-2'>
-        <p className='text-lg md:text-xl font-medium font-poppins'>Number of pieces</p>
+      <motion.div variants={itemVariants} className='flex flex-col gap-2 mt-2'>
+        <p className='text-lg  font-medium font-poppins'>{t('Number of pieces')}</p>
         <div className='flex flex-col sm:flex-row gap-4 items-stretch sm:items-center'>
           {/* Quantity Selector */}
           <motion.div
@@ -414,7 +427,7 @@ export default function ProductDetailsContent() {
                   >
                     <ShoppingCart size={22} />
                   </motion.div>
-                  <span>Adding...</span>
+                  <span>{t('Adding...')}</span>
                 </motion.div>
               ) : showAddedMessage ? (
                 <motion.div
@@ -425,7 +438,7 @@ export default function ProductDetailsContent() {
                   className="flex items-center gap-3"
                 >
                   <Check size={22} />
-                  <span>Added Successfully!</span>
+                  <span>{t('Added Successfully!')}</span>
                 </motion.div>
               ) : (
                 <motion.div
@@ -436,7 +449,7 @@ export default function ProductDetailsContent() {
                   className="flex items-center gap-3 w-full justify-center"
                 >
                   <ShoppingCart size={22} className="hidden sm:block" />
-                  <span>Add To Cart</span>
+                  <span>{t('Add To Cart')}</span>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -447,7 +460,7 @@ export default function ProductDetailsContent() {
       <Toast
         position='top'
         show={showAddedMessage}
-        message="Product added to cart successfully!"
+        message={t("Product added to cart successfully!")}
         type="success"
         onClose={() => setShowAddedMessage(false)}
       />

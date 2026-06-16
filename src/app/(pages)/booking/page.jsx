@@ -5,36 +5,37 @@ import Image from 'next/image';
 import { ChevronLeft, ChevronRight, MapPin } from 'lucide-react';
 import BookingBanner from '@/components/pages/Booking/BookingBanner/BookingBanner';
 import BookingAppointement from '@/components/pages/Booking/BookingAppointement/BookingAppointement';
+import { useTranslation } from 'react-i18next';
 
 const services = [
   {
     id:1,
-    active_img:"/images/Booking/streamline-ultimate_hair-skin-bold.svg",
-    inactive_img:"/images/Booking/1.svg",
-    title:"Hair Transplant Consultation"
+    active_img:"/SHAHD-IMAGE/Booking/streamline-ultimate_hair-skin-bold.webp",
+    inactive_img:"/SHAHD-IMAGE/Booking/1.webp",
+    title: "Hair Transplant Consultation"
   },
   {
     id:2,
-    inactive_img:"/images/Booking/healthicons_stomach.svg",
-    active_img:"/images/Booking/4.svg",
+    inactive_img:"/SHAHD-IMAGE/Booking/healthicons_stomach.webp",
+    active_img:"/SHAHD-IMAGE/Booking/4.webp",
     title:"Weight Management Program"
   },
   {
     id:3,
-    inactive_img:"/images/Booking/ic_sharp-face-4.svg",
-    active_img:"/images/Booking/3.svg",
+    inactive_img:"/SHAHD-IMAGE/Booking/ic_sharp-face-4.webp",
+    active_img:"/SHAHD-IMAGE/Booking/3.webp",
     title:"Facial Aesthetic Treatment"
   },
   {
     id:4,
-    inactive_img:"/images/Booking/Group.svg",
-    active_img:"/images/Booking/5.svg",
+    inactive_img:"/SHAHD-IMAGE/Booking/Group.webp",
+    active_img:"/SHAHD-IMAGE/Booking/5.webp",
     title:"PRP Therapy"
   },
   {
     id:5,
-    inactive_img:"/images/Booking/streamline-ultimate_work-from-home-laptop-meeting-bold.svg",
-    active_img:"/images/Booking/2.svg",
+    inactive_img:"/SHAHD-IMAGE/Booking/streamline-ultimate_work-from-home-laptop-meeting-bold.webp",
+    active_img:"/SHAHD-IMAGE/Booking/2.webp",
     title:"Online Consultation"
   }
 ];
@@ -43,6 +44,7 @@ const services = [
 
 
 export default function BookingPage() {
+  const { t } = useTranslation();
   const [selectedService, setSelectedService] = useState(services[0]?.id);
   const [selectedDate, setSelectedDate] = useState("6");
   const [selectedTime, setSelectedTime] = useState("7:00 PM");

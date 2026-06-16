@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
 import { header_links } from '../../../../data/HeaderData';
+import { useTranslation } from 'react-i18next';
 
 const itemVariants = {
   hidden: { y: -10, opacity: 0 },
@@ -45,14 +46,16 @@ const dropdownVariants = {
 };
 
 export default function NavLinks() {
+  const { t , i18n} = useTranslation();
   const pathname = usePathname();
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [openDropdown, setOpenDropdown] = useState(null);
-  
+   
+  const de_lang = i18n?.language == "de";
 
   return (
     <motion.nav 
-      className="bg-light-primary px-2 xl:px-4 2xl:px-6 py-3 border border-primary rounded-full flex items-center gap-1 xl:gap-2"
+      className="bg-light-primary px-2  py-3 border border-primary rounded-full flex items-center gap-1"
       initial={{ scale: 0.9, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ delay: 0.4, duration: 0.5, type: "spring", stiffness: 100 }}
@@ -85,7 +88,7 @@ export default function NavLinks() {
           >
             <Link href={item?.path}>
               <motion.div
-                className={`relative px-2 lg:px-4 2xl:px-7 py-2.5 flex items-center gap-1 text-md lg:text-lg 2xl:text-[20px] uppercase tracking-wide rounded-full transition-colors ${
+                className={`relative px-2 font-poppins py-2 flex items-center gap-1 ${i18n?.language == "de" ? "text-sm!" : "text-sm!"}    capitalize rounded-full transition-colors ${
                   isActive ? "text-white!" : "text-black!"
                 }`}
                 whileHover={{ scale: 1.02 }}
@@ -105,7 +108,7 @@ export default function NavLinks() {
                   )}
                 </AnimatePresence>
                 
-                <span className="relative whitespace-nowrap text-[16px] font-main uppercase 2xl:text-[20px] z-10">{item?.name}</span>
+                <span className="relative whitespace-nowrap text-md font-poppins capitalize z-10">{t(item?.name)}</span>
                 
                 {hasChildren && (
                   <motion.span
@@ -138,10 +141,10 @@ export default function NavLinks() {
                     >
                       <Link href={child?.path}>
                         <motion.div
-                          className="px-4 py-3 text-lg text-gray-700 hover:bg-light-primary hover:text-primary transition-colors"
+                          className="px-2 py-3 text-sm font-poppins text-gray-700 hover:bg-light-primary hover:text-primary transition-colors"
                           whileHover={{ x: 4 }}
                         >
-                          {child?.name}
+                          {t(child?.name)}
                         </motion.div>
                       </Link>
                     </motion.div>

@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import useFilterStore from "@/zustandStore/FilterStore";
 import Pagination from '@/components/shared/Pagination';
+import { useTranslation } from 'react-i18next';
 
 // Animation variants
 const containerVariants = {
@@ -102,6 +103,7 @@ export default function AllProductsGrid() {
     setCurrentPage,
     getPaginatedProducts
   } = useFilterStore();
+  const { t } = useTranslation();
 
   // Get paginated products
   const { products: filteredProducts, total, totalPages } = React.useMemo(() => getPaginatedProducts(), [getPaginatedProducts, currentPage, sortBy, activeFilters]);
@@ -139,24 +141,24 @@ export default function AllProductsGrid() {
             className="text-black font-poppins font-light text-base md:text-lg"
             variants={itemVariants}
           >
-            Showing <span className="font-medium text-primary">{startItem}-{endItem}</span> Of <span className="font-medium text-primary">{total}</span> Results
+            {t("Showing")} <span className="font-medium text-primary">{startItem}-{endItem}</span> {t("Of")} <span className="font-medium text-primary">{total}</span> {t("Results")}
           </motion.p>
  
           <motion.div
             className="flex items-center gap-3 w-full sm:w-auto"
             variants={itemVariants}
           >
-            <span className="text-black text-base md:text-lg font-light font-poppins shrink-0">Sort By:</span>
+            <span className="text-black text-base md:text-lg font-light font-poppins shrink-0">{t("Sort By")}:</span>
             <Select value={sortBy} onValueChange={handleSortChange}>
               <SelectTrigger className="w-full sm:w-[200px] text-base md:text-lg border border-[#DADADA] rounded-full px-5 py-2.5 bg-white! outline-none font-poppins shadow-sm">
-                <SelectValue placeholder="Default Sorting" />
+                <SelectValue placeholder={t("Default Sorting")} />
               </SelectTrigger>
               <SelectContent className="bg-white! rounded-2xl border-primary/20 shadow-xl">
-                <SelectItem value="default" className="font-poppins text-lg transition-colors hover:bg-primary/5 cursor-pointer">Default Sorting</SelectItem>
-                <SelectItem value="price-low-high" className="font-poppins text-lg transition-colors hover:bg-primary/5 cursor-pointer">Price: Low to High</SelectItem>
-                <SelectItem value="price-high-low" className="font-poppins text-lg transition-colors hover:bg-primary/5 cursor-pointer">Price: High to Low</SelectItem>
-                <SelectItem value="newest" className="font-poppins text-lg transition-colors hover:bg-primary/5 cursor-pointer">Newest First</SelectItem>
-                <SelectItem value="popular" className="font-poppins text-lg transition-colors hover:bg-primary/5 cursor-pointer">Most Popular</SelectItem>
+                <SelectItem value="default" className="font-poppins text-lg transition-colors hover:bg-primary/5 cursor-pointer">{t("Default Sorting")}</SelectItem>
+                <SelectItem value="price-low-high" className="font-poppins text-lg transition-colors hover:bg-primary/5 cursor-pointer">{t("Price: Low to High")}</SelectItem>
+                <SelectItem value="price-high-low" className="font-poppins text-lg transition-colors hover:bg-primary/5 cursor-pointer">{t("Price: High to Low")}</SelectItem>
+                <SelectItem value="newest" className="font-poppins text-lg transition-colors hover:bg-primary/5 cursor-pointer">{t("Newest First")}</SelectItem>
+                <SelectItem value="popular" className="font-poppins text-lg transition-colors hover:bg-primary/5 cursor-pointer">{t("Most Popular")}</SelectItem>
               </SelectContent>
             </Select>
           </motion.div>
@@ -182,7 +184,7 @@ export default function AllProductsGrid() {
                   className="text-primary font-medium text-base md:text-lg font-poppins mr-1"
                   variants={itemVariants}
                 >
-                  Filters Applied:
+                  {t("Filters Applied")}:
                 </motion.span>
  
                 {/* Active Filter Tags */}
@@ -199,7 +201,7 @@ export default function AllProductsGrid() {
                         whileHover="hover"
                         layout
                         >
-                        {filter.displayValue}
+                        {t(filter.displayValue)}
                         <motion.div
                             whileHover={{ rotate: 90, scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
@@ -220,7 +222,7 @@ export default function AllProductsGrid() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Reset All
+                {t("Reset All")}
               </motion.button>
             </motion.div>
           )}
@@ -278,7 +280,7 @@ export default function AllProductsGrid() {
               <span className="text-6xl mb-4 block">🔍</span>
             </motion.div>
             <p className="text-xl font-poppins text-gray-500">
-              No products match your filters
+              {t("No products match your filters")}
             </p>
             <motion.button
               onClick={clearAllFilters}
@@ -286,7 +288,7 @@ export default function AllProductsGrid() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Clear Filters
+              {t("Clear Filters")}
             </motion.button>
           </motion.div>
         )}

@@ -8,21 +8,21 @@ import { useMemo } from 'react';
 
 // Define logo variants for different states
 // const LOGO_VARIANTS = {
-//   default: '/images/horizontal logo 1.svg',
-//   dark: '/images/horizontal logo 2.svg',
-//   light: '/images/horizontal logo 4.svg',
+//   default: '/SHAHD-IMAGE/horizontal logo 1.webp',
+//   dark: '/SHAHD-IMAGE/horizontal logo 2.webp',
+//   light: '/SHAHD-IMAGE/horizontal logo 4.webp',
 // };
 
 const LOGO_VARIANTS = {
-  default: '/images/6.png',
-  dark: '/images/7.png',
-  light: '/images/7.png',
+  default: '/SHAHD-IMAGE/6 (1).webp',
+  dark: '/SHAHD-IMAGE/7.webp',
+  light: '/SHAHD-IMAGE/7.webp',
 };
 
 // Define which paths use which logo variant
 const PATH_LOGO_MAPPING = {
   light: ['products'],
-  dark: ['horse', 'service', 'shop', 'cart', 'coaching', 'hair-therapy', 'weight-management'],
+  dark: ['horse',"contact-us", 'service', 'shop', 'cart', 'coaching', 'hair-therapy', 'weight-management' , 'blogs',"favorite"],
 };
 
 export default function MainLogo({ isScrolled, isSidebarOpen }) {
@@ -62,14 +62,14 @@ export default function MainLogo({ isScrolled, isSidebarOpen }) {
 
   return (
     <Link href="/" className="block" aria-label="Go to homepage">
-      <motion.div {...logoAnimation} className='w-fit py-3'>
+      <motion.div {...logoAnimation} className='w-[230px]  py-3'>
         <Image
           src={logoSrc}
           width={260}
           height={64}
           alt="Shahd Awad Logo"
-          className={` ${isSidebarOpen ? 'w-[80%] h-auto md:w-[80%]' : 'w-[200px] sm:w-[260px]'} object-contain priority
- ps-3 lg:ps-0 md:h-[80px] aspect-auto md:aspect-4/5 lg:object-contain lg:h-[70px]`} // Combined and cleaned up responsive sizing
+          className={` ${isSidebarOpen ? 'w-[80%] h-auto md:w-[80%]' : 'w-[200px] sm:w-[230px]'} object-contain priority
+ ps-3 lg:ps-0 md:h-[80px] aspect-auto md:aspect-4/5  lg:object-contain max-[1409px]:w-[260px] max-[1409px]:h-[70px]`} // Combined and cleaned up responsive sizing
           priority
           quality={95}
         />

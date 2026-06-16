@@ -2,8 +2,11 @@
 import Image from 'next/image'
 import React from 'react'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next';
 
 export default function HairTherapyBanner() {
+  const { t , i18n } = useTranslation();
+  const dir  = i18n?.language == "ar" ? "right" :"left";
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -112,7 +115,7 @@ export default function HairTherapyBanner() {
         className="absolute inset-0"
       >
         <Image 
-          src="/images/hair-therapy/Frame 1000005536.png" 
+          src="/SHAHD-IMAGE/hair-therapy/Frame 1000005536.webp" 
           alt="Hair Therapy Banner" 
           width={1920} 
           height={1080} 
@@ -122,21 +125,20 @@ export default function HairTherapyBanner() {
       </motion.div>
 
       <motion.div 
-        className='relative  min-h-screen mt-2 lg:mt-30 mb-7 z-10 w-full main-container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center pt-24 lg:pt-0 pb-12 lg:pb-0 px-4 sm:px-8'
+        className='relative h-screen mt-2 lg:mt-30 mb-7 z-10 w-full main-container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center pt-24 lg:pt-0 pb-12 lg:pb-0 px-4 sm:px-8'
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
       >
-        <div className='flex flex-col gap-8 lg:gap-10 text-center lg:text-left'>
+        <div className={`flex flex-col gap-8 lg:gap-10 text-center lg:text-[${dir}]`}>
           <motion.div variants={itemVariants}>
             <motion.h1 
-              className="text-white text-4xl sm:text-6xl md:text-[80px] lg:text-[100px] font-normal leading-tight lg:leading-[1.1] uppercase tracking-tight"
+              className={`text-white text-3xl sm:text-5xl md:text-6xl text-[${dir}] font-normal leading-tight lg:leading-[1.1] uppercase tracking-tight`}
               variants={textVariants}
             >
-              Medical
-              <br /> Precision.
+              {t("Medical Precision")}
               <br />
-              <span className='text-secondary lg:text-white'>Natural Results.</span>
+              <span className='text-secondary lg:text-white'>{t("Natural Results")}</span>
             </motion.h1>
           </motion.div>
 
@@ -164,7 +166,7 @@ export default function HairTherapyBanner() {
               }}
             />
             <button className="relative bg-white min-w-[200px] sm:min-w-[252px] rounded-full px-8 py-4 text-primary font-medium text-lg hover:bg-gray-50 transition-colors uppercase tracking-wider">
-              Book your consultation
+              {t("Book your consultation")}
             </button>
           </motion.div>
         </div>
@@ -175,15 +177,15 @@ export default function HairTherapyBanner() {
         >
           {/* Card 1: Text */}
           <motion.div 
-            className="bg-white/10 backdrop-blur-md rounded-[24px] p-6 flex flex-col justify-center border border-white/20 order-1"
+            className="bg-white/10 backdrop-blur-md rounded-[24px] p-2 flex flex-col justify-center border border-white/20 order-1"
             variants={cardVariants}
             whileHover="hover"
           >
             <motion.p 
-              className='text-base md:text-lg text-center font-normal font-poppins leading-relaxed text-white tracking-wide'
+              className='text-base px-2 text-wrap! text-center font-normal font-poppins leading-relaxed text-white tracking-wide'
               variants={textVariants}
             >
-              Dr. Shahd's hair transplant program combines medical expertise, advanced techniques, and personalized planning.
+              {t("Hair Banner Desc 1")}
             </motion.p>
           </motion.div>
 
@@ -194,7 +196,7 @@ export default function HairTherapyBanner() {
             whileHover="hover"
           >
             <Image 
-              src="/images/hair-therapy/Frame 1000005828.png" 
+              src="/SHAHD-IMAGE/hair-therapy/Frame 1000005828.webp" 
               fill 
               alt="Hair Therapy" 
               className='object-cover'
@@ -208,7 +210,7 @@ export default function HairTherapyBanner() {
             whileHover="hover"
           >
             <Image 
-              src="/images/hair-therapy/Frame 1000005828-1.png" 
+              src="/SHAHD-IMAGE/hair-therapy/Frame 1000005828-1.webp" 
               fill 
               alt="Hair Therapy" 
               className='object-cover'
@@ -217,15 +219,15 @@ export default function HairTherapyBanner() {
 
           {/* Card 4: Text */}
           <motion.div 
-            className="bg-white/10 backdrop-blur-md rounded-[24px] p-6 flex flex-col justify-center border border-white/20 order-4"
+            className="bg-white/10 backdrop-blur-md text-wrap!  rounded-[24px] p-2 flex flex-col justify-center border border-white/20 order-4"
             variants={cardVariants}
             whileHover="hover"
           >
             <motion.p 
-              className='text-base md:text-lg text-center font-normal font-poppins leading-relaxed text-white tracking-wide'
+              className='text-base px-2 text-center font-normal font-poppins leading-relaxed text-white tracking-wide'
               variants={textVariants}
             >
-              Every procedure is designed around your scalp biology, hair pattern, and long-term goals.
+              {t("Hair Banner Desc 2")}
             </motion.p>
           </motion.div>
         </motion.div>

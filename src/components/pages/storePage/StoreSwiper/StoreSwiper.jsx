@@ -10,11 +10,12 @@ import 'swiper/css/pagination';
 // import required modules
 import { Pagination, Autoplay } from 'swiper/modules';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 const images = [
   {
     id: 1,
-    image: "/images/store/store-swiper-1.jpg",
+    image: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     title: "DAILY GLOW SET",
     desc: "Cleanser + Serum + Moisturizer + your everyday skin essentials.",
     btn_name: "SHOP BUNDLE",
@@ -22,7 +23,7 @@ const images = [
   },
   {
     id: 2,
-    image: "/images/store/store-swiper-1.jpg",
+    image: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     title: "DAILY GLOW SET",
     desc: "Cleanser + Serum + Moisturizer + your everyday skin essentials.",
     btn_name: "SHOP BUNDLE",
@@ -30,7 +31,7 @@ const images = [
   },
   {
     id: 3,
-    image: "/images/store/store-swiper-1.jpg",
+    image: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     title: "DAILY GLOW SET",
     desc: "Cleanser + Serum + Moisturizer + your everyday skin essentials.",
     btn_name: "SHOP BUNDLE",
@@ -38,7 +39,7 @@ const images = [
   },
   {
     id: 4,
-    image: "/images/store/store-swiper-1.jpg",
+    image: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     title: "DAILY GLOW SET",
     desc: "Cleanser + Serum + Moisturizer + your everyday skin essentials.",
     btn_name: "SHOP BUNDLE",
@@ -46,7 +47,7 @@ const images = [
   },
   {
     id: 5,
-    image: "/images/store/store-swiper-1.jpg",
+    image: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     title: "DAILY GLOW SET",
     desc: "Cleanser + Serum + Moisturizer + your everyday skin essentials.",
     btn_name: "SHOP BUNDLE",
@@ -128,6 +129,7 @@ const slideVariants = {
 export default function StoreSwiper() {
   const [swiperInstance, setSwiperInstance] = useState(null);
   const router = useRouter();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (swiperInstance) {
@@ -180,7 +182,7 @@ export default function StoreSwiper() {
               whileInView={"visible"}
               viewport={{ once: false }}
               whileHover="hover"
-              className='relative w-full aspect-video md:aspect-[2/1] lg:aspect-[2.68/1] overflow-hidden rounded-[32px] md:rounded-[52px] group cursor-pointer'
+              className='relative w-full h-[250px] overflow-hidden rounded-[32px] md:rounded-[52px] group cursor-pointer'
             >
               <motion.div
                 initial={{ scale: 1.1 }}
@@ -218,24 +220,24 @@ export default function StoreSwiper() {
               >
                 <motion.h2
                   variants={itemVariants}
-                  className='text-3xl md:text-5xl lg:text-[100px] text-primary font-normal leading-tight mb-2 md:mb-4'
+                  className='text-3xl md:text-5xl text-primary font-normal leading-tight mb-2 md:mb-4'
                 >
-                  {item?.title}
+                  {t(item?.title)}
                 </motion.h2>
 
                 <motion.p
                   variants={itemVariants}
-                  className='font-poppins text-white text-sm md:text-xl lg:text-2xl mb-6 md:mb-8 max-w-md md:max-w-none'
+                  className='font-poppins text-white text-sm md:text-xl mb-6 md:mb-8 max-w-md md:max-w-none'
                 >
-                  {item?.desc}
+                  {t("Store Swiper Desc")}
                 </motion.p>
 
                 <motion.button
                   onClick={() => router.push(item?.btn_link)}
                   variants={buttonVariants}
-                  className="bg-white text-primary font-medium text-sm md:text-2xl rounded-full h-[44px] md:h-[52px] w-[160px] md:w-[190px] shadow-xl hover:bg-opacity-90 transition-all duration-300"
+                  className="bg-white text-primary font-medium text-sm md:text-xl rounded-full h-[44px] md:h-[52px] w-[160px] md:w-[190px] shadow-xl hover:bg-opacity-90 transition-all duration-300"
                 >
-                  {item?.btn_name}
+                  {t(item?.btn_name)}
                 </motion.button>
               </motion.div>
 

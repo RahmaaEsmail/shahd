@@ -59,15 +59,21 @@ const sparkleVariants = {
   }
 };
 
+import useWishlistStore from '@/zustandStore/WishlistStore';
+import { useTranslation } from 'react-i18next';
+
 export default function AuthButtons({ isScrolled }) {
-  const [isLiked, setIsLiked] = useState(false);
+  const { t , i18n} = useTranslation();
+  const { wishlist, toggleWishlist, isInWishlist } = useWishlistStore();
   const [inCart, setInCart] = useState(false);
   const [showHeartTooltip, setShowHeartTooltip] = useState(false);
   const [showCartTooltip, setShowCartTooltip] = useState(false);
   const pathname = usePathname();
 
+  const isLiked = pathname.includes("/product") ? isInWishlist(1) : false; // Mocking ID 1 for product pages if needed, but ideally we link to favorites
+
   const handleLikeClick = () => {
-    setIsLiked(!isLiked);
+    // If we're not on a product page, this button usually shouldn't toggle something abstract
   };
 
   const handleCartClick = () => {
@@ -105,44 +111,43 @@ export default function AuthButtons({ isScrolled }) {
           onHoverStart={() => setShowHeartTooltip(true)}
           onHoverEnd={() => setShowHeartTooltip(false)}
         >
-          <motion.button
-            onClick={handleLikeClick}
-            variants={buttonVariants}
-            initial="initial"
-            whileHover="hover"
-            whileTap="tap"
-            animate={isLiked ? "liked" : "initial"}
-            className={`w-[50px] h-[50px] flex justify-center items-center rounded-full border transition-all duration-300 ${
-              isLiked 
-                ? "bg-primary border-primary shadow-lg shadow-primary/30" 
-                : getBorderColor()
-            }`}
-          >
-            <motion.div
-              variants={iconVariants}
+          <Link href="/favorite">
+            <motion.button
+              variants={buttonVariants}
+              initial="initial"
               whileHover="hover"
               whileTap="tap"
-              animate={isLiked ? "liked" : "initial"}
+              className={`w-[50px] h-[50px] flex justify-center items-center rounded-full border transition-all duration-300 ${
+                wishlist.length > 0 
+                  ? "bg-primary border-primary shadow-lg shadow-primary/30" 
+                  : getBorderColor()
+              }`}
             >
-              <Heart 
-                size={24} 
-                className={`transition-all duration-300 ${
-                  isLiked 
-                    ? "text-white fill-white scale-110" 
-                    : getIconColor()
-                }`} 
-              />
-            </motion.div>
-          </motion.button>
-                   
-          {/* Tooltip */}
-          {/* <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: showHeartTooltip ? 1 : 0, y: showHeartTooltip ? 0 : 10 }}
-            className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs py-1 px-2 rounded whitespace-nowrap"
-          >
-            {isLiked ? "Remove from wishlist" : "Add to wishlist"}
-          </motion.div> */}
+              <motion.div
+                variants={iconVariants}
+                whileHover="hover"
+                whileTap="tap"
+              >
+                <Heart 
+                  size={24} 
+                  className={`transition-all duration-300 ${
+                    wishlist.length > 0 
+                      ? "text-white fill-white scale-110" 
+                      : getIconColor()
+                  }`} 
+                />
+              </motion.div>
+              {wishlist.length > 0 && (
+                <motion.span
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="absolute -top-1 -right-1 bg-white text-primary text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border border-primary"
+                >
+                  {wishlist.length}
+                </motion.span>
+              )}
+            </motion.button>
+          </Link>
         </motion.div>
 
         {/* Cart Button */}
@@ -199,7 +204,7 @@ export default function AuthButtons({ isScrolled }) {
       </motion.div>
     ) : (
       <motion.div
-        className={`flex  xl:px-4 2xl:px-6 py-2 items-center px-1.5 rounded-full relative overflow-hidden transition-all duration-300 ${
+        className={`flex  px-2 py-2 items-center  rounded-full relative overflow-hidden transition-all duration-300 ${
           isScrolled 
             ? "bg-white shadow-lg border border-primary/20" 
             : "bg-light-primary/90 backdrop-blur-sm"
@@ -209,9 +214,9 @@ export default function AuthButtons({ isScrolled }) {
         transition={{ delay: 0.6, duration: 0.4 }}
         whileHover="hover"
       >
-        <Link href="/sign-up" className="relative z-10">
+        <Link href="/login" className="relative z-10">
           <motion.button
-            className={`px-3 whitespace-nowrap xl:px-4 2xl:px-5 py-3 text-[14px] xl:text-[16px] 2xl:text-[20px] font-normal uppercase tracking-wide rounded-full transition-all duration-300 ${
+            className={`whitespace-nowrap font-poppins  ${i18n?.language=="de" ?"text-[12px] py-3 px-1" :"text-[14px] py-3 px-3"} font-normal capitalize tracking-wide rounded-full transition-all duration-300 ${
               isScrolled 
                 ? "text-primary hover:bg-primary/10" 
                 : "text-gray-700 hover:bg-white/50"
@@ -222,13 +227,13 @@ export default function AuthButtons({ isScrolled }) {
             }}
             whileTap={{ scale: 0.98 }}
           >
-            Sign Up
+            {t("Sign In")}
           </motion.button>
         </Link>
 
         <Link href="/booking" className="relative z-10">
           <motion.button
-            className={`px-3 whitespace-nowrap xl:px-4 2xl:px-5 py-3 text-[14px] xl:text-[16px] 2xl:text-[20px] font-normal uppercase tracking-wide rounded-full shadow-sm transition-all duration-300 ${
+            className={`whitespace-nowrap font-poppins ${i18n?.language =="de" ? "text-[12px] py-3 px-1" : "p-3 text-[14px]"}  font-normal capitalize tracking-wide rounded-full shadow-sm transition-all duration-300 ${
               isScrolled 
                 ? "bg-primary text-white hover:bg-primary/90" 
                 : "bg-primary text-white"
@@ -247,7 +252,7 @@ export default function AuthButtons({ isScrolled }) {
               }
             }}
           >
-            Booking
+            {t("Booking")}
           </motion.button>
         </Link>
       </motion.div>

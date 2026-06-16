@@ -72,7 +72,7 @@ export default function StoreProductsGrid({ activeTab }) {
         whileInView="visible"
         viewport={{ once: false, amount: 0.3 }}
         exit="exit"
-        className="grid grid-cols-1 mt-10 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 w-full"
+        className="grid grid-cols-1 mt-4 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 w-full"
       >
         {filteredProducts?.slice(0, 4).map((product, index) => (
           <motion.div
@@ -90,4 +90,4 @@ export default function StoreProductsGrid({ activeTab }) {
       </motion.div>
     </AnimatePresence>
   )
-}
+}

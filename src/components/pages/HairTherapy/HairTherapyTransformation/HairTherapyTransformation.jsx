@@ -4,39 +4,41 @@ import Image from 'next/image'
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 const data = [
   {
     id: 1,
-    num_img:"/images/hair-therapy/Vector 1.svg",
-    img: "/images/hair-therapy/52ac59b8ad9b63f5128dcc7210d21f26f62a829a.jpg",
-    title: "Preparation & Diagnosis",
-    desc: "This stage builds the foundation for safe surgery and natural results through medical assessment and personalized planning.",
+    num_img:"/SHAHD-IMAGE/hair-therapy/Vector 1.webp",
+    img: "/SHAHD-IMAGE/hair-therapy/52ac59b8ad9b63f5128dcc7210d21f26f62a829a.webp",
+    titleKey: "Prep Diagnosis",
+    descKey: "Prep Diagnosis Desc",
   },
   {
     id: 2,
-     num_img:"/images/hair-therapy/Vector 2.svg",
-    img: "/images/hair-therapy/82af8657dbd0e09d955942f00f48d5f6bd97f262.jpg",
-    title: "Procedure Day",
-    desc: "Safe, sterile, comfortable medical environment with advanced technology. A controlled, professional medical setting.",
+     num_img:"/SHAHD-IMAGE/hair-therapy/Vector 2.webp",
+    img: "/SHAHD-IMAGE/hair-therapy/82af8657dbd0e09d955942f00f48d5f6bd97f262.webp",
+    titleKey: "Procedure Day",
+    descKey: "Procedure Day Desc",
   },
   {
     id: 3,
-    num_img:"/images/hair-therapy/Vector 3.svg",
-    img: "/images/hair-therapy/c135b14e42cfc72e26e5a6e67e3853153aa4843f.jpg",
-    title: "Healing & Regrowth",
-    desc: "Healing phase, shedding phase, and early regrowth phase. Recovery, care, and the start of natural hair regeneration.",
+    num_img:"/SHAHD-IMAGE/hair-therapy/Vector 3.webp",
+    img: "/SHAHD-IMAGE/hair-therapy/c135b14e42cfc72e26e5a6e67e3853153aa4843f.webp",
+    titleKey: "Healing Regrowth",
+    descKey: "Healing Regrowth Desc",
   },
   {
     id: 4,
-     num_img:"/images/hair-therapy/Vector.svg",
-    img: "/images/hair-therapy/d38a8c4a873f471b48fd69aab5e08ce16f7d927d.jpg",
-    title: "Transformation",
-    desc: "Long-term density improvement, natural hair growth, restored confidence. Final visible results, confidence, and natural beauty.",
+     num_img:"/SHAHD-IMAGE/hair-therapy/Vector (3).webp",
+    img: "/SHAHD-IMAGE/hair-therapy/d38a8c4a873f471b48fd69aab5e08ce16f7d927d.webp",
+    titleKey: "Transformation Title",
+    descKey: "Transformation Desc",
   },
 ]
 
 export default function HairTherapyTransformation() {
+  const { t } = useTranslation();
   const router = useRouter();
 
   // Animation variants
@@ -164,7 +166,7 @@ export default function HairTherapyTransformation() {
 
   return (
     <motion.div 
-      className="py-20 pb-40 min-h-screen"
+      className="py-20 mb-20 min-h-screen"
       initial="hidden"
       whileInView="visible"
       variants={containerVariants}
@@ -172,26 +174,26 @@ export default function HairTherapyTransformation() {
       <div className="main-container mx-auto px-4">
         {/* Header Section */}
         <motion.div 
-          className='flex flex-col gap-2 text-center mb-8'
+          className='flex flex-col gap-2 text-center mb-3'
           variants={headerVariants}
           initial="hidden"
           whileInView={"visible"}
         >
           <motion.p 
-            className='text-[18px] md:text-[27px] font-poppins font-bold text-secondary uppercase tracking-wider'
+            className='text-2xl font-poppins font-bold text-secondary uppercase tracking-wider'
             variants={contentVariants}
              initial="hidden"
           whileInView={"visible"}
           >
-            WHAT SHOULD YOU EXPECT?
+            {t("What Expect")}
           </motion.p>
           <motion.h2 
-            className='text-3xl md:text-[64px] font-normal text-primary uppercase leading-tight'
+            className='text-3xl font-normal text-primary uppercase leading-tight'
             variants={contentVariants}
              initial="hidden"
           whileInView={"visible"}
           >
-            YOUR TRANSFORMATION JOURNEY
+            {t("Transformation Journey")}
           </motion.h2>
         </motion.div>
 
@@ -210,7 +212,7 @@ export default function HairTherapyTransformation() {
           whileInView={"visible"}
             >
               <Image 
-                src="/images/hair-therapy/arrow.svg" 
+                src="/SHAHD-IMAGE/hair-therapy/arrow.webp" 
                 alt="image" 
                 width={147} 
                 height={26} 
@@ -244,7 +246,7 @@ export default function HairTherapyTransformation() {
               >
                 {/* Decorative element */}
                 <img
-                  src="/images/hair-therapy/Untitled design - 2026-03-25T114829.031.png"
+                  src="/SHAHD-IMAGE/hair-therapy/Untitled design - 2026-03-25T114829.031.webp"
                   className="absolute rounded-[40px]! w-50 h-50 top-0 border-none object-cover right-0 z-50"
                   // variants={decorativeVariants}
                   // animate="animate"
@@ -306,18 +308,18 @@ export default function HairTherapyTransformation() {
                   viewport={{ once: false, amount: 0.3 }}
                 >
                   <motion.h3 
-                    className='text-[24px] font-medium text-white font-poppins text-center leading-tight'
+                    className='text-[22px] font-medium text-white font-poppins text-center leading-tight'
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.2 }}
                   >
-                    {item.title}
+                    {t(item.titleKey)}
                   </motion.h3>
                   <motion.p 
-                    className='text-lg mt-3 font-normal text-[#414141] font-poppins leading-[24px] tracking-[-0.3px] text-center line-clamp-3'
+                    className='text-lg mt-2 font-normal text-[#414141] font-poppins leading-[24px] tracking-[-0.3px] text-center line-clamp-3'
                     whileHover={{ y: -2 }}
                     transition={{ duration: 0.2 }}
                   >
-                    {item.desc}
+                    {t(item.descKey)}
                   </motion.p>
                 </motion.div>
               </motion.div>

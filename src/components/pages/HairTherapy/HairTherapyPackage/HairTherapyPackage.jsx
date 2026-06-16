@@ -6,7 +6,7 @@
 //   {
 //     id: 1,
 //     name: "FRESH START",
-//     img: "/images/Services/151784f3bce476935cf0d7f6c8fd712a8563af4a.png",
+//     img: "/SHAHD-IMAGE/Services/151784f3bce476935cf0d7f6c8fd712a8563af4a.webp",
 //     price: "$150",
 //     description: "choose the plan that suits your beauty goals — from essential touch-ups to full transformations, every package is designed to help you look and feel your best with professional care and lasting results.",
 //     features: [
@@ -21,7 +21,7 @@
 //     id: 2,
 //     name: "SIGNATURE BEAUTY",
 //     price: "$320",
-//     img: "/images/Services/f591c51b224049891c5e2235b64968fcddec3d88.png",
+//     img: "/SHAHD-IMAGE/Services/f591c51b224049891c5e2235b64968fcddec3d88.webp",
 //     description: "our most loved plan smoothe, lift, and enhance your look with advanced treatments our most loved plan smooth, lift, and enhance your look with advanced treatments.",
 //     features: [
 //       "full facial analysis",
@@ -35,7 +35,7 @@
 //     id: 3,
 //     name: "TOTAL MAKEOVER",
 //     price: "$650",
-//     img: "/images/Services/c117c55556fe9873b9dca05f51eb50263ce8a7db.png",
+//     img: "/SHAHD-IMAGE/Services/c117c55556fe9873b9dca05f51eb50263ce8a7db.webp",
 //     description: "for the bold & confident experience a complete transformation with personalized treatments for the bold & confident experience a complete transformation with personalized treatments.",
 //     features: [
 //       "full face design consultation",
@@ -54,7 +54,7 @@
 //     <div
 //       className="min-h-screen relative"
 //       style={{
-//         background: "url('/images/hair-therapy/246a05720eac4ca783057d77600768c1dc06e211.jpg')",
+//         background: "url('/SHAHD-IMAGE/hair-therapy/246a05720eac4ca783057d77600768c1dc06e211.webp')",
 //         backgroundSize: "cover",
 //         backgroundPosition: "center",
 //         backgroundRepeat: "no-repeat",
@@ -83,64 +83,65 @@
 //   )
 // }
 
-
 "use client";
 import { useState } from 'react'
 import HairTherapyCard from './HairTherapyCard'
+import { useTranslation } from 'react-i18next';
 
 const plans = [
   {
     id: 1,
-    name: "FRESH START",
-    img: "/images/Services/151784f3bce476935cf0d7f6c8fd712a8563af4a.png",
+    nameKey: "FRESH START",
+    img: "/SHAHD-IMAGE/Services/151784f3bce476935cf0d7f6c8fd712a8563af4a.webp",
     price: "$150",
-    description: "choose the plan that suits your beauty goals — from essential touch-ups to full transformations, every package is designed to help you look and feel your best with professional care and lasting results.",
-    features: [
-      "skin check & consultation",
-      "hydra facial session",
-      "light botox or filler dose",
-      "aftercare advice"
+    descriptionKey: "FRESH START Desc",
+    featuresKeys: [
+      "skin check",
+      "hydra facial",
+      "light botox",
+      "aftercare"
     ],
     popular: false
   },
   {
     id: 2,
-    name: "SIGNATURE BEAUTY",
+    nameKey: "SIGNATURE BEAUTY",
     price: "$320",
-    img: "/images/Services/f591c51b224049891c5e2235b64968fcddec3d88.png",
-    description: "our most loved plan smoothe, lift, and enhance your look with advanced treatments our most loved plan smooth, lift, and enhance your look with advanced treatments.",
-    features: [
+    img: "/SHAHD-IMAGE/Services/f591c51b224049891c5e2235b64968fcddec3d88.webp",
+    descriptionKey: "SIGNATURE BEAUTY Desc",
+    featuresKeys: [
       "full facial analysis",
-      "botox for forehead & eyes",
-      "lip or cheek filler",
-      "skin glow facial"
+      "botox forehead",
+      "lip cheek filler",
+      "skin glow"
     ],
     popular: true
   },
   {
     id: 3,
-    name: "TOTAL MAKEOVER",
+    nameKey: "TOTAL MAKEOVER",
     price: "$650",
-    img: "/images/Services/c117c55556fe9873b9dca05f51eb50263ce8a7db.png",
-    description: "for the bold & confident experience a complete transformation with personalized treatments for the bold & confident experience a complete transformation with personalized treatments.",
-    features: [
-      "full face design consultation",
-      "botox & filler combination",
-      "prp or under-eye treatment",
-      "premium skincare sessions"
+    img: "/SHAHD-IMAGE/Services/c117c55556fe9873b9dca05f51eb50263ce8a7db.webp",
+    descriptionKey: "TOTAL MAKEOVER Desc",
+    featuresKeys: [
+      "full face design",
+      "botox filler combo",
+      "prp under eye",
+      "premium skincare"
     ],
     popular: false
   }
 ]
 
 export default function HairTherapyPackage() {
+  const { t } = useTranslation();
   const [hoveredCard, setHoveredCard] = useState(null);
 
   return (
     <div
       className="min-h-screen relative overflow-hidden"
       style={{
-        background: "url('/images/hair-therapy/246a05720eac4ca783057d77600768c1dc06e211.jpg')",
+        background: "url('/SHAHD-IMAGE/hair-therapy/246a05720eac4ca783057d77600768c1dc06e211.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -153,22 +154,22 @@ export default function HairTherapyPackage() {
       <div className="relative z-10 w-full py-12 md:py-20">
         
         {/* Header Section */}
-        <div className="flex flex-col justify-center items-center gap-2 mb-10 px-4">
-          <p className="text-secondary text-center font-bold text-xl md:text-[27px] font-poppins uppercase tracking-wider">
-            Offers
+        <div className="flex flex-col justify-center items-center gap-2 mb-4 px-4">
+          <p className="text-secondary text-center font-bold text-2xl  font-poppins uppercase tracking-wider">
+            {t("Offers Title")}
           </p>
-          <h1 className="text-primary text-center font-normal text-3xl md:text-[64px] uppercase leading-tight max-w-4xl">
-            Hair Transplant Packages
+          <h1 className="text-primary text-center font-normal text-3xl  uppercase leading-tight max-w-4xl">
+            {t("Hair Transplant Packages")}
           </h1>
         </div>
 
         {/* Responsive Grid Container */}
-        <div className="main-container mx-auto px-4 lg:px-8 mt-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 items-stretch">
+        <div className="main-container mx-auto px-4 lg:px-8 mt-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {plans.map((plan, index) => {
               const isHovered = hoveredCard === plan.id;
               const isPopular = plan.popular;
-              const shouldScale = isPopular || isHovered;
+              const shouldScale = isHovered;
 
               return (
                 <div 

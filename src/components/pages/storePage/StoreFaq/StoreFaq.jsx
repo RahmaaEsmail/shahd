@@ -3,32 +3,33 @@ import React, { useState } from 'react'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslation } from 'react-i18next';
 
 const faq = [
   {
     id: 1,
-    question: "Does PRP Hair Therapy really work?",
-    answer: "Most patients describe the sensation as light pinching."
+    questionKey: "FAQ Question 1",
+    answerKey: "FAQ Answer 1"
   },
   {
     id: 2,
-    question: "Does PRP Hair Therapy really work?",
-    answer: "Most patients describe the sensation as light pinching."
+    questionKey: "FAQ Question 1",
+    answerKey: "FAQ Answer 1"
   },
   {
     id: 3,
-    question: "Does PRP Hair Therapy really work?",
-    answer: "Most patients describe the sensation as light pinching."
+    questionKey: "FAQ Question 1",
+    answerKey: "FAQ Answer 1"
   },
   {
     id: 4,
-    question: "Does PRP Hair Therapy really work?",
-    answer: "Most patients describe the sensation as light pinching."
+    questionKey: "FAQ Question 1",
+    answerKey: "FAQ Answer 1"
   },
   {
     id: 5,
-    question: "Does PRP Hair Therapy really work?",
-    answer: "Most patients describe the sensation as light pinching."
+    questionKey: "FAQ Question 1",
+    answerKey: "FAQ Answer 1"
   },
 ]
 
@@ -155,6 +156,7 @@ const answerVariants = {
 }
 
 export default function StoreFaq({ is_main = true, data = faq }) {
+  const { t } = useTranslation();
   const [openId, setOpenId] = useState(null)
 
   const toggleFaq = (id) => {
@@ -167,7 +169,7 @@ export default function StoreFaq({ is_main = true, data = faq }) {
       whileInView="visible"
       viewport={{ once: false, amount: 0.1 }}
       variants={containerVariants}
-      className="min-h-screen py-20 relative overflow-hidden bg-white"
+      className="min-h-[75vh] py-6 relative overflow-hidden bg-white"
     >
       {/* Background Image with Opacity */}
       <motion.div
@@ -177,7 +179,7 @@ export default function StoreFaq({ is_main = true, data = faq }) {
         transition={{ duration: 1.2 }}
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('/images/store/9023dc7fa9386c76aa4fc87f422bca7d19bc0b91.png')",
+          backgroundImage: "url('/SHAHD-IMAGE/Store/9023dc7fa9386c76aa4fc87f422bca7d19bc0b91.webp')",
         }}
       />
 
@@ -186,12 +188,12 @@ export default function StoreFaq({ is_main = true, data = faq }) {
         {/* Header Section */}
         <motion.div
           variants={headerVariants}
-          className="flex flex-col items-center mb-12"
+          className="flex flex-col items-center mb-6"
         >
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="bg-[#F4E7E8] w-[120px] h-[57px] rounded-full flex justify-center items-center mb-6"
+            className="bg-[#F4E7E8] w-[120px] h-[57px] rounded-full flex justify-center items-center mb-2"
           >
             <motion.p
               initial={{ opacity: 0 }}
@@ -199,11 +201,11 @@ export default function StoreFaq({ is_main = true, data = faq }) {
               viewport={{ once: false }}
               transition={{ delay: 0.2 }}
               className={cn(
-                "text-[27px] font-poppins font-bold",
+                "text-2xl font-poppins font-bold",
                 is_main ? "text-[#D29B9F]" : "text-secondary"
               )}
             >
-              FAQ
+              {t("FAQ")}
             </motion.p>
           </motion.div>
 
@@ -212,9 +214,9 @@ export default function StoreFaq({ is_main = true, data = faq }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-primary text-3xl sm:text-4xl lg:text-[60px] text-center max-w-full lg:max-w-2xl leading-tight font-normal"
+            className="text-primary text-3xl  text-center max-w-full lg:max-w-2xl leading-tight font-normal"
           >
-            Everything You Need to Know About PRP Hair Therapy
+            {t("FAQ Section Title")}
           </motion.h3>
         </motion.div>
 
@@ -243,32 +245,32 @@ export default function StoreFaq({ is_main = true, data = faq }) {
                   <motion.div
                     variants={questionMarkVariants}
                     whileHover="hover"
-                    className="w-[50px] h-[50px] md:w-[68px] md:h-[68px] rounded-full bg-white shadow-md flex justify-center items-center shrink-0"
+                    className="w-[50px] h-[50px]  rounded-full bg-white shadow-md flex justify-center items-center shrink-0"
                   >
                     <motion.div
                       animate={{ rotate: openId === item.id ? 360 : 0 }}
                       transition={{ duration: 0.5 }}
                     >
                       <Image
-                        src={is_main ? "/images/store/ph_question-fill.png" : "/images/store/ph_question-fill-2.png"}
+                        src={is_main ? "/SHAHD-IMAGE/Store/ph_question-fill.webp" : "/SHAHD-IMAGE/Store/ph_question-fill-2.webp"}
                         alt="question mark"
                         width={48}
                         height={48}
-                        className="w-[39px] h-[39px]"
+                        className="w-[35px] h-[35px]"
                       />
                     </motion.div>
                   </motion.div>
 
                   <motion.div
                     whileHover={{ scale: 1.01 }}
-                    className="flex bg-white rounded-full px-8 py-4 shadow-sm border border-[#F0F0F0] justify-between items-center flex-1"
+                    className="flex bg-white rounded-full px-5 py-2 shadow-sm border border-[#F0F0F0] justify-between items-center flex-1"
                   >
                     <motion.p
                       animate={{ color: openId === item.id ? is_main ? "#D29B9F" : "#7189A2" : "#414141" }}
                       transition={{ duration: 0.3 }}
-                      className="text-[#414141] text-lg md:text-[24px] font-poppins font-medium"
+                      className="text-[#414141] text-lg  font-poppins font-medium"
                     >
-                      {item?.question}
+                      {item.questionKey ? t(item.questionKey) : item?.question}
                     </motion.p>
                   </motion.div>
                 </motion.div>
@@ -311,9 +313,9 @@ export default function StoreFaq({ is_main = true, data = faq }) {
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: 0.2 }}
-                          className="text-[#414141] text-lg sm:text-[24px] text-center sm:text-left font-poppins font-medium"
+                          className="text-[#414141] text-lg  text-center p-0! m-0! sm:text-left font-poppins font-medium"
                         >
-                          {item?.answer}
+                          {item.answerKey ? t(item.answerKey) : item?.answer}
                         </motion.p>
                       </motion.div>
 
@@ -334,7 +336,7 @@ export default function StoreFaq({ is_main = true, data = faq }) {
                           }}
                         >
                           <Image
-                            src={is_main ? "/images/store/tabler_message-circle-filled.png" : "/images/store/tabler_message-circle-filled-2.png"}
+                            src={is_main ? "/SHAHD-IMAGE/Store/tabler_message-circle-filled.webp" : "/SHAHD-IMAGE/Store/tabler_message-circle-filled-2.webp"}
                             alt="answer image"
                             width={39}
                             height={39}

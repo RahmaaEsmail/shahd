@@ -9,9 +9,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { motion, AnimatePresence } from 'framer-motion';
 import { Play, X } from 'lucide-react';
-
+import { useTranslation } from 'react-i18next';
+import { motion, AnimatePresence } from 'framer-motion';
 // Animation variants
 const containerVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -130,6 +130,7 @@ const dialogVariants = {
 };
 
 export default function ProductDetailsUsage() {
+  const { t } = useTranslation();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const playerRef = useRef(null);
@@ -160,7 +161,7 @@ export default function ProductDetailsUsage() {
 
   return (
     <motion.div 
-      className='main-container grid grid-cols-1 md:grid-cols-2 gap-4 py-8 md:py-12' 
+      className='main-container grid grid-cols-1 md:grid-cols-2 items-stretch gap-4 py-8' 
       dir="ltr"
       variants={containerVariants}
       initial="hidden"
@@ -171,11 +172,11 @@ export default function ProductDetailsUsage() {
       <motion.div 
         variants={cardVariants}
         whileHover="hover"
-        className='h-[400px] sm:h-[500px] md:h-[662px] relative rounded-[32px] overflow-hidden group cursor-pointer'
+        className='h-[400px]  relative rounded-[32px] overflow-hidden group cursor-pointer'
       >
         <Image 
           className='object-cover transition-transform duration-500 group-hover:scale-105' 
-          src="/images/product-details/service details.png" 
+          src="/SHAHD-IMAGE/product-details/service details.webp" 
           alt="Dr. Shahd Quote" 
           fill 
         />
@@ -189,16 +190,16 @@ export default function ProductDetailsUsage() {
           className='absolute z-20 top-6 left-6 md:top-10 md:left-10 text-white flex flex-col justify-between h-[85%] pr-6'
         >
           <motion.p 
-            className='text-xl md:text-2xl font-poppins font-light'
+            className='text-xl font-poppins font-light'
             whileHover={{ x: 10 }}
           >
-            From Dr.Shahd
+            {t('From Dr.Shahd')}
           </motion.p>
           <motion.h2 
-            className='text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-semibold font-poppins max-w-lg leading-tight'
+            className='text-3xl sm:text-4xl font-semibold font-poppins max-w-lg leading-tight'
             whileHover={{ scale: 1.02, x: 10 }}
           >
-            MY GO-TO DAILY CLEANSER
+            {t('MY GO-TO DAILY CLEANSER')}
           </motion.h2>
         </motion.div>
       </motion.div>
@@ -207,26 +208,26 @@ export default function ProductDetailsUsage() {
       <motion.div 
         variants={cardVariants}
         style={{
-          background: `linear-gradient(rgba(255, 255, 255, 0.27), rgba(255, 255, 255, 0.27)), url('/images/product-details/c17080f024061945d283c30609d7dfd468f6fbf8.jpg')`,
+          background: `linear-gradient(rgba(255, 255, 255, 0.27), rgba(255, 255, 255, 0.27)), url('/SHAHD-IMAGE/product-details/c17080f024061945d283c30609d7dfd468f6fbf8.webp')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
-        className='h-auto min-h-[500px] md:h-[662px] p-5 rounded-[32px] overflow-hidden flex flex-col gap-4'
+        className='h-[400px] p-5 rounded-[32px] overflow-hidden flex flex-col gap-4'
       >
         {/* Video Thumbnail Section with Shadcn Dialog */}
         <Dialog open={isDialogOpen} onOpenChange={handleDialogClose}>
           <DialogTrigger asChild>
             <motion.div 
-              className='relative h-[250px] md:h-1/2 rounded-[32px] overflow-hidden cursor-pointer group'
+              className='relative h-[200px] rounded-[32px] overflow-hidden cursor-pointer group'
               whileHover="hover"
               variants={cardVariants}
               onClick={handlePlayClick}
             >
               <Image 
-                src="/images/product-details/Rectangle 70.png" 
+                src="/SHAHD-IMAGE/product-details/Rectangle 70.webp" 
                 alt="Usage Video Thumbnail" 
                 fill 
-                className='object-cover'
+                className='object-cover h-[200px]!'
               />
               {/* Gradient Overlay */}
               <motion.div 
@@ -314,14 +315,14 @@ export default function ProductDetailsUsage() {
  
         {/* Instructions List Section */}
         <motion.div 
-          className='flex-1 p-4 md:p-8 rounded-[32px] flex flex-col'
+          className='flex-1 p-4 h-[350px] overflow-y-auto rounded-[32px] flex flex-col'
           variants={textVariants}
         >
           <motion.h6 
-            className='font-bold text-xl md:text-2xl font-poppins mb-4 text-[#4D3E3F]'
+            className='font-bold text-xl  font-poppins mb-2 text-[#4D3E3F]'
             whileHover={{ x: 10, color: "#DDB2B5" }}
           >
-            How To Use?
+            {t('How To Use?')}
           </motion.h6>
           
           <div className='overflow-y-auto overflow-x-hidden pr-2 ps-4 custom-scrollbar flex-1'>
@@ -345,9 +346,9 @@ export default function ProductDetailsUsage() {
                   custom={index}
                   variants={stepVariants}
                   whileHover="hover"
-                  className='font-medium text-lg md:text-xl lg:text-[24px] leading-relaxed font-poppins cursor-default text-gray-800'
+                  className='font-medium text-lg md:text-xl  leading-relaxed font-poppins cursor-default text-gray-800'
                 >
-                  {step}
+                  {t(step)}
                 </motion.li>
               ))}
             </motion.ol>

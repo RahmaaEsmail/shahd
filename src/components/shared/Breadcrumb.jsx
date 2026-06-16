@@ -6,7 +6,7 @@ import React from 'react';
 export const Breadcrumb = ({ items }) => {
   return (
     <div
-      className="flex gap-2 sm:gap-3 md:gap-6 items-center justify-start md:justify-center w-fit uppercase min-h-[44px] md:min-h-[76px] p-2 px-4 md:p-[20px_40px] rounded-full mx-auto border border-white/10 overflow-x-auto hide-scrollbar max-w-[calc(100vw-2rem)]"
+      className="flex gap-2 sm:gap-3 items-center justify-start md:justify-center w-fit uppercase min-h-[44px] md:min-h-[76px] p-2 px-4 md:p-[16px_30px] rounded-full mx-auto border border-white/10 overflow-x-auto hide-scrollbar max-w-[calc(100vw-2rem)]"
       style={{
         background: "rgba(255, 255, 255, 0.126)",
         backdropFilter: "blur(9.24px)",
@@ -23,19 +23,19 @@ export const Breadcrumb = ({ items }) => {
           {item.href ? (
             <Link
               href={item.href}
-              className="text-sm sm:text-base md:text-2xl text-[#E1A1A1] font-bold font-poppins border-b md:border-b-2 border-[#E1A1A1] hover:opacity-80 transition-opacity whitespace-nowrap"
+              className="text-sm sm:text-base text-[#E1A1A1] font-bold font-poppins border-b md:border-b-2 border-[#E1A1A1] hover:opacity-80 transition-opacity whitespace-nowrap"
             >
               {item.label}
             </Link>
           ) : (
-            <span className="text-sm sm:text-base md:text-2xl font-medium font-poppins text-white whitespace-nowrap">
+            <span className="text-sm sm:text-base font-medium font-poppins text-white whitespace-nowrap">
               {item.label}
             </span>
           )}
 
           {/* Render separator if not the last item */}
           {index < items.length - 1 && (
-            <span className="text-lg md:text-4xl font-light text-white">/</span>
+            <span className="text-lg md:text-2xl font-light text-white">/</span>
           )}
         </React.Fragment>
       ))}

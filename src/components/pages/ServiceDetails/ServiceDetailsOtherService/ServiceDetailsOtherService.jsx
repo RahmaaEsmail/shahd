@@ -4,6 +4,7 @@ import { Button } from '../../../ui/button'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay, EffectCoverflow } from 'swiper/modules'
 import { motion } from 'framer-motion'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { service_data } from '../../../../data/serviceData'
 import OurServiceCard from '../../Services/OurServices/OurServiceCard'
 
@@ -21,7 +22,7 @@ export default function ServiceDetailsOtherService() {
       viewport={{ once: false, amount: 0.2 }}
       className='min-h-screen py-12 relative overflow-hidden'
       style={{
-        background: "url(/images/service-details/d1ce99293bb9df3fa18d3d8ad6f3c5802adf222d.png)",
+        background: "url(/SHAHD-IMAGE/service-details/d1ce99293bb9df3fa18d3d8ad6f3c5802adf222d.webp)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -37,13 +38,25 @@ export default function ServiceDetailsOtherService() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className='flex flex-col md:flex-row justify-between items-center gap-6 mb-10'
         >
-          <motion.h3 
-            whileHover={{ scale: 1.05, x: 10 }}
-            transition={{ type: "spring", stiffness: 400 }}
-            className='font-bold text-secondary text-2xl sm:text-[27px] md:text-[32px] font-poppins drop-shadow-lg text-center md:text-left'
-          >
-            Other Services
-          </motion.h3>
+          <div className='flex items-center gap-4'>
+            <motion.h3 
+              whileHover={{ scale: 1.05, x: 10 }}
+              transition={{ type: "spring", stiffness: 400 }}
+              className='font-bold text-secondary text-2xl sm:text-[27px] md:text-[32px] font-poppins drop-shadow-lg text-center md:text-left'
+            >
+              Other Services
+            </motion.h3>
+
+            {/* Navigation Buttons */}
+            <div className='hidden md:flex gap-3'>
+              <button className="other-services-prev w-10 h-10 rounded-full border border-secondary/30 flex items-center justify-center text-secondary hover:bg-secondary hover:text-white transition-all duration-300">
+                <ChevronLeft size={20} />
+              </button>
+              <button className="other-services-next w-10 h-10 rounded-full border border-secondary/30 flex items-center justify-center text-secondary hover:bg-secondary hover:text-white transition-all duration-300">
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          </div>
           
           <motion.div
             onClick={() => router.push(`/services`)}
@@ -52,6 +65,7 @@ export default function ServiceDetailsOtherService() {
             className="w-full md:w-auto flex justify-center"
           >
             <Button 
+            onClick={() => router.push(`/services`)}
               variant='secondary' 
               className="rounded-full h-12 sm:h-[54px] px-6 sm:px-[32px] text-lg sm:text-xl md:text-2xl font-normal text-[#FEF6F6] shadow-lg hover:shadow-xl transition-all w-full sm:w-auto"
             >
@@ -69,6 +83,10 @@ export default function ServiceDetailsOtherService() {
         >
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
+            navigation={{
+              prevEl: '.other-services-prev',
+              nextEl: '.other-services-next',
+            }}
             spaceBetween={30}
             slidesPerView={1}
             centeredSlides={true}

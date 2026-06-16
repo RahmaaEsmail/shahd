@@ -9,8 +9,8 @@ import HomeTestimonial from "@/components/pages/Home/HomeTestimonial/HomeTestimo
 
 export default function page() {
   return (
-    <div className="mt-30">
-      <div className="main-container mx-auto px-4 lg:px-8">
+    <div className="mt-20">
+      <div className="main-container   mx-auto px-4 lg:px-8">
         <HomeBanner />
       </div>
       <BannerMarquee />

@@ -1,13 +1,15 @@
-/* Bebas Neue */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
 @font-face {
   font-family: "Bebas Neue";
   src: url("/fonts/Bebas/BebasNeue-Regular.ttf") format("truetype");
-  font-weight: normal;
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
-/* Poppins */
 @font-face {
   font-family: "Poppins";
   src: url("/fonts/Poppins/Poppins-Regular.ttf") format("truetype");
@@ -15,6 +17,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: "Poppins";
   src: url("/fonts/Poppins/Poppins-Italic.ttf") format("truetype");
@@ -22,6 +25,7 @@
   font-style: italic;
   font-display: swap;
 }
+
 @font-face {
   font-family: "Poppins";
   src: url("/fonts/Poppins/Poppins-Medium.ttf") format("truetype");
@@ -29,6 +33,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: "Poppins";
   src: url("/fonts/Poppins/Poppins-SemiBold.ttf") format("truetype");
@@ -36,6 +41,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: "Poppins";
   src: url("/fonts/Poppins/Poppins-Bold.ttf") format("truetype");
@@ -43,6 +49,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: "Poppins";
   src: url("/fonts/Poppins/Poppins-Black.ttf") format("truetype");
@@ -51,39 +58,38 @@
   font-display: swap;
 }
 
-/* Noto Serif */
 @font-face {
   font-family: "Noto Serif";
-  src: url("/fonts/Noto_Serif/NotoSerif-VariableFont_wdth,wght.ttf") format("truetype-variations");
+  src: url("/fonts/Noto_Serif/NotoSerif-VariableFont_wdth,wght.ttf") format("truetype");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: "Noto Serif";
-  src: url("/fonts/Noto_Serif/NotoSerif-Italic-VariableFont_wdth,wght.ttf") format("truetype-variations");
+  src: url("/fonts/Noto_Serif/NotoSerif-Italic-VariableFont_wdth,wght.ttf") format("truetype");
   font-weight: 100 900;
   font-style: italic;
   font-display: swap;
 }
 
-/* Inter */
 @font-face {
   font-family: "Inter";
-  src: url("/fonts/Inter/Inter-VariableFont_opsz,wght.ttf") format("truetype-variations");
+  src: url("/fonts/Inter/Inter-VariableFont_opsz,wght.ttf") format("truetype");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: "Inter";
-  src: url("/fonts/Inter/Inter-Italic-VariableFont_opsz,wght.ttf") format("truetype-variations");
+  src: url("/fonts/Inter/Inter-Italic-VariableFont_opsz,wght.ttf") format("truetype");
   font-weight: 100 900;
   font-style: italic;
   font-display: swap;
 }
 
-/* SF Pro Display */
 @font-face {
   font-family: "SF Pro Display";
   src: url("/fonts/SFPRODISPLAYREGULAR.OTF") format("opentype");
@@ -91,13 +97,7 @@
   font-style: normal;
   font-display: swap;
 }
-@font-face {
-  font-family: "SF Pro Display";
-  src: url("/fonts/SFPRODISPLAYBOLD.OTF") format("opentype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
+
 @font-face {
   font-family: "SF Pro Display";
   src: url("/fonts/SFPRODISPLAYMEDIUM.OTF") format("opentype");
@@ -106,85 +106,161 @@
   font-display: swap;
 }
 
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
+@font-face {
+  font-family: "SF Pro Display";
+  src: url("/fonts/SFPRODISPLAYBOLD.OTF") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Changa";
+  src: url("/fonts/changa/Changa-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Changa";
+  src: url("/fonts/changa/Changa-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Changa";
+  src: url("/fonts/changa/Changa-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Changa";
+  src: url("/fonts/changa/Changa-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Changa";
+  src: url("/fonts/changa/Changa-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Changa";
+  src: url("/fonts/changa/Changa-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cairo";
+  src: url("/fonts/cairo/Cairo-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cairo";
+  src: url("/fonts/cairo/Cairo-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cairo";
+  src: url("/fonts/cairo/Cairo-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cairo";
+  src: url("/fonts/cairo/Cairo-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cairo";
+  src: url("/fonts/cairo/Cairo-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cairo";
+  src: url("/fonts/cairo/Cairo-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --primary-color: #ddb2b5;
   --light-primary-color: #fff9f7;
   --text-color: #414141;
-
   --dark-primary: #af7f73;
-
   --radius: 0.625rem;
 
   --background: oklch(1 0 0);
-
   --foreground: oklch(0.145 0 0);
-
   --card: oklch(1 0 0);
-
   --card-foreground: oklch(0.145 0 0);
-
   --popover: oklch(1 0 0);
-
   --popover-foreground: oklch(0.145 0 0);
-
   --primary: #ddb2b5;
-
   --primary-foreground: oklch(0.985 0 0);
-
   --secondary: #7189a2;
-
   --secondary-foreground: oklch(0.205 0 0);
-
   --muted: oklch(0.97 0 0);
-
   --muted-foreground: oklch(0.556 0 0);
-
   --accent: oklch(0.97 0 0);
-
   --accent-foreground: oklch(0.205 0 0);
-
   --destructive: oklch(0.577 0.245 27.325);
-
   --border: oklch(0.922 0 0);
-
   --input: oklch(0.922 0 0);
-
   --ring: oklch(0.708 0 0);
-
   --chart-1: oklch(0.646 0.222 41.116);
-
   --chart-2: oklch(0.6 0.118 184.704);
-
   --chart-3: oklch(0.398 0.07 227.392);
-
   --chart-4: oklch(0.828 0.189 84.429);
-
   --chart-5: oklch(0.769 0.188 70.08);
-
   --sidebar: oklch(0.985 0 0);
-
   --sidebar-foreground: oklch(0.145 0 0);
-
   --sidebar-primary: oklch(0.205 0 0);
-
   --sidebar-primary-foreground: oklch(0.985 0 0);
-
   --sidebar-accent: oklch(0.97 0 0);
-
   --sidebar-accent-foreground: oklch(0.205 0 0);
-
   --sidebar-border: oklch(0.922 0 0);
-
   --sidebar-ring: oklch(0.708 0 0);
 
   --main-font-family: "Bebas Neue", sans-serif;
   --poppins-font-family: "Poppins", sans-serif;
   --noto-font-family: "Noto Serif", serif;
   --inter-font-family: "Inter", sans-serif;
+  --sfpro-font-family: "SF Pro Display", sans-serif;
+}
+
+html[lang="ar"],
+html[dir="rtl"] {
+  --main-font-family: "Changa", sans-serif;
+  --poppins-font-family: "Cairo", sans-serif;
+  --inter-font-family: "Cairo", sans-serif;
 }
 
 @theme {
@@ -197,52 +273,54 @@
   --font-poppins: var(--poppins-font-family);
   --font-noto: var(--noto-font-family);
   --font-inter: var(--inter-font-family);
+  --font-sfpro: var(--sfpro-font-family);
 
-  /* Custom xs breakpoint for 360px devices */
   --breakpoint-xs: 400px;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-foreground: var(--foreground);
   --color-text: var(--text-color);
   --color-dark-primary: var(--dark-primary);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary-color);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 
   --font-main: var(--main-font-family);
   --font-poppins: var(--poppins-font-family);
   --font-noto: var(--noto-font-family);
+  --font-inter: var(--inter-font-family);
+  --font-sfpro: var(--sfpro-font-family);
+  --font-sans: var(--poppins-font-family);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary-color);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --color-foreground: var(--foreground);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -256,26 +334,47 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background font-main!;
+    @apply bg-background text-foreground;
+    font-family: var(--main-font-family);
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font-family: inherit;
   }
 }
 
-/* Add to your global.css or styles/globals.css */
 .hide-scrollbar {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .hide-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
 }
 
 .heading-font {
-  font-family: var(--font-sfpro);
+  font-family: var(--sfpro-font-family);
 }
 
-/* Hair Therapy Swiper Styles */
+.hair-swiper {
+  padding-top: 40px !important;
+  padding-bottom: 40px !important;
+  overflow: visible !important;
+}
+
+.hair-swiper .swiper-wrapper {
+  align-items: center;
+}
+
 .hair-swiper .swiper-slide {
   width: 300px !important;
   height: 446px !important;
@@ -297,20 +396,6 @@
   z-index: 50;
 }
 
-.hair-swiper {
-  padding-top: 40px !important;
-  padding-bottom: 40px !important;
-  overflow: visible !important;
-}
-
-.hair-swiper .swiper-wrapper {
-  align-items: center; /* Ensures slides are vertically centered in the wrapper */
-}
-
-/* ============================================================
-   Custom Container - Slightly wider than Tailwind's container
-   Usage: className="main-container"
-   ============================================================ */
 .main-container {
   width: 100%;
   margin-left: auto;
@@ -352,5 +437,3 @@
     max-width: 1650px;
   }
 }
-
-

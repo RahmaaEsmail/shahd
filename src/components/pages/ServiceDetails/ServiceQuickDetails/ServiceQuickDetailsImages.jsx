@@ -24,7 +24,7 @@ export default function ServiceQuickDetailsImages({ activeImg, setActiveImg, ima
         transition={{
           duration: 0.4
         }}
-        className="relative w-full h-[552px]  rounded-[40px] overflow-hidden shadow-sm"
+        className="relative w-full h-[400px]  rounded-[40px] overflow-hidden shadow-sm"
       >
         <AnimatePresence mode="wait">
           <motion.div
@@ -54,7 +54,7 @@ export default function ServiceQuickDetailsImages({ activeImg, setActiveImg, ima
               key={item.id}
               onClick={() => setActiveImg(item.img)}
               // The magic line: calc(100% / 3) minus gap adjustments
-              className={`relative shrink-0 w-[calc((100%-32px)/3)] aspect-square rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 snap-start
+              className={`relative shrink-0 w-[calc((100%-64px)/3)] aspect-square rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 snap-start
                     ${activeImg === item.img
                   ? "shadow-[0px_0px_20px_2px_#DDB2B5] scale-95 border-2 border-[#DDB2B5]"
                   : "shadow-none"

@@ -2,22 +2,23 @@
 import Image from 'next/image';
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const data = [
   {
     id: 1,
-    title: "Personalized Nutrition Plans",
-    desc: "Every body is different. Your nutrition plan is designed based on your lifestyle, goals, medical history, and treatment program — ensuring results you can actually maintain."
+    titleKey: "Personalized Nutrition Plans",
+    descKey: "Personalized Nutrition Plans Desc"
   },
   {
     id: 2,
-    title: "Metabolism & Hormonal Balance",
-    desc: "We focus on foods that support metabolism, regulate blood sugar, and balance hormones — key factors in sustainable weight management."
+    titleKey: "Metabolism & Hormonal Balance",
+    descKey: "Metabolism & Hormonal Balance Desc"
   },
   {
     id: 3,
-    title: "Healthy relationship with food",
-    desc: "Our approach encourages mindful eating, portion awareness, and flexibility — helping you enjoy food without guilt while staying on track."
+    titleKey: "Healthy relationship with food",
+    descKey: "Healthy relationship with food Desc"
   }
 ];
 
@@ -94,12 +95,14 @@ const pulseAnimation = {
 };
 
 export default function WeightManagementNutritionFood() {
+  const { t } = useTranslation();
   return (
     <motion.div 
+      dir="ltr"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className='min-h-fit py-16 md:py-24 lg:min-h-screen lg:py-0 relative w-full flex items-center overflow-hidden'
+      className='min-h-fit py-16  lg:min-h-[80vh] lg:py-0 relative w-full flex items-center overflow-hidden'
     >
       {/* Background Image Container with Parallax Effect */}
       <motion.div 
@@ -108,7 +111,7 @@ export default function WeightManagementNutritionFood() {
         transition={{ duration: 1.5 }}
         className='absolute inset-0 z-0'
         style={{
-          backgroundImage: "url('/images/d1ce99293bb9df3fa18d3d8ad6f3c5802adf222d.png')",
+          backgroundImage: "url('/SHAHD-IMAGE/d1ce99293bb9df3fa18d3d8ad6f3c5802adf222d.webp')",
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
@@ -122,32 +125,32 @@ export default function WeightManagementNutritionFood() {
         className='absolute inset-0 bg-white/70 z-0'
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 z-10 items-center main-container mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 z-10 items-center main-container mx-auto">
         {/* Left Column: Text Content */}
         <motion.div 
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: false, amount: 0.2 }}
-          className='flex flex-col gap-6 order-2 lg:order-1'
+          className='flex flex-col gap-1 order-2 lg:order-1'
         >
           <motion.h4 
             variants={fadeInUp}
-            className='font-bold font-poppins text-[#95BCAA] text-sm md:text-base lg:text-[20px] uppercase tracking-widest'
+            className='font-bold font-poppins text-[#95BCAA] text-2xl uppercase tracking-widest'
           >
-            Nutrition & Food
+            {t("Nutrition & Food")}
           </motion.h4>
           
           <motion.h2 
             variants={fadeInLeft}
-            className='font-normal text-primary max-w-2xl text-3xl sm:text-4xl md:text-5xl lg:text-[56px] xl:text-[64px] leading-[1.1] lg:leading-tight'
+            className='font-normal text-primary max-w-2xl text-3xl   leading-[1.1] lg:leading-tight'
           >
-            Because real results start from within
+            {t("Because real results start from within")}
           </motion.h2>
           
           <motion.div 
             variants={staggerContainer}
-            className="flex flex-col gap-6 md:gap-8 mt-4"
+            className="flex flex-col gap-3 mt-4"
           >
             {data?.map((item, index) => (
               <motion.div 
@@ -168,27 +171,27 @@ export default function WeightManagementNutritionFood() {
                   }}
                 >
                   <Image 
-                    src={"/images/Weight-management/Frame 1000005848.svg"} 
+                    src={"/SHAHD-IMAGE/Weight-management/Frame 1000005848.webp"} 
                     alt='icon' 
                     height={32} 
                     width={32} 
-                    className="w-7 h-7 md:w-9 md:h-9"
+                    className="w-7 h-7 md:w-8 md:h-8"
                   />
                 </motion.div>
                 <div className="flex-1">
                   <motion.h4 
-                    className='text-lg md:text-xl lg:text-[24px] font-medium text-[#414141] mb-1 md:mb-2'
+                    className='text-lg md:text-xl  font-medium text-[#414141] mb-1 md:mb-2'
                     whileHover={{ color: "#95BCAA" }}
                   >
-                    {item.title}
+                    {t(item.titleKey)}
                   </motion.h4>
                   <motion.p 
-                    className='text-sm md:text-base font-light font-poppins text-[#414141]/90 leading-relaxed'
+                    className='text-sm  font-light font-poppins text-[#414141]/90 leading-relaxed'
                     initial={{ opacity: 0.8 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ delay: 0.3 + index * 0.1 }}
                   >
-                    {item.desc}
+                    {t(item.descKey)}
                   </motion.p>
                 </div>
               </motion.div>
@@ -207,7 +210,7 @@ export default function WeightManagementNutritionFood() {
           className='w-full relative order-1 lg:order-2 aspect-[4/3] sm:aspect-video lg:aspect-square xl:aspect-auto lg:h-[600px] xl:h-[700px] rounded-3xl overflow-hidden shadow-xl lg:shadow-none'
         >
           <Image 
-            src="/images/Weight-management/Gradient Mask Group.svg"
+            src="/SHAHD-IMAGE/Weight-management/Gradient Mask Group.webp"
             alt='weight management'
             fill
             className='object-cover transition-transform duration-700 hover:scale-105'

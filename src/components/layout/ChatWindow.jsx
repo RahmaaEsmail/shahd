@@ -65,13 +65,13 @@ export default function ChatWindow({ isOpen, onClose }) {
           {/* Header */}
           <div className="bg-primary p-4 flex items-center justify-between text-white shadow-lg">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 p-1">
+              <div className="w-10 h-10  backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 overflow-hidden">
                 <Image 
-                  src="/images/7.png" 
+                  src="/SHAHD-IMAGE/Book/dr shahd.jpg.jpeg" 
                   alt="Logo" 
-                  width={32} 
-                  height={32} 
-                  className="object-contain"
+                  width={40} 
+                  height={40} 
+                  className="object-contain rounded-full"
                 />
               </div>
               <div>

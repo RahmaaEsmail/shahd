@@ -21,6 +21,7 @@ import { Slider } from "@/components/ui/slider";
 import dynamic from "next/dynamic";
 import useFilterStore from "@/zustandStore/FilterStore";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
  
 const Sticky = dynamic(() => import('react-stickynode'), { ssr: false });
 
@@ -117,7 +118,7 @@ const DragCloseDrawer = ({ open, setOpen, children }) => {
             <div className="pt-10 px-6 pb-2 border-b border-gray-50 flex items-center justify-between">
                 <h2 className="text-2xl font-normal font-bebas uppercase tracking-wider flex items-center gap-3 text-primary">
                     <Filter size={24} />
-                    Filter Options
+                    {t("Filter Options")}
                 </h2>
                 <button 
                   onClick={handleClose}
@@ -138,7 +139,7 @@ const DragCloseDrawer = ({ open, setOpen, children }) => {
                     className="flex-1 rounded-full py-7 text-xl font-bebas tracking-widest shadow-lg shadow-primary/20 bg-primary text-white hover:bg-primary/90"
                     onClick={handleClose}
                 >
-                    Apply Filters
+                    {t("Apply Filters")}
                 </Button>
             </div>
           </motion.div>
@@ -204,6 +205,7 @@ const FilterContent = () => {
     toggleAvailability,
     setPriceRange
   } = useFilterStore();
+  const { t } = useTranslation();
 
   const handlePriceChange = (value) => {
     setPriceRange(value);
@@ -229,7 +231,7 @@ const FilterContent = () => {
             className="border! border-[#DADADA] p-[16px_24px] rounded-[16px] my-2 lg:my-4! last:mb-0"
           >
             <AccordionTrigger className="text-lg lg:text-xl font-normal font-poppins no-underline hover:no-underline py-0">
-              {section.trigger}
+              {t(section.trigger)}
             </AccordionTrigger>
             <AnimatePresence initial={false}>
               <AccordionContent className="p-0 overflow-hidden">
@@ -255,7 +257,7 @@ const FilterContent = () => {
                         className="w-5 h-5 border-[#DADADA] bg-transparent! data-[state=checked]:bg-primary! data-[state=checked]:border-primary!"
                       />
                       <span className="text-base lg:text-[18px] font-poppins font-light text-black">
-                        {option}
+                        {t(option)}
                       </span>
                     </motion.label>
                   ))}
@@ -272,7 +274,7 @@ const FilterContent = () => {
         variants={itemVariants}
       >
         <p className="text-lg lg:text-xl font-normal font-poppins no-underline hover:no-underline py-0">
-          By Price
+          {t("By Price")}
         </p>
         <motion.div
           className="flex mt-3 flex-col gap-2 ps-4"
@@ -299,7 +301,7 @@ const FilterContent = () => {
         className="border-t border-[#DADADA] mt-6 pt-6 flex flex-col gap-4"
         variants={itemVariants}
       >
-        <h5 className="text-lg lg:text-xl font-normal font-poppins text-black">By Review</h5>
+        <h5 className="text-lg lg:text-xl font-normal font-poppins text-black">{t("By Review")}</h5>
         <motion.div
           className="flex flex-col gap-3 ps-2"
           variants={containerVariants}
@@ -330,7 +332,7 @@ const FilterContent = () => {
                 <motion.span
                   className="text-sm lg:text-base font-poppins text-[#6A6A6A] ml-1"
                 >
-                  {stars} Stars
+                  {stars} {t("Stars")}
                 </motion.span>
               </motion.div>
             </motion.label>
@@ -349,7 +351,7 @@ const FilterContent = () => {
           variants={itemVariants}
           custom={groupIndex + 3}
         >
-          <h5 className="text-lg lg:text-xl font-normal font-poppins text-black">{group.title}</h5>
+          <h5 className="text-lg lg:text-xl font-normal font-poppins text-black">{t(group.title)}</h5>
           <motion.div
             className="flex flex-col gap-3 ps-2"
             variants={containerVariants}
@@ -370,7 +372,7 @@ const FilterContent = () => {
                   className="text-base lg:text-[18px] font-poppins font-light text-black"
                   whileHover={{ color: "#0066FF" }}
                 >
-                  {opt}
+                  {t(opt)}
                 </motion.span>
               </motion.label>
             ))}
@@ -383,6 +385,7 @@ const FilterContent = () => {
 
 export default function AllProductFilters() {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <>
@@ -395,9 +398,9 @@ export default function AllProductFilters() {
         >
           <div className="flex items-center gap-2">
             <Filter size={20} />
-            <span>Filter Products</span>
+            <span>{t("Filter Products")}</span>
           </div>
-          <span className="text-sm font-light opacity-70">Tap to Sort & Filter</span>
+          <span className="text-sm font-light opacity-70">{t("Tap to Sort & Filter")}</span>
         </Button>
 
         <DragCloseDrawer open={isOpen} setOpen={setIsOpen}>
@@ -416,7 +419,7 @@ export default function AllProductFilters() {
           className="text-[22px] font-medium font-poppins pb-4 border-b border-[#DADADA] mb-2"
           variants={itemVariants}
         >
-          Filter Options
+          {t("Filter Options")}
         </motion.p>
         <FilterContent />
       </motion.div>

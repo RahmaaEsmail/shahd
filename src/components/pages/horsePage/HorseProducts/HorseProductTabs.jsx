@@ -3,6 +3,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { horse_product_tabs } from '@/data/horseData';
+import { useTranslation } from 'react-i18next';
 
 // Tab animation variants
 const tabContainerVariants = {
@@ -55,6 +56,7 @@ const activeIndicatorVariants = {
 };
 
 export default function HorseProductsTabs({ setActiveTab, activeTab }) {
+  const { t } = useTranslation();
   return (
     <motion.div
       variants={tabContainerVariants}
@@ -73,7 +75,7 @@ export default function HorseProductsTabs({ setActiveTab, activeTab }) {
           whileHover="hover"
           whileTap="tap"
           className={cn(
-            'relative px-4 min-w-[94px] h-[38px] rounded-full border border-dark-primary text-base font-poppins uppercase overflow-hidden',
+            'relative px-2 min-w-[94px] h-[34px] rounded-full border border-dark-primary text-base font-poppins uppercase overflow-hidden',
             item?.id === activeTab
               ? "font-bold bg-dark-primary text-white"
               : "font-medium text-dark-primary hover:bg-dark-primary bg-white hover:text-white"
@@ -101,7 +103,7 @@ export default function HorseProductsTabs({ setActiveTab, activeTab }) {
             />
           )} */}
 
-          <span className="relative z-10">{item?.name}</span>
+          <span className="relative z-10">{t(item?.name)}</span>
         </motion.button>
       ))}
     </motion.div>

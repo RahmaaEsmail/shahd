@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { CircleDollarSign, Truck } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const list = [
   { id: 1, name: "Discover your true purpose" },
@@ -75,9 +76,10 @@ const listItemVariants = {
 }
 
 export default function BuyBookContent() {
+  const { t , i18n } = useTranslation();
   return (
     <motion.div
-      className="flex flex-col gap-6 lg:gap-8"
+      className={`flex flex-col gap-3 ${i18n?.language == "ar" ?"text-right" : "text-left"}`}
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
@@ -86,27 +88,27 @@ export default function BuyBookContent() {
       {/* Title */}
       <motion.h1
         variants={titleVariants}
-        className="text-primary text-4xl md:text-6xl xl:text-[90px] font-normal leading-tight xl:leading-[100%] text-center lg:text-left"
+        className={`text-primary text-4xl  ${i18n?.language == "ar" ?"lg:text-right" : "lg:text-left"} font-normal leading-tight xl:leading-[100%] text-center`}
       >
-        Glow in All Areas of Your Life
+        {t("Glow in All Areas of Your Life")}
       </motion.h1>
 
-      <div className="flex flex-col gap-4 text-center lg:text-left">
-        <motion.p variants={itemVariants} className='text-[#414141] font-bold font-poppins text-2xl lg:text-3xl'>
-          Price: $100
+      <div className={`flex flex-col gap-4 text-center lg:text-${i18n?.language == "ar" ? "right"  :"left"}`}>
+        <motion.p variants={itemVariants} className='text-[#414141] font-bold font-poppins text-2xl'>
+          {t("Price")}: $100
         </motion.p>
-        <motion.p variants={itemVariants} className='text-[#414141] font-normal font-poppins text-lg lg:text-2xl'>
-          Language: English
+        <motion.p variants={itemVariants} className='text-[#414141] font-normal font-poppins text-lg'>
+          {t("Language")}: {t("English")}
         </motion.p>
       </div>
 
       {/* Language Buttons */}
-      <div className="flex flex-wrap justify-center lg:justify-start gap-4 my-2">
+      <div className={`flex flex-wrap justify-center lg:${i18n?.language == "ar" ? "justify-end" : "justify-start"} gap-4 my-2 `}>
         {['English', 'العربية'].map((lang, i) => (
           <motion.div key={lang} custom={i} variants={languageButtonVariants} whileHover="hover">
             <Button
               variant={i === 0 ? 'default' : 'outline'}
-              className={`rounded-full px-8 lg:px-10 h-12 lg:h-[52px] font-normal font-poppins text-lg lg:text-2xl ${i === 1 ? 'border-primary text-primary hover:bg-primary/5' : ''}`}
+              className={`rounded-full px-8 lg:px-10 h-12  font-normal font-poppins text-lg ${i === 1 ? 'border-primary! text-primary bg-white!' : ''}`}
             >
               {lang}
             </Button>
@@ -117,21 +119,21 @@ export default function BuyBookContent() {
       {/* Payment Cards */}
       <div className="flex flex-col gap-4">
         {[
-          { text: "Split your purchase into monthly payments", sub: "Learn more", img: "/images/Buy-book/Group 32.png" },
-          { text: "Or split in 4 payments of $19.90 - No late fees", sub: "Learn more", img: "/images/Buy-book/lavendar-logo.703d190a 1.png" }
+          { text: t("Split your purchase into monthly payments"), sub: t("Learn more"), img: "/SHAHD-IMAGE/Buy-book/Group 32.webp" },
+          { text: t("Or split in 4 payments of $19.90 - No late fees"), sub: t("Learn more"), img: "/SHAHD-IMAGE/Buy-book/lavendar-logo.703d190a 1.webp" }
         ].map((card, i) => (
           <motion.div
             key={i}
             custom={i}
             variants={cardVariants}
             whileHover="hover"
-            className='bg-[#DDB2B524] backdrop-blur-2xl rounded-2xl p-5 lg:p-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left'
+            className='bg-[#DDB2B524] backdrop-blur-2xl rounded-2xl p-3 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left'
           >
             <div className="flex flex-col gap-1">
-              <p className='text-[#414141] text-sm lg:text-base font-normal font-poppins leading-snug'>
-                {card.text}
+              <p className={`text-[#414141] text-sm  font-normal font-poppins leading-snug ${i18n?.language == "ar" ? 'text-right': 'text-left'}`}>
+                {card.text} 
               </p>
-              <span className='text-secondary font-medium text-sm lg:text-base underline cursor-pointer'>{card.sub}</span>
+              <span className={`text-secondary font-medium text-sm lg:text-base underline cursor-pointer ${i18n?.language =="ar" ? 'text-right' :'text-left'}`}>{card.sub}</span>
             </div>
             <div className="shrink-0">
                <Image src={card.img} alt="payment logo" width={80} height={40} className="object-contain" />
@@ -143,8 +145,8 @@ export default function BuyBookContent() {
       {/* Buttons & Shipping */}
       <div className="flex flex-col gap-6">
         <motion.button
-          className='w-full text-white h-14 lg:h-[60px] rounded-full text-xl lg:text-2xl font-semibold relative overflow-hidden shadow-xl'
-          style={{ background: "linear-gradient(90deg, #DDB2B5 0%, #A4B3C1 100%)" }}
+          className='w-full text-white h-12 rounded-full text-xl  font-semibold relative overflow-hidden shadow-xl'
+          style={{ background: "linear-gradient(90deg, #DDB2B5 40%, #A4B3C1 100%)" }}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
@@ -154,17 +156,17 @@ export default function BuyBookContent() {
             whileHover={{ x: "100%" }}
             transition={{ duration: 0.6 }}
           />
-          <span className="relative z-10">Add To Cart</span>
+          <span className="relative z-10">{t("Add To Cart")}</span>
         </motion.button>
 
         <motion.div className="flex flex-wrap justify-center lg:justify-between gap-4 items-center" variants={itemVariants} custom={0.8}>
           <div className="flex gap-2 items-center text-secondary">
             <Truck size={20} />
-            <span className="font-poppins text-lg font-normal">Fast shipping</span>
+            <span className="font-poppins text-lg font-normal">{t("Fast shipping")}</span>
           </div>
           <div className="flex gap-2 items-center text-secondary text-right">
             <CircleDollarSign size={20} />
-            <span className="font-poppins text-lg font-normal">Installments available</span>
+            <span className="font-poppins text-lg font-normal">{t("Installments available")}</span>
           </div>
         </motion.div>
       </div>
@@ -172,32 +174,32 @@ export default function BuyBookContent() {
       {/* Details & Help */}
       <div className="space-y-8 mt-4">
         {[
-          { title: "Additional Details", content: [
-            "If you've ever felt stuck, lost, overwhelmed, or unsure of your direction — this book was written for you.",
-            "You need guidance, clarity, and alignment. Glow in All Areas of Your Life is a transformational guide created to help you reconnect with who you truly are.",
+          { title: t("Additional Details"), content: [
+            t("Additional Details Line 1"),
+            t("Additional Details Line 2"),
           ]},
-          { title: "What This Book Will Help You With:", list: list }
+          { title: t("What This Book Will Help You With:"), list: list }
         ].map((section, i) => (
           <motion.div key={section.title} className="flex flex-col gap-3" variants={itemVariants} custom={1 + i * 0.2}>
-            <h4 className="text-[#414141] font-semibold text-2xl lg:text-3xl font-poppins text-center lg:text-left">
+            <h4 className={`text-[#414141] font-semibold text-2xl  font-poppins text-center ${i18n?.language == "ar" ? "lg:text-right" :"lg:text-left"}`}>
               {section.title}
             </h4>
             {section.content && (
-              <div className="text-[#414141] font-poppins text-base lg:text-lg leading-relaxed space-y-4 text-center lg:text-left">
+              <div className={`text-[#414141] font-poppins text-base  leading-relaxed space-y-2 text-center ${i18n?.language == "ar" ? "lg:text-right" : "lg:text-left"}`}>
                 {section.content.map((p, j) => <p key={j}>{p}</p>)}
               </div>
             )}
             {section.list && (
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-1 gap-x-4">
                 {section.list.map((item, j) => (
                   <motion.li
                     key={item.id}
                     custom={j}
                     variants={listItemVariants}
                     whileHover="hover"
-                    className='text-sm lg:text-base list-disc list-inside font-poppins text-[#414141] leading-7'
+                    className={`text-sm list-disc list-inside font-poppins text-[#414141] leading-7 ${i18n?.language == "ar" ? "lg:text-right" : "lg:text-left"}`}
                   >
-                    {item.name}
+                    {t(item.name)}
                   </motion.li>
                 ))}
               </ul>

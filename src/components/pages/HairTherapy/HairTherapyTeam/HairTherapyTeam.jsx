@@ -2,8 +2,10 @@
 import Image from 'next/image'
 import React from 'react'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next';
 
 export default function HairTherapyTeam() {
+  const { t } = useTranslation();
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -164,7 +166,7 @@ export default function HairTherapyTeam() {
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="main-container overflow-hidden my-10 lg:my-20 mx-auto px-4"
       initial="hidden"
       whileInView="visible"
@@ -172,122 +174,114 @@ export default function HairTherapyTeam() {
       variants={containerVariants}
     >
       <motion.div
-        className="relative overflow-hidden rounded-[32px] min-h-[600px] lg:min-h-screen"
+        className="relative overflow-hidden rounded-[32px] min-h-[600px]"
         variants={backgroundVariants}
         style={{
-          backgroundImage: "url('/images/hair-therapy/0dfa4723e2f3e9d48a080580fa685952b58207be.jpg')",
+          backgroundImage: "url('/SHAHD-IMAGE/hair-therapy/0dfa4723e2f3e9d48a080580fa685952b58207be.webp')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
       >
-        <motion.div 
+        <motion.div
           className="absolute inset-0 z-10 bg-white/70 lg:bg-white/60 shadow-inner"
           variants={overlayVariants}
         />
-        <motion.div 
-          className="relative inset-0 p-6 lg:p-10 z-20 flex flex-col h-full"
+        <motion.div
+          className="relative inset-0 px-6 pt-6 lg:px-10 lg:pt-10 pb-0! z-20 flex flex-col min-h-[600px]"
           variants={containerVariants}
         >
-          <div className='flex flex-col items-center justify-center text-center mb-10'>
-            <motion.p 
-              className="text-xl md:text-[32px] font-bold font-poppins text-secondary capitalize mb-4"
+          <div className='flex flex-col items-center justify-center text-center mb-4'>
+            <motion.p
+              className="text-2xl font-bold font-poppins text-secondary capitalize mb-2"
               variants={titleVariants}
             >
-              Meet My Team
+              {t("Meet My Team")}
             </motion.p>
-            <motion.h2 
-              className="text-3xl md:text-5xl lg:text-[64px] font-normal max-w-4xl mx-auto text-[#414141] leading-tight"
+            <motion.h2
+              className="text-3xl  font-normal max-w-4xl mx-auto text-[#414141] leading-tight"
               variants={subtitleVariants}
             >
-              Together, A Complete <br className='hidden md:block' /> hair transplant journey
+              {t("Together Hair Journey")}
             </motion.h2>
           </div>
-          
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center mt-auto"
+
+          {/* Updated Grid: added items-end to ensure images sit on the bottom boundary */}
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-end mt-auto"
             variants={containerVariants}
           >
             {/* Left Doctor Image */}
             <motion.div
               variants={imageVariants}
               whileHover="hover"
-              className="flex justify-center order-2 lg:order-1"
+              className="flex justify-center order-2 lg:order-1 h-full"
             >
-              <div className="relative w-full max-w-[300px] aspect-[350/675]">
-                <Image 
-                  src="/images/hair-therapy/Image_fx - 2026-03-07T150053.361 1.svg" 
-                  alt="Doctor" 
+              {/* Set a specific height or h-full and remove max-width constraints if you want them larger */}
+              <div className="relative w-full h-[400px] lg:h-[500px]">
+                <Image
+                  src="/SHAHD-IMAGE/hair-therapy/Image_fx - 2026-03-07T150053.361 1.webp"
+                  alt="Doctor"
                   fill
-                  className="object-contain"
+                  className="object-contain object-bottom" // Changed to contain + bottom
+                  priority
                 />
               </div>
             </motion.div>
-            
+
             {/* Cards Column */}
-            <motion.div 
-              className="flex flex-col gap-6 order-1 lg:order-2"
+            <motion.div
+              className="flex flex-col gap-3 order-1 lg:order-2 mb-10" // Added bottom margin to lift cards off the floor
               variants={containerVariants}
             >
               {/* Doctor Card 1 */}
               <motion.div
-                className='bg-white/40 backdrop-blur-3xl flex flex-col gap-4 rounded-[24px] p-6 lg:p-8 border border-white/60 shadow-xl'
+                className='bg-white/40 backdrop-blur-3xl flex flex-col gap-3 rounded-[24px] p-6 border border-white/60 shadow-xl'
                 custom={0}
                 variants={cardVariants}
                 whileHover="hover"
               >
                 <div className='flex flex-col'>
-                  <motion.p 
-                    className="text-secondary font-bold font-poppins text-xl lg:text-2xl mb-2"
-                    variants={nameVariants}
-                  >
+                  <motion.p className="text-secondary font-bold font-poppins text-xl mb-2" variants={nameVariants}>
                     DR. Shahd Awad
                   </motion.p>
-                  <motion.p 
-                    className="text-[#414141] uppercase font-semibold font-poppins text-sm lg:text-base leading-relaxed tracking-wider"
-                    variants={descriptionVariants}
-                  >
-                    Specializes in advanced hair restoration treatments that support natural hair growth, improve scalp health, and deliver precise results.
+                  <motion.p className="text-[#414141] uppercase font-semibold font-poppins text-sm leading-relaxed tracking-wider" variants={descriptionVariants}>
+                    {t("Dr Shahd Description")}
                   </motion.p>
                 </div>
               </motion.div>
 
               {/* Doctor Card 2 */}
               <motion.div
-                className='bg-white/40 backdrop-blur-3xl flex flex-col gap-4 rounded-[24px] p-6 lg:p-8 border border-white/60 shadow-xl'
+                className='bg-white/40 backdrop-blur-3xl flex flex-col gap-4 rounded-[24px] p-6 border border-white/60 shadow-xl'
                 custom={1}
                 variants={cardVariants}
                 whileHover="hover"
               >
                 <div className='flex flex-col'>
-                  <motion.p 
-                    className="text-secondary font-bold font-poppins text-xl lg:text-2xl mb-2"
-                    variants={nameVariants}
-                  >
-                    DR. Islam
+                  <motion.p className="text-secondary font-bold font-poppins text-xl mb-2" variants={nameVariants}>
+                    {t("Dr Islam Name")}
                   </motion.p>
-                  <motion.p 
-                    className="text-[#414141] uppercase font-semibold font-poppins text-sm lg:text-base leading-relaxed tracking-wider"
-                    variants={descriptionVariants}
-                  >
-                    Focuses on modern hair transplant techniques designed to restore hair density, enhance hairline definition, and achieve balanced results.
+                  <motion.p className="text-[#414141] uppercase font-semibold font-poppins text-sm leading-relaxed tracking-wider" variants={descriptionVariants}>
+                    {t("Dr Islam Description")}
                   </motion.p>
                 </div>
               </motion.div>
             </motion.div>
-            
+
             {/* Right Doctor Image */}
             <motion.div
               variants={imageRightVariants}
               whileHover="hover"
-              className="flex justify-center order-3"
+              className="flex justify-center order-3 h-full"
             >
-              <div className="relative w-full max-w-[300px] aspect-[350/675]">
-                <Image 
-                  src="/images/hair-therapy/Image_fx (9) (1) 1.png" 
-                  alt="Doctor" 
+              <div className="relative w-full h-[400px] lg:h-[500px]">
+                <Image
+                  src="/SHAHD-IMAGE/hair-therapy/Image_fx (9) (1) 1.webp"
+                  alt="Doctor"
                   fill
-                  className="object-contain"
+                  className="object-contain object-bottom" // Changed to contain + bottom
+                  priority
                 />
               </div>
             </motion.div>

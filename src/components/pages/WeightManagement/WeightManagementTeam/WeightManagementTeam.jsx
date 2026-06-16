@@ -2,8 +2,10 @@
 import Image from 'next/image'
 import React, { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import { useTranslation } from 'react-i18next';
 
 export default function WeightManagementTeam() {
+  const { t } = useTranslation();
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: false, amount: 0.2 })
 
@@ -88,13 +90,13 @@ export default function WeightManagementTeam() {
   }
 
   const floatingImages = [
-    { id: 1, src: "/images/Academy/Image_fx (47) (1) 1.png", height: 93, width: 220, className: 'left-1/4 bottom-30', delay: 0 },
-    { id: 2, src: "/images/Academy/Image_fx (47) (1) 2.png", height: 93, width: 248, className: 'left-100 top-10', delay: 0.2 },
-    { id: 3, src: "/images/Academy/Image_fx (47) (1) 3.png", height: 110, width: 448, className: 'left-160 top-10', delay: 0.4 },
-    { id: 4, src: "/images/Academy/Image_fx (47) (1) 4.png", height: 93, width: 248, className: 'right-33 bottom-10', delay: 0.6 },
-    { id: 5, src: "/images/Academy/Image_fx (47) (1) 6.png", height: 93, width: 248, className: 'right-0 top-10', delay: 0.8 },
-    { id: 6, src: "/images/Academy/Image_fx (47) (1) 7.png", height: 93, width: 248, className: 'top-6', delay: 1 },
-    { id: 7, src: "/images/Academy/Image_fx (47) (1) 8.png", height: 93, width: 248, className: 'right-1/2 bottom-10', delay: 1.2 },
+    { id: 1, src: "/SHAHD-IMAGE/Academy/Image_fx (47) (1) 1.webp", height: 93, width: 220, className: 'left-1/4 bottom-30', delay: 0 },
+    { id: 2, src: "/SHAHD-IMAGE/Academy/Image_fx (47) (1) 2.webp", height: 93, width: 248, className: 'left-100 top-10', delay: 0.2 },
+    { id: 3, src: "/SHAHD-IMAGE/Academy/Image_fx (47) (1) 3.webp", height: 110, width: 448, className: 'left-160 top-10', delay: 0.4 },
+    { id: 4, src: "/SHAHD-IMAGE/Academy/Image_fx (47) (1) 4.webp", height: 93, width: 248, className: 'right-33 bottom-10', delay: 0.6 },
+    { id: 5, src: "/SHAHD-IMAGE/Academy/Image_fx (47) (1) 6.webp", height: 93, width: 248, className: 'right-0 top-10', delay: 0.8 },
+    { id: 6, src: "/SHAHD-IMAGE/Academy/Image_fx (47) (1) 7.webp", height: 93, width: 248, className: 'top-6', delay: 1 },
+    { id: 7, src: "/SHAHD-IMAGE/Academy/Image_fx (47) (1) 8.webp", height: 93, width: 248, className: 'right-1/2 bottom-10', delay: 1.2 },
   ]
 
   return (
@@ -102,9 +104,9 @@ export default function WeightManagementTeam() {
       ref={sectionRef}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
-      className='min-h-screen py-16 md:py-24 lg:min-h-screen lg:py-0 w-full relative overflow-hidden'
+      className='min-h-screen py-16  lg:min-h-screen  w-full relative overflow-hidden'
       style={{
-        background:"url('/images/Weight-management/352ca418788b2450d748119b5a92ace55d930229.jpg')",
+        background:"url('/SHAHD-IMAGE/Weight-management/352ca418788b2450d748119b5a92ace55d930229.webp')",
         backgroundPosition:"center center",
         backgroundRepeat:"no-repeat",
         backgroundSize:"cover"
@@ -125,41 +127,39 @@ export default function WeightManagementTeam() {
         }} />
       
       {/* Main Content Container */}
-      <div className="relative lg:absolute container mx-auto z-10 w-full h-full inset-0 flex flex-col lg:flex-row justify-between items-center gap-12 lg:gap-8 px-4 sm:px-8">
+      <div className="relative lg:absolute container py-4 mx-auto z-10 w-full h-full inset-0 flex flex-col lg:flex-row justify-between items-stretch gap-12 lg:gap-8 px-4 sm:px-8">
         {/* Left Content */}
         <motion.div
           variants={textContainerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="flex flex-col max-w-2xl gap-4 md:gap-6 text-center lg:text-left"
+          className="flex flex-col max-w-2xl gap-4 text-center justify-center  lg:text-left"
         >
           <motion.p 
             variants={textItemVariants}
-            className="font-bold text-[#95BCAA] text-xl md:text-2xl lg:text-[27px] font-poppins"
+            className="font-bold text-[#95BCAA] text-xl md:text-2xl font-poppins"
           >
-            Meet My Team
+            {t("Meet My Team")}
           </motion.p>
           
           <motion.h2 
             variants={textItemVariants}
-            className="text-primary text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-normal leading-tight lg:leading-[1.1]"
+            className="text-primary text-3xl  font-normal leading-tight lg:leading-[1.1]"
           >
-            Together, A Complete Weight Management Experience
+            {t("Together, A Complete Weight Management Experience")}
           </motion.h2>
 
           {/* Cards with staggered animation */}
-          <div className="flex flex-col gap-4 md:gap-6 mt-4">
+          <div className="flex flex-col gap-4 mt-2">
             <motion.div
               custom={0}
               variants={cardVariants}
               whileHover="hover"
-              className='bg-white/20 backdrop-blur-md flex flex-col gap-3 rounded-[24px] p-5 md:p-6 border border-white/40 shadow-sm'
+              className='bg-white/20 backdrop-blur-md flex flex-col gap-3 rounded-[24px] p-4 border border-white/40 shadow-sm'
             >
-              <p className="text-primary font-medium font-poppins text-xl md:text-2xl">DR. Shahd Awad</p>
-              <p className="text-[#414141] tracking-[-0.3px] font-normal text-sm md:text-base leading-relaxed">
-                Dr. Shahd specializes in advanced weight management treatments that support body contouring, 
-                fat reduction, and metabolic balance. Her approach is centered on medical precision, patient safety, 
-                and sustainable results.
+              <p className="text-primary font-medium font-poppins text-xl">{t("DR. Shahd Awad")}</p>
+              <p className="text-[#414141] tracking-[-0.3px] font-poppins font-normal text-sm leading-relaxed">
+                {t("Dr. Shahd Team Desc")}
               </p>
             </motion.div>
 
@@ -167,12 +167,11 @@ export default function WeightManagementTeam() {
               custom={1}
               variants={cardVariants}
               whileHover="hover"
-              className='bg-white/20 backdrop-blur-md flex flex-col gap-3 rounded-[24px] p-5 md:p-6 border border-white/40 shadow-sm'
+              className='bg-white/20 backdrop-blur-md flex flex-col gap-3 rounded-[24px] p-4 border border-white/40 shadow-sm'
             >
-              <p className="text-primary font-medium font-poppins text-xl md:text-2xl">DR. Islam</p>
-              <p className="text-[#414141] tracking-[-0.3px] font-normal text-sm md:text-base leading-relaxed">
-                Dr. Islam brings deep expertise in nutrition science and lifestyle optimization, 
-                creating personalized food plans that support weight loss, muscle balance, and metabolic health.
+              <p className="text-primary font-medium font-poppins text-xl">{t("DR. Islam")}</p>
+              <p className="text-[#414141] tracking-[-0.3px] font-poppins  font-normal text-sm leading-relaxed">
+                {t("Dr. Islam Team Desc")}
               </p>
             </motion.div>
           </div>
@@ -183,19 +182,19 @@ export default function WeightManagementTeam() {
           variants={rightImagesVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className='flex gap-4 md:gap-6 items-center justify-center'
+          className='flex gap-4 md:gap-6 my-5 items-stretch justify-center'
         >
-          <div className="relative w-[140px] sm:w-[200px] lg:w-[260px] xl:w-[281px] aspect-[281/676]">
+          <div className="relative w-[140px] sm:w-[200px] lg:w-[260px] h-full">
             <Image 
-              src="/images/Academy/Frame 98.png" 
+              src="/SHAHD-IMAGE/Academy/Frame 98.webp" 
               fill
               alt="Team member" 
               className='rounded-full object-cover shadow-lg' 
             />
           </div>
-          <div className="relative w-[140px] sm:w-[200px] lg:w-[260px] xl:w-[281px] aspect-[281/676]">
+          <div className="relative w-[140px] sm:w-[200px] lg:w-[260px]">
             <Image 
-              src="/images/Academy/Frame 97.png" 
+              src="/SHAHD-IMAGE/Academy/Frame 97.webp" 
               fill
               alt="Team member" 
               className='rounded-full object-cover shadow-lg' 
@@ -205,4 +204,4 @@ export default function WeightManagementTeam() {
       </div>
     </motion.div>
   )
-}
+}

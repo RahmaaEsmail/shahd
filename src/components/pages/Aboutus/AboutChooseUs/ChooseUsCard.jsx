@@ -8,10 +8,10 @@ export default function ChooseUsCard({ img, title, desc }) {
     <motion.div
       whileHover={{ 
         y: -5,
-        backgroundColor: "rgba(131, 166, 202, 0.3)",
+        // backgroundColor: "rgba(131, 166, 202, 0.3)",
         boxShadow: "0 15px 30px -10px rgba(131, 166, 202, 0.3)",
       }}
-      className='bg-[#83A6CA22] flex flex-col gap-3 backdrop-blur-md rounded-[24px] md:rounded-[30px] p-5 md:p-6 transition-colors duration-300 border border-white/10'
+      className='bg-[#83A6CA22] flex flex-col gap-3 backdrop-blur-md rounded-[24px] md:rounded-[30px] p-5 md:p-3 transition-colors duration-300 border border-white/10 h-full'
     >
       <div className='flex items-center h-12 md:h-16'>
         <Image 
@@ -23,7 +23,7 @@ export default function ChooseUsCard({ img, title, desc }) {
         />
       </div>
       
-      <h3 className='text-primary font-normal text-xl md:text-2xl lg:text-3xl leading-snug'>
+      <h3 className='text-primary font-normal text-xl md:text-2xl  2xl:text-3xl leading-snug'>
         {title}
       </h3>
       

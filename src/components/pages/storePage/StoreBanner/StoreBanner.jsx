@@ -4,9 +4,11 @@ import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 export default function StoreBanner() {
   const router = useRouter();
+  const { t  , i18n} = useTranslation();
   // Animation variants for smoother, more coordinated animations
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -153,10 +155,9 @@ export default function StoreBanner() {
         >
           <motion.h1
             variants={textVariants}
-            className='text-5xl md:text-7xl lg:text-[92px] text-primary font-normal leading-tight'
+            className='text-4xl text-primary font-normal leading-tight'
           >
-            Because Your Skin
-            Deserves{' '}
+            {t("Because Your Skin Deserves")}{' '}
             <motion.span
               variants={gradientVariants}
               style={{
@@ -168,15 +169,15 @@ export default function StoreBanner() {
               }}
               className='underline decoration-wavy decoration-primary decoration-2 md:decoration-4'
             >
-              pure luxury
+              {t("pure luxury")}
             </motion.span>
           </motion.h1>
 
           <motion.p
             variants={textVariants}
-            className='text-lg md:text-2xl text-[#414141] max-w-2xl font-normal font-poppins'
+            className={`text-lg md:text-2xl text-[#414141] max-w-2xl font-normal font-poppins ${i18n?.language == "ar" ?"text-right" :"text-left"}`}
           >
-            From medical-grade skincare to wellness essentials, every product is chosen with purpose, science, and care.
+            {t("Store Banner Desc")}
           </motion.p>
 
           <motion.div
@@ -188,9 +189,9 @@ export default function StoreBanner() {
               variants={buttonVariants}
               whileHover="hover"
               whileTap="tap"
-              className='bg-white border border-primary text-primary hover:bg-primary hover:text-white h-[52px] w-[220px] md:w-[195px] text-lg md:text-2xl px-5 py-2 rounded-full font-normal transition-colors duration-300'
+              className='bg-white border border-primary text-primary hover:bg-primary hover:text-white h-[52px] min-w-[220px] md:min-w-[195px] text-lg  px-5 py-2 rounded-full font-normal transition-colors duration-300'
             >
-              Shop Bundle
+              {t("Shop Bundle")}
             </motion.button>
 
             <motion.div
@@ -204,9 +205,9 @@ export default function StoreBanner() {
                   background: "linear-gradient(90deg, #DDB2B5 0%, #EFD4CE 100%)"
                 }}
                 variant='default'
-                className='text-white h-[52px] min-w-[220px] md:min-w-[195px] px-9 py-2 text-lg md:text-2xl rounded-full font-normal transition-all duration-300'
+                className='text-white h-[52px] min-w-[220px] md:min-w-[195px] px-9 py-2 text-lg rounded-full font-normal transition-all duration-300'
               >
-                Explore Bestsellers
+                {t("Explore Bestsellers")}
               </Button>
             </motion.div>
           </motion.div>
@@ -214,11 +215,11 @@ export default function StoreBanner() {
 
         <motion.div
           variants={rightContentVariants}
-          className='relative mx-auto lg:ms-auto rounded-3xl lg:rounded-br-[32px] lg:rounded-bl-[32px] w-full max-w-[400px] md:max-w-[500px] lg:w-[768px] overflow-hidden h-[400px] md:h-[500px] lg:h-[664.49px] order-1 lg:order-2'
+          className='relative mx-auto lg:ms-auto rounded-3xl lg:rounded-br-[32px] lg:rounded-bl-[32px] w-full max-w-[400px] overflow-hidden h-[500px]  order-1 lg:order-2'
         >
           <motion.div
             variants={gradientBgVariants}
-            className="absolute rounded-t-3xl lg:rounded-tr-[32px] lg:rounded-tl-[32px] bottom-0 w-full h-[70%] lg:h-[380.62px]"
+            className="absolute rounded-t-3xl lg:rounded-tr-[32px] lg:rounded-tl-[32px] bottom-0 w-full h-[50%]"
             style={{
               background: "linear-gradient(270deg, #D19B9B 7.28%, #DDB2B5 57.76%, #FFF2F2 100%)"
             }}
@@ -229,7 +230,7 @@ export default function StoreBanner() {
             className="relative w-full h-full"
           >
             <Image
-              src='/images/store/store_banner.png'
+              src='/SHAHD-IMAGE/Store/store_banner.webp'
               fill
               alt='store banner image'
               className="object-cover w-full! h-full! lg:object-cover z-10"

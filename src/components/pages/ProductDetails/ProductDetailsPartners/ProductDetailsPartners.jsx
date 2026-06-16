@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation, FreeMode } from 'swiper/modules';
@@ -12,26 +13,27 @@ import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
 
 const partners = [
-  { id: 1, name: "Salla", logo: "/images/product-details/Group (1).svg" },
-  { id: 2, name: "Careem", logo: "/images/product-details/Group.svg" },
-  { id: 3, name: "Grintahub", logo: "/images/product-details/logo 1.svg" },
-  { id: 4, name: "Qalam", logo: "/images/product-details/logo 2.svg" },
-  { id: 5, name: "Grintahub Alt", logo: "/images/product-details/main-logo-en 1.svg" },
-  { id: 6, name: "Salla Alt", logo: "/images/product-details/main-logo-en 2.svg" },
-  { id: 7, name: "Careem Alt", logo: "/images/product-details/qalam-logo.dcdb430 1.svg" },
+  { id: 1, name: "Salla", logo: "/SHAHD-IMAGE/product-details/Group (1).webp" },
+  { id: 2, name: "Careem", logo: "/SHAHD-IMAGE/product-details/Group.webp" },
+  { id: 3, name: "Grintahub", logo: "/SHAHD-IMAGE/product-details/logo 1.webp" },
+  { id: 4, name: "Qalam", logo: "/SHAHD-IMAGE/product-details/logo 2.webp" },
+  { id: 5, name: "Grintahub Alt", logo: "/SHAHD-IMAGE/product-details/main-logo-en 1.webp" },
+  { id: 6, name: "Salla Alt", logo: "/SHAHD-IMAGE/product-details/main-logo-en 2.webp" },
+  { id: 7, name: "Careem Alt", logo: "/SHAHD-IMAGE/product-details/qalam-logo.dcdb430 1.webp" },
 ];
 
 // Duplicate partners for seamless infinite scroll
 const duplicatedPartners = [...partners, ...partners, ...partners];
 
 export default function ProductDetailsPartners() {
+  const { t } = useTranslation();
   return (
-    <section className="relative w-full py-12 overflow-hidden">
+    <section className="relative w-full py-8 overflow-hidden">
       {/* Background with slight opacity as per Figma (32%) */}
       <div
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: "url('/images/product-details/c17080f024061945d283c30609d7dfd468f6fbf8.jpg')",
+          backgroundImage: "url('/SHAHD-IMAGE/product-details/c17080f024061945d283c30609d7dfd468f6fbf8.webp')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           opacity: 0.32
@@ -44,9 +46,9 @@ export default function ProductDetailsPartners() {
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className='text-3xl md:text-5xl lg:text-[64px] font-normal text-center text-primary uppercase mb-8 md:mb-10 px-4'
+          className='text-3xl  font-normal text-center text-primary uppercase mb-8 px-4'
         >
-          Featured by press
+          {t('Featured by press')}
         </motion.h2>
 
         {/* Swiper Slider */}
@@ -109,7 +111,7 @@ export default function ProductDetailsPartners() {
                     scale: 1.1,
                     transition: { type: "spring", stiffness: 400 }
                   }}
-                  className='relative w-32 h-12 md:w-40 md:h-16 mx-auto cursor-pointer'
+                  className='relative w-32 h-12  mx-auto cursor-pointer'
                 >
                   <Image
                     src={partner.logo}

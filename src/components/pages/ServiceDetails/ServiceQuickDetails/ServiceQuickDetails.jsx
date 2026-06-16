@@ -4,18 +4,18 @@ import ServiceQuickDetailsImages from './ServiceQuickDetailsImages';
 import ServiceQuickDetailsContent from './ServiceQuickDetailsContent';
 
 const images = [
-  { id: 1, img: "/images/service-details/service1.jpg" },
-  { id: 2, img: "/images/service-details/service1.jpg" },
-  { id: 3, img: "/images/service-details/service2.png" },
-  { id: 4, img: "/images/service-details/service2.png" },
-  { id: 5, img: "/images/service-details/service1.jpg" },
+  { id: 1, img: "/SHAHD-IMAGE/service-details/service1.webp" },
+  { id: 2, img: "/SHAHD-IMAGE/service-details/service1.webp" },
+  { id: 3, img: "/SHAHD-IMAGE/service-details/service2.webp" },
+  { id: 4, img: "/SHAHD-IMAGE/service-details/service2.webp" },
+  { id: 5, img: "/SHAHD-IMAGE/service-details/service1.webp" },
 ];
 
 export default function ServiceQuickDetails({ service }) {
   const [activeImg, setActiveImg] = useState(images[0].img);
 
   return (
-    <section className="main-container mx-auto py-20 px-4">
+    <section className="main-container mx-auto py-10 px-4">
       {/* items-start is crucial for sticky to work in a grid */}
       <div className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-12 items-start">
 

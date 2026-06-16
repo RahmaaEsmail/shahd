@@ -4,6 +4,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 // Animation variants
 const containerVariants = {
@@ -132,12 +133,14 @@ const languageButtonVariants = {
 }
 
 export default function BookBanner() {
-  const titleWords = ["Glow", "in", "All", "Areas", "of", "Your", "Life"];
+  const { t , i18n} = useTranslation();
+  const translatedTitle = t("Glow in All Areas of Your Life");
+  const titleWords = translatedTitle.split(' ');
   
   const router = useRouter();
   return (
     <motion.div
-      className='min-h-screen lg:h-screen flex flex-col lg:grid lg:grid-cols-[3fr_9fr] gap-10 lg:gap-20 py-0'
+      className='h-[100vh] md:h-[80vh]! flex flex-col lg:grid lg:grid-cols-[3fr_9fr] gap-10 items-center'
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
@@ -145,7 +148,7 @@ export default function BookBanner() {
     >
       {/* Book Image with animation */}
       <motion.div
-        className="w-[250px] sm:w-[480px] md:w-[320px] lg:w-full h-auto lg:h-[495px] relative mx-auto lg:mx-0"
+        className="w-[250px] sm:w-[480px] md:w-[320px] lg:w-full h-auto lg:h-[395px] relative mx-auto lg:mx-0"
         variants={imageVariants}
         initial="hidden"
         whileInView="visible"
@@ -153,7 +156,7 @@ export default function BookBanner() {
         whileHover="hover"
       >
         <Image
-          src="/images/book/book.png"
+          src="/SHAHD-IMAGE/Book/book.webp"
           alt="book"
           width={374}
           height={495}
@@ -171,7 +174,7 @@ export default function BookBanner() {
 
       {/* Content section */}
       <motion.div
-        className="flex lg:w-full mt-6 flex-col text-center lg:text-left"
+        className="flex lg:w-full  mt-6 flex-col text-center lg:text-left"
         variants={itemVariants}
         initial="hidden"
         whileInView="visible"
@@ -179,7 +182,7 @@ export default function BookBanner() {
       >
         <div className='flex w-full flex-col lg:flex-row justify-between gap-6 lg:gap-3 items-center lg:items-start'>
           <motion.h1
-            className='text-4xl md:text-7xl lg:text-[110px] w-full leading-[110%] md:leading-[100%] font-normal text-primary'
+            className='text-4xl  w-full leading-[110%] md:leading-[100%] font-normal text-primary'
             variants={titleVariants}
             initial="hidden"
             whileInView="visible"
@@ -262,16 +265,14 @@ export default function BookBanner() {
 
         {/* Description with animation */}
         <motion.p
-          className='text-[#414141] leading-8 lg:leading-10 font-poppins mt-5 lg:mt-3 font-normal max-w-3xl text-lg lg:text-2xl mx-auto lg:mx-0'
+          className={`text-[#414141] leading-8 lg:leading-10 font-poppins mt-5 lg:mt-3 font-normal max-w-3xl text-lg  mx-auto lg:mx-0 ${i18n?.language == "ar" ? "text-right" : "text-left"}`}
           variants={itemVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: false, amount: 0.2, margin: "-50px" }}
           custom={4}
         >
-          This book brings together her personal experiences, medical expertise,
-          and lifestyle philosophy to help every woman create her own path toward
-          success, wellness, and beauty.
+          {t("Book Banner Desc")}
         </motion.p>
 
         {/* Buy Now button with animations */}
@@ -297,7 +298,7 @@ export default function BookBanner() {
           />
 
           {/* Button text */}
-          <span className="relative z-10">Buy Now</span>
+          <span className="relative z-10">{t("Buy Now")}</span>
         </motion.button>
       </motion.div>
     </motion.div>

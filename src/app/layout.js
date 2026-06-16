@@ -1,10 +1,12 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import localFont from "next/font/local";
 
 import "./globals.css";
 import Header from "../layouts/Header/Header";
 import Footer from "../layouts/Footer/Footer";
 import ChatbotIcon from '../components/layout/ChatbotIcon';
+import "sweetalert2/dist/sweetalert2.min.css";
+import LanguageCurrencySettings from "../components/layout/LanguageCurrencySettings";
+import DirectionProvider from "../components/shared/DirectionProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,18 +25,22 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html >
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <DirectionProvider>
+          <Header />
+          <main>{children}</main>
+          <Footer />
 
-        <div className="flex justify-between items-center fixed z-9999999 bottom-6 left-5 right-5">
-          <div className="booking-button"></div>
-          <ChatbotIcon/>
-        </div>
+          <div className="flex justify-between items-center fixed z-[9999999] bottom-6 left-5 right-5 pointer-events-none">
+            <div className="booking-button">
+              <LanguageCurrencySettings/>
+            </div>
+            <ChatbotIcon/>
+          </div>
+        </DirectionProvider>
       </body>
     </html>
   );

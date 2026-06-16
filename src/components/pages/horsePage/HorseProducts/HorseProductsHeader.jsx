@@ -2,6 +2,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import HorseProductsTabs from './HorseProductTabs';
+import { useTranslation } from 'react-i18next';
 
 const headerVariants = {
   hidden: { opacity: 0 },
@@ -28,22 +29,23 @@ const itemVariants = {
 };
 
 export default function HorseProductsHeader({ setActiveTab, activeTab }) {
+  const { t } = useTranslation();
   return (
     <motion.div
       variants={headerVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: false, amount: 0.3 }}
-      className="content flex flex-col justify-center items-center gap-6"
+      className="content flex flex-col justify-center items-center gap-3"
     >
       <motion.p
         variants={itemVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: false, amount: 0.3 }}
-        className='text-lg sm:text-xl lg:text-[27px] font-bold text-dark-primary font-poppins text-center'
+        className='text-2xl font-bold text-dark-primary font-poppins text-center'
       >
-        Equestrian Essentials
+        {t("Equestrian Essentials")}
       </motion.p>
 
       <motion.h3
@@ -51,9 +53,9 @@ export default function HorseProductsHeader({ setActiveTab, activeTab }) {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: false, amount: 0.3 }}
-        className='text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-[80px] font-normal text-primary text-center leading-tight max-w-4xl'
+        className='text-3xl font-normal text-primary text-center leading-tight max-w-4xl'
       >
-        Because horses deserve luxury too.
+        {t("Because horses deserve luxury too.")}
       </motion.h3>
 
       <motion.div variants={itemVariants}>

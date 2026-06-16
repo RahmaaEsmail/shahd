@@ -11,17 +11,17 @@ export default function Page() {
       <div
         className='absolute inset-0 w-full h-full'
         style={{
-          backgroundImage: "url('/images/book/bg-img.png')",
-          backgroundSize: "cover",
+          backgroundImage: "url('/SHAHD-IMAGE/Book/Untitled design - 2026-04-18T152652.350.png')",
+          // backgroundSize: "cover",
           backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
+          backgroundRepeat: "repeat",
           opacity: 0.2
         }}
       />
 
       {/* Content wrapper */}
       <div className='relative z-10 main-container mx-auto px-4 py-12 lg:py-20'>
-        <div className='mt-10 lg:mt-24 space-y-20 lg:space-y-40'>
+        <div className='mt-10'>
           <BookBanner />
           <BookAbout />
           <BookWrite />

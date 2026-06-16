@@ -2,6 +2,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import StatisCard from './StatisCard'
+import { useTranslation } from 'react-i18next'
 
 // Animation variants for the container
 const containerVariants = {
@@ -16,34 +17,35 @@ const containerVariants = {
 };
 
 export default function AboutUsStatistics() {
+  const { t } = useTranslation();
   const stats = [
     {
       id: 1,
-      image: "/images/About/aboutImg1.png",
+      image: "/SHAHD-IMAGE/About/aboutImg1.webp",
       isPrimary: false,
       number: "1500 +",
-      title: "Happy clients"
+      title: t("Happy clients")
     },
     {
       id: 2,
-      image: "/images/About/aboutImg2.png",
+      image: "/SHAHD-IMAGE/About/aboutImg2.webp",
       isPrimary: true,
       number: "150 +",
-      title: "treatments"
+      title: t("treatments")
     },
     {
       id: 3,
-      image: "/images/About/aboutImg3.png",
+      image: "/SHAHD-IMAGE/About/aboutImg3.webp",
       isPrimary: false,
       number: "1200 +",
-      title: "natural results"
+      title: t("natural results")
     },
     {
       id: 4,
-      image: "/images/About/aboutImg4.png",
+      image: "/SHAHD-IMAGE/About/aboutImg4.webp",
       isPrimary: true,
       number: "100%",
-      title: "safe care"
+      title: t("safe care")
     }
   ];
 

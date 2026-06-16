@@ -6,8 +6,6 @@ import { motion, useInView, AnimatePresence } from 'framer-motion';
 import BuyBookImages from '@/components/pages/buyBook/BuyBookImages/BuyBookImages';
 import BuyBookContent from '@/components/pages/buyBook/BuyBookContent/BuyBookContent';
 
-const Sticky = dynamic(() => import('react-stickynode'), { ssr: false });
-
 // Animation Variants
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -93,21 +91,6 @@ export default function Page() {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  const isInView = useInView(containerRef, { once: false, amount: 0.1 });
-
-  useEffect(() => {
-    const updateBoundary = () => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        setBottomBoundary(rect.bottom + window.scrollY);
-      }
-    };
-
-    updateBoundary();
-    window.addEventListener('resize', updateBoundary);
-    return () => window.removeEventListener('resize', updateBoundary);
-  }, []);
-
   // Track scroll progress and sticky state
   useEffect(() => {
     const handleScroll = () => {
@@ -141,16 +124,18 @@ export default function Page() {
       ref={containerRef}
       variants={containerVariants}
       initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
+      whileInView="visible"
+      viewport={{ once: false, amount: 0.1 }}
     >
       {/* Background Image Layer with Parallax Effect */}
       <motion.div
         variants={backgroundVariants}
         className='absolute inset-0 w-full h-full'
         style={{
-          backgroundImage: "url('/images/book/bg-img.png')",
-          backgroundSize: "cover",
+          backgroundImage: "url('/SHAHD-IMAGE/Book/Untitled design - 2026-04-18T152652.350.png')",
           backgroundPosition: "center",
+          backgroundRepeat: "repeat",
+          opacity: 0.2,
           zIndex: 0
         }}
         animate={{
@@ -160,20 +145,15 @@ export default function Page() {
 
 
 
-      <div className='relative z-10 main-container mx-auto px-4 py-8 md:py-12 lg:py-16'>
+      <div className='relative z-10 main-container mx-auto px-4'>
         <motion.div
           className='mt-16 md:mt-24 lg:mt-32 flex flex-col lg:flex-row gap-8 lg:gap-12 items-start'
         >
           {/* Left Column with Sticky Image */}
           <motion.div
-            className='w-full lg:w-[55%]'
+            className='w-full lg:w-[55%] relative'
           >
-            <Sticky
-              enabled={isLargeScreen}
-              top={90}
-              innerZ={30}
-              bottomBoundary={bottomBoundary}
-            >
+            <div className="lg:sticky lg:top-[90px] z-30 h-max">
               <motion.div
                 className="w-full"
                 variants={stickyIndicatorVariants}
@@ -183,7 +163,7 @@ export default function Page() {
                 <BuyBookImages />
 
                 {/* Floating indicator when sticky */}
-                <AnimatePresence>
+                {/* <AnimatePresence>
                   {isSticky && (
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
@@ -199,9 +179,9 @@ export default function Page() {
                       <span>Book preview</span>
                     </motion.div>
                   )}
-                </AnimatePresence>
+                </AnimatePresence> */}
               </motion.div>
-            </Sticky>
+            </div>
           </motion.div>
 
           {/* Right Column with Content */}

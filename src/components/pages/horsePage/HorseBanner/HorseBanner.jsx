@@ -2,8 +2,10 @@
 import Image from 'next/image'
 import React from 'react'
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function HorseBanner() {
+  const { t } = useTranslation();
   return (
     <motion.div
       initial={{ opacity: 0, y: -24 }}
@@ -14,7 +16,7 @@ export default function HorseBanner() {
     >
       {/* Background Image */}
       <Image 
-        src="/images/horse/67adf9f6bdfe8688747e9c5a7a3bc089d5b6199c.jpg" 
+        src="/SHAHD-IMAGE/horse/67adf9f6bdfe8688747e9c5a7a3bc089d5b6199c.webp" 
         fill // Use fill for better responsive scaling
         priority
         className='object-cover' 
@@ -32,12 +34,12 @@ export default function HorseBanner() {
           
           {/* Text Content Container */}
           <div className='flex flex-col items-center space-y-4 md:space-y-6'>
-            <h1 className='font-normal text-white text-[48px] sm:text-[64px] md:text-[80px] lg:text-[100px] leading-[1.1] max-w-4xl'>
-              A Lifestyle of Balance
+            <h1 className='font-normal text-white text-[48px] sm:text-[64px]  leading-[1.1] max-w-4xl'>
+              {t("A Lifestyle of Balance")}
             </h1>
             
-            <p className='font-normal max-w-xs sm:max-w-md md:max-w-xl text-white mx-auto font-poppins text-lg sm:text-xl md:text-2xl opacity-90'>
-              Horse riding is more than a hobby for Dr. Shahd — it’s a source of balance, strength, and connection.
+            <p className='font-normal max-w-xs sm:max-w-md md:max-w-xl text-white mx-auto font-poppins text-lg sm:text-xl  opacity-90'>
+              {t("Horse Banner Desc")}
             </p>
           </div>
 
@@ -56,7 +58,7 @@ export default function HorseBanner() {
               }}
             />
             <button className="relative bg-white rounded-full px-6 py-3 md:px-10 md:py-4 text-primary font-medium text-base md:text-lg uppercase tracking-wider hover:bg-gray-50 transition-colors">
-              follow the passion
+              {t("follow the passion")}
             </button>
           </motion.div>
           

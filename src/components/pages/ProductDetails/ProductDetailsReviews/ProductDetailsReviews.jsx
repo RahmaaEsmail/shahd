@@ -3,6 +3,7 @@ import React from 'react';
 import { Star } from 'lucide-react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const data = [
   {
@@ -10,7 +11,7 @@ const data = [
     name: "Kristin Watson",
     title: "Absolutly Loved This Product!!!",
     desc: "A Gentle Yet Effective Formula Designed To Nourish, Hydrate, And Enhance Your Natural Glow. This Product Delivers Smooth, Radiant Skin While Supporting Your Overall Skin Health — Perfect For Daily Use And All Skin Types.",
-    img: "/images/product-details/Ellipse 25.png",
+    img: "/SHAHD-IMAGE/product-details/Ellipse 25.webp",
     is_verified: true,
     rating: 5,
     date: "1 Month Ago"
@@ -20,7 +21,7 @@ const data = [
     name: "Kristin Watson",
     title: "Absolutly Loved This Product!!!",
     desc: "A Gentle Yet Effective Formula Designed To Nourish, Hydrate, And Enhance Your Natural Glow. This Product Delivers Smooth, Radiant Skin While Supporting Your Overall Skin Health — Perfect For Daily Use And All Skin Types.",
-    img: "/images/product-details/Ellipse 25.png",
+    img: "/SHAHD-IMAGE/product-details/Ellipse 25.webp",
     is_verified: true,
     rating: 5,
     date: "1 Month Ago"
@@ -125,11 +126,12 @@ const starVariants = {
 };
 
 export default function ProductDetailsReviews() {
+  const { t } = useTranslation();
   return (
     <div
-      className='min-h-[500px] md:min-h-screen relative py-12 md:py-20 px-4 overflow-hidden'
+      className='min-h-[500px] md:min-h-[85vh] relative py-12 px-4 overflow-hidden'
       style={{
-        backgroundImage: "url('/images/product-details/Desktop - 42.png')",
+        backgroundImage: "url('/SHAHD-IMAGE/product-details/Desktop - 42.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -147,9 +149,9 @@ export default function ProductDetailsReviews() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: false, amount: 0.3, margin: "-50px" }}
-        className='text-3xl md:text-5xl lg:text-[64px] font-normal text-center text-primary uppercase tracking-wider mb-8 md:mb-16 relative z-10'
+        className='text-3xl font-normal text-center text-primary uppercase tracking-wider mb-4 relative z-10'
       >
-        Reviews List
+        {t('Reviews List')}
       </motion.h2>
 
       <motion.div 
@@ -161,7 +163,7 @@ export default function ProductDetailsReviews() {
           amount: 0.1,
           margin: "-50px"
         }}
-        className='flex flex-col main-container gap-6 relative z-10'
+        className='flex flex-col main-container gap-3 relative z-10'
       >
         {data.map((item, index) => (
           <motion.div 
@@ -170,15 +172,15 @@ export default function ProductDetailsReviews() {
             custom={index}
             initial="hidden"
             whileInView="visible"
-            className='bg-white/50 backdrop-blur-md rounded-[28px] md:rounded-[40px] border border-white/30 p-6 md:p-10 shadow-lg'
+            className='bg-white/50 backdrop-blur-md rounded-[28px] md:rounded-[40px] border border-white/30 p-4  shadow-lg'
           >
             {/* Top Row: User Info and Date */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 mb-2">
               <div className="flex gap-4 items-center">
                 <motion.div 
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="relative w-14 h-14 md:w-16 md:h-16 shrink-0"
+                  className="relative w-14 h-14 shrink-0"
                 >
                     <Image 
                         src={item.img} 
@@ -189,36 +191,36 @@ export default function ProductDetailsReviews() {
                 </motion.div>
                 <div>
                   <motion.h3 
-                    className='text-lg md:text-xl font-semibold text-gray-900 font-poppins leading-tight'
+                    className='text-lg font-semibold text-gray-900 font-poppins leading-tight'
                   >
-                    {item.name}
+                    {t(item.name)}
                   </motion.h3>
                   <motion.p 
-                    className='text-sm md:text-base font-light text-gray-500 font-poppins'
+                    className='text-sm  font-light text-gray-500 font-poppins'
                   >
-                    ({item.is_verified ? "Verified Purchase" : "Unverified"})
+                    ({item.is_verified ? t("Verified Purchase") : t("Unverified")})
                   </motion.p>
                 </div>
               </div>
               <motion.span 
-                className='text-primary border border-primary px-3 py-1 rounded-full text-sm md:text-base font-medium font-poppins bg-white/50 shrink-0'
+                className='text-primary border border-primary px-3 py-1 rounded-full text-sm font-medium font-poppins bg-white/50 shrink-0'
               >
-                {item.date}
+                {t(item.date)}
               </motion.span>
             </div>
 
             {/* Content Section */}
-            <div className="flex flex-col gap-3 md:gap-4 text-left">
+            <div className="flex flex-col gap-3 text-left">
               <motion.h4 
-                className='text-xl md:text-2xl font-semibold font-poppins text-[#4D3E3F] leading-snug'
+                className='text-xl font-semibold font-poppins text-[#4D3E3F] leading-snug'
               >
-                {item.title}
+                {t(item.title)}
               </motion.h4>
               
               <motion.p 
-                className='text-base md:text-lg lg:text-xl leading-relaxed font-normal text-gray-700 font-poppins max-w-5xl'
+                className='text-base md:text-lg leading-relaxed font-normal text-gray-700 font-poppins max-w-5xl'
               >
-                {item.desc}
+                {t(item.desc)}
               </motion.p>
               
               {/* Rating Section */}
@@ -234,7 +236,7 @@ export default function ProductDetailsReviews() {
                   ))}
                 </div>
                 <span className='text-sm md:text-base font-medium text-gray-500 font-poppins'>
-                   {item.rating}.0 Rating
+                   {item.rating}.0 {t('Rating')}
                 </span>
               </div>
             </div>
@@ -247,7 +249,7 @@ export default function ProductDetailsReviews() {
         variants={buttonVariants}
         initial="hidden"
         whileInView="visible"
-        className="flex justify-center mt-12 md:mt-16 relative z-10"
+        className="flex justify-center mt-12 relative z-10"
       >
         <motion.button 
           whileHover="hover"
@@ -255,9 +257,9 @@ export default function ProductDetailsReviews() {
           style={{
             background: "linear-gradient(90deg, #DDB2B5 0%, #EFD4CE 100%)"
           }}
-          className="text-white px-8 md:px-12 py-3 md:py-4 rounded-full uppercase font-medium text-lg md:text-2xl shadow-xl transition-shadow"
+          className="text-white px-8 py-3  rounded-full uppercase font-medium text-lg md:text-2xl shadow-xl transition-shadow"
         >
-          Read More
+          {t('Read More')}
         </motion.button>
       </motion.div>
     </div>

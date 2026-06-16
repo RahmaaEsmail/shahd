@@ -14,6 +14,10 @@ export const header_links = [
     path: "/services",
     isChildren: true,
     children: [
+       {
+        name: "All Services",
+        path: "/services",
+      },
       {
         name: "Weight Management",
         path: "/weight-management",
@@ -23,7 +27,7 @@ export const header_links = [
         path: "/hair-therapy",
       },
       {
-        name: "Aesthetic Gynecology ",
+        name: "Aesthetic Gynecology",
         path: "/aesthetic",
       },
     ]
@@ -53,4 +57,9 @@ export const header_links = [
     path: "/horse",
     isChildren: false
   },
+  {
+    name:"Contact Us",
+    path:"/contact-us",
+    isChildren:false
+  }
 ]

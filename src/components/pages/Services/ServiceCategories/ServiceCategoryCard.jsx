@@ -1,20 +1,28 @@
 "use client";
 import React from 'react'
 import { motion } from 'framer-motion';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, ChevronDown } from 'lucide-react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { slugify } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
 
 export default function ServiceCategoryCard({cardVariants, item, itemVariants }) {
+  const { t } = useTranslation();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const currentCategory = searchParams.get('category');
+  const isSelected = currentCategory === item.type;
+
+  const handleClick = () => {
+    if (item?.type) {
+      router.push(`?category=${item.type}#our-services`, { scroll: true });
+    }
+  };
+
   return (
     <motion.div
-    onClick={() => {
-      if (item?.id && item?.title) {
-        router.push(`/services/${item.id}/${slugify(item.title)}`);
-      }
-    }}
+    onClick={handleClick}
       variants={itemVariants}
       whileHover="hover"
     >
@@ -27,7 +35,7 @@ export default function ServiceCategoryCard({cardVariants, item, itemVariants })
       >
         {/* Decorative element */}
         <motion.img
-          src="/images/Services/sh5'.png"
+          src="/SHAHD-IMAGE/Services/sh5'.webp"
           className="absolute w-50 h-50 top-0   border-none object-cover right-0  z-50"
           transition={{
             duration: 5,
@@ -38,18 +46,17 @@ export default function ServiceCategoryCard({cardVariants, item, itemVariants })
         />
 
         <button 
-        onClick={() => {
-          if (item?.id && item?.title) {
-            router.push(`/services/${item.id}/${slugify(item.title)}`);
-          }
+        onClick={(e) => {
+          e.stopPropagation();
+          handleClick();
         }}
         className="bg-secondary cursor-pointer absolute z-50 top-3 right-5 w-13 h-13 rounded-full flex justify-center items-center opacity-100  transition-opacity duration-300">
-          <ChevronRight size={25} color="white" />
+          {isSelected ? <ChevronDown size={25} color="white" /> : <ChevronRight size={25} color="white" />}
         </button>
 
         <Image
           src={item.image}
-          alt={item.title}
+          alt={t(item.title)}
           fill
           className="object-cover rounded-tr-[100px]! transition-transform duration-700"
         />
@@ -68,18 +75,18 @@ export default function ServiceCategoryCard({cardVariants, item, itemVariants })
           transition={{ duration: 0.3 }}
         >
           <motion.div
-            className="w-fit px-3 md:px-4 text-xs md:text-base rounded-full bg-white font-poppins py-1.5 md:py-2.5 text-primary font-bold mb-2"
+            className="w-fit px-3 text-xs md:text-base rounded-full bg-white font-poppins py-1.5  text-primary font-bold mb-2"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400 }}
           >
-            {item.service_num} Services
+            {item.service_num} {t("Services Label")}
           </motion.div>
           <motion.h3
-            className="text-white text-2xl md:text-4xl font-normal leading-tight"
+            className="text-white text-2xl font-normal leading-tight"
             whileHover={{ x: 5 }}
             transition={{ type: "spring", stiffness: 400 }}
           >
-            {item.title}
+            {t(item.title)}
           </motion.h3>
         </motion.div>
       </motion.div>

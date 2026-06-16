@@ -1,10 +1,13 @@
 "use client";
-import React, { useRef } from 'react'
-import { Button } from '@/components/ui/button'
+import { useTranslation } from 'react-i18next';
+import { useRef } from 'react';
+import { useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Image from 'next/image'
-import { motion, useInView } from 'framer-motion'
+import { Button } from '@/components/ui/button'
 
 export default function AcademyWorkshop() {
+  const { t , i18n} = useTranslation();
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: false, amount: 0.3 })
 
@@ -61,7 +64,7 @@ export default function AcademyWorkshop() {
       ref={sectionRef}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
-      className='relative w-full min-h-screen lg:h-screen flex items-center overflow-hidden py-20 lg:py-0'
+      className='relative w-full min-h-[85vh] lg:h-[85vh] flex items-center overflow-hidden py-20 lg:py-0'
     >
       <div
         style={{ background: "linear-gradient(180deg, #FFFFFF 0%, rgba(255, 249, 249, 0) 100%)" }}
@@ -81,7 +84,7 @@ export default function AcademyWorkshop() {
         className='absolute inset-0'
       >
         <Image
-          src="/images/Academy/Frame 1000005609.png"
+          src="/SHAHD-IMAGE/Academy/Frame 1000005609.webp"
           alt="academy-workshop"
           fill
           className='object-cover'
@@ -97,37 +100,37 @@ export default function AcademyWorkshop() {
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        className='relative z-10 w-full main-container mx-auto px-4 flex flex-col justify-center lg:items-start items-center text-center lg:text-left gap-6 md:gap-8'
+        className='relative z-10 w-full main-container mx-auto px-4 flex flex-col justify-center lg:items-start items-center text-center lg:text-left gap-3'
       >
         {/* Badge */}
         <motion.p
           variants={itemVariants}
-          className='font-bold font-poppins text-lg md:text-xl lg:text-[27px] text-secondary'
+          className='font-bold font-poppins text-lg md:text-xl text-secondary'
         >
-          Live Aesthetic Medicine Workshop
+          {t('Live Aesthetic Medicine Workshop')}
         </motion.p>
 
         {/* Title */}
         <motion.h1
           variants={itemVariants}
-          className='text-primary text-3xl md:text-5xl lg:text-[64px] font-bold max-w-2xl leading-tight'
+          className='text-primary text-3xl  font-normal font-main max-w-2xl leading-tight'
         >
-          Watch the Artistry in Real-Time.
+          {t('Academy Workshop Title')}
         </motion.h1>
 
         {/* Description Card */}
         <motion.div
           variants={cardVariants}
           whileHover="hover"
-          className='bg-white/40 backdrop-blur-xl border max-w-2xl rounded-[24px] border-white/40 p-6 md:p-8 shadow-2xl'
+          className='bg-white/40 backdrop-blur-xl border max-w-2xl rounded-[24px] border-white/40 p-5 shadow-2xl'
         >
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="text-[#414141] text-sm md:text-base leading-relaxed font-poppins"
+            className="text-[#414141] text-sm leading-relaxed font-poppins"
           >
-            Join Dr. Shahd and Dr. Eslam for an immersive live experience. Observe live demonstrations of advanced injection techniques and patient assessments. Bridge the gap between digital learning and real-world application, focusing on safety and artistry.
+            {t('Academy Workshop Desc')}
           </motion.p>
         </motion.div>
 
@@ -136,13 +139,13 @@ export default function AcademyWorkshop() {
           variants={buttonVariants}
           whileHover="hover"
           whileTap="tap"
-          className="mt-4"
+          className="mt-1"
         >
           <Button
             variant='secondary'
-            className={"rounded-full text-white text-lg md:text-xl lg:text-2xl px-8 py-6 md:px-10 md:py-8 shadow-2xl relative overflow-hidden group font-medium"}
+            className={"rounded-full text-white text-lg md:text-xl  px-8 py-6  shadow-2xl relative overflow-hidden group font-medium"}
           >
-            <span className='relative z-10'>Reserve My Seat at the Next Event</span>
+            <span className='relative z-10'>{t('Reserve My Seat')}</span>
           </Button>
         </motion.div>
       </motion.div>

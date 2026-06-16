@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image';
 import Link from 'next/link';
 import { MoveUpRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const headerVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -32,12 +33,12 @@ const gridContainerVariants = {
 // Grid item animation
 const gridItemVariants = {
   hidden: { 
-    opacity: 0,
+    opacity: 0, 
     scale: 0.8,
     y: 50
   },
   visible: { 
-    opacity: 1,
+    opacity: 1, 
     scale: 1,
     y: 0,
     transition: {
@@ -80,38 +81,39 @@ const linkVariants = {
 }
 
 export default function MedicalWeightManagement() {
+  const { t } = useTranslation();
   return (
-    <div className='min-h-screen bg-[#FFF9F7] overflow-hidden'>
+    <div className='min-h-[85vh] pt-4 bg-[#FFF9F7] overflow-hidden'>
       <motion.div
         variants={headerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
-        className='max-w-4xl py-9 text-center mx-auto px-4'
+        className='max-w-4xl py-4 text-center mx-auto px-4'
       >
         <motion.h5
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className='text-[#95BCAA] text-[27px] font-bold font-poppins tracking-[-0.15px]'
+          className='text-[#95BCAA] text-2xl font-bold font-poppins tracking-[-0.15px]'
         >
-          Medical Weight Management
+          {t("Medical Weight Management")}
         </motion.h5>
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.8 }}
-            className='text-3xl sm:text-4xl md:text-5xl lg:text-[56px] text-primary font-normal leading-tight mt-2 lg:mt-0'
+            className='text-3xl   text-primary font-normal leading-tight mt-2 lg:mt-0'
         >
-          A Sustainable Approach to Weight Management
+          {t("A Sustainable Approach to Weight Management")}
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.8 }}
-          className='text-base text-[#414141] font-poppins font-normal mt-4'
+          className='text-base text-[#414141] font-poppins font-normal mt-2'
         >
-          A science-driven approach to fat loss, body shaping, and metabolic balance — guided by medical expertise.
+          {t("Sustainable Weight Management Desc")}
         </motion.p>
       </motion.div>
 
@@ -126,7 +128,7 @@ export default function MedicalWeightManagement() {
         <motion.div 
           variants={gridItemVariants}
           whileHover="hover"
-          className='relative w-full h-[328px] overflow-hidden group'
+          className='relative w-full h-[280px] overflow-hidden group'
         >
           <motion.div
             variants={imageVariants}
@@ -135,7 +137,7 @@ export default function MedicalWeightManagement() {
             className='relative w-full h-full'
           >
             <Image 
-              src="/images/Weight-management/Rectangle 48.png" 
+              src="/SHAHD-IMAGE/Weight-management/Rectangle 48.webp" 
               alt="Weight management" 
               fill 
               className='object-cover w-full h-full transition-transform duration-700'
@@ -154,14 +156,14 @@ export default function MedicalWeightManagement() {
         <motion.div 
           variants={gridItemVariants}
           whileHover="hover"
-          className='w-full h-[328px] text-center flex flex-col justify-center items-center bg-[#DDB2B5] group'
+          className='w-full h-[280px] text-center flex flex-col justify-center items-center bg-[#DDB2B5] group'
         >
           <motion.div 
             variants={textContentVariants}
             initial="hidden"
             whileInView="visible"
             whileHover="hover"
-            className='max-w-[220px] flex flex-col gap-6 mx-auto text-center'
+            className='max-w-[220px] flex flex-col gap-1 mx-auto text-center'
           >
             <motion.p 
               className='text-[32px] tracking-[-0.15px] text-white font-normal relative'
@@ -171,7 +173,7 @@ export default function MedicalWeightManagement() {
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
             >
-              FAT Reduction
+              {t("FAT Reduction")}
               <motion.span 
                 className="absolute -inset-1 bg-white/20 rounded-lg -z-10"
                 initial={{ scale: 0 }}
@@ -180,11 +182,11 @@ export default function MedicalWeightManagement() {
               />
             </motion.p>
             <motion.p 
-              className='text-base font-light font-poppins text-[#414141]'
+              className='text-base  font-light line-clamp-4! text-ellipsis! font-poppins text-[#414141]'
               initial={{ opacity: 0.8 }}
               whileHover={{ opacity: 1 }}
             >
-              Target stubborn fat deposits with advanced non-invasive technologies designed to contour the body and improve proportions safely.
+              {t("FAT Reduction Desc")}
             </motion.p>
             <motion.div
               variants={linkVariants}
@@ -196,7 +198,7 @@ export default function MedicalWeightManagement() {
                   whileHover={{ x: -3 }}
                   transition={{ duration: 0.3 }}
                 >
-                  Learn More
+                  {t("Learn More")}
                 </motion.span>
                 <motion.div
                   whileHover={{ rotate: 45 }}
@@ -213,7 +215,7 @@ export default function MedicalWeightManagement() {
         <motion.div 
           variants={gridItemVariants}
           whileHover="hover"
-          className='relative w-full h-[328px] overflow-hidden group'
+          className='relative w-full h-[280px] overflow-hidden group'
         >
           <motion.div
             variants={imageVariants}
@@ -222,7 +224,7 @@ export default function MedicalWeightManagement() {
             className='relative w-full h-full'
           >
             <Image 
-              src="/images/Weight-management/Rectangle 49.png" 
+              src="/SHAHD-IMAGE/Weight-management/Rectangle 49.webp" 
               alt="Weight management" 
               fill 
               className='object-cover w-full h-full'
@@ -240,14 +242,14 @@ export default function MedicalWeightManagement() {
         <motion.div 
           variants={gridItemVariants}
           whileHover="hover"
-          className='w-full h-[328px] text-center flex flex-col justify-center items-center bg-white group'
+          className='w-full h-[280px] text-center flex flex-col justify-center items-center bg-white group'
         >
           <motion.div 
             variants={textContentVariants}
             initial="hidden"
             whileInView="visible"
             whileHover="hover"
-            className='max-w-[220px] flex flex-col gap-6 mx-auto text-center'
+            className='max-w-[220px] flex flex-col gap-1 mx-auto text-center'
           >
             <motion.p 
               className='text-[32px] tracking-[-0.15px] text-white font-normal relative'
@@ -257,7 +259,7 @@ export default function MedicalWeightManagement() {
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
             >
-              Metabolic boost
+              {t("Metabolic boost")}
               <motion.span 
                 className="absolute -inset-1 bg-[#DDB2B5]/20 rounded-lg -z-10"
                 initial={{ scale: 0 }}
@@ -266,11 +268,11 @@ export default function MedicalWeightManagement() {
               />
             </motion.p>
             <motion.p 
-              className='text-base tracking-[-0.15px] font-light font-poppins text-[#414141]'
+              className='text-base tracking-[-0.15px] line-clamp-4 text-ellipsis font-light font-poppins text-[#414141]'
               initial={{ opacity: 0.8 }}
               whileHover={{ opacity: 1 }}
             >
-              Enhance your metabolism and energy levels through medically guided weight management protocols tailored to your body.
+              {t("Metabolic boost Desc")}
             </motion.p>
             <motion.div
               variants={linkVariants}
@@ -278,7 +280,7 @@ export default function MedicalWeightManagement() {
               whileHover="hover"
             >
               <Link href="/weight-management/fat-reduction" className='text-base flex gap-1 items-center justify-center underline font-light font-poppins text-[#414141]'>
-                <span>Learn More</span>
+                <span>{t("Learn More")}</span>
                 <motion.div
                   whileHover={{ rotate: 45 }}
                   transition={{ duration: 0.3 }}
@@ -294,14 +296,14 @@ export default function MedicalWeightManagement() {
         <motion.div 
           variants={gridItemVariants}
           whileHover="hover"
-          className='w-full h-[328px] text-center flex flex-col justify-center items-center bg-[#D29B9F] group'
+          className='w-full h-[280px] text-center flex flex-col justify-center items-center bg-[#D29B9F] group'
         >
           <motion.div 
             variants={textContentVariants}
             initial="hidden"
             whileInView="visible"
             whileHover="hover"
-            className='max-w-[220px] flex flex-col gap-6 mx-auto text-center'
+            className='max-w-[220px] flex flex-col gap-1 mx-auto text-center'
           >
             <motion.p 
               className='text-[32px] tracking-[-0.15px] text-white font-normal relative'
@@ -311,7 +313,7 @@ export default function MedicalWeightManagement() {
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
             >
-              Body Contouring
+              {t("Body Contouring")}
               <motion.span 
                 className="absolute -inset-1 bg-white/20 rounded-lg -z-10"
                 initial={{ scale: 0 }}
@@ -320,11 +322,11 @@ export default function MedicalWeightManagement() {
               />
             </motion.p>
             <motion.p 
-              className='text-base font-light tracking-[-0.15px] font-poppins text-[#414141]'
+              className='text-base font-light  line-clamp-4 text-ellipsis tracking-[-0.15px] font-poppins text-[#414141]'
               initial={{ opacity: 0.8 }}
               whileHover={{ opacity: 1 }}
             >
-              Reshape and sculpt your body with precision using non-surgical contouring technologies for smoother, firmer results.
+              {t("Body Contouring Desc")}
             </motion.p>
             <motion.div
               variants={linkVariants}
@@ -332,7 +334,7 @@ export default function MedicalWeightManagement() {
               whileHover="hover"
             >
               <Link href="/weight-management/fat-reduction" className='text-base flex gap-1 items-center justify-center underline font-light font-poppins text-[#414141]'>
-                <span>Learn More</span>
+                <span>{t("Learn More")}</span>
                 <motion.div
                   whileHover={{ rotate: 45 }}
                   transition={{ duration: 0.3 }}
@@ -348,7 +350,7 @@ export default function MedicalWeightManagement() {
         <motion.div 
           variants={gridItemVariants}
           whileHover="hover"
-          className='relative w-full h-[328px] overflow-hidden group'
+          className='relative w-full h-[280px] overflow-hidden group'
         >
           <motion.div
             variants={imageVariants}
@@ -357,7 +359,7 @@ export default function MedicalWeightManagement() {
             className='relative w-full h-full'
           >
             <Image 
-              src="/images/Weight-management/Rectangle 47.png" 
+              src="/SHAHD-IMAGE/Weight-management/Rectangle 47.webp" 
               alt="Weight management" 
               fill 
               className='object-cover w-full h-full'
@@ -375,14 +377,14 @@ export default function MedicalWeightManagement() {
         <motion.div 
           variants={gridItemVariants}
           whileHover="hover"
-          className='w-full h-[328px] text-center flex flex-col justify-center items-center bg-[#95BCAA] group'
+          className='w-full h-[280px] text-center flex flex-col justify-center items-center bg-[#95BCAA] group'
         >
           <motion.div 
             variants={textContentVariants}
             initial="hidden"
             whileInView="visible"
             whileHover="hover"
-            className='max-w-[220px] flex flex-col gap-6 mx-auto text-center'
+            className='max-w-[220px] flex flex-col gap-1 mx-auto text-center'
           >
             <motion.p 
               className='text-[32px] tracking-[-0.15px] text-white font-normal relative'
@@ -392,7 +394,7 @@ export default function MedicalWeightManagement() {
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
             >
-              Muscle toning
+              {t("Muscle toning")}
               <motion.span 
                 className="absolute -inset-1 bg-[#DDB2B5]/20 rounded-lg -z-10"
                 initial={{ scale: 0 }}
@@ -401,11 +403,11 @@ export default function MedicalWeightManagement() {
               />
             </motion.p>
             <motion.p 
-              className='text-base font-light tracking-[-0.15px] font-poppins text-[#414141]'
+              className='text-base font-light line-clamp-4 text-ellipsis tracking-[-0.15px] font-poppins text-[#414141]'
               initial={{ opacity: 0.8 }}
               whileHover={{ opacity: 1 }}
             >
-              Target stubborn fat deposits with advanced non-invasive technologies designed to contour the body and improve proportions safely.
+              {t("Muscle toning Desc")}
             </motion.p>
             <motion.div
               variants={linkVariants}
@@ -413,7 +415,7 @@ export default function MedicalWeightManagement() {
               whileHover="hover"
             >
               <Link href="/weight-management/fat-reduction" className='text-base flex gap-1 items-center justify-center underline font-light font-poppins text-[#414141]'>
-                <span>Learn More</span>
+                <span>{t("Learn More")}</span>
                 <motion.div
                   whileHover={{ rotate: 45 }}
                   transition={{ duration: 0.3 }}
@@ -429,7 +431,7 @@ export default function MedicalWeightManagement() {
         <motion.div 
           variants={gridItemVariants}
           whileHover="hover"
-          className='relative w-full h-[328px] overflow-hidden group'
+          className='relative w-full h-[280px] overflow-hidden group'
         >
           <motion.div
             variants={imageVariants}
@@ -438,7 +440,7 @@ export default function MedicalWeightManagement() {
             className='relative w-full h-full'
           >
             <Image 
-              src="/images/Weight-management/Rectangle 45.png" 
+              src="/SHAHD-IMAGE/Weight-management/Rectangle 45.webp" 
               alt="Weight management" 
               fill 
               className='object-cover w-full h-full'

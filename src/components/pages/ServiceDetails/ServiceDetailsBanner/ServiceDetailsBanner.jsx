@@ -15,9 +15,9 @@ export default function ServiceDetailsBanner({ title }) {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className='relative min-h-[60vh] md:min-h-screen flex justify-center items-center py-20 px-4'
+      className='relative min-h-[90vh] flex justify-center items-center py-20 px-4'
       style={{
-        background: "url('/images/service-details/service details.png')",
+        background: "url('/SHAHD-IMAGE/service-details/service details.webp')",
         backgroundPosition: "center center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover"
@@ -42,7 +42,7 @@ export default function ServiceDetailsBanner({ title }) {
             damping: 20,
             delay: 0.2
           }}
-          className='text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-normal leading-[1.1] text-white mb-6 md:mb-8'
+          className='text-4xl  font-normal leading-[1.1] text-white mb-6 md:mb-8'
         >
           {title}
         </motion.h1>

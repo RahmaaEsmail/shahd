@@ -3,31 +3,32 @@
 import Image from 'next/image'
 import React from 'react'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next';
 
 const data = [
   {
     id: 1,
-    title: "VAGINAL HEALTH",
-    description: "Treatments designed for long-term care.",
-    icon: "/images/aethesic/Vector.png"
+    titleKey: "VAGINAL HEALTH",
+    descriptionKey: "Vaginal Health Desc",
+    icon: "/SHAHD-IMAGE/aethesic/Vector.webp"
   },
   {
     id: 2,
-    title: "TISSUE REJUVENATION",
-    description: "Advanced technologies stimulate natural collagen production for improved function and comfort.",
-    icon: "/images/aethesic/Group.png",
+    titleKey: "TISSUE REJUVENATION",
+    descriptionKey: "Tissue Rejuvenation Desc",
+    icon: "/SHAHD-IMAGE/aethesic/Group.webp",
   },
   {
     id: 3,
-    title: "COMFORT DURING DAILY LIFE",
-    description: "Enhancing comfort, reducing discomfort and supporting ease in movement, lifestyle and daily routines.",
-    icon: "/images/aethesic/Vector (1).png"
+    titleKey: "COMFORT DURING DAILY LIFE",
+    descriptionKey: "Daily Comfort Desc",
+    icon: "/SHAHD-IMAGE/aethesic/Vector (1).webp"
   },
   {
     id: 4,
-    title: "CONFIDENCE & QUALITY OF LIFE",
-    description: "Empowering confidence and personal well-being helping you feel more comfortable/confident.",
-    icon: "/images/aethesic/Vector (2).png"
+    titleKey: "CONFIDENCE & QUALITY OF LIFE",
+    descriptionKey: "Confidence Quality Desc",
+    icon: "/SHAHD-IMAGE/aethesic/Vector (2).webp"
   }
 ]
 
@@ -46,12 +47,14 @@ const staggerContainer = {
 }
 
 export default function AboutAestheticGynecology() {
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === 'ar';
   return (
-    <section className="relative w-full py-16 overflow-hidden">
+    <section dir={isRtl ? 'rtl' : 'ltr'} className="relative w-full py-16 overflow-hidden">
       {/* Background Decorative Floral Elements */}
       <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
         <Image
-          src="/images/aethesic/d6f7c7b39cbc8c4f1eb3a6f2018f0f6d8c68cec3.jpg"
+          src="/SHAHD-IMAGE/aethesic/d6f7c7b39cbc8c4f1eb3a6f2018f0f6d8c68cec3.webp"
           alt="Floral Background"
           fill
           className="object-cover"
@@ -61,16 +64,16 @@ export default function AboutAestheticGynecology() {
       <div className="main-container relative z-10 mx-auto px-4">
         {/* Header Section */}
         <motion.div 
-          initial={{ opacity: 0, x: -20 }}
+          initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: false }}
-          className="mb-12"
+          className="mb-4"
         >
-          <p className="text-secondary font-semibold tracking-wider text-sm lg:text-lg uppercase mb-2">
-            About Aesthetic Gynecology
+          <p  className="text-secondary font-bold font-poppins tracking-wider text-2xl capitalize">
+            {t("About Aesthetic Gynecology Title")}
           </p>
-          <h2 className="text-primary text-4xl md:text-5xl lg:text-[55px] leading-tight max-w-2xl uppercase">
-            Aesthetic gynecology focuses on <br className="hidden lg:block" /> treatments that improve:
+          <h2 className="text-primary text-3xl   leading-tight max-w-2xl uppercase">
+            {t("Aesthetic Focus")}
           </h2>
         </motion.div>
 
@@ -85,7 +88,7 @@ export default function AboutAestheticGynecology() {
             className="relative w-full aspect-square  mx-auto lg:mx-0"
           >
             <Image
-              src="/images/aethesic/56dd5bf56856e3484db3b38ee1306fde539ed367.png"
+              src="/SHAHD-IMAGE/aethesic/56dd5bf56856e3484db3b38ee1306fde539ed367.webp"
               alt="Anatomical Illustration"
               fill
               className="object-cover" // Changed to contain to ensure the illustration isn't cropped
@@ -108,21 +111,21 @@ export default function AboutAestheticGynecology() {
                 style={{
                   boxShadow: "-0.6px -0.6px 48px -12px #00000026"
                 }}
-                className="bg-white/60 backdrop-blur-sm border border-white p-6 rounded-xl flex flex-col items-center text-center shadow-sm"
+                className="bg-white/60 backdrop-blur-sm border border-white p-3 rounded-xl flex flex-col items-center text-center shadow-sm"
               >
                 <div className="relative w-10 h-10 mb-4">
                   <Image
                     src={item.icon}
-                    alt={item.title}
+                    alt={t(item.titleKey)}
                     fill
                     className="object-contain"
                   />
                 </div>
-                <h3 className="text-primary font-normal text-[32px] mb-2 leading-tight uppercase tracking-wide">
-                  {item.title}
+                <h3 className="text-primary font-normal text-xl mb-2 leading-tight uppercase tracking-wide">
+                  {t(item.titleKey)}
                 </h3>
                 <p className="text-[#414141] text-base font-light font-poppins leading-[1.6]">
-                  {item.description}
+                  {t(item.descriptionKey)}
                 </p>
               </motion.div>
             ))}
@@ -131,11 +134,11 @@ export default function AboutAestheticGynecology() {
       </div>
 
        <div className='absolute -bottom-7 left-0 right-0 z-20 w-full h-[53px] pointer-events-none'>
-                <img src="/images/aethesic/Rectangle 24.png" className='w-full h-full object-cover' alt="" />
+                <img src="/SHAHD-IMAGE/aethesic/Rectangle 24.webp" className='w-full h-full object-cover' alt="" />
             </div>
 
              <div className='absolute top-0 rotate-180 left-0 right-0 z-20 w-full h-[53px] pointer-events-none'>
-                <img src="/images/aethesic/Rectangle 24.png" className='w-full h-full object-cover' alt="" />
+                <img src="/SHAHD-IMAGE/aethesic/Rectangle 24.webp" className='w-full h-full object-cover' alt="" />
             </div>
     </section>
   )

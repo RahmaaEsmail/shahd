@@ -250,11 +250,11 @@ export default function Header() {
         animate={{ y: 0, opacity: 1 }}
         className={`${pathname === "/book/buy-book" ? "absolute" : "fixed"}
          top-0 left-0 right-0 z-9999 transition-all duration-300 
-         ${isScrolled ? 'bg-primary/60 backdrop-blur-lg shadow-sm py-4' : 'bg-transparent py-4'
+         ${isScrolled ? 'bg-primary/60 backdrop-blur-lg shadow-sm' : 'bg-transparent'
           }`}
       >
         <div className="main-container mx-auto px-4">
-          <div className="flex items-center gap-4 justify-between">
+          <div className="flex items-center  gap-1 justify-between">
             {/* Logo - Scale down slightly on mobile to save space */}
             <div className="scale-90 sm:scale-100 origin-left">
               <MainLogo isScrolled={isScrolled} />

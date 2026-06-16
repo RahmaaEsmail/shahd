@@ -3,29 +3,34 @@ import Image from 'next/image'
 import React from 'react'
 import { motion } from 'framer-motion';
 import { Breadcrumb } from '@/components/shared/Breadcrumb';
-
-const breadcrumbItems = [
-  { label: 'Home', href: '/' },
-  { label: 'Services' },
-];
+import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 export default function ServiceBanner() {
+  const { t } = useTranslation();
+  const router = useRouter();
+
+  const breadcrumbItems = [
+    { label: t('Home'), href: '/' },
+    { label: t('Services') },
+  ];
+
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: -24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false }}
       transition={{ duration: 0.4, ease: "easeIn" }}
       // Use min-h-screen but allow content to expand if needed on very small devices
-      className='min-h-screen relative flex flex-col justify-center overflow-hidden w-full'
+      className='h-screen relative flex flex-col justify-center overflow-hidden w-full'
     >
       {/* Background Section */}
       <div className="absolute inset-0">
-        <Image 
-          src="/images/Services/servicesBg.png" 
+        <Image
+          src="/SHAHD-IMAGE/Services/servicesBg.webp"
           fill
-          className='object-cover' 
-          alt="service banner image" 
+          className='object-cover'
+          alt="service banner image"
           priority
           quality={90}
         />
@@ -38,17 +43,18 @@ export default function ServiceBanner() {
       </div>
 
       {/* Content Section */}
-      <div className='relative z-10 w-full flex flex-col items-center justify-center px-4 py-20 lg:pt-32'>
-        <div className='max-w-7xl mx-auto pt-10 lg:pt-0 w-full flex flex-col items-center text-center'>
-          
+      <div className='relative z-10 w-full flex flex-col items-center justify-center  mt-20  py-20 lg:pt-32'>
+        <div className=' pt-10 lg:pt-0 w-full flex flex-col items-center text-center'>
+
           {/* Main Heading with Fluid Typography */}
-          <h1 className='font-normal text-white text-center text-3xl sm:text-5xl md:text-6xl lg:text-[100px] leading-[1.2] lg:leading-[1.1] mb-6 max-w-5xl'>
-            Discover the Art of <span className="italic lg:not-italic font-light lg:font-normal">Subtle Beauty</span>
+          <h1 className='font-normal p-0! text-white text-center flex justify-center  lg:justify-between items-center text-3xl sm:text-5xl md:text-6xl   leading-[1.2] lg:leading-[1.1] mb-6 gap-40 max-w-full mx-auto'>
+            <span>{t("Discover the Art")}</span>
+            <span className="">{t("of Subtle Beauty")}</span>
           </h1>
-          
+
           {/* Subtext with responsive width and size */}
-          <p className='font-normal max-w-sm sm:max-w-xl md:max-w-3xl text-white/90 mx-auto text-center font-poppins text-base sm:text-lg lg:text-2xl leading-relaxed mb-8 lg:mb-12'>
-            At Dr. Shahd Awad Clinic, we believe that true beauty lies in balance and confidence. Explore our range of advanced treatments designed to enhance your natural elegance.
+          <p className='font-normal max-w-sm sm:max-w-xl md:max-w-5xl text-white/90 mx-auto text-center font-poppins text-base sm:text-lg leading-relaxed mb-8 lg:mb-12'>
+            {t("Service Banner Desc")}
           </p>
 
           {/* Breadcrumb - Hidden on very small screens if necessary, or styled for fit */}
@@ -57,12 +63,12 @@ export default function ServiceBanner() {
           </div>
 
           {/* Responsive Button */}
-          <motion.div
+          {/* <motion.div
+          onClick={() => router.push("/booking")}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className="relative w-fit mx-auto group cursor-pointer"
           >
-            {/* Gradient border wrapper */}
             <div
               className="absolute -inset-0.5 rounded-full opacity-80 group-hover:opacity-100 transition-opacity duration-300"
               style={{
@@ -71,9 +77,9 @@ export default function ServiceBanner() {
               }}
             />
             <button className="relative bg-white rounded-full px-6 py-3 lg:px-10 lg:py-4 text-primary font-semibold text-sm lg:text-lg hover:bg-gray-50 transition-colors uppercase tracking-widest whitespace-nowrap">
-              Explore Our services
+              {t("Explore Our services")}
             </button>
-          </motion.div>
+          </motion.div> */}
         </div>
       </div>
     </motion.div>

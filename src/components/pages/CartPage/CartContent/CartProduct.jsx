@@ -44,7 +44,7 @@ export default function CartProduct({ product, index = 0 }) {
         {/* Product Image */}
         <div className="relative w-[100px] h-[100px] md:w-[120px] md:h-[120px] rounded-[24px] overflow-hidden bg-[#F5E8E6] shrink-0">
           <Image
-            src={product?.image || "/images/Cart/Rectangle 43.png"}
+            src={product?.image || "/SHAHD-IMAGE/Cart/Rectangle 43.webp"}
             alt={product?.name || "Product"}
             fill
             className="object-cover"

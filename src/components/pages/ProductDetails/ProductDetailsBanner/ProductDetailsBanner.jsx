@@ -2,14 +2,17 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Breadcrumb } from '../../../shared/Breadcrumb';
-
-const breadcrumbItems = [
-  { label: 'Home', href: '/' },
-  { label: 'Products' },
-  { label: 'Product Details' },
-];
+import { useTranslation } from 'react-i18next';
 
 export default function ProductDetailsBanner() {
+  const { t } = useTranslation();
+  
+  const breadcrumbItems = [
+    { label: t('Home'), href: '/' },
+    { label: t('Products') },
+    { label: t('Product Details') },
+  ];
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -17,7 +20,7 @@ export default function ProductDetailsBanner() {
       transition={{ duration: 0.8 }}
       className='relative min-h-[60vh] lg:min-h-screen flex justify-center items-center py-20 lg:py-0'
       style={{
-        background: "url('/images/product-details/service details.png')",
+        background: "url('/SHAHD-IMAGE/product-details/service details.webp')",
         backgroundPosition: "center center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover"
@@ -42,9 +45,9 @@ export default function ProductDetailsBanner() {
             damping: 20,
             delay: 0.2
           }}
-          className='text-4xl md:text-6xl lg:text-[80px] font-normal leading-[1.1] text-white mb-6 md:mb-8'
+          className='text-4xl md:text-6xl font-normal leading-[1.1] text-white mb-6 md:mb-8'
         >
-          Discover the Product Your Skin Will Love
+          {t('Discover the Product Your Skin Will Love')}
         </motion.h1>
 
         {/* Breadcrumb animation */}

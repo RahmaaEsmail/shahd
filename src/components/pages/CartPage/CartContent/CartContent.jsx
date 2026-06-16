@@ -48,9 +48,9 @@ const summaryVariants = {
 export default function CartContent() {
   // Sample cart items - replace with your actual cart data
   const [cartItems, setCartItems] = React.useState([
-    { id: 1, name: "Gentle Foaming Cleanser", price: 23.00, image: "/images/Cart/Rectangle 43.png" },
-    { id: 2, name: "Moisturizing Cream", price: 35.00, image: "/images/Cart/Rectangle 43.png" },
-    { id: 3, name: "Face Serum", price: 45.00, image: "/images/Cart/Rectangle 43.png" },
+    { id: 1, name: "Gentle Foaming Cleanser", price: 23.00, image: "/SHAHD-IMAGE/Cart/Rectangle 43.webp" },
+    { id: 2, name: "Moisturizing Cream", price: 35.00, image: "/SHAHD-IMAGE/Cart/Rectangle 43.webp" },
+    { id: 3, name: "Face Serum", price: 45.00, image: "/SHAHD-IMAGE/Cart/Rectangle 43.webp" },
   ]);
 
   return (

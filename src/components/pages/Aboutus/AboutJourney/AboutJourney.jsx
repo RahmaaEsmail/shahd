@@ -1,21 +1,22 @@
 "use client";
-
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import React, { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslation } from 'react-i18next';
 
 // Optimized Title Component for responsiveness
 const TitleSection = ({ title, highlightedWord, lastPart }) => {
   return (
-    <h1 className="text-white  pt-0 text-4xl md:text-6xl lg:text-[100px] xl:text-[120px] font-light leading-[1.1] md:leading-[0.9] tracking-tight px-4">
+    <h1 className="text-white  pt-0 text-4xl md:text-6xl font-light leading-[1.1] md:leading-[0.9] tracking-tight px-4">
       <span className="block mb-2">{title}</span>
       <span className="flex flex-wrap items-center justify-center gap-3 md:gap-4 lg:gap-8">
         <span className="font-medium italic md:not-italic">{highlightedWord}</span>
         <span className="relative w-16 h-8 md:w-24 md:h-12 lg:w-40 lg:h-16 rounded-full overflow-hidden inline-block border border-white/20">
           <Image
-            src="/images/About/aboutcontent.png"
+            src="/SHAHD-IMAGE/About/aboutcontent.webp"
             alt="Beauty detail"
             fill
             className="object-cover"
@@ -27,61 +28,74 @@ const TitleSection = ({ title, highlightedWord, lastPart }) => {
   );
 };
 
-const imagesWithVariations = [
-  {
-    id: 1,
-    titleData: { main: "Where the Dream of Redefining ", word: "BEAUTY", end: "FIRST BEGAN" },
-    description: "It all started with a vision — a dream to bring together science, art, and passion. Dr. Shahd Awad began her journey in aesthetic medicine determined to help people see and feel their natural beauty in a new light.",
-    image: "/images/About/about-content1.png",
-    thumbnail: "/images/About/about-content1.png",
-  },
-  {
-    id: 2,
-    titleData: { main: "OUR MISSION IS", word: "TRANSFORM", end: "LIVES" },
-    description: "With cutting-edge technology and personalized care, we help our clients achieve their aesthetic goals while maintaining their unique natural beauty.",
-    image: "/images/About/about-content2.png",
-    thumbnail: "/images/About/about-content2.png",
-  },
-  {
-    id: 3,
-    titleData: { main: "WE BELIEVE", word: "BEAUTY", end: "IS ART" },
-    description: "Every face tells a story. Our approach combines medical precision with artistic vision to enhance your natural features.",
-    image: "/images/About/about-content3.png",
-    thumbnail: "/images/About/about-content3.png",
-  },
-  {
-    id: 4,
-    titleData: { main: "YOUR JOURNEY", word: "STARTS", end: "HERE" },
-    description: "Experience the perfect blend of science and aesthetics in a comfortable, welcoming environment designed just for you.",
-    image: "/images/About/about-content4.png",
-    thumbnail: "/images/About/about-content4.png",
-  },
-];
-
 export default function AboutJourney() {
+  const { t , i18n} = useTranslation();
   const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const imagesWithVariations = [
+    {
+      id: 1,
+      titleData: { main: t("Journey Title 1"), word: t("Journey Word 1"), end: t("Journey End 1") },
+      description: t("Journey Desc 1"),
+      image: "/SHAHD-IMAGE/About/about-content1.webp",
+      thumbnail: "/SHAHD-IMAGE/About/about-content1.webp",
+    },
+    {
+      id: 2,
+      titleData: { main: t("Journey Title 2"), word: t("Journey Word 2"), end: t("Journey End 2") },
+      description: t("Journey Desc 2"),
+      image: "/SHAHD-IMAGE/About/about-content2.webp",
+      thumbnail: "/SHAHD-IMAGE/About/about-content2.webp",
+    },
+    {
+      id: 3,
+      titleData: { main: t("Journey Title 3"), word: t("Journey Word 3"), end: t("Journey End 3") },
+      description: t("Journey Desc 3"),
+      image: "/SHAHD-IMAGE/About/about-content3.webp",
+      thumbnail: "/SHAHD-IMAGE/About/about-content3.webp",
+    },
+    {
+      id: 4,
+      titleData: { main: t("Journey Title 4"), word: t("Journey Word 4"), end: t("Journey End 4") },
+      description: t("Journey Desc 4"),
+      image: "/SHAHD-IMAGE/About/about-content4.webp",
+      thumbnail: "/SHAHD-IMAGE/About/about-content4.webp",
+    },
+  ];
+
   const [selectedImage, setSelectedImage] = useState(imagesWithVariations[0]);
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
       loop: true,
       align: "center",
+      direction: i18n?.language == "ar" ? "right" : "left",
       containScroll: "trimSnaps",
     },
     [Autoplay({ delay: 4000, stopOnInteraction: true })]
   );
 
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
   const handleThumbnailClick = useCallback((index) => {
     if (!emblaApi) return;
     emblaApi.scrollTo(index);
-  }, [emblaApi]);
+    setSelectedIndex(index);
+    setSelectedImage(imagesWithVariations[index]);
+  }, [emblaApi, imagesWithVariations]);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
     const index = emblaApi.selectedScrollSnap();
     setSelectedIndex(index);
     setSelectedImage(imagesWithVariations[index]);
-  }, [emblaApi]);
+  }, [emblaApi, imagesWithVariations]);
 
   useEffect(() => {
     if (!emblaApi) return;
@@ -95,7 +109,7 @@ export default function AboutJourney() {
   }, [emblaApi, onSelect]);
 
   return (
-    <div className="relative min-h-[200px]! lg:min-h-[700px]  w-full overflow-hidden bg-black">
+    <div className="relative min-h-[200px]! lg:min-h-[700px] py-4  w-full overflow-hidden bg-black">
       {/* Background Image with Ken Burns effect */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -120,14 +134,14 @@ export default function AboutJourney() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black/90" />
 
       {/* Content Container */}
-      <div className="relative z-10 h-full flex flex-col pt-8 pb-12 px-4 md:px-10">
+      <div className="relative z-10 h-full flex flex-col pt-4 pb-6 px-4 md:px-10">
         {/* Section Label */}
         <motion.h2
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-[#D19B9B] font-poppins text-center font-medium text-xl! md:text-2xl lg:text-[40px] tracking-[4px] uppercase"
+          className="text-[#D19B9B] font-poppins text-center font-medium text-xl! md:text-2xl  tracking-[4px] uppercase"
         >
-          OUR JOURNEY
+          {t("OUR JOURNEY")}
         </motion.h2>
 
         {/* Main Headline & Description */}
@@ -155,7 +169,7 @@ export default function AboutJourney() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="mt-6 md:mt-10 text-white/70 font-poppins text-sm md:text-lg lg:text-2xl font-light max-w-4xl leading-relaxed px-6"
+              className="mt-2 text-white/70 font-poppins text-base  font-light max-w-4xl leading-relaxed px-6"
             >
               {selectedImage.description}
             </motion.p>
@@ -163,7 +177,7 @@ export default function AboutJourney() {
         </div>
 
         {/* Bottom Section: Stacked on Mobile, Row on Desktop */}
-        <div className="lg:mt-auto mt-8! flex flex-col md:flex-row items-center md:items-end justify-between gap-8 w-full">
+        <div className="lg:mt-auto mt-4! flex flex-col md:flex-row items-center md:items-end justify-between gap-8 w-full">
           {/* Button */}
           <motion.div
             whileHover={{ scale: 1.05 }}
@@ -178,12 +192,30 @@ export default function AboutJourney() {
               }}
             />
             <button className="relative bg-white rounded-full px-6 py-3 md:px-10 md:py-4 text-gray-800 font-semibold text-sm md:text-lg">
-              Book Appointment
+              {t("Book Appointment")}
             </button>
           </motion.div>
 
-          {/* Thumbnails */}
-          <div className="w-full md:w-auto max-w-[90vw] md:max-w-[400px] lg:max-w-[600px]">
+          {/* Thumbnails & Navigation */}
+          <div className="w-full md:w-auto max-w-[90vw] md:max-w-[400px] lg:max-w-[600px] flex flex-col gap-4">
+            {/* Navigation Buttons */}
+            <div className="flex justify-center md:justify-end gap-3 px-2">
+              <button
+                onClick={scrollPrev}
+                className="w-10 h-10 rounded-full border border-white flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm"
+                aria-label="Previous slide"
+              >
+                <ChevronRight size={20} />
+              </button>
+              <button
+                onClick={scrollNext}
+                className="w-10 h-10 rounded-full border border-white flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm"
+                aria-label="Next slide"
+              >
+                <ChevronLeft size={20} />
+              </button>
+            </div>
+
             <div className="overflow-hidden" ref={emblaRef}>
               <div className="flex gap-3 md:gap-4">
                 {imagesWithVariations.map((item, index) => (

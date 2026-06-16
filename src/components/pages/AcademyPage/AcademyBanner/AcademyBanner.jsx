@@ -1,19 +1,20 @@
 "use client";
 import Image from 'next/image'
-import React from 'react'
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-
 export default function AcademyBanner() {
+  const { t } = useTranslation();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: -24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false }}
       transition={{ duration: 0.4, ease: "easeIn" }}
-      className='min-h-screen lg:h-screen relative overflow-hidden'
+      className='min-h-[90vh] relative overflow-hidden'
     >
       <Image 
-        src="/images/Academy/Frame 1000005536.png" 
+        src="/SHAHD-IMAGE/Academy/Frame 1000005536.webp" 
         fill
         className='object-cover z-0' 
         alt="Academy banner image" 
@@ -21,26 +22,26 @@ export default function AcademyBanner() {
       />
       <div className='absolute inset-0 bg-black/20 z-1' />
 
-      <div className='relative z-10 flex flex-col justify-center items-center min-h-screen px-4 py-20 lg:py-0'>
+      <div className='relative z-10 flex flex-col justify-center items-center min-h-screen px-4 py-10 lg:py-0'>
         <div className='main-container w-full flex flex-col justify-center lg:justify-between h-full lg:h-[80%] gap-10 lg:gap-0'>
-          <div className='flex flex-col gap-4 lg:gap-6 mt-20'>
+          <div className='flex flex-col gap-4 lg:gap-6  mt-15'>
             <motion.div
               initial={{ opacity: 0, y: -50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className='flex w-full lg:max-w-6xl mx-auto flex-col lg:flex-row justify-between items-center text-center lg:text-left gap-2 lg:gap-0 leading-none'
             >
-              <h1 className='font-normal text-white text-5xl md:text-7xl lg:text-[100px]'>Empowering</h1>
-              <h1 className='font-normal text-white text-5xl md:text-7xl lg:text-[100px]'>next generation</h1>
+              <h1 className='font-normal text-white   text-5xl md:text-7xl'>{t('Empowering')}</h1>
+              <h1 className='font-normal text-white text-5xl md:text-7xl'>{t('next generation')}</h1>
             </motion.div>
             
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className='font-normal text-white/90 mt-4 text-center font-poppins text-lg md:text-xl lg:text-2xl max-w-4xl mx-auto leading-relaxed'
+              className='font-normal text-white/90 mt-2 text-center font-poppins text-lg md:text-xl max-w-4xl mx-auto leading-relaxed'
             >
-              Master the art and science of Aesthetic Medicine with Dr. Shahd Awad and Dr. Eslam Rizk. Internationally certified training designed by doctors, for doctors.
+              {t('Academy Banner Desc')}
             </motion.p>
           </div>
 
@@ -50,7 +51,7 @@ export default function AcademyBanner() {
             transition={{ duration: 0.8, delay: 0.6 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="relative w-fit mx-auto mt-14! lg:mt-auto mb-10 group cursor-pointer"
+            className="relative w-fit mx-auto mt-6! lg:mt-auto mb-3 group cursor-pointer"
           >
             <div
               className="absolute -inset-0.5 rounded-full opacity-80 group-hover:opacity-100 transition-opacity"
@@ -60,7 +61,7 @@ export default function AcademyBanner() {
               }}
             />
             <button className="relative bg-white w-[220px] md:w-[252px] rounded-full px-8 py-4 text-primary font-bold text-base md:text-lg hover:bg-gray-50 transition-colors">
-              Explore our courses
+              {t('Explore our courses')}
             </button>
           </motion.div>
         </div>

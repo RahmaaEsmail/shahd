@@ -3,8 +3,11 @@ import React from "react";
 import Marquee from "react-fast-marquee";
 import BannerMarqueeCard from "./BannerMarqueeCard";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export default function BannerMarquee() {
+  const {i18n} = useTranslation();
+   const dir = i18n.language === 'ar' ? 'right' : 'left';
   return (
     <motion.div
       initial={{ y: 24, opacity: 0 }}          // أقل من 100 عشان مايبقاش “قفزة”
@@ -22,14 +25,16 @@ export default function BannerMarquee() {
         autoFill
         pauseOnHover
         gradient={false}
-        speed={35}         // قلّل/زوّد حسب مزاجك (الأقل = أنعم)
+        speed={35}
+        loop={true}
+        direction={dir}         // قلّل/زوّد حسب مزاجك (الأقل = أنعم)
         delay={0.2}        // بداية أهدى
       >
         <div className="flex items-center gap-8 px-4">
-          <BannerMarqueeCard id={5} img={"/images/BannerImage/Rectangle 7.png"} title={"Eyebrow Enhancement"} />
-          <BannerMarqueeCard id={4} img={"/images/BannerImage/Rectangle 7 (1).png"} title={"Hair Routine"} />
-          <BannerMarqueeCard id={1} img={"/images/BannerImage/Rectangle 7 (2).png"} title={"Wrinkle Treatment"} />
-          <BannerMarqueeCard id={5} img={"/images/BannerImage/Rectangle 7 (3).png"} title={"Eyebrow Enhancement"} />
+          <BannerMarqueeCard id={5} img={"/SHAHD-IMAGE/BannerImage/Rectangle 7.webp"} title={"Eyebrow Enhancement"} />
+          <BannerMarqueeCard id={4} img={"/SHAHD-IMAGE/BannerImage/Rectangle 7 (1).webp"} title={"Hair Routine"} />
+          <BannerMarqueeCard id={1} img={"/SHAHD-IMAGE/BannerImage/Rectangle 7 (2).webp"} title={"Wrinkle Treatment"} />
+          <BannerMarqueeCard id={5} img={"/SHAHD-IMAGE/BannerImage/Rectangle 7 (3).webp"} title={"Eyebrow Enhancement"} />
         </div>
       </Marquee>
     </motion.div>

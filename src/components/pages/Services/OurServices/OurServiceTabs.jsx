@@ -2,8 +2,10 @@
 import React from 'react'
 import { motion } from 'framer-motion';
 import { cn } from '../../../../lib/utils';
+import { useTranslation } from 'react-i18next';
 
 export default function OurServiceTabs({ setActiveTab, tabs, activeTab }) {
+  const { t } = useTranslation();
   // Animation variants
   const tabVariants = {
     initial: { scale: 1 },
@@ -41,7 +43,7 @@ export default function OurServiceTabs({ setActiveTab, tabs, activeTab }) {
               "hover:bg-secondary hover:text-white"
             )}
           >
-            {item?.name}
+            {t(item?.name + " Tab")}
           </motion.button>
         )
       })}

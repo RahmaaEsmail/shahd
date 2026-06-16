@@ -7,7 +7,7 @@ export default function AllProductBanner() {
     <div
       className='relative min-h-screen flex justify-center items-center'
       style={{
-        background: "url('/images/Cart/service details.png')",
+        background: "url('/SHAHD-IMAGE/Cart/service details.webp')",
         backgroundPosition: "center center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover"

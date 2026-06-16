@@ -14,8 +14,8 @@ export const dynamicParams = false;
 
 export async function generateStaticParams() {
   return service_data.map((service) => ({
-    id: service.id.toString(),
-    slug: slugify(service.title),
+    id: service.id.toString() || 1,
+    slug: slugify(service.title) || "eyes-brows",
   }));
 }
 
@@ -24,7 +24,8 @@ export default async function ServiceDetailsPage({ params }) {
   
   // Find the service by ID
   const service = service_data.find(s => s.id.toString() === id);
-
+  console.log(service);
+  console.log("service data", service_data);
   if (!service) {
     notFound();
   }

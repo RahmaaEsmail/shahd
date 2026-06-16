@@ -65,7 +65,7 @@
 //       viewport={{ once: false, amount: 0.3 }}
 //       variants={sectionVariants}
 //       style={{
-//         backgroundImage: "url('/images/store/Desktop - 20.jpg')",
+//         backgroundImage: "url('/SHAHD-IMAGE/store/Desktop - 20.webp')",
 //         backgroundSize: "cover",
 //         backgroundPosition: "center",
 //         backgroundRepeat: "no-repeat",
@@ -114,15 +114,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import StoreProductsHeader from './StoreProductsHeader';
 import StoreProductsGrid from './StoreProductsGrid';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 export default function StoreProducts() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(1);
   const router = useRouter();
   
   return (
     <section
       style={{
-        backgroundImage: "url('/images/store/Desktop - 20.jpg')",
+        backgroundImage: "url('/SHAHD-IMAGE/Store/Desktop - 20.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -140,7 +142,7 @@ export default function StoreProducts() {
       
       {/* Content Container - Centered with flex */}
       <div className="relative z-10 w-full h-full">
-        <div className="main-container mx-auto px-4 py-12 flex flex-col items-center min-h-full">
+        <div className="main-container mx-auto px-4 py-4 flex flex-col items-center min-h-full">
           <StoreProductsHeader setActiveTab={setActiveTab} activeTab={activeTab} />
           
           <AnimatePresence mode="wait">
@@ -154,9 +156,9 @@ export default function StoreProducts() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => router.push('/products')}
-            className="mt-12 w-full lg:w-[189px] h-[44px] lg:h-[52px] rounded-full text-white flex justify-center items-center text-lg lg:text-2xl font-normal bg-gradient-to-r from-[#DDB2B5] to-[#EFD4CE] hover:shadow-lg active:scale-95 transition-all duration-300 mx-auto"
+            className="mt-12 w-full lg:w-[189px] h-[44px] rounded-full text-white flex justify-center items-center text-lg   font-normal bg-gradient-to-r from-[#DDB2B5] to-[#EFD4CE] hover:shadow-lg active:scale-95 transition-all duration-300 mx-auto"
           >
-            See more
+            {t("See more")}
           </motion.button>
         </div>
       </div>

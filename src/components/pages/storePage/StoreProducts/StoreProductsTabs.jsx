@@ -3,6 +3,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { store_product_tabs } from '@/data/storeData';
+import { useTranslation } from 'react-i18next';
 
 // Tab animation variants
 const tabContainerVariants = {
@@ -55,6 +56,7 @@ const activeIndicatorVariants = {
 };
 
 export default function StoreProductsTabs({ setActiveTab, activeTab }) {
+  const { t } = useTranslation();
   return (
     <motion.div
       variants={tabContainerVariants}
@@ -101,7 +103,7 @@ export default function StoreProductsTabs({ setActiveTab, activeTab }) {
             />
           )} */}
 
-          <span className="relative z-10">{item?.name}</span>
+          <span className="relative z-10">{t(item?.name)}</span>
         </motion.button>
       ))}
     </motion.div>

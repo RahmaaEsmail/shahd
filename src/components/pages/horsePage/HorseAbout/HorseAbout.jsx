@@ -46,9 +46,9 @@ export default function HorseAbout() {
     <motion.section
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: false, amount: 0.2 }} // Lowered amount for better mobile trigger
+      viewport={{ once: false, amount: 0.2 }} 
       variants={sectionVariants}
-      className='relative w-full min-h-screen py-12 md:py-20 overflow-hidden'
+      className='relative w-full min-h-[80vh] py-6  overflow-hidden'
     >
       {/* Gradient Overlay */}
       <motion.div
@@ -80,7 +80,7 @@ export default function HorseAbout() {
         variants={containerVariants}
         className='relative z-10 px-6 md:ps-10 lg:ps-16 h-full max-w-[1920px] mx-auto'
       >
-        <div className='grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center'>
+        <div className='grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-stretch'>
           
           {/* Content - Order 2 on mobile so image can show first if preferred, or Order 1 for standard */}
           <div className='order-2 lg:order-1 lg:col-span-5'>
@@ -90,8 +90,8 @@ export default function HorseAbout() {
           </div>
 
           {/* Image - Order 1 on mobile to grab attention */}
-          <div className='order-1 lg:order-2 lg:col-span-7 w-full'>
-            <div className='relative w-full h-auto'>
+          <div className='order-1 h-full lg:order-2 lg:col-span-7 w-full'>
+            <div className='relative w-full h-full'>
                <HorseAboutImage />
             </div>
           </div>

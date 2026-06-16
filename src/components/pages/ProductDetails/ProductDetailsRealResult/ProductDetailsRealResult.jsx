@@ -2,8 +2,10 @@
 import React from 'react'
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { useTranslation } from 'react-i18next';
 
 export default function ProductDetailsRealResult() {
+  const { t , i18n} = useTranslation();
   // Animation variants for staggered children
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -67,9 +69,9 @@ export default function ProductDetailsRealResult() {
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: false, amount: 0.1 }}
-      className='relative min-h-[600px] md:min-h-screen py-12 md:py-20'
+      className='relative min-h-[600px]  py-12'
       style={{
-        background: "url('/images/product-details/c17080f024061945d283c30609d7dfd468f6fbf8.jpg')",
+        background: "url('/SHAHD-IMAGE/product-details/c17080f024061945d283c30609d7dfd468f6fbf8.webp')",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center center",
         backgroundSize: "cover"
@@ -92,23 +94,23 @@ export default function ProductDetailsRealResult() {
       >
         <motion.h4 
           variants={itemVariants}
-          className='text-primary text-4xl md:text-5xl lg:text-[64px] font-normal mb-8 md:mb-12 text-center md:text-left'
+          className={`text-primary text-4xl  font-normal mb-8  text-center ${i18n?.language == "ar" ? "md:text-right" :"md:text-left"}`}
         >
-          Real results
+          {t('Real results')}
         </motion.h4>
  
-        <div className='flex flex-col lg:grid lg:grid-cols-[1fr_1.5fr] gap-10 md:gap-16'>
+        <div className='flex flex-col lg:grid items-stretch lg:grid-cols-[1fr_1.5fr] gap-7'>
           {/* Left side - Image */}
           <motion.div 
             variants={imageVariants}
             whileHover="hover"
-            className='rounded-[32px] w-full max-w-[535px] mx-auto lg:mx-0 relative overflow-hidden aspect-535/575 shadow-2xl'
+            className='rounded-[32px] w-full max-w-[535px] mx-auto lg:mx-0 relative overflow-hidden aspect-535/500 shadow-2xl'
           >
             <Image 
-              src={"/images/product-details/Group 30.png"} 
+              src={"/SHAHD-IMAGE/product-details/Group 30.webp"} 
               fill
               className='object-cover transition-transform duration-500 group-hover:scale-105' 
-              alt="real result image"
+              alt={t("real result image")}
               sizes="(max-width: 1024px) 100vw, 535px"
             />
           </motion.div>
@@ -123,9 +125,9 @@ export default function ProductDetailsRealResult() {
               >
                 <motion.h3 
                   variants={itemVariants}
-                  className='text-primary capitalize text-xl md:text-2xl lg:text-3xl font-semibold font-poppins border-l-4 border-primary pl-4'
+                  className={`text-primary capitalize text-xl   font-semibold font-poppins ${i18n?.language == "ar" ? "border-r-4  pr-4" : "border-l-4  pl-4"} border-primary pl-4`}
                 >
-                  after the 1st application:
+                  {t('after the 1st application:')}
                 </motion.h3>
                 
                 {[1, 2, 3, 4].map((item, index) => (
@@ -143,12 +145,12 @@ export default function ProductDetailsRealResult() {
                     className='flex flex-col gap-1 pb-4 border-b border-primary/20'
                   >
                     <motion.p 
-                      className='text-xl md:text-2xl font-poppins font-semibold text-gray-900'
+                      className='text-xl  font-poppins font-semibold text-gray-900'
                       whileHover={{ color: "#DDB2B5" }}
                     >
-                      100% agree
+                      {t('100% agree')}
                     </motion.p>
-                    <p className='text-base md:text-lg font-poppins font-normal text-gray-700'>that it has a pleasant foam</p>
+                    <p className='text-base  font-poppins font-normal text-gray-700'>{t('that it has a pleasant foam')}</p>
                   </motion.div>
                 ))}
               </motion.div>
@@ -160,9 +162,9 @@ export default function ProductDetailsRealResult() {
               >
                 <motion.h3 
                   variants={itemVariants}
-                  className='text-primary capitalize text-xl md:text-2xl lg:text-3xl font-semibold font-poppins border-l-4 border-primary pl-4'
+                  className={`text-primary capitalize text-xl font-semibold font-poppins  border-primary ${i18n?.language == "ar" ? "border-r-4  pr-4" : "border-l-4  pl-4"}`}
                 >
-                  after 4 weeks:
+                  {t('after 4 weeks:')}
                 </motion.h3>
                 
                 {[1, 2, 3, 4].map((item, index) => (
@@ -180,26 +182,26 @@ export default function ProductDetailsRealResult() {
                     className='flex flex-col gap-1 pb-4 border-b border-primary/20'
                   >
                     <motion.p 
-                      className='text-xl md:text-2xl font-poppins font-semibold text-gray-900'
+                      className='text-xl font-poppins font-semibold text-gray-900'
                       whileHover={{ color: "#DDB2B5" }}
                     >
-                      94% agree
+                      {t('94% agree')}
                     </motion.p>
-                    <p className='text-base md:text-lg font-poppins font-normal text-gray-700'>that skin feels smoother</p>
+                    <p className='text-base font-poppins font-normal text-gray-700'>{t('that skin feels smoother')}</p>
                   </motion.div>
                 ))}
               </motion.div>
             </div>
  
             {/* Footer text */}
-            <motion.p 
+            {/* <motion.p 
               variants={itemVariants}
               className='text-sm md:text-base font-poppins text-gray-500 italic mt-4 leading-relaxed'
               whileHover={{ scale: 1.01 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
               *consumer use test under dermatological control with 31 women between 18 and 35 years, daily use in the morning and evening.
-            </motion.p>
+            </motion.p> */}
           </div>
         </div>
       </motion.div>

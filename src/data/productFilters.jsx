@@ -24,7 +24,8 @@ export const productFilterData = [
 export const productData = [
   {
     id: 1,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Gentle Foaming Cleanser",
     category: "Cleanser",
     rating: 4,
@@ -36,7 +37,8 @@ export const productData = [
   },
   {
     id: 2,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Hydrating Facial Cream",
     category: "Moisturizer",
     rating: 5,
@@ -48,7 +50,8 @@ export const productData = [
   },
   {
     id: 3,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Vitamin C Serum",
     category: "Serum",
     rating: 4,
@@ -60,7 +63,8 @@ export const productData = [
   },
   {
     id: 4,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Retinol Night Cream",
     category: "Moisturizer",
     rating: 4,
@@ -72,7 +76,8 @@ export const productData = [
   },
   {
     id: 5,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Exfoliating Scrub",
     category: "Cleanser",
     rating: 3,
@@ -84,7 +89,8 @@ export const productData = [
   },
   {
     id: 6,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Eye Cream",
     category: "Moisturizer",
     rating: 4,
@@ -96,7 +102,8 @@ export const productData = [
   },
   {
     id: 7,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Niacinamide Serum",
     category: "Serum",
     rating: 5,
@@ -108,7 +115,8 @@ export const productData = [
   },
   {
     id: 8,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Toner",
     category: "Toner",
     rating: 4,
@@ -120,7 +128,8 @@ export const productData = [
   },
   {
     id: 9,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Moisturizing Gel",
     category: "Moisturizer",
     rating: 4,
@@ -132,7 +141,8 @@ export const productData = [
   },
   {
     id: 10,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Cleansing Oil",
     category: "Cleanser",
     rating: 5,
@@ -144,7 +154,8 @@ export const productData = [
   },
   {
     id: 11,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "AHA BHA Peeling Solution",
     category: "Treatment",
     rating: 5,
@@ -156,7 +167,8 @@ export const productData = [
   },
   {
     id: 12,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Sunscreen SPF 50",
     category: "Sunscreen",
     rating: 5,
@@ -168,7 +180,8 @@ export const productData = [
   },
   {
     id: 13,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Lip Balm",
     category: "Lip Care",
     rating: 4,
@@ -180,7 +193,8 @@ export const productData = [
   },
   {
     id: 14,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Sheet Mask Pack",
     category: "Mask",
     rating: 4,
@@ -192,7 +206,8 @@ export const productData = [
   },
   {
     id: 15,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Clay Mask",
     category: "Mask",
     rating: 4,
@@ -204,7 +219,8 @@ export const productData = [
   },
   {
     id: 16,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Hyaluronic Acid Serum",
     category: "Serum",
     rating: 5,
@@ -216,7 +232,8 @@ export const productData = [
   },
   {
     id: 17,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Peptide Eye Cream",
     category: "Moisturizer",
     rating: 4,
@@ -228,7 +245,8 @@ export const productData = [
   },
   {
     id: 18,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Makeup Remover Wipes",
     category: "Cleanser",
     rating: 3,
@@ -240,7 +258,8 @@ export const productData = [
   },
   {
     id: 19,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Vitamin E Cream",
     category: "Moisturizer",
     rating: 4,
@@ -252,7 +271,8 @@ export const productData = [
   },
   {
     id: 20,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Rose Water Toner",
     category: "Toner",
     rating: 4,
@@ -264,7 +284,8 @@ export const productData = [
   },
   {
     id: 21,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Tea Tree Oil",
     category: "Treatment",
     rating: 4,
@@ -276,7 +297,8 @@ export const productData = [
   },
   {
     id: 22,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Night Repair Serum",
     category: "Serum",
     rating: 5,
@@ -288,7 +310,8 @@ export const productData = [
   },
   {
     id: 23,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Hand Cream",
     category: "Hand Care",
     rating: 4,
@@ -300,7 +323,8 @@ export const productData = [
   },
   {
     id: 24,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Body Lotion",
     category: "Body Care",
     rating: 4,
@@ -312,7 +336,8 @@ export const productData = [
   },
   {
     id: 25,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Charcoal Soap",
     category: "Cleanser",
     rating: 4,
@@ -324,7 +349,8 @@ export const productData = [
   },
   {
     id: 26,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Micellar Water",
     category: "Cleanser",
     rating: 4,
@@ -336,7 +362,8 @@ export const productData = [
   },
   {
     id: 27,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Facial Spray",
     category: "Toner",
     rating: 4,
@@ -348,7 +375,8 @@ export const productData = [
   },
   {
     id: 28,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Vitamin C Cream",
     category: "Moisturizer",
     rating: 4,
@@ -360,7 +388,8 @@ export const productData = [
   },
   {
     id: 29,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Lip Scrub",
     category: "Lip Care",
     rating: 4,
@@ -372,7 +401,8 @@ export const productData = [
   },
   {
     id: 30,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Eye Mask",
     category: "Mask",
     rating: 4,
@@ -384,7 +414,8 @@ export const productData = [
   },
   {
     id: 31,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Cleansing Balm",
     category: "Cleanser",
     rating: 5,
@@ -396,7 +427,8 @@ export const productData = [
   },
   {
     id: 32,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Essence",
     category: "Serum",
     rating: 4,
@@ -408,7 +440,8 @@ export const productData = [
   },
   {
     id: 33,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Body Scrub",
     category: "Body Care",
     rating: 4,
@@ -420,7 +453,8 @@ export const productData = [
   },
   {
     id: 34,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Foot Cream",
     category: "Foot Care",
     rating: 3,
@@ -432,7 +466,8 @@ export const productData = [
   },
   {
     id: 35,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Anti-aging Cream",
     category: "Moisturizer",
     rating: 5,
@@ -444,7 +479,8 @@ export const productData = [
   },
   {
     id: 36,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Blemish Cream",
     category: "Treatment",
     rating: 4,
@@ -456,7 +492,8 @@ export const productData = [
   },
   {
     id: 37,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Pore Strips",
     category: "Cleanser",
     rating: 3,
@@ -468,7 +505,8 @@ export const productData = [
   },
   {
     id: 38,
-    img: "/images/Cart/Rectangle 43.png",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
     name: "Aloe Vera Gel",
     category: "Moisturizer",
     rating: 4,
@@ -480,7 +518,8 @@ export const productData = [
   },
   {
     id: 39,
-    img: "/images/Cart/Rectangle 43.png",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
     name: "Peptide Serum",
     category: "Serum",
     rating: 5,
@@ -492,7 +531,8 @@ export const productData = [
   },
   {
     id: 40,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Lip Oil",
     category: "Lip Care",
     rating: 4,
@@ -504,7 +544,8 @@ export const productData = [
   },
   {
     id: 41,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Facial Mist",
     category: "Toner",
     rating: 4,
@@ -516,7 +557,8 @@ export const productData = [
   },
   {
     id: 42,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Under Eye Patches",
     category: "Mask",
     rating: 4,
@@ -528,7 +570,8 @@ export const productData = [
   },
   {
     id: 43,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Neck Cream",
     category: "Moisturizer",
     rating: 4,
@@ -540,7 +583,8 @@ export const productData = [
   },
   {
     id: 44,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "pH Balancing Toner",
     category: "Toner",
     rating: 5,
@@ -552,7 +596,8 @@ export const productData = [
   },
   {
     id: 45,
-    img: "/images/Cart/Rectangle 43.png",
+    img: "/SHAHD-IMAGE/Cart/Rectangle 43.webp",
+    hoverImg: "/SHAHD-IMAGE/Store/store-swiper-1.webp",
     name: "Makeup Setting Spray",
     category: "Makeup",
     rating: 4,

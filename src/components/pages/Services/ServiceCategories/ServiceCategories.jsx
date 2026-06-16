@@ -13,73 +13,73 @@
 // //     id: 1,
 // //     title: "Eyes & Brows",
 // //     service_num: "4",
-// //     image: "/images/Services/service1.png",
+// //     image: "/SHAHD-IMAGE/Services/service1.webp",
 // //   },
 // //   {
 // //     id: 2,
 // //     title: "Lips & Smile",
 // //     service_num: "3",
-// //     image: "/images/Services/service2.png",
+// //     image: "/SHAHD-IMAGE/Services/service2.webp",
 // //   },
 // //   {
 // //     id: 3,
 // //     title: "Skin & Glow",
 // //     service_num: "5",
-// //     image: "/images/Services/service3.png",
+// //     image: "/SHAHD-IMAGE/Services/service3.webp",
 // //   },
 // //   {
 // //     id: 4,
 // //     title: "Eyes & Brows",
 // //     service_num: "6",
-// //     image: "/images/Services/service4.png",
+// //     image: "/SHAHD-IMAGE/Services/service4.webp",
 // //   },
 // //   {
 // //     id: 5,
 // //     title: "Face & Neck",
 // //     service_num: "4",
-// //     image: "/images/Services/service1.png",
+// //     image: "/SHAHD-IMAGE/Services/service1.webp",
 // //   },
 // //   {
 // //     id: 6,
 // //     title: "Anti-Aging",
 // //     service_num: "3",
-// //     image: "/images/Services/service2.png",
+// //     image: "/SHAHD-IMAGE/Services/service2.webp",
 // //   },
 // //   {
 // //     id: 7,
 // //     title: "Body Care",
 // //     service_num: "5",
-// //     image: "/images/Services/service3.png",
+// //     image: "/SHAHD-IMAGE/Services/service3.webp",
 // //   },
 // //   {
 // //     id: 8,
 // //     title: "Laser & Light",
 // //     service_num: "6",
-// //     image: "/images/Services/service4.png",
+// //     image: "/SHAHD-IMAGE/Services/service4.webp",
 // //   },
 // //   {
 // //     id: 9,
 // //     title: "Injectables",
 // //     service_num: "4",
-// //     image: "/images/Services/service1.png",
+// //     image: "/SHAHD-IMAGE/Services/service1.webp",
 // //   },
 // //   {
 // //     id: 10,
 // //     title: "Facial Harmony",
 // //     service_num: "3",
-// //     image: "/images/Services/service2.png",
+// //     image: "/SHAHD-IMAGE/Services/service2.webp",
 // //   },
 // //   {
 // //     id: 11,
 // //     title: "Skincare",
 // //     service_num: "5",
-// //     image: "/images/Services/service3.png",
+// //     image: "/SHAHD-IMAGE/Services/service3.webp",
 // //   },
 // //   {
 // //     id: 12,
 // //     title: "Wellness",
 // //     service_num: "6",
-// //     image: "/images/Services/service4.png",
+// //     image: "/SHAHD-IMAGE/Services/service4.webp",
 // //   },
 // // ];
 
@@ -140,7 +140,7 @@
 // //       <div 
 // //         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
 // //         style={{
-// //           backgroundImage: "url('/images/Services/sdbg.png')",
+// //           backgroundImage: "url('/SHAHD-IMAGE/Services/sdbg.webp')",
 // //           opacity: 0.25, // 25% opacity
 // //         }}
 // //       />
@@ -242,18 +242,18 @@
 // import ServiceCategoryCard from "./ServiceCategoryCard";
 
 // const services = [
-//   { id: 1, title: "Eyes & Brows", service_num: "4", image: "/images/Services/service1.png" },
-//   { id: 2, title: "Lips & Smile", service_num: "3", image: "/images/Services/service2.png" },
-//   { id: 3, title: "Skin & Glow", service_num: "5", image: "/images/Services/service3.png" },
-//   { id: 4, title: "Eyes & Brows", service_num: "6", image: "/images/Services/service4.png" },
-//   { id: 5, title: "Face & Neck", service_num: "4", image: "/images/Services/service1.png" },
-//   { id: 6, title: "Anti-Aging", service_num: "3", image: "/images/Services/service2.png" },
-//   { id: 7, title: "Body Care", service_num: "5", image: "/images/Services/service3.png" },
-//   { id: 8, title: "Laser & Light", service_num: "6", image: "/images/Services/service4.png" },
-//   { id: 9, title: "Injectables", service_num: "4", image: "/images/Services/service1.png" },
-//   { id: 10, title: "Facial Harmony", service_num: "3", image: "/images/Services/service2.png" },
-//   { id: 11, title: "Skincare", service_num: "5", image: "/images/Services/service3.png" },
-//   { id: 12, title: "Wellness", service_num: "6", image: "/images/Services/service4.png" },
+//   { id: 1, title: "Eyes & Brows", service_num: "4", image: "/SHAHD-IMAGE/Services/service1.webp" },
+//   { id: 2, title: "Lips & Smile", service_num: "3", image: "/SHAHD-IMAGE/Services/service2.webp" },
+//   { id: 3, title: "Skin & Glow", service_num: "5", image: "/SHAHD-IMAGE/Services/service3.webp" },
+//   { id: 4, title: "Eyes & Brows", service_num: "6", image: "/SHAHD-IMAGE/Services/service4.webp" },
+//   { id: 5, title: "Face & Neck", service_num: "4", image: "/SHAHD-IMAGE/Services/service1.webp" },
+//   { id: 6, title: "Anti-Aging", service_num: "3", image: "/SHAHD-IMAGE/Services/service2.webp" },
+//   { id: 7, title: "Body Care", service_num: "5", image: "/SHAHD-IMAGE/Services/service3.webp" },
+//   { id: 8, title: "Laser & Light", service_num: "6", image: "/SHAHD-IMAGE/Services/service4.webp" },
+//   { id: 9, title: "Injectables", service_num: "4", image: "/SHAHD-IMAGE/Services/service1.webp" },
+//   { id: 10, title: "Facial Harmony", service_num: "3", image: "/SHAHD-IMAGE/Services/service2.webp" },
+//   { id: 11, title: "Skincare", service_num: "5", image: "/SHAHD-IMAGE/Services/service3.webp" },
+//   { id: 12, title: "Wellness", service_num: "6", image: "/SHAHD-IMAGE/Services/service4.webp" },
 // ];
 
 // export default function ServiceCategories() {
@@ -297,7 +297,7 @@
 //       {/* Background with Opacity */}
 //       <div 
 //         className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none"
-//         style={{ backgroundImage: "url('/images/Services/sdbg.png')", opacity: 0.25 }}
+//         style={{ backgroundImage: "url('/SHAHD-IMAGE/Services/sdbg.webp')", opacity: 0.25 }}
 //       />
 //       <div className="absolute inset-0 bg-white/30 pointer-events-none" /> 
       
@@ -362,32 +362,151 @@
 //   );
 // }
 
+// "use client";
+// import React from "react";
+// import { motion } from "framer-motion";
+// import { Swiper, SwiperSlide } from 'swiper/react';
+// import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+// import { service_data } from "@/data/serviceData";
+// // Import Swiper styles
+// import 'swiper/css';
+// import ServiceCategoryCard from "./ServiceCategoryCard";
+// import { useTranslation } from "react-i18next";
+
+// export default function ServiceCategories() {
+//   const { t } = useTranslation();
+//   const containerVariants = {
+//     hidden: { opacity: 0 },
+//     visible: {
+//       opacity: 1,
+//       transition: { staggerChildren: 0.2, delayChildren: 0.3 },
+//     },
+//   };
+
+//   const titleVariants = {
+//     hidden: { opacity: 0, y: -30 },
+//     visible: {
+//       opacity: 1,
+//       y: 0,
+//       transition: { duration: 0.8, ease: "easeOut" },
+//     },
+//   };
+
+//   const itemVariants = {
+//     hidden: { y: 50, opacity: 0 },
+//     visible: {
+//       y: 0,
+//       opacity: 1,
+//       transition: { type: "spring", stiffness: 100, damping: 12 },
+//     },
+//   };
+
+//   const cardVariants = {
+//     hidden: { scale: 0.8, opacity: 0 },
+//     visible: {
+//       scale: 1,
+//       opacity: 1,
+//       transition: { type: "spring", stiffness: 200, damping: 15 },
+//     },
+//   };
+
+//   return (
+//     <div className="min-h-[85vh] main-container mx-auto  pt-10  relative">
+//       {/* Background Image */}
+//       <div 
+//         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+//         style={{
+//           backgroundImage: "url('/SHAHD-IMAGE/Services/sdbg.webp')",
+//           opacity: 0.25,
+//         }}
+//       />
+      
+//       {/* <div className="absolute inset-0 bg-white/30" />  */}
+      
+//       <div className="relative z-10">
+//         <motion.div
+//           initial="hidden"
+//           whileInView="visible"
+//           viewport={{ once: false, amount: 0.3 }}
+//           variants={containerVariants}
+//           className="flex flex-col gap-1 py-1 mb-10"
+//         >
+//           <motion.p
+//             variants={titleVariants}
+//             className="font-poppins text-2xl  text-secondary font-bold text-center"
+//           >
+//             {t("Our Categories")}
+//           </motion.p>
+
+//           <motion.h2
+//             variants={titleVariants}
+//             className="text-3xl   font-bold text-primary text-center"
+//           >
+//             {t("Choose Perfect Treatment")}
+//           </motion.h2>
+
+//           <motion.p
+//             variants={titleVariants}
+//             className="text-text text-base text-center tracking-[-0.3px] font-poppins font-normal max-w-2xl mx-auto"
+//           >
+//             {t("Categories Desc")}
+//           </motion.p>
+//         </motion.div>
+
+//         {/* Swiper Carousel */}
+//         <motion.div
+//           initial="hidden"
+//           whileInView="visible"
+//           viewport={{ once: false, amount: 0.1 }}
+//           variants={containerVariants}
+//         >
+//           <Swiper
+//             modules={[Autoplay, Pagination, Navigation]}
+//             spaceBetween={20}
+//             slidesPerView={1} // 1 card on small mobile
+//             loop={true}
+//             autoplay={{
+//               delay: 3000,
+//               disableOnInteraction: false,
+//             }}
+//             breakpoints={{
+//               640: { slidesPerView: 2, spaceBetween: 20 },
+//               1024: { slidesPerView: 4, spaceBetween: 20 },
+//             }}
+//             className="pb-0! lg:pb-6!"
+//             dir
+//           >
+//             {service_data?.slice(9)?.map((item, index) => (
+//               <SwiperSlide key={`${item.id}-${index}`}>
+//                 <ServiceCategoryCard cardVariants={cardVariants} item={item} itemVariants={itemVariants}/> 
+//               </SwiperSlide>
+//             ))}
+//           </Swiper>
+//         </motion.div>
+//       </div>
+//     </div>
+//   );
+// }
+
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-
+import { service_data } from "@/data/serviceData";
 // Import Swiper styles
 import 'swiper/css';
 import ServiceCategoryCard from "./ServiceCategoryCard";
-
-const services = [
-  { id: 1, title: "Eyes & Brows", service_num: "4", image: "/images/Services/service1.png" },
-  { id: 2, title: "Lips & Smile", service_num: "3", image: "/images/Services/service2.png" },
-  { id: 3, title: "Skin & Glow", service_num: "5", image: "/images/Services/service3.png" },
-  { id: 4, title: "Eyes & Brows", service_num: "6", image: "/images/Services/service4.png" },
-  { id: 5, title: "Face & Neck", service_num: "4", image: "/images/Services/service1.png" },
-  { id: 6, title: "Anti-Aging", service_num: "3", image: "/images/Services/service2.png" },
-  { id: 7, title: "Body Care", service_num: "5", image: "/images/Services/service3.png" },
-  { id: 8, title: "Laser & Light", service_num: "6", image: "/images/Services/service4.png" },
-  { id: 9, title: "Injectables", service_num: "4", image: "/images/Services/service1.png" },
-  { id: 10, title: "Facial Harmony", service_num: "3", image: "/images/Services/service2.png" },
-  { id: 11, title: "Skincare", service_num: "5", image: "/images/Services/service3.png" },
-  { id: 12, title: "Wellness", service_num: "6", image: "/images/Services/service4.png" },
-];
+import { useTranslation } from "react-i18next";
 
 export default function ServiceCategories() {
+  // 1. Destructure i18n along with t
+  const { t, i18n } = useTranslation();
+  
+  // 2. Dynamically check if the current language is Arabic (or use i18n.dir())
+  const isRtl = i18n.language === 'ar' || i18n.dir() === 'rtl';
+  const currentDir = isRtl ? "rtl" : "ltr";
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -424,17 +543,16 @@ export default function ServiceCategories() {
   };
 
   return (
-    <div className="min-h-screen px-4 md:px-10 pt-10  relative">
+    // 3. IMPORTANT: Set the HTML dir attribute on the container wrapper so Swiper's internal CSS aligns perfectly
+    <div dir={currentDir} className="min-h-[85vh] main-container mx-auto pt-10 relative">
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('/images/Services/sdbg.png')",
+          backgroundImage: "url('/SHAHD-IMAGE/Services/sdbg.webp')",
           opacity: 0.25,
         }}
       />
-      
-      {/* <div className="absolute inset-0 bg-white/30" />  */}
       
       <div className="relative z-10">
         <motion.div
@@ -442,28 +560,27 @@ export default function ServiceCategories() {
           whileInView="visible"
           viewport={{ once: false, amount: 0.3 }}
           variants={containerVariants}
-          className="flex flex-col gap-1 py-2 mb-10"
+          className="flex flex-col gap-1 py-1 mb-10"
         >
           <motion.p
             variants={titleVariants}
-            className="font-poppins text-lg md:text-[27px] text-secondary font-bold text-center"
+            className="font-poppins text-2xl text-secondary font-bold text-center"
           >
-            Our Categories
+            {t("Our Categories")}
           </motion.p>
 
           <motion.h2
             variants={titleVariants}
-            className="text-4xl md:text-6xl lg:text-[80px] font-bold text-primary text-center"
+            className="text-3xl font-bold text-primary text-center"
           >
-            Choose the Perfect Treatment for You
+            {t("Choose Perfect Treatment")}
           </motion.h2>
 
           <motion.p
             variants={titleVariants}
-            className="text-text text-sm md:text-base text-center tracking-[-0.3px] font-poppins font-normal max-w-2xl mx-auto"
+            className="text-text text-base text-center tracking-[-0.3px] font-poppins font-normal max-w-2xl mx-auto"
           >
-            Whether you seek a subtle refresh or a complete transformation, our
-            categories help you find exactly what your beauty needs.
+            {t("Categories Desc")}
           </motion.p>
         </motion.div>
 
@@ -474,10 +591,13 @@ export default function ServiceCategories() {
           viewport={{ once: false, amount: 0.1 }}
           variants={containerVariants}
         >
+          {/* 4. Pass the key and dir props to Swiper */}
           <Swiper
+            key={currentDir} // Forces Swiper to re-initialize completely when language changes
+            dir={currentDir} // Tells Swiper's internal logic to slide right-to-left
             modules={[Autoplay, Pagination, Navigation]}
             spaceBetween={20}
-            slidesPerView={1} // 1 card on small mobile
+            slidesPerView={1}
             loop={true}
             autoplay={{
               delay: 3000,
@@ -489,7 +609,7 @@ export default function ServiceCategories() {
             }}
             className="pb-0! lg:pb-6!"
           >
-            {services.map((item, index) => (
+            {service_data?.slice(9)?.map((item, index) => (
               <SwiperSlide key={`${item.id}-${index}`}>
                 <ServiceCategoryCard cardVariants={cardVariants} item={item} itemVariants={itemVariants}/> 
               </SwiperSlide>

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { slugify } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
  const cardVariants = {
     hidden: { scale: 0.8, opacity: 0 },
     visible: {
@@ -19,6 +20,7 @@ import { slugify } from '@/lib/utils';
   };
   
 export default function OurServiceCard({ item }) {
+  const { t } = useTranslation();
   const router = useRouter();
   return (
     <motion.div
@@ -32,7 +34,7 @@ export default function OurServiceCard({ item }) {
       whileInView="visible"
       viewport={{ once: false }}
       whileHover="hover"
-      className="border-[3px] cursor-pointer rounded-[30px] h-134 w-full bg-white flex flex-col justify-between border-[#CDD0DB] overflow-hidden"
+      className="border-[3px] cursor-pointer rounded-[30px] h-124 w-full bg-white flex flex-col justify-between border-[#CDD0DB] overflow-hidden"
     >
       <div className="content pt-8 px-6">
         <div className="flex justify-between items-center">
@@ -40,7 +42,7 @@ export default function OurServiceCard({ item }) {
             style={{ backgroundColor: item?.bgColor }}
             className="w-22.25 h-10 flex justify-center font-poppins uppercase items-center rounded-full text-black"
           >
-            {item?.type}
+            {t(item?.type + " Tab")}
           </div>
 
           <motion.div
@@ -56,11 +58,11 @@ export default function OurServiceCard({ item }) {
         <div className="flex flex-col mt-3 gap-3">
           <motion.h2
             whileHover={{ x: 5 }}
-            className="text-2xl lg:text-[40px] font-normal text-text"
+            className="text-2xl md:text-[27px] 2xl:text-[40px] font-normal text-text"
           >
-            {item?.title}
+            {t(item?.title)}
           </motion.h2>
-          <p className="font-poppins text-sm lg:text-base font-light">{item?.desc}</p>
+          <p className="font-poppins= text-sm  lg:text-base font-light">{t(item?.desc)}</p>
         </div>
       </div>
 
@@ -71,7 +73,7 @@ export default function OurServiceCard({ item }) {
       >
         <Image
           src={item?.image}
-          alt={item?.title}
+          alt={t(item?.title)}
           width={332}
           height={308}
           className="w-full"

@@ -2,6 +2,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import StoreProductsTabs from './StoreProductsTabs'
+import { useTranslation } from 'react-i18next';
 
 const headerVariants = {
   hidden: { opacity: 0 },
@@ -28,22 +29,23 @@ const itemVariants = {
 };
 
 export default function StoreProductsHeader({ setActiveTab, activeTab }) {
+  const { t } = useTranslation();
   return (
     <motion.div
       variants={headerVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: false, amount: 0.3 }}
-      className="content flex flex-col justify-center items-center gap-6"
+      className="content flex flex-col justify-center items-center gap-3"
     >
       <motion.p
         variants={itemVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: false, amount: 0.3 }}
-        className='text-[27px] font-bold text-primary font-poppins text-center'
+        className='text-2xl font-bold text-primary font-poppins text-center'
       >
-        Our Products
+        {t("Our Products")}
       </motion.p>
 
       <motion.h3
@@ -51,9 +53,9 @@ export default function StoreProductsHeader({ setActiveTab, activeTab }) {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: false, amount: 0.3 }}
-        className='text-3xl md:text-5xl lg:text-[80px] font-normal text-primary text-center leading-tight'
+        className='text-4xl  font-normal text-primary text-center leading-tight'
       >
-        Choose The products that perfect match
+        {t("Choose The products that perfect match")}
       </motion.h3>
 
       <motion.div variants={itemVariants}>

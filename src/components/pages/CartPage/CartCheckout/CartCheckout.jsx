@@ -180,17 +180,17 @@ export default function CartCheckout({ open, setOpen }) {
     {
       id: 1,
       title: "Card",
-      img: "/images/Cart/card1.svg",
+      img: "/SHAHD-IMAGE/Cart/card1.webp",
     },
     {
       id: 2,
       title: "EPS",
-      img: "/images/Cart/EPS.svg",
+      img: "/SHAHD-IMAGE/Cart/EPS.webp",
     },
     {
       id: 3,
       title: "Giropay",
-      img: "/images/Cart/Giropay.svg",
+      img: "/SHAHD-IMAGE/Cart/Giropay.webp",
     }
   ]
 
@@ -302,7 +302,7 @@ export default function CartCheckout({ open, setOpen }) {
                       whileHover={{ scale: 1.05 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
-                      <Image src="/images/Cart/banks.svg" alt="banks" width={108} height={16} />
+                      <Image src="/SHAHD-IMAGE/Cart/banks.webp" alt="banks" width={108} height={16} />
                     </motion.div>
                   </motion.div>
                 </motion.div>
@@ -424,7 +424,7 @@ export default function CartCheckout({ open, setOpen }) {
                 whileHover="hover"
                 whileTap="tap"
                 style={{
-                  backgroundImage: "url('/images/Cart/Rectangle 20.png')",
+                  backgroundImage: "url('/SHAHD-IMAGE/Cart/Rectangle 20.webp')",
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
                   backgroundPosition: "center"

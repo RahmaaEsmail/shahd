@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import React from 'react'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next';
 
 // Animation variants
 const imageContainerVariants = {
@@ -54,13 +55,15 @@ const overlayVariants = {
 }
 
 export default function HorseAboutImage() {
+  const { i18n } = useTranslation();
   return (
     <motion.div
       variants={imageContainerVariants}
       initial="hidden"
+      dir="ltr"
       whileInView="visible"
       viewport={{ once: false, amount: 0.3 }}
-      className='relative w-full h-full flex'
+      className='relative w-full h-full!  flex'
     >
       <motion.div
         variants={imageVariants}
@@ -68,11 +71,13 @@ export default function HorseAboutImage() {
         className='relative'
       >
         <Image
-          src="/images/horse/b90cd6ca1788779bd6a514979cd33225ab9d20dd.png"
+          src="/SHAHD-IMAGE/horse/b90cd6ca1788779bd6a514979cd33225ab9d20dd.webp"
           width={1500}
-          height={558}
+          height={700}
           alt="horse about image"
-          className='w-full lg:max-w-5xl! h-auto lg:-ms-23 object-cover'
+          className={`w-full lg:max-w-4xl! h-full! object-bottom! 
+            
+              object-fit`}
           priority
         />
       </motion.div>

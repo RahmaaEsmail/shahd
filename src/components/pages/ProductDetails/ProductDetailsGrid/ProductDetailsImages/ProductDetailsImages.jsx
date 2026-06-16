@@ -7,13 +7,13 @@ import { motion } from 'framer-motion'
 export default function ProductDetailsImages() {
   // Sample thumbnail images - replace with your actual images
   const thumbnails = [
-    { id: 1, src: "/images/product-details/Rectangle 36.png", alt: "Book thumbnail 1" },
-    { id: 2, src: "/images/product-details/Rectangle 36.png", alt: "Book thumbnail 2" },
-    { id: 3, src: "/images/product-details/Rectangle 36.png", alt: "Book thumbnail 3" },
-    { id: 4, src: "/images/product-details/Rectangle 36.png", alt: "Book thumbnail 4" },
-    { id: 5, src: "/images/product-details/Rectangle 36.png", alt: "Book thumbnail 5" },
-    { id: 6, src: "/images/product-details/Rectangle 36.png", alt: "Book thumbnail 6" },
-    { id: 7, src: "/images/product-details/Rectangle 36.png", alt: "Book thumbnail 7" },
+    { id: 1, src: "/SHAHD-IMAGE/product-details/Rectangle 36.webp", alt: "Book thumbnail 1" },
+    { id: 2, src: "/SHAHD-IMAGE/product-details/Rectangle 36.webp", alt: "Book thumbnail 2" },
+    { id: 3, src: "/SHAHD-IMAGE/product-details/Rectangle 36.webp", alt: "Book thumbnail 3" },
+    { id: 4, src: "/SHAHD-IMAGE/product-details/Rectangle 36.webp", alt: "Book thumbnail 4" },
+    { id: 5, src: "/SHAHD-IMAGE/product-details/Rectangle 36.webp", alt: "Book thumbnail 5" },
+    { id: 6, src: "/SHAHD-IMAGE/product-details/Rectangle 36.webp", alt: "Book thumbnail 6" },
+    { id: 7, src: "/SHAHD-IMAGE/product-details/Rectangle 36.webp", alt: "Book thumbnail 7" },
   ];
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -48,7 +48,7 @@ export default function ProductDetailsImages() {
 
   return (
     <motion.div
-      className="flex flex-col-reverse lg:grid lg:grid-cols-[180px_1fr] gap-4 md:gap-6 h-auto lg:h-[640px]"
+      className="flex flex-col-reverse lg:grid lg:grid-cols-[180px_1fr] gap-4 md:gap-6 h-[440px] w-full!"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
@@ -79,7 +79,7 @@ export default function ProductDetailsImages() {
             whileTap={{ scale: 0.95 }}
             onClick={() => handleThumbnailClick(index)}
             className={`relative w-24 h-24 sm:w-32 sm:h-32 lg:w-[180px] lg:h-[180px] rounded-[12px] lg:rounded-[16px] overflow-hidden cursor-pointer shrink-0 transition-all duration-300 ${selectedIndex === index
-              ? 'border-2 lg:border-4 border-primary shadow-lg scale-105'
+              ? 'border  border-primary'
               : 'border border-transparent hover:border-primary/50'
               }`}
           >
@@ -105,7 +105,7 @@ export default function ProductDetailsImages() {
  
       {/* Main Image Container */}
       <motion.div
-        className="w-full relative rounded-[20px] lg:rounded-[24px] overflow-hidden h-[350px] sm:h-[500px] lg:h-[600px] group"
+        className="w-full relative rounded-[20px] lg:rounded-[24px] overflow-hidden h-[450px]  group"
         key={selectedIndex}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

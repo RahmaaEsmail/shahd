@@ -3,31 +3,33 @@ import Image from 'next/image';
 import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const data = [
   {
     id: 1,
-    img: "/images/hair-therapy/Frame 1000005833 (1).svg",
-    title: "Your journey begins with a full medical evaluation, scalp analysis, and hair assessment to understand your hair loss pattern.",
+    img: "/SHAHD-IMAGE/hair-therapy/Frame 1000005833 (1).webp",
+    titleKey: "Hair Journey Step 1",
   },
   {
     id: 2,
-    img: "/images/hair-therapy/Frame 1000005833 (2).svg",
-    title: "Your hairline is designed medically and aesthetically to suit your facial structure, age progression, and natural growth pattern.",
+    img: "/SHAHD-IMAGE/hair-therapy/Frame 1000005833 (2).webp",
+    titleKey: "Hair Journey Step 2",
   },
   {
     id: 3,
-    img: "/images/hair-therapy/Frame 1000005833 (3).svg",
-    title: "Healthy hair follicles are carefully extracted using advanced techniques (FUE / DHI / Sapphire) with minimal trauma and high precision.",
+    img: "/SHAHD-IMAGE/hair-therapy/Frame 1000005833 (3).webp",
+    titleKey: "Hair Journey Step 3",
   },
   {
     id: 4,
-    img: "/images/hair-therapy/Frame 1000005833 (4).svg",
-    title: "Immediate aftercare, scalp protection, medication guidance, and recovery instructions are provided, and Healing Begins.",
+    img: "/SHAHD-IMAGE/hair-therapy/Frame 1000005833 (4).webp",
+    titleKey: "Hair Journey Step 4",
   }
 ];
 
 export default function HairTherapyAbout() {
+  const { t } = useTranslation();
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.2 });
 
@@ -139,7 +141,7 @@ export default function HairTherapyAbout() {
   return (
     <motion.section
       ref={sectionRef}
-      className="py-16 md:py-20 lg:py-24 relative min-h-fit lg:min-h-screen overflow-hidden"
+      className="py-10 relative min-h-fit lg:min-h-[80vh] overflow-hidden"
       style={{
         background: "linear-gradient(180deg, #FFFFFF 0%, #F3E5E6 50%, #FFFFFF 100%)"
       }}
@@ -147,23 +149,23 @@ export default function HairTherapyAbout() {
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
     >
-      <div className="main-container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center px-4 sm:px-6 lg:px-8">
+      <div className="main-container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-stretch px-4 sm:px-6 lg:px-8">
         
         {/* Left Content */}
-        <div className="flex flex-col gap-8 lg:gap-10 order-2 lg:order-1">
-          <div className="space-y-4">
+        <div className="flex flex-col gap-8 order-2 lg:order-1">
+          <div className="space-y-2">
             <motion.span 
               className="text-secondary font-bold text-sm sm:text-base md:text-lg uppercase tracking-[0.2em] font-poppins inline-block"
               variants={badgeVariants}
             >
-              About The Surgery
+              {t("About The Surgery")}
             </motion.span>
             
             <motion.h2 
-              className="text-primary text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light leading-[1.1] uppercase tracking-tight"
+              className="text-primary text-3xl  font-light leading-[1.1] uppercase tracking-tight"
               variants={titleVariants}
             >
-              What is hair <br className="hidden sm:block" /> transplant surgery?
+              {t("What is hair transplant?")}
             </motion.h2>
           </div>
 
@@ -174,7 +176,7 @@ export default function HairTherapyAbout() {
             {data.map((item, index) => (
               <motion.div 
                 key={item.id} 
-                className="bg-white/40 border border-white/60 backdrop-blur-md rounded-[24px] sm:rounded-[32px] p-6 lg:p-8 flex flex-col items-center text-center shadow-lg hover:shadow-xl transition-all duration-300 h-full"
+                className="bg-white/40 border border-white/60 backdrop-blur-md rounded-[24px] sm:rounded-[32px] p-6 flex flex-col items-center text-center shadow-lg hover:shadow-xl transition-all duration-300 h-full"
                 variants={cardVariants}
                 whileHover="hover"
                 custom={index}
@@ -192,10 +194,10 @@ export default function HairTherapyAbout() {
                 </motion.div>
                 <div className="flex-1 flex items-center">
                   <motion.p 
-                    className="text-[#414141] text-sm sm:text-base font-medium font-poppins leading-relaxed"
+                    className="text-[#414141] text-sm font-medium font-poppins leading-relaxed"
                     variants={textVariants}
                   >
-                    {item.title}
+                    {t(item.titleKey)}
                   </motion.p>
                 </div>
               </motion.div>
@@ -209,15 +211,15 @@ export default function HairTherapyAbout() {
           variants={imageVariants}
         >
           <motion.div 
-            className="relative w-full aspect-4/5 sm:aspect-3/4 lg:aspect-square max-w-[540px] lg:max-w-none rounded-[32px] overflow-hidden"
+            className="relative w-full h-full max-w-[540px] lg:max-w-none rounded-[32px] overflow-hidden"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.4 }}
           >
             <Image
-              src="/images/hair-therapy/Image_fx - 2026-02-04T001320.240 1.png"
+              src="/SHAHD-IMAGE/hair-therapy/Image_fx - 2026-02-04T001320.240 1.webp"
               alt="Dr. Shahd Hair Transplant"
               fill
-              className="object-cover"
+              className="object-contain"
               priority
             />
           </motion.div>

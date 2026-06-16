@@ -4,14 +4,16 @@ import React from 'react'
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { Breadcrumb } from '@/components/shared/Breadcrumb';
-
-const breadcrumbItems = [
-  { label: 'Home', href: '/' },
-  { label: 'Booking' },
-];
+import { useTranslation } from 'react-i18next';
 
 export default function BookingBanner() {
   const router = useRouter();
+  const { t } = useTranslation();
+
+  const breadcrumbItems = [
+    { label: t('Home'), href: '/' },
+    { label: t('Booking') },
+  ];
   return (
     <motion.div
       initial={{
@@ -28,7 +30,7 @@ export default function BookingBanner() {
       {/* Background Image - with relative/absolute fix for mobile */}
       <div className="absolute inset-0">
         <Image 
-          src="/images/Booking/Frame 1000005536.webp" 
+          src="/SHAHD-IMAGE/Booking/Frame 1000005536.webp" 
           priority 
           fill
           className='object-cover' 
@@ -40,12 +42,12 @@ export default function BookingBanner() {
       <div className='relative z-10 w-full pt-30 pb-10 px-4'>
         <div className='main-container flex flex-col items-center justify-center min-h-screen lg:min-h-[80vh]'>
           <div className='flex flex-col items-center max-w-5xl mx-auto'>
-            <h1 className='font-normal text-white text-center text-4xl sm:text-6xl lg:text-[100px] leading-[1.1] mb-6'>
-              Start Your Personalized Care Journey
+            <h1 className='font-normal text-white text-center text-4xl sm:text-6xl lg:text-[80px] leading-[1.1] mb-6'>
+              {t("Start Your Personalized Care Journey")}
             </h1>
             
             <p className='font-normal max-w-2xl text-white/90 mx-auto mt-4 text-center font-poppins text-lg sm:text-2xl leading-relaxed mb-10'>
-              Book your consultation with Dr. Shahd and take the first step toward medically guided beauty, wellness, and confidence.
+              {t("Booking Banner Desc")}
             </p>
 
           </div>
@@ -68,7 +70,7 @@ export default function BookingBanner() {
               onClick={() => router.push('/services')}
               className="relative bg-white rounded-full px-8 py-3 lg:py-4 text-primary font-medium text-base lg:text-lg hover:bg-gray-50 transition-colors uppercase"
             >
-              explore the services
+              {t("explore the services")}
             </button>
           </motion.div>
         </div>

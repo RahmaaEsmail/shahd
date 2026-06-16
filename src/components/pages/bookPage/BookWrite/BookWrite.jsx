@@ -1,6 +1,6 @@
 "use client";
-import React from 'react'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next';
 
 // Animation variants
 const containerVariants = {
@@ -84,16 +84,17 @@ const lineVariants = {
 }
 
 export default function BookWrite() {
+  const { t } = useTranslation();
   // Split the text into lines for staggered animation
   const lines = [
-    "If you've ever felt stuck, overwhelmed, lost, or unsure of your direction — this book was written for you.",
-    "You don't need to become someone else.",
-    "You don't need to chase perfection.",
-    "You don't need to fix yourself.",
-    "You need clarity, guidance, and alignment",
-    "This book is your personal guide to building confidence, purpose, femininity, and inner strength — not from the outside world, but from within.",
-    "It's not about becoming a 'new you.'",
-    "It's about becoming the real you — fully, powerfully, and unapologetically."
+    t("Book Write Line 1"),
+    t("Book Write Line 2"),
+    t("Book Write Line 3"),
+    t("Book Write Line 4"),
+    t("Book Write Line 5"),
+    t("Book Write Line 6"),
+    t("Book Write Line 7"),
+    t("Book Write Line 8")
   ];
 
   return (
@@ -110,9 +111,9 @@ export default function BookWrite() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: false }}
-        className="text-secondary text-center text-[27px] font-poppins font-bold mb-6"
+        className="text-secondary text-center text-2xl font-poppins font-bold mb-6"
       >
-        I wrote this for you
+        {t("I wrote this for you")}
       </motion.h4>
 
       {/* Card with hover effect */}
@@ -148,7 +149,7 @@ export default function BookWrite() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false }}
-              className="font-poppins text-[#414141] mx-auto text-base lg:text-lg tracking-tight lg:tracking-[-0.3px] mb-4 lg:mb-0 leading-relaxed lg:leading-7"
+              className="font-poppins capitalize text-[#414141] mx-auto text-base lg:text-lg tracking-tight lg:tracking-[-0.3px] mb-4 lg:mb-0 leading-relaxed lg:leading-7"
             >
               {line}
               {index < lines.length - 1 && <span className="hidden lg:inline"><br /></span>}

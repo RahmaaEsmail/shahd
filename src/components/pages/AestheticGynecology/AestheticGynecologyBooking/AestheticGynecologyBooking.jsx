@@ -1,9 +1,10 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function AestheticGynecologyBooking() {
-  // Animation variants for the text and buttons
+  const { t } = useTranslation();
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -26,9 +27,9 @@ export default function AestheticGynecologyBooking() {
 
   return (
     <section
-      className="min-h-screen relative flex items-center justify-center overflow-hidden"
+      className="min-h-[85vh] relative flex items-center justify-center overflow-hidden"
       style={{
-        backgroundImage: "url('/images/aethesic/4faec5660326699923b9d63848afd4e878631b30.png')",
+        backgroundImage: "url('/SHAHD-IMAGE/aethesic/4faec5660326699923b9d63848afd4e878631b30.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -57,9 +58,9 @@ export default function AestheticGynecologyBooking() {
           
           <motion.h1 
             variants={itemVariants}
-            className="text-[18px] md:text-[27px] font-bold text-white font-poppins uppercase mb-4"
+            className="text-[18px] md:text-[24px] font-bold text-white font-poppins uppercase mb-2"
           >
-            Book your consultation now
+            {t("Book Now Title")}
           </motion.h1>
 
           {/* Responsive Typography: 
@@ -67,9 +68,9 @@ export default function AestheticGynecologyBooking() {
           */}
           <motion.p 
             variants={itemVariants}
-            className="text-[45px] sm:text-[65px] md:text-[85px] lg:text-[100px] xl:text-[120px] font-normal text-white leading-[1.1] tracking-[2px] mb-12 max-w-[1200px]"
+            className="text-[45px]  font-normal text-white leading-[1.1] tracking-[2px] mb-12 max-w-[1200px]"
           >
-            Take the first step toward better intimate health.
+            {t("First Step Health")}
           </motion.p>
 
           <motion.div 
@@ -93,7 +94,7 @@ export default function AestheticGynecologyBooking() {
               <button
                 className="relative w-full bg-white rounded-full px-12 py-4 lg:py-5 text-primary font-semibold text-base lg:text-lg hover:bg-gray-50 transition-colors uppercase tracking-wider"
               >
-                Book consultation
+                {t("Book consultation button")}
               </button>
             </motion.div>
 
@@ -109,7 +110,7 @@ export default function AestheticGynecologyBooking() {
                 }}
                 className="relative w-full rounded-full px-12 py-4 lg:py-5 text-white font-semibold text-base lg:text-lg transition-all uppercase tracking-wider border border-white/30 shadow-lg"
               >
-                Contact Clinic
+                {t("Contact Clinic button")}
               </button>
             </motion.div>
 

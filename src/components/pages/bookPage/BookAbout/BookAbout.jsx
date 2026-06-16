@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import React from 'react'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next';
 
 const list = [
   {
@@ -39,6 +40,7 @@ const list = [
 ]
 
 export default function BookAbout() {
+  const { t , i18n } = useTranslation();
   return (
     <motion.div
       className="flex flex-col lg:grid lg:grid-cols-[4fr_8fr] overflow-hidden items-center gap-10 lg:gap-16"
@@ -48,7 +50,7 @@ export default function BookAbout() {
     >
       {/* Left content section */}
       <motion.div
-        className='flex flex-col gap-4 text-center lg:text-left'
+        className={`flex flex-col gap-4 text-center  ${i18n?.language == "ar" ? "lg:text-right" : "lg:text-left"}`}
         initial={{ opacity: 0, x: -50 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -57,18 +59,18 @@ export default function BookAbout() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className='font-bold text-secondary text-xl lg:text-[27px] font-poppins'
+          className={`font-bold text-secondary text-xl  font-poppins ${i18n?.language == "ar" ? "text-right" : "text-left"}`}
         >
-          Take a look inside
+          {t("Take a look inside")}
         </motion.p>
 
         <motion.h3
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.5 }}
-          className='text-3xl md:text-5xl lg:text-[56px] max-w-xl mx-auto lg:mx-0 text-primary font-normal leading-tight lg:leading-16'
+          className={`text-2xl  max-w-xl mx-auto lg:mx-0 text-primary font-normal leading-tight lg:leading-16  ${i18n?.language == "ar" ? "text-right" : "text-left"}}`}
         >
-          Inside this book, you'll discover how to:
+          {t("Inside this book, you'll discover how to:")}
         </motion.h3>
 
         {/* List with animated items */}
@@ -84,9 +86,9 @@ export default function BookAbout() {
                 color: "#B97C7C",
                 transition: { type: "spring", stiffness: 400 }
               }}
-              className='text-sm lg:text-base list-disc list-inside font-poppins text-[#414141] leading-7 lg:leading-8 cursor-default'
+              className={`text-sm lg:text-base list-disc list-inside font-poppins text-[#414141] leading-7 lg:leading-8 cursor-default ${i18n?.language == "ar" ? "lg:text-right" :"lg:text-left"}`}
             >
-              {item?.name}
+              {t(item?.name)}
             </motion.li>
           ))}
         </ul>
@@ -111,7 +113,7 @@ export default function BookAbout() {
         }}
       >
         <Image
-          src="/images/Book/book (2) 1.png"
+          src="/SHAHD-IMAGE/Book/book (2) 1.webp"
           width={810}
           height={524}
           objectFit='cover'

@@ -1,6 +1,7 @@
 "use client";
 import React from 'react'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next';
 
 const ingredients = [
   {
@@ -41,6 +42,7 @@ const ingredients = [
 ]
 
 export default function ProductDetailsIngredients() {
+  const { t } = useTranslation();
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -49,7 +51,7 @@ export default function ProductDetailsIngredients() {
       viewport={{ once: false, amount: 0.2 }}
       className='relative min-h-screen py-6'
       style={{
-        background: "url('/images/product-details/c17080f024061945d283c30609d7dfd468f6fbf8.jpg')",
+        background: "url('/SHAHD-IMAGE/product-details/c17080f024061945d283c30609d7dfd468f6fbf8.webp')",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center center",
         backgroundSize: "cover"
@@ -69,21 +71,21 @@ export default function ProductDetailsIngredients() {
           initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className='text-4xl md:text-5xl lg:text-[64px] font-normal text-primary text-center mb-4'
+          className='text-4xl  font-normal text-primary text-center mb-4'
         >
-          key ingredients
+          {t('key ingredients')}
         </motion.h3>
  
         <motion.p
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className='text-sm md:text-base lg:text-lg font-poppins font-medium text-[#414141] text-center mx-auto max-w-2xl px-4'
+          className='text-sm md:text-base  font-poppins font-medium text-[#414141] text-center mx-auto max-w-2xl px-4'
         >
-          A carefully balanced blend of medical-grade and botanical ingredients designed to cleanse, soothe, and protect the skin barrier.
+          {t('A carefully balanced blend of medical-grade and botanical ingredients designed to cleanse, soothe, and protect the skin barrier.')}
         </motion.p>
  
-        <div className='flex flex-col gap-6 md:gap-8 justify-center text-center items-center mt-12 md:mt-16'>
+        <div className='flex flex-col gap-2 justify-center text-center items-center mt-3'>
           {ingredients?.map((item, index) => (
             <motion.div
               key={item.id}
@@ -93,8 +95,8 @@ export default function ProductDetailsIngredients() {
               whileHover={{ scale: 1.02, x: 10 }}
               className="w-full max-w-3xl"
             >
-              <h5 className='text-xl md:text-2xl lg:text-[28px] font-bold font-poppins leading-snug text-black mb-2'>{item?.title}</h5>
-              <p className='text-lg md:text-xl lg:text-[24px] font-medium font-poppins leading-snug text-gray-700'>{item?.sub_title}</p>
+              <h5 className='text-xl md:text-2xl  font-bold font-poppins leading-snug text-black mb-2'>{t(item?.title)}</h5>
+              <p className='text-lg md:text-xl font-medium font-poppins leading-snug text-gray-700'>{t(item?.sub_title)}</p>
             </motion.div>
           ))}
         </div>

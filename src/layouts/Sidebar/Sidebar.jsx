@@ -3,8 +3,10 @@ import { AnimatePresence , motion } from 'framer-motion';
 import Link from 'next/link';
 import { X, ChevronDown, Search, Heart, ShoppingCart } from 'lucide-react';
 import MainLogo from '../../components/layout/Header/MainLogo/MainLogo';
+import { useTranslation } from 'react-i18next';
 
 export default function Sidebar({ isScrolled, isSidebarOpen, setIsSidebarOpen, expandedItem, isActive, isChildren, isExpanded, toggleAccordion, header_links, pathname }) {
+  const { t } = useTranslation();
   return (
     <AnimatePresence>
       {isSidebarOpen && (
@@ -34,7 +36,7 @@ export default function Sidebar({ isScrolled, isSidebarOpen, setIsSidebarOpen, e
               
               <div className="flex items-center gap-3">
                
-                <Link href="/wishlist" className="p-2 text-gray-500 hover:text-primary transition-colors">
+                <Link href="/favorite" className="p-2 text-gray-500 hover:text-primary transition-colors">
                   <Heart size={22} />
                 </Link>
                 <Link href="/cart" className="p-2 text-primary hover:opacity-80 transition-opacity">
@@ -50,7 +52,7 @@ export default function Sidebar({ isScrolled, isSidebarOpen, setIsSidebarOpen, e
             </div>
 
             {/* Scrollable Nav Area */}
-            <nav className="flex-1 overflow-y-auto px-4 py-6 space-y-2">
+            <nav className="flex-1 overflow-y-auto px-2 py-6 space-y-2">
               {header_links?.map((item, index) => {
                 const isActive = pathname === item.path;
                 const hasChildren = item.isChildren && item.children;
@@ -66,7 +68,7 @@ export default function Sidebar({ isScrolled, isSidebarOpen, setIsSidebarOpen, e
                           : 'text-gray-700 hover:bg-gray-50'
                           }`}
                       >
-                        {item.name}
+                        {t(item.name)}
                       </Link>
 
                       {hasChildren && (
@@ -95,7 +97,7 @@ export default function Sidebar({ isScrolled, isSidebarOpen, setIsSidebarOpen, e
                               className={`flex items-center px-6 py-3.5 text-base transition-colors ${pathname === child.path ? 'text-primary font-bold' : 'text-gray-500 hover:text-primary'
                                 }`}
                             >
-                              {child.name}
+                              {t(child.name)}
                             </Link>
                           ))}
                         </motion.div>
@@ -110,12 +112,12 @@ export default function Sidebar({ isScrolled, isSidebarOpen, setIsSidebarOpen, e
             <div className="p-6 bg-gray-50 border-t border-gray-100 flex flex-col gap-3">
               <Link href="/signup" className="w-full">
                 <button className="w-full py-4 rounded-2xl text-primary font-normal border-2 border-primary/20 bg-white hover:bg-primary/5 transition-all">
-                  SIGN UP
+                  {t("Sign Up")}
                 </button>
               </Link>
               <Link href="/booking" className="w-full">
                 <button className="w-full py-4 rounded-2xl bg-primary text-white font-normal shadow-lg shadow-primary/25 hover:brightness-110 transition-all">
-                  BOOKING
+                  {t("Booking")}
                 </button>
               </Link>
             </div>

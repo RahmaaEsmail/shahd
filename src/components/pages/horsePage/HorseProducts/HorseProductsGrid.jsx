@@ -10,7 +10,7 @@ const products = [
     name: "Gentle Foaming Cleanser",
     rating: 4,
     price: "23.00",
-    img: "/images/horse/206c8be48988ac5b9bce6352927ab9782f8d48d8.jpg",
+    img: "/SHAHD-IMAGE/horse/206c8be48988ac5b9bce6352927ab9782f8d48d8.webp",
     category: "face",
   },
   {
@@ -18,7 +18,7 @@ const products = [
     name: "Gentle Foaming Cleanser",
     rating: 5,
     price: "35.00",
-    img: "/images/horse/b1dfb2d20e7426a29aefe4ea741c2bf2a7e2419e.jpg",
+    img: "/SHAHD-IMAGE/horse/b1dfb2d20e7426a29aefe4ea741c2bf2a7e2419e.webp",
     category: "hair",
   },
   {
@@ -26,7 +26,7 @@ const products = [
     name: "Gentle Foaming Cleanser",
     rating: 4,
     price: "28.00",
-    img: "/images/horse/4c8ee52d8fa1007f43c0d4ad4f1c8bb459f29823.jpg",
+    img: "/SHAHD-IMAGE/horse/4c8ee52d8fa1007f43c0d4ad4f1c8bb459f29823.webp",
     category: "body",
   },
   {
@@ -34,7 +34,7 @@ const products = [
     name: "Gentle Foaming Cleanser",
     rating: 5,
     price: "45.00",
-    img: "/images/horse/0851bb4abfba7e11bfca1ef4224a4d3b262332be.jpg",
+    img: "/SHAHD-IMAGE/horse/0851bb4abfba7e11bfca1ef4224a4d3b262332be.webp",
     category: "skin",
   },
   {
@@ -42,7 +42,7 @@ const products = [
     name: "Hydrating Face Cream",
     rating: 4,
     price: "32.00",
-    img: "/images/store/product1.jpg",
+    img: "/SHAHD-IMAGE/Store/product1.webp",
     category: "face",
   },
   {
@@ -50,7 +50,7 @@ const products = [
     name: "Repairing Hair Oil",
     rating: 4,
     price: "29.00",
-    img: "/images/store/product1.jpg",
+    img: "/SHAHD-IMAGE/Store/product1.webp",
     category: "hair",
   },
   {
@@ -58,7 +58,7 @@ const products = [
     name: "Body Lotion",
     rating: 3,
     price: "19.00",
-    img: "/images/store/product1.jpg",
+    img: "/SHAHD-IMAGE/Store/product1.webp",
     category: "body",
   },
   {
@@ -66,7 +66,7 @@ const products = [
     name: "Night Repair Cream",
     rating: 5,
     price: "52.00",
-    img: "/images/store/product1.jpg",
+    img: "/SHAHD-IMAGE/Store/product1.webp",
     category: "skin",
   }
 ];
@@ -137,9 +137,9 @@ export default function HorseProductsGrid({ activeTab }) {
         whileInView="visible"
         viewport={{ once: false, amount: 0.3 }}
         exit="exit"
-        className="grid grid-cols-1 mt-10 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 w-full"
+        className="grid grid-cols-1 mt-2 md:grid-cols-2 lg:grid-cols-4 gap-6  w-full"
       >
-        {filteredProducts?.slice(0, 4).map((product, index) => (
+        {products?.slice(0, 4).map((product, index) => (
           <motion.div
             key={product?.id}
             variants={itemVariants}

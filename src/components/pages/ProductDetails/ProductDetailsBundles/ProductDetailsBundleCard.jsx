@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Star } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { slugify } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
 
 const cardVariants = {
   hidden: {
@@ -178,6 +179,7 @@ const imageVariants = {
   }
 };
 export default function ProductDetailsBundleCard({ item, index }) {
+  const { t } = useTranslation();
   const router = useRouter();
   return (
     <motion.div
@@ -200,24 +202,35 @@ export default function ProductDetailsBundleCard({ item, index }) {
     >
       {/* Image Container */}
       <motion.div
-        className='relative aspect-4/3 w-full overflow-hidden'
+        className='relative aspect-4/3 w-full overflow-hidden cursor-pointer'
         whileHover="hover"
+        onClick={() => {
+          if (item?.id && item?.title) {
+            router.push(`/products/${item.id}/${slugify(item.title)}`);
+          }
+        }}
       >
         <motion.div
-          onClick={() => {
-            if (item?.id && item?.title) {
-              router.push(`/products/${item.id}/${slugify(item.title)}`);
-            }
-          }}
           variants={imageVariants}
           className="relative w-full h-full"
         >
+          {/* Main Image */}
           <Image
             src={item.img}
             alt={item.title}
             fill
-            className='object-cover'
+            className={`object-cover transition-opacity duration-500 ${item.hoverImg ? 'group-hover:opacity-0' : ''}`}
           />
+          
+          {/* Hover Image */}
+          {item.hoverImg && (
+            <Image
+              src={item.hoverImg}
+              alt={`${item.title} hover`}
+              fill
+              className='object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500'
+            />
+          )}
         </motion.div>
 
         {item.is_best && (
@@ -229,21 +242,21 @@ export default function ProductDetailsBundleCard({ item, index }) {
             whileHover="hover"
             className='absolute top-3 right-3 bg-primary text-white font-poppins text-lg font-medium px-4 py-1 rounded-full z-10'
           >
-            Best Seller
+            {t('Best Seller')}
           </motion.div>
         )}
       </motion.div>
 
       {/* Content Section */}
       <motion.div
-        className='p-6 flex flex-col gap-4'
+        className='p-3 flex flex-col gap-2'
         initial="hidden"
         whileInView="visible"
         viewport={{ once: false }}
       >
         {/* Rating Stars */}
         <motion.div
-          className='flex gap-1 mb-3'
+          className='flex gap-1 mb-1.5'
           initial="hidden"
           whileInView="visible"
           viewport={{ once: false }}
@@ -267,18 +280,18 @@ export default function ProductDetailsBundleCard({ item, index }) {
         {/* Title */}
         <motion.h4
           variants={titleVariants}
-          className='text-xl md:text-2xl max-w-[230px] font-medium text-[#1E1E1E] uppercase leading-tight mb-3 md:mb-4'
+          className='text-xl  max-w-[230px] font-medium text-[#1E1E1E] uppercase leading-tight mb-3 md:mb-4'
         >
-          {item.title}
+          {t(item.title)}
         </motion.h4>
  
         {/* Price */}
         <motion.p
           variants={priceVariants}
           whileHover="hover"
-          className='text-xl md:text-2xl font-bold font-poppins text-primary cursor-default'
+          className='text-xl  font-bold font-poppins text-primary cursor-default'
         >
-          {item.price}
+          {t(item.price)}
         </motion.p>
 
         {/* Add to Cart Button */}
@@ -291,7 +304,7 @@ export default function ProductDetailsBundleCard({ item, index }) {
           style={{
             background: "linear-gradient(90deg, #DDB2B5 0%, #EFD4CE 100%)"
           }}
-          className='w-full cursor-pointer py-2.5 md:py-3 rounded-full text-white text-lg md:text-2xl font-medium uppercase relative overflow-hidden'
+          className='w-full cursor-pointer py-2.5  rounded-full text-white text-lg  font-medium uppercase relative overflow-hidden'
         >
           {/* Button shine effect on hover */}
           <motion.div
@@ -300,7 +313,7 @@ export default function ProductDetailsBundleCard({ item, index }) {
             whileHover={{ x: "200%", skewX: -15 }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
           />
-          <span className="relative z-10">Add to Cart</span>
+          <span className="relative z-10">{t('Add to Cart')}</span>
         </motion.button>
       </motion.div>
     </motion.div>

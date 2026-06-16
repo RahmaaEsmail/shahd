@@ -2,14 +2,16 @@
 import Image from 'next/image'
 import React from 'react'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next';
 
 export default function WeightManagementApp() {
+  const { t } = useTranslation();
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative h-[90vh] overflow-hidden">
       {/* Fixed Background with Gradient Overlay */}
       <div className="absolute inset-0 -z-10">
         <Image 
-          src="/images/Weight-management/Frame 1000005887.png" 
+          src="/SHAHD-IMAGE/Weight-management/Frame 1000005887.webp" 
           alt="app image" 
           fill 
           className='object-cover'
@@ -60,9 +62,9 @@ export default function WeightManagementApp() {
               delay: 0.5,
               ease: [0.16, 1, 0.3, 1] 
             }}
-            className='text-white text-center text-4xl md:text-6xl lg:text-[80px] font-poppins font-bold leading-tight'
+            className='text-white text-center text-4xl   font-poppins font-bold leading-tight'
           >
-            Fresh & Delicious Meals Delivered to You
+            {t("Fresh & Delicious Meals Delivered to You")}
           </motion.h2>
           
           {/* Animated Button with Hover Effects */}
@@ -85,12 +87,12 @@ export default function WeightManagementApp() {
             style={{
               boxShadow: '0px 4px 100px 0px #95BCAA'
             }}
-            className='bg-[#95BCAA] text-white mt-10 md:mt-20 lg:mt-40 px-8 md:px-10 py-2 md:py-3 rounded-full text-center text-2xl md:text-4xl lg:text-[48px] font-normal hover:bg-[#86ad9b] transition-colors duration-300'
+            className='bg-[#95BCAA] text-white mt-10  px-8  py-2 rounded-full text-center text-2xl font-normal hover:bg-[#86ad9b] transition-colors duration-300'
           >
-            Order Now
+            {t("Order Now")}
           </motion.button>
         </motion.div>
       </div>
     </div>
   )
-}
+}

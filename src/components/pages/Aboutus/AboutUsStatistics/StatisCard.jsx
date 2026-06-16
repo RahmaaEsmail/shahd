@@ -96,7 +96,7 @@ export default function StatisCard({ image, number, title, isPrimary }) {
       >
         <div className='flex flex-col justify-center items-center text-center p-4'>
           <motion.h3 
-            className={`font-bold text-[40px] lg:text-[50px] font-poppins mb-2 ${
+            className={`font-bold text-[30px] font-poppins mb-2 ${
               isPrimary ? "text-[#DDB2B5]" : "text-[#B6C7D6]"
             }`}
             variants={numberVariants}
@@ -108,7 +108,7 @@ export default function StatisCard({ image, number, title, isPrimary }) {
           </motion.h3>
           
           <motion.p 
-            className='text-white uppercase font-normal text-xl lg:text-5xl'
+            className='text-white uppercase font-normal text-xl lg:text-3xl'
             variants={{
               initial: { opacity: 0, y: 10 },
               animate: { 

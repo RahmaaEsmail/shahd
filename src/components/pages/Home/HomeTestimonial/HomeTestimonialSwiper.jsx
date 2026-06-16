@@ -33,11 +33,11 @@ export default function HomeTestimonialSwiper({
   };
 
   return (
-    <div className="relative w-full max-w-7xl mx-auto px-4 py-8 lg:py-12">
+    <div className="relative w-full max-w-7xl mx-auto px-4">
       {/* Decorative Background */}
       <div className="absolute inset-0 -z-10 flex justify-center items-center opacity-30 lg:opacity-60">
         <Image
-          src="/images/HomeTestimonial/testimonial_bg.png"
+          src="/SHAHD-IMAGE/HomeTestioniai/testimonial_bg.webp"
           width={1000}
           height={600}
           alt=""
@@ -90,11 +90,11 @@ export default function HomeTestimonialSwiper({
 
               {/* Textual Content */}
               <div className="flex flex-col text-center lg:text-left space-y-4 max-w-xl w-full">
-                <div className="bg-black/30 backdrop-blur-md p-5 lg:p-8 rounded-[30px] lg:rounded-[40px] border border-white/10">
-                  <h4 className="text-xl lg:text-3xl font-bold text-white mb-1">
+                <div className="bg-black/10 backdrop-blur-xs p-5 lg:p-8 rounded-[30px] lg:rounded-[40px] border border-white/10">
+                  <h4 className="text-xl font-bold text-white mb-1">
                     {selectedTestimonial?.name}
                   </h4>
-                  <p className="text-secondary font-medium tracking-wide uppercase text-xs lg:text-sm mb-3 lg:mb-4">
+                  <p className="text-white font-medium tracking-wide uppercase text-xs lg:text-sm mb-3 lg:mb-4">
                     {selectedTestimonial?.treatment}
                   </p>
                   <p className="text-white/90 text-base lg:text-xl font-light italic leading-relaxed">
@@ -103,9 +103,9 @@ export default function HomeTestimonialSwiper({
                 </div>
                 
                 <div className="flex flex-col sm:flex-row items-center gap-4 mt-2 justify-center lg:justify-start">
-                  <button className="px-8 py-3 bg-secondary text-white rounded-full font-semibold border-2 border-transparent hover:bg-transparent hover:border-white transition-all active:scale-95 text-sm lg:text-base">
+                  {/* <button className="px-8 py-3 bg-secondary text-white rounded-full font-semibold border-2 border-transparent hover:bg-transparent hover:border-white transition-all active:scale-95 text-sm lg:text-base">
                     Show More
-                  </button>
+                  </button> */}
                   
                   {/* Mobile/Tablet Navigation Buttons */}
                   {/* <div className="flex gap-4 lg:hidden mt-4 lg:mt-0">
