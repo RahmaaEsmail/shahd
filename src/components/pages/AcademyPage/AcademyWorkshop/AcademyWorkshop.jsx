@@ -6,10 +6,16 @@ import { motion } from 'framer-motion';
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 
-export default function AcademyWorkshop() {
-  const { t , i18n} = useTranslation();
+export default function AcademyWorkshop({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: false, amount: 0.3 })
+
+  const subtitle = data?.[`subtitle_${lang}`] || data?.subtitle_en || t('Live Aesthetic Medicine Workshop');
+  const title = data?.[`title_${lang}`] || data?.title_en || t('Academy Workshop Title');
+  const description = data?.[`description_${lang}`] || data?.description_en || t('Academy Workshop Desc');
+  const bgImage = data?.image_url || "/SHAHD-IMAGE/Academy/Frame 1000005609.webp";
 
   // Animation variants
   const containerVariants = {
@@ -84,7 +90,7 @@ export default function AcademyWorkshop() {
         className='absolute inset-0'
       >
         <Image
-          src="/SHAHD-IMAGE/Academy/Frame 1000005609.webp"
+          src={bgImage}
           alt="academy-workshop"
           fill
           className='object-cover'
@@ -107,7 +113,7 @@ export default function AcademyWorkshop() {
           variants={itemVariants}
           className='font-bold font-poppins text-lg md:text-xl text-secondary'
         >
-          {t('Live Aesthetic Medicine Workshop')}
+          {subtitle}
         </motion.p>
 
         {/* Title */}
@@ -115,7 +121,7 @@ export default function AcademyWorkshop() {
           variants={itemVariants}
           className='text-primary text-3xl  font-normal font-main max-w-2xl leading-tight'
         >
-          {t('Academy Workshop Title')}
+          {title}
         </motion.h1>
 
         {/* Description Card */}
@@ -130,7 +136,7 @@ export default function AcademyWorkshop() {
             transition={{ delay: 0.6 }}
             className="text-[#414141] text-sm leading-relaxed font-poppins"
           >
-            {t('Academy Workshop Desc')}
+            {description}
           </motion.p>
         </motion.div>
 

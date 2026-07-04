@@ -5,10 +5,18 @@ import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
 
-export default function AestheticGynecologyBanner() {
-  const { t , i18n} = useTranslation();
+export default function AestheticGynecologyBanner({ data }) {
+  const { t, i18n } = useTranslation();
   const isRtl = i18n?.language === 'ar';
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
   const router = useRouter();
+
+  const title = data?.[`title_${lang}`] || data?.title_en;
+  const description1 = data?.[`description_1_${lang}`] || data?.description_1_en || t("Aesthetic Banner Desc 1");
+  const description2 = data?.[`description_2_${lang}`] || data?.description_2_en || t("Aesthetic Banner Desc 2");
+  const bgImage = data?.image_url || "/SHAHD-IMAGE/aethesic/6953b487ed849b644340eea62251152efbd4f688.webp";
+  const portraitImage = data?.small_image_url || "/SHAHD-IMAGE/aethesic/069ebbd11859b4fb11af7a96fd1a5974030fed1e.webp";
+
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -29,7 +37,7 @@ export default function AestheticGynecologyBanner() {
       {/* 1. Background Image Layer */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/SHAHD-IMAGE/aethesic/6953b487ed849b644340eea62251152efbd4f688.webp"
+          src={bgImage}
           alt="Aesthetic Background"
           fill
           className='object-cover object-center scale-105'
@@ -54,8 +62,12 @@ export default function AestheticGynecologyBanner() {
           <div className='xl:col-span-6  flex flex-col items-center xl:items-start text-center xl:text-start gap-8 md:gap-12'>
             <motion.div variants={fadeInUp}>
               <h1 className="text-white text-3xl md:text-6xl mt-10 font-normal text-start leading-[1.1] uppercase tracking-tight">
-                {t("Begin Your Women Health")} 
-                <span className="block lg:inline"> {t("Journey.")}</span>
+                {title ? title : (
+                  <>
+                    {t("Begin Your Women Health")} 
+                    <span className="block lg:inline"> {t("Journey.")}</span>
+                  </>
+                )}
               </h1>
             </motion.div>
 
@@ -94,7 +106,7 @@ export default function AestheticGynecologyBanner() {
                   className="flex-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-[24px] md:rounded-[32px] p-3 flex items-center justify-center text-center shadow-xl"
                 >
                   <p className="text-white text-sm md:text-base leading-relaxed font-light font-poppins">
-                    {t("Aesthetic Banner Desc 1")}
+                    {description1}
                   </p>
                 </motion.div>
 
@@ -104,7 +116,7 @@ export default function AestheticGynecologyBanner() {
                   className="flex-1 bg-white/10 backdrop-blur-md border border-white/10 rounded-[24px] md:rounded-[32px] p-3 flex items-center justify-center text-center shadow-xl"
                 >
                   <p className="text-white text-sm md:text-base leading-relaxed font-light font-poppins">
-                    {t("Aesthetic Banner Desc 2")}
+                    {description2}
                   </p>
                 </motion.div>
               </div>
@@ -115,7 +127,7 @@ export default function AestheticGynecologyBanner() {
                 className="flex-1 min-h-[300px] md:min-h-full relative rounded-[24px] md:rounded-[32px] overflow-hidden shadow-2xl border border-white/20 order-1 md:order-2"
               >
                 <Image
-                  src="/SHAHD-IMAGE/aethesic/069ebbd11859b4fb11af7a96fd1a5974030fed1e.webp"
+                  src={portraitImage}
                   alt="Portrait Specialist"
                   fill
                   className='object-cover hover:scale-105 transition-transform duration-1000'

@@ -39,8 +39,15 @@ const list = [
   }
 ]
 
-export default function BookAbout() {
-  const { t , i18n } = useTranslation();
+export default function BookAbout({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+
+  const subtitle = data?.[`subtitle_${lang}`] || data?.subtitle_en || t("Take a look inside");
+  const title = data?.[`title_${lang}`] || data?.title_en || t("Inside this book, you'll discover how to:");
+  const description = data?.[`description_${lang}`] || data?.description_en;
+  const bgImage = data?.image_url || "/SHAHD-IMAGE/Book/book (2) 1.webp";
+
   return (
     <motion.div
       className="flex flex-col lg:grid lg:grid-cols-[4fr_8fr] overflow-hidden items-center gap-10 lg:gap-16"
@@ -61,37 +68,47 @@ export default function BookAbout() {
           transition={{ delay: 0.2, duration: 0.5 }}
           className={`font-bold text-secondary text-xl  font-poppins ${i18n?.language == "ar" ? "text-right" : "text-left"}`}
         >
-          {t("Take a look inside")}
+          {subtitle}
         </motion.p>
 
         <motion.h3
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.5 }}
-          className={`text-2xl  max-w-xl mx-auto lg:mx-0 text-primary font-normal leading-tight lg:leading-16  ${i18n?.language == "ar" ? "text-right" : "text-left"}}`}
+          className={`text-2xl  max-w-xl mx-auto lg:mx-0 text-primary font-normal leading-tight lg:leading-16  ${i18n?.language == "ar" ? "text-right" : "text-left"}`}
         >
-          {t("Inside this book, you'll discover how to:")}
+          {title}
         </motion.h3>
 
-        {/* List with animated items */}
-        <ul className="space-y-2 text-left inline-block mx-auto lg:mx-0">
-          {list?.map((item, index) => (
-            <motion.li
-              key={item?.id}
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 + index * 0.1, duration: 0.4 }}
-              whileHover={{
-                x: 10,
-                color: "#B97C7C",
-                transition: { type: "spring", stiffness: 400 }
-              }}
-              className={`text-sm lg:text-base list-disc list-inside font-poppins text-[#414141] leading-7 lg:leading-8 cursor-default ${i18n?.language == "ar" ? "lg:text-right" :"lg:text-left"}`}
-            >
-              {t(item?.name)}
-            </motion.li>
-          ))}
-        </ul>
+        {/* List or description block with animated items */}
+        {description ? (
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className={`text-sm lg:text-base font-poppins text-[#414141] leading-7 lg:leading-8 ${i18n?.language == "ar" ? "text-right" : "text-left"}`}
+          >
+            {description}
+          </motion.p>
+        ) : (
+          <ul className="space-y-2 text-left inline-block mx-auto lg:mx-0">
+            {list?.map((item, index) => (
+              <motion.li
+                key={item?.id}
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4 + index * 0.1, duration: 0.4 }}
+                whileHover={{
+                  x: 10,
+                  color: "#B97C7C",
+                  transition: { type: "spring", stiffness: 400 }
+                }}
+                className={`text-sm lg:text-base list-disc list-inside font-poppins text-[#414141] leading-7 lg:leading-8 cursor-default ${i18n?.language == "ar" ? "lg:text-right" :"lg:text-left"}`}
+              >
+                {t(item?.name)}
+              </motion.li>
+            ))}
+          </ul>
+        )}
       </motion.div>
 
       {/* Right image section */}
@@ -113,7 +130,7 @@ export default function BookAbout() {
         }}
       >
         <Image
-          src="/SHAHD-IMAGE/Book/book (2) 1.webp"
+          src={bgImage}
           width={810}
           height={524}
           objectFit='cover'

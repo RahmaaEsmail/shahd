@@ -262,9 +262,23 @@ import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
-export default function HairTherapyPrePost() {
-  const { t } = useTranslation();
+export default function HairTherapyPrePost({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : "en";
   const [isOpen, setIsOpen] = useState(false);
+
+  const subtitle = data?.[`subtitle_${lang}`] || data?.subtitle_en || t("Pre Post Care");
+  const title = data?.[`title_${lang}`] || data?.title_en || t("Journey Beyond Surgery");
+
+  const preImage = data?.pre_image_url || "/SHAHD-IMAGE/hair-therapy/Vector.webp";
+  const postImage = data?.post_image_url || "/SHAHD-IMAGE/hair-therapy/Vector-1 (2).webp";
+
+  const preCareHtml = data?.[`pre_care_${lang}`] || data?.pre_care_en;
+  const postCareHtml = data?.[`post_care_${lang}`] || data?.post_care_en;
 
   const preSurgery = [
     "Medical scalp assessment",
@@ -282,6 +296,8 @@ export default function HairTherapyPrePost() {
     "Long term maintenance"
   ];
 
+  const isAr = lang === "ar";
+
   return (
     <div
       className="relative w-full py-12 overflow-hidden"
@@ -295,7 +311,7 @@ export default function HairTherapyPrePost() {
         <div className="relative h-[400px] md:h-[600px] w-full max-w-full sm:max-w-[600px] mx-auto order-2 md:order-1">
           <div className="absolute top-0 left-0 w-full h-[90%] md:h-full">
             <Image
-              src="/SHAHD-IMAGE/hair-therapy/Vector.webp"
+              src={preImage}
               alt="Surgery Consultation"
               fill
               className="object-contain"
@@ -304,7 +320,7 @@ export default function HairTherapyPrePost() {
 
           <div className="absolute bottom-10 md:bottom-2 right-0 xs:right-6 sm:right-16 md:-right-2 w-[55%] h-[60%] md:w-[45%] md:h-[70%] z-10">
             <Image
-              src="/SHAHD-IMAGE/hair-therapy/Vector-1 (2).webp"
+              src={postImage}
               alt="Post Surgery Care"
               fill
               className="object-contain drop-shadow-2xl md:object-left-bottom"
@@ -326,10 +342,10 @@ export default function HairTherapyPrePost() {
         <div className="flex flex-col gap-4 order-1 md:order-2">
           <div className="space-y-2">
             <h4 className="text-secondary text-lg md:text-2xl font-bold font-poppins uppercase tracking-wider">
-              {t("Pre Post Care")}
+              {subtitle}
             </h4>
             <h2 className="text-primary text-3xl font-normal uppercase leading-tight">
-              {t("Journey Beyond Surgery")}
+              {title}
             </h2>
           </div>
 
@@ -339,14 +355,21 @@ export default function HairTherapyPrePost() {
                 <span className="w-8 h-px bg-secondary"></span>
                 {t("Pre Surgery Care")}
               </h3>
-              <ul className="space-y-4 ml-4">
-                {preSurgery.map((item, index) => (
-                  <li key={index} className="text-[#414141] text-base md:text-lg font-normal font-poppins flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-secondary mt-2 shrink-0"></span>
-                    {t(item)}
-                  </li>
-                ))}
-              </ul>
+              {preCareHtml ? (
+                <div 
+                  className={`care-list-html text-[#414141] text-base md:text-lg font-normal font-poppins [&_ul]:list-none [&_ul]:space-y-4 [&_li]:relative ${isAr ? '[&_li]:pr-6 [&_li]:pl-0 [&_li]:before:right-0 [&_li]:before:left-auto' : '[&_li]:pl-6 [&_li]:pr-0 [&_li]:before:left-0 [&_li]:before:right-auto'} [&_li]:before:content-[''] [&_li]:before:absolute [&_li]:before:top-2.5 [&_li]:before:w-1.5 [&_li]:before:h-1.5 [&_li]:before:rounded-full [&_li]:before:bg-secondary`}
+                  dangerouslySetInnerHTML={{ __html: preCareHtml }}
+                />
+              ) : (
+                <ul className="space-y-4 ml-4">
+                  {preSurgery.map((item, index) => (
+                    <li key={index} className="text-[#414141] text-base md:text-lg font-normal font-poppins flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-secondary mt-2 shrink-0"></span>
+                      {t(item)}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
 
             <div className="space-y-6">
@@ -354,14 +377,21 @@ export default function HairTherapyPrePost() {
                 <span className="w-8 h-px bg-secondary"></span>
                 {t("Post Surgery Care")}
               </h3>
-              <ul className="space-y-4 ml-4">
-                {postSurgery.map((item, index) => (
-                  <li key={index} className="text-[#414141] text-base md:text-lg font-normal font-poppins flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-secondary mt-2 shrink-0"></span>
-                    {t(item)}
-                  </li>
-                ))}
-              </ul>
+              {postCareHtml ? (
+                <div 
+                  className={`care-list-html text-[#414141] text-base md:text-lg font-normal font-poppins [&_ul]:list-none [&_ul]:space-y-4 [&_li]:relative ${isAr ? '[&_li]:pr-6 [&_li]:pl-0 [&_li]:before:right-0 [&_li]:before:left-auto' : '[&_li]:pl-6 [&_li]:pr-0 [&_li]:before:left-0 [&_li]:before:right-auto'} [&_li]:before:content-[''] [&_li]:before:absolute [&_li]:before:top-2.5 [&_li]:before:w-1.5 [&_li]:before:h-1.5 [&_li]:before:rounded-full [&_li]:before:bg-secondary`}
+                  dangerouslySetInnerHTML={{ __html: postCareHtml }}
+                />
+              ) : (
+                <ul className="space-y-4 ml-4">
+                  {postSurgery.map((item, index) => (
+                    <li key={index} className="text-[#414141] text-base md:text-lg font-normal font-poppins flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-secondary mt-2 shrink-0"></span>
+                      {t(item)}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
         </div>

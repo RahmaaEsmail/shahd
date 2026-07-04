@@ -217,7 +217,7 @@ export default function CartCheckout({ open, setOpen }) {
                 variants={titleVariants}
                 initial="hidden"
                 animate="visible"
-                className="text-[27px] font-bold text-secondary mb-4 font-poppins"
+                className="text-[23px] font-semeibold text-secondary mb-4 font-poppins"
               >
                 Payment Details
               </motion.h3>
@@ -429,7 +429,7 @@ export default function CartCheckout({ open, setOpen }) {
                   backgroundSize: "cover",
                   backgroundPosition: "center"
                 }}
-                className="w-[183px] flex items-center justify-center ms-auto text-[24px] font-normal h-[47px] rounded-full text-white mt-4"
+                className="w-[183px] flex items-center justify-center ms-auto text-md font-normal h-[47px] rounded-full text-white mt-4"
                 onClick={handlePayment}
               >
                 <motion.span

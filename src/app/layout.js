@@ -6,6 +6,7 @@ import Footer from "../layouts/Footer/Footer";
 import ChatbotIcon from '../components/layout/ChatbotIcon';
 import "sweetalert2/dist/sweetalert2.min.css";
 import LanguageCurrencySettings from "../components/layout/LanguageCurrencySettings";
+import LayoutProvider from "../components/layout/LayoutProvider";
 import DirectionProvider from "../components/shared/DirectionProvider";
 
 const geistSans = Geist({
@@ -29,6 +30,8 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <LayoutProvider>
+
         <DirectionProvider>
           <Header />
           <main>{children}</main>
@@ -41,6 +44,7 @@ export default function RootLayout({ children }) {
             <ChatbotIcon/>
           </div>
         </DirectionProvider>
+        </LayoutProvider>
       </body>
     </html>
   );

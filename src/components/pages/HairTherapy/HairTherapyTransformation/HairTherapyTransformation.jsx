@@ -6,7 +6,7 @@ import { ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
-const data = [
+const staticCards = [
   {
     id: 1,
     num_img:"/SHAHD-IMAGE/hair-therapy/Vector 1.webp",
@@ -37,9 +37,30 @@ const data = [
   },
 ]
 
-export default function HairTherapyTransformation() {
-  const { t } = useTranslation();
+export default function HairTherapyTransformation({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : "en";
   const router = useRouter();
+
+  const cards = data && data.length > 0
+    ? data.map((item, idx) => ({
+        id: item.id,
+        num_img: `/SHAHD-IMAGE/hair-therapy/Vector ${(idx % 4) + 1}.webp`,
+        img: item.image_url || item.image || "/SHAHD-IMAGE/hair-therapy/52ac59b8ad9b63f5128dcc7210d21f26f62a829a.webp",
+        title: item[`title_${lang}`] || item.title_en || "",
+        desc: item[`description_${lang}`] || item.description_en || ""
+      }))
+    : staticCards.map(item => ({
+        id: item.id,
+        num_img: item.num_img,
+        img: item.img,
+        title: t(item.titleKey),
+        desc: t(item.descKey)
+      }));
 
   // Animation variants
   const containerVariants = {
@@ -230,7 +251,7 @@ export default function HairTherapyTransformation() {
            initial="hidden"
           whileInView={"visible"}
         >
-          {data.map((item, index) => (
+          {cards.map((item, index) => (
             <motion.div
               key={item.id}
               onClick={() => router.push(`/services/${item?.id}/${item?.title}`)}
@@ -248,8 +269,6 @@ export default function HairTherapyTransformation() {
                 <img
                   src="/SHAHD-IMAGE/hair-therapy/Untitled design - 2026-03-25T114829.031.webp"
                   className="absolute rounded-[40px]! w-50 h-50 top-0 border-none object-cover right-0 z-50"
-                  // variants={decorativeVariants}
-                  // animate="animate"
                   alt="decorative element"
                 />
 
@@ -312,14 +331,14 @@ export default function HairTherapyTransformation() {
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.2 }}
                   >
-                    {t(item.titleKey)}
+                    {item.title}
                   </motion.h3>
                   <motion.p 
                     className='text-lg mt-2 font-normal text-[#414141] font-poppins leading-[24px] tracking-[-0.3px] text-center line-clamp-3'
                     whileHover={{ y: -2 }}
                     transition={{ duration: 0.2 }}
                   >
-                    {t(item.descKey)}
+                    {item.desc}
                   </motion.p>
                 </motion.div>
               </motion.div>

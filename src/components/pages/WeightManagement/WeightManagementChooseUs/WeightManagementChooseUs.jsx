@@ -32,8 +32,34 @@ const data = [
   },
 ];
 
-export default function WeightManagementChooseUs() {
-  const { t } = useTranslation();
+export default function WeightManagementChooseUs({ cardsData, mainData }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+
+  const subtitle = mainData?.[`subtitle_${lang}`] || mainData?.subtitle_en || t("Why Choose Us?");
+  const title = mainData?.[`title_${lang}`] || mainData?.title_en || t("Why Choose Us Weight Desc 1");
+  const description = mainData?.[`description_${lang}`] || mainData?.description_en || t("Why Choose Us Weight Desc 2");
+  const centerImage = mainData?.image_url || "/SHAHD-IMAGE/Weight-management/Rectangle 21.webp";
+
+  const isDynamic = cardsData && cardsData.length > 0;
+  const resolvedCards = isDynamic
+    ? cardsData.map((item, idx) => ({
+        id: item.id || idx + 1,
+        img: item.image_url || "/SHAHD-IMAGE/Weight-management/Group 1597883563.webp",
+        title: item[`title_${lang}`] || item.title_en,
+        desc: item[`description_${lang}`] || item.description_en,
+      }))
+    : data.map(item => ({
+        id: item.id,
+        img: item.img,
+        title: t(item.titleKey),
+        desc: t(item.descKey),
+      }));
+
+  const half = Math.ceil(resolvedCards.length / 2);
+  const leftCards = resolvedCards.slice(0, half);
+  const rightCards = resolvedCards.slice(half);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -60,7 +86,7 @@ export default function WeightManagementChooseUs() {
             transition={{ duration: 0.6 }}
             className="font-bold text-[#95BCAA] font-poppins text-lg md:text-2xl"
           >
-            {t("Why Choose Us?")}
+            {subtitle}
           </motion.h3>
           <motion.p
             initial={{ y: 50, opacity: 0 }}
@@ -69,7 +95,7 @@ export default function WeightManagementChooseUs() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-primary font-normal text-2xl sm:text-3xl mt-3 leading-tight lg:leading-tight"
           >
-            {t("Why Choose Us Weight Desc 1")}
+            {title}
           </motion.p>
           <motion.p
             initial={{ y: 70, opacity: 0 }}
@@ -78,7 +104,7 @@ export default function WeightManagementChooseUs() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-text text-base  font-poppins leading-relaxed mt-2 max-w-3xl"
           >
-            {t("Why Choose Us Weight Desc 2")}
+            {description}
           </motion.p>
         </motion.div>
  
@@ -91,7 +117,7 @@ export default function WeightManagementChooseUs() {
             transition={{ duration: 0.5, ease: "easeInOut", delay: 0.4 }}
             className="flex flex-col gap-4 order-2 lg:order-1 h-full"
           >
-            {data?.slice(0, 2)?.map((item, index) => (
+            {leftCards?.map((item, index) => (
               <motion.div
                 key={item?.id}
                 initial={{ x: -50, opacity: 0 }}
@@ -101,9 +127,9 @@ export default function WeightManagementChooseUs() {
                 className="flex-1"
               >
                 <ChooseUsCard
-                  desc={t(item?.descKey)}
+                  desc={item?.desc}
                   img={item?.img}
-                  title={t(item?.titleKey)}
+                  title={item?.title}
                 />
               </motion.div>
             ))}
@@ -123,7 +149,7 @@ export default function WeightManagementChooseUs() {
               className="relative w-full h-full min-h-[400px] lg:min-h-0"
             >
               <Image
-                src="/SHAHD-IMAGE/Weight-management/Rectangle 21.webp"
+                src={centerImage}
                 fill
                 className="rounded-[32px] lg:rounded-[40px] object-cover shadow-2xl"
                 alt="Clinic"
@@ -139,7 +165,7 @@ export default function WeightManagementChooseUs() {
             transition={{ duration: 0.5, ease: "easeInOut", delay: 0.4 }}
             className="flex flex-col gap-4 order-3 h-full"
           >
-            {data?.slice(2)?.map((item, index) => (
+            {rightCards?.map((item, index) => (
               <motion.div
                 key={item?.id}
                 initial={{ x: 50, opacity: 0 }}
@@ -149,9 +175,9 @@ export default function WeightManagementChooseUs() {
                 className="flex-1"
               >
                 <ChooseUsCard
-                  desc={t(item?.descKey)}
+                  desc={item?.desc}
                   img={item?.img}
-                  title={t(item?.titleKey)}
+                  title={item?.title}
                 />
               </motion.div>
             ))}

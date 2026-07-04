@@ -31,9 +31,46 @@ const steps = [
   }
 ];
 
-const AestheticGynecologyGuide = () => {
+const AestheticGynecologyGuide = ({ data }) => {
   const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
   const isRtl = i18n.language === 'ar';
+
+  const staticSteps = [
+    {
+      number: t("Step 1"),
+      title: t("Consultation Title"),
+      description: t("Consultation Desc"),
+      icon: "/SHAHD-IMAGE/aethesic/Frame 2147208124.webp",
+    },
+    {
+      number: t("Step 2"),
+      title: t("Personalized Plan Title"),
+      description: t("Personalized Plan Desc"),
+      icon: "/SHAHD-IMAGE/aethesic/Frame 2147208124 (1).webp",
+    },
+    {
+      number: t("Step 3"),
+      title: t("Non Surgical Title"),
+      description: t("Non Surgical Desc"),
+      icon: "/SHAHD-IMAGE/aethesic/Frame 2147208124 (2).webp",
+    },
+    {
+      number: t("Step 4"),
+      title: t("Recovery Title"),
+      description: t("Recovery Desc"),
+      icon: "/SHAHD-IMAGE/aethesic/Frame 2147208124 (3).webp",
+    }
+  ];
+
+  const stepsList = data && data.length > 0
+    ? data.map((item, idx) => ({
+        number: `${t("Step")} ${item.step_number || (idx + 1)}`,
+        title: item[`title_${lang}`] || item.title_en || "",
+        description: item[`description_${lang}`] || item.description_en || "",
+        icon: item.image_url || item.image || `/SHAHD-IMAGE/aethesic/Frame 2147208124${idx > 0 ? ` (${idx})` : ""}.webp`
+      }))
+    : staticSteps;
 
   return (
     <section dir={isRtl ? 'rtl' : 'ltr'} className="relative overflow-hidden py-16  bg-white">
@@ -70,7 +107,7 @@ const AestheticGynecologyGuide = () => {
           <div className={`absolute ${isRtl ? 'left-[20px] border-e! lg:border-e-2!' : 'left-[20px] border-s lg:border-s-2'} lg:left-1/2 top-0 bottom-0 bg-primary w-[2px] lg:w-[5px]  border-primary -translate-x-1/2 z-0`} />
 
           <div className="space-y-12 lg:space-y-[-20px] relative z-10">
-            {steps.map((step, index) => {
+            {stepsList.map((step, index) => {
               const isEven = index % 2 === 1;
 
               return (
@@ -98,10 +135,10 @@ const AestheticGynecologyGuide = () => {
                           </div>
 
                           <h3 className="text-primary font-normal text-[22px]  tracking-wider leading-tight uppercase">
-                            {t(step.numberKey)} {t(step.titleKey)}
+                            {step.number} {step.title}
                           </h3>
                           <p className="text-[#414141] text-sm  font-poppins tracking-[-0.15px] leading-relaxed font-light mt-2">
-                            {t(step.descriptionKey)}
+                            {step.description}
                           </p>
                         </div>
                       </div>

@@ -42,7 +42,7 @@ export default function CartProduct({ product, index = 0 }) {
     >
       <div className="flex items-center gap-6 w-full md:w-auto">
         {/* Product Image */}
-        <div className="relative w-[100px] h-[100px] md:w-[120px] md:h-[120px] rounded-[24px] overflow-hidden bg-[#F5E8E6] shrink-0">
+        <div className="relative w-[100px] h-[100px] rounded-[24px] overflow-hidden bg-[#F5E8E6] shrink-0">
           <Image
             src={product?.image || "/SHAHD-IMAGE/Cart/Rectangle 43.webp"}
             alt={product?.name || "Product"}
@@ -53,17 +53,17 @@ export default function CartProduct({ product, index = 0 }) {
 
         {/* Info on Mobile (Title + Price) */}
         <div className="flex flex-col gap-1 md:hidden">
-            <h3 className="text-xl font-normal text-[#1E1E1E] uppercase">
+            <h3 className="text-md font-normal text-[#1E1E1E]">
                 {product?.name || "Gentle Foaming Cleanser"}
             </h3>
-            <p className="text-lg font-semibold font-poppins text-primary">
+            <p className="text-sm font-semibold font-poppins text-primary">
                 {(product?.price * quantity || 23.00).toFixed(2)} S.R
             </p>
         </div>
       </div>
 
       {/* Description / Name - Hidden on mobile, handled above */}
-      <h3 className="hidden md:block text-lg lg:text-2xl font-normal text-[#1E1E1E] uppercase truncate">
+      <h3 className="hidden md:block text-sm font-normal text-[#1E1E1E] truncate">
         {product?.name || "Gentle Foaming Cleanser"}
       </h3>
 

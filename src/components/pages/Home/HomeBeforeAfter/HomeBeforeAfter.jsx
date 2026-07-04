@@ -8,12 +8,18 @@ import HomeBeforeAfterHeader from "./HomeBeforeAfterHeader";
 import HomeBeforeLeftContent from "./HomeBeforeLeftContent";
 import HomeBeforeRightContentImages from "./HomeBeforeRightContentImages";
 
-export default function HomeBeforeAfter() {
-  const { t } = useTranslation();
+export default function HomeBeforeAfter({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+    ? "sk"
+    : "en";
+
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const treatments = [
+  const staticTreatments = [
     {
       id: 1,
       title: t("Non-Surgical Nose Reshaping"),
@@ -71,6 +77,18 @@ export default function HomeBeforeAfter() {
       thumbnail: "/SHAHD-IMAGE/homebefore/mainImg.webp",
     },
   ];
+
+  const treatments =
+    data?.results && data.results.length > 0
+      ? data.results.map((item) => ({
+          id: item.id,
+          title: item[`title_${lang}`] || item.title_en,
+          description: item[`description_${lang}`] || item.description_en,
+          before_img: item.before_image_url || "/SHAHD-IMAGE/homebefore/mainImg.webp",
+          after_img: item.after_image_url || "/SHAHD-IMAGE/homebefore/mainImg.webp",
+          thumbnail: item.before_image_url || "/SHAHD-IMAGE/homebefore/mainImg.webp",
+        }))
+      : staticTreatments;
 
   const activeTreatment = treatments[activeIndex];
 

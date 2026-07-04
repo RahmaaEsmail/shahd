@@ -4,8 +4,14 @@ import React from 'react'
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
-export default function HorseBanner() {
-  const { t } = useTranslation();
+export default function HorseBanner({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+
+  const bgImage = data?.image_url || "/SHAHD-IMAGE/horse/67adf9f6bdfe8688747e9c5a7a3bc089d5b6199c.webp";
+  const title = data?.[`title_${lang}`] || data?.title_en || t("A Lifestyle of Balance");
+  const description = data?.[`description_${lang}`] || data?.description_en || t("Horse Banner Desc");
+
   return (
     <motion.div
       initial={{ opacity: 0, y: -24 }}
@@ -16,8 +22,8 @@ export default function HorseBanner() {
     >
       {/* Background Image */}
       <Image 
-        src="/SHAHD-IMAGE/horse/67adf9f6bdfe8688747e9c5a7a3bc089d5b6199c.webp" 
-        fill // Use fill for better responsive scaling
+        src={bgImage}
+        fill
         priority
         className='object-cover' 
         alt="service banner image" 
@@ -35,11 +41,11 @@ export default function HorseBanner() {
           {/* Text Content Container */}
           <div className='flex flex-col items-center space-y-4 md:space-y-6'>
             <h1 className='font-normal text-white text-[48px] sm:text-[64px]  leading-[1.1] max-w-4xl'>
-              {t("A Lifestyle of Balance")}
+              {title}
             </h1>
             
             <p className='font-normal max-w-xs sm:max-w-md md:max-w-xl text-white mx-auto font-poppins text-lg sm:text-xl  opacity-90'>
-              {t("Horse Banner Desc")}
+              {description}
             </p>
           </div>
 
@@ -66,4 +72,4 @@ export default function HorseBanner() {
       </div>
     </motion.div>
   )
-}
+}

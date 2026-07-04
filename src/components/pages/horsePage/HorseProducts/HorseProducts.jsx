@@ -6,7 +6,7 @@ import HorseProductsHeader from './HorseProductsHeader';
 import HorseProductsGrid from './HorseProductsGrid';
 import { useTranslation } from 'react-i18next';
 
-export default function HorseProducts() {
+export default function HorseProducts({ data }) {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(1);
   const router = useRouter();
@@ -36,7 +36,7 @@ export default function HorseProducts() {
           <HorseProductsHeader setActiveTab={setActiveTab} activeTab={activeTab} />
 
           <AnimatePresence mode="wait">
-            <HorseProductsGrid key={activeTab} activeTab={activeTab} />
+            <HorseProductsGrid key={activeTab} activeTab={activeTab} data={data} />
           </AnimatePresence>
 
           <motion.button

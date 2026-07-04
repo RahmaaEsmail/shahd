@@ -1,10 +1,10 @@
 "use client";
-import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import Image from 'next/image';
-import { Calendar, Clock } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useTranslation } from 'react-i18next';
+import React from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
+import { Calendar, Clock } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 export default function BlogBanner({ blog }) {
   const { scrollY } = useScroll();
@@ -15,13 +15,17 @@ export default function BlogBanner({ blog }) {
     <section className="relative h-[80vh] min-h-[600px] w-full overflow-hidden">
       {/* Parallax Background */}
       <motion.div style={{ y }} className="relative h-[120%] w-full">
-        <Image
-          src={blog.img}
-          alt={blog.title}
-          fill
-          className="object-cover"
-          priority
-        />
+        {blog.img ? (
+          <Image
+            src={blog.img}
+            alt={blog.title || "Blog"}
+            fill
+            className="object-cover"
+            priority
+          />
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-[#7189A2] via-[#DDB2B5] to-[#FFF9F7]" />
+        )}
         {/* Overlays */}
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#FFF9F7]" />
@@ -30,24 +34,25 @@ export default function BlogBanner({ blog }) {
       {/* Floating Elements (similar to AcademyBanner style) */}
       <div className="absolute inset-0 z-10 flex flex-col justify-end items-center pb-24 px-4">
         <div className="max-w-7xl w-full mx-auto text-center">
-
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="bg-[#DDB2B5] text-white text-sm md:text-md font-normal uppercase tracking-[0.3em] px-8 py-2.5 rounded-full mb-8 inline-block shadow-2xl">
-              {t(blog.category)}
-            </span>
+            {blog.category && (
+              <span className="bg-[#DDB2B5] text-white text-sm md:text-md font-normal uppercase tracking-[0.3em] px-8 py-2.5 rounded-full mb-8 inline-block shadow-2xl">
+                {blog.category}
+              </span>
+            )}
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-white text-5xl md:text-7xl lg:text-[110px] font-normal leading-none mb-10 drop-shadow-2xl"
+            className="text-white text-5xl md:text-7xl  font-normal leading-none mb-10 drop-shadow-2xl"
           >
-            {t(blog.title)}
+            {blog.title}
           </motion.h1>
 
           <motion.div
@@ -58,12 +63,20 @@ export default function BlogBanner({ blog }) {
           >
             <div className="flex items-center gap-3">
               <Calendar className="w-5 h-5 text-[#DDB2B5]" />
-              <span className="tracking-wide">{t(blog.date)}</span>
+              <span className="tracking-wide">
+                {blog.date
+                  ? new Date(blog.date).toLocaleDateString(undefined, {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })
+                  : ""}
+              </span>
             </div>
             <div className="w-1.5 h-1.5 bg-[#DDB2B5] rounded-full opacity-50" />
             <div className="flex items-center gap-3">
               <Clock className="w-5 h-5 text-[#DDB2B5]" />
-              <span className="tracking-wide">{t('8 Minute Read')}</span>
+              <span className="tracking-wide">{t("8 Minute Read")}</span>
             </div>
           </motion.div>
 
@@ -82,9 +95,10 @@ export default function BlogBanner({ blog }) {
               }}
             />
             <button
-              onClick={() => router.push('/booking')}
-              className="relative bg-white rounded-full px-8 py-4 text-primary font-medium text-base md:text-lg hover:bg-gray-50 transition-colors whitespace-nowrap">
-              {t('Book Your Consultation')}
+              onClick={() => router.push("/booking")}
+              className="relative bg-white rounded-full px-8 py-4 text-primary font-medium text-base md:text-lg hover:bg-gray-50 transition-colors whitespace-nowrap"
+            >
+              {t("Book Your Consultation")}
             </button>
           </motion.div>
         </div>

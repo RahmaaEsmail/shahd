@@ -14,7 +14,7 @@ export default function AllProductBanner() {
       }}
     >
       <div className="max-w-3xl mx-auto text-center">
-        <h1 className='text-4xl sm:text-5xl lg:text-[80px] font-normal leading-[100%] text-white mb-8'>
+        <h1 className='text-4xl sm:text-5xl  font-normal leading-[100%] text-white mb-8'>
           Your Beauty Picks Are Almost Home
         </h1>
 

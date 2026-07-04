@@ -4,8 +4,14 @@ import { useTranslation } from 'react-i18next';
 import {motion} from 'framer-motion'
 import { Button } from '@/components/ui/button'
 
-export default function AcademyLicense() {
-  const { t , i18n } = useTranslation();
+export default function AcademyLicense({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+
+  const subtitle = data?.[`subtitle_${lang}`] || data?.subtitle_en || t('License Exam Prep');
+  const title = data?.[`title_${lang}`] || data?.title_en || t('Study Smarter. Pass with Pride.');
+  const description = data?.[`description_${lang}`] || data?.description_en || t('Academy License Desc');
+  const bgImage = data?.image_url || "/SHAHD-IMAGE/Academy/Component 18.webp";
 
   return (
     <motion.div
@@ -17,7 +23,7 @@ export default function AcademyLicense() {
       className='min-h-screen  my-4 py-3 relative overflow-hidden flex items-center'
     >
       <Image 
-        src="/SHAHD-IMAGE/Academy/Component 18.webp" 
+        src={bgImage} 
         fill
         className='object-cover z-0' 
         alt="License prep background" 
@@ -33,7 +39,7 @@ export default function AcademyLicense() {
               transition={{ duration: 0.8, delay: 0.1 }}
               className='text-white font-poppins text-lg md:text-xl  font-bold'
             >
-              {t('License Exam Prep')}
+              {subtitle}
             </motion.p>
             
             <motion.div
@@ -42,7 +48,7 @@ export default function AcademyLicense() {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <h1 className='font-normal text-white text-4xl leading-tight'>
-                {t('Study Smarter. Pass with Pride.')}
+                {title}
               </h1>
             </motion.div>
             
@@ -52,7 +58,7 @@ export default function AcademyLicense() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className='font-normal text-white/90 mt-4 font-poppins text-base md:text-lg max-w-4xl mx-auto leading-relaxed'
             >
-              {t('Academy License Desc')}
+              {description}
             </motion.p>
           </div>
 

@@ -399,10 +399,17 @@ const thumbnailVariants = {
   }),
 };
 
-export default function HomeBannerContentWithImage() {
+export default function HomeBannerContentWithImage({ data }) {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
-  const [selectedImage, setSelectedImage] = useState(images[0]);
+
+  // Use API images if available, fall back to static array
+  const galleryImages =
+    data?.images && data.images.length > 0
+      ? data.images.map((img) => ({ id: img.id, image: img.image_url, title: "banner image" }))
+      : images;
+
+  const [selectedImage, setSelectedImage] = useState(galleryImages[0]);
   const router = useRouter();
 
   return (
@@ -522,7 +529,7 @@ export default function HomeBannerContentWithImage() {
         variants={textVariants}
         className="flex gap-3 xl:gap-4 mt-3 w-full"
       >
-        {[...images]?.reverse()?.map((item, index) => (
+        {[...galleryImages]?.reverse()?.map((item, index) => (
           <motion.button
             key={item.id}
             custom={index}

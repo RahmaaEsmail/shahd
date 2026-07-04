@@ -5,10 +5,15 @@ import ChooseUsCard from "./ChooseUsCard";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
-export default function AboutChooseUs() {
-  const { t } = useTranslation();
+export default function AboutChooseUs({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+    ? "sk"
+    : "en";
 
-  const data = [
+  const staticCards = [
     {
       id: 1,
       img: "/SHAHD-IMAGE/About/icon_2-removebg-preview.webp",
@@ -34,6 +39,20 @@ export default function AboutChooseUs() {
       desc: t("Comfort Privacy Desc"),
     },
   ];
+
+  const cards =
+    data?.feature_cards && data.feature_cards.length > 0
+      ? data.feature_cards.map((item) => ({
+          id: item.id,
+          img: item.image_url || "/SHAHD-IMAGE/About/icon_2-removebg-preview.webp",
+          title: item[`title_${lang}`] || item.title_en,
+          desc: item[`description_${lang}`] || item.description_en,
+        }))
+      : staticCards;
+
+  const centerImage =
+    data?.main_image_url ||
+    "/SHAHD-IMAGE/About/4da149cfda6278d6384ebe6833b5097f3ced57b9.webp";
 
   return (
     <motion.div
@@ -76,7 +95,7 @@ export default function AboutChooseUs() {
         
         {/* First 2 Cards */}
         <div className="flex flex-col gap-3 order-2 lg:order-1">
-          {data.slice(0, 2).map((item) => (
+          {cards.slice(0, 2).map((item) => (
             <ChooseUsCard key={item.id} {...item} />
           ))}
         </div>
@@ -90,7 +109,7 @@ export default function AboutChooseUs() {
         >
           <div className="relative w-full max-w-[450px]">
             <Image
-              src="/SHAHD-IMAGE/About/4da149cfda6278d6384ebe6833b5097f3ced57b9.webp"
+              src={centerImage}
               width={400}
               height={600}
               className="rounded-[40px] w-full h-full object-cover"
@@ -102,7 +121,7 @@ export default function AboutChooseUs() {
 
         {/* Last 2 Cards */}
         <div className="flex flex-col gap-3 order-3">
-          {data.slice(2, 4).map((item) => (
+          {cards.slice(2, 4).map((item) => (
             <ChooseUsCard key={item.id} {...item} />
           ))}
         </div>

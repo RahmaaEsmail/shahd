@@ -8,7 +8,7 @@ import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslation } from 'react-i18next';
 
-const treatments = [
+const staticTreatments = [
   {
     id: 1,
     titleKey: "Non Surgical Nose",
@@ -67,12 +67,28 @@ const treatments = [
   },
 ];
 
-export default function HairTherapyBeforeAfter() {
-  const { t , i18n } = useTranslation();
+export default function HairTherapyBeforeAfter({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : "en";
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const activeTreatment = treatments[activeIndex];
+  const treatments = data && data.length > 0
+    ? data.map(item => ({
+        id: item.id,
+        title: item[`title_${lang}`] || item.title_en || "",
+        description: item[`description_${lang}`] || item.description_en || "",
+        before_img: item.image_url || "/SHAHD-IMAGE/homebefore/mainImg.webp",
+        after_img: item.image_url || "/SHAHD-IMAGE/homebefore/mainImg.webp",
+        thumbnail: item.image_url || "/SHAHD-IMAGE/homebefore/mainImg.webp"
+      }))
+    : staticTreatments;
+
+  const activeTreatment = treatments[activeIndex] || treatments[0] || {};
 
   return (
     <section className="bg-[#FFF9F7] min-h-screen py-12 px-6 lg:px-16 overflow-hidden">

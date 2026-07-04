@@ -5,6 +5,8 @@ import StoreProductCard from './StoreProductCard'
 import { store_product_tabs } from '@/data/storeData';
 import { productData } from '@/data/productFilters';
 
+import { useTranslation } from 'react-i18next';
+
 // Animation variants for grid
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -54,13 +56,30 @@ const itemVariants = {
   }
 };
 
-export default function StoreProductsGrid({ activeTab }) {
+export default function StoreProductsGrid({ activeTab, data }) {
+  const { i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+
+  const isDynamic = data && data.length > 0;
+  const baseProducts = isDynamic
+    ? data.map(p => ({
+        id: p.id,
+        name: p[`title_${lang}`] || p.title_en || "Product",
+        img: p.image_url,
+        price: p.price,
+        rating: p.rating || 5,
+        category: (p[`category_${lang}`] || p.category_en || "").toLowerCase().trim(),
+      }))
+    : productData.map(p => ({
+        ...p,
+        category: p.category.toLowerCase().trim(),
+      }));
+
   // Filter products based on active tab
-  const filteredProducts = productData.filter(product => {
+  const filteredProducts = baseProducts.filter(product => {
     if (activeTab === 1) return true; // 'All' tab
-    const tabName = store_product_tabs.find(tab => tab.id === activeTab)?.name.toLowerCase();
-    // Normalize category names for matching if necessary
-    return product.category.toLowerCase().includes(tabName);
+    const tabName = store_product_tabs.find(tab => tab.id === activeTab)?.name.toLowerCase().trim();
+    return product.category === tabName || product.category.includes(tabName);
   });
 
   return (

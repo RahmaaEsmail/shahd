@@ -53,7 +53,7 @@ export default function CartTable() {
     >
       {/* Table Headers - Fixed for mobile */}
       <motion.div 
-        className="hidden md:grid grid-cols-[1.5fr_2fr_1fr_1fr_0.5fr] pb-4 border-b-2 border-primary text-primary font-poppins text-lg lg:text-[22px] font-semibold capitalize tracking-wider"
+        className="hidden md:grid grid-cols-[1.5fr_2fr_1fr_1fr_0.5fr] pb-4 border-b-2 border-primary text-primary font-poppins text-md font-semibold capitalize tracking-wider"
         variants={headerVariants}
       >
         <motion.span

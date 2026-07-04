@@ -4,9 +4,19 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next';
 
-const AestheticGynecologyMeetShahd = () => {
+const AestheticGynecologyMeetShahd = ({ data }) => {
     const {t, i18n} = useTranslation();
     const isRtl = i18n.language === 'ar';
+    const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+
+    const title = data?.[`title_${lang}`] || data?.title_en || t("Compassionate Care");
+    const subtitle = data?.[`subtitle_${lang}`] || data?.subtitle_en || t("Meet Dr Shahd");
+    const description = data?.[`description_${lang}`] || data?.description_en || t("Meet Shahd Desc");
+    const portraitImage = data?.image_url || 
+      (data?.image ? (data.image.startsWith("http") ? data.image : `https://drshahdawad.com/ShahdAwad/uploads/aesthetic_gynecology/${data.image}`) : null) || 
+      (data?.image ? (data.image.startsWith("http") ? data.image : `https://drshahdawad.com/ShahdAwad/uploads/aesthetic_gynecology_about/${data.image}`) : null) || 
+      "/SHAHD-IMAGE/aethesic/d84af73b8acd014cfcef33e4a8101aa45f982ca2.webp";
+
     const services = [
         {
             title: "VAGINAL HEALTH",
@@ -63,7 +73,7 @@ const AestheticGynecologyMeetShahd = () => {
 
                         <div className="relative z-10 w-full max-w-[300px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[525px] aspect-[525/733]">
                             <Image
-                                src="/SHAHD-IMAGE/aethesic/d84af73b8acd014cfcef33e4a8101aa45f982ca2.webp"
+                                src={portraitImage}
                                 alt="Dr. Shahd Awad"
                                 fill
                                 className="object-contain"
@@ -81,15 +91,15 @@ const AestheticGynecologyMeetShahd = () => {
                         className="flex flex-col space-y-3 text-center lg:text-start"
                     >
                         <span  className="text-secondary font-bold font-poppins tracking-wider text-sm lg:text-[27px] capitalize">
-                            {t("Meet Dr Shahd")}
+                            {subtitle}
                         </span>
 
                         <h2 className="text-3xl   text-primary leading-[1.2] lg:leading-[1.1]">
-                            {t("Compassionate Care")}
+                            {title}
                         </h2>
 
                         <p className="text-[#414141] max-w-xl mx-auto lg:mx-0 text-sm sm:text-base lg:text-lg tracking-[-0.3px] leading-[1.6] font-poppins">
-                            {t("Meet Shahd Desc")}
+                            {description}
                         </p>
                     </motion.div>
                 </div>

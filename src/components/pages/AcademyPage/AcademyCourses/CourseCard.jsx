@@ -46,7 +46,7 @@ export default function CourseCard({ item, index }) {
       >
         <Image
           src={item?.image}
-          alt={t(item?.titleKey)}
+          alt={item?.titleKey ? t(item?.titleKey) : (item?.title || "")}
           height={440}
           width={380}
           className='object-cover w-full! rounded-[32px] transition-transform duration-700 group-hover:scale-110'
@@ -73,7 +73,7 @@ export default function CourseCard({ item, index }) {
           transition={{ delay: 0.2 }}
           className='text-primary font-medium text-xl  font-poppins mb-2'
         >
-          {t(item?.titleKey)}
+          {item?.titleKey ? t(item?.titleKey) : item?.title}
         </motion.p>
 
         <motion.p
@@ -82,7 +82,7 @@ export default function CourseCard({ item, index }) {
           transition={{ delay: 0.3 }}
           className='text-[#414141] tracking-[-0.3px] font-medium text-base  leading-6 font-poppins mb-3'
         >
-          {t(item?.descKey)}
+          {item?.descKey ? t(item?.descKey) : item?.desc}
         </motion.p>
 
         <motion.div

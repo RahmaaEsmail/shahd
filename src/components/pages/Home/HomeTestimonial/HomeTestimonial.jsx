@@ -6,11 +6,17 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import HomeTestimonialSwiper from './HomeTestimonialSwiper';
 
-export default function HomeTestimonial() {
-  const { t } = useTranslation();
+export default function HomeTestimonial({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+    ? "sk"
+    : "en";
+
   const [activeIndex, setActiveIndex] = useState(0);
-  
-  const testimonials = [
+
+  const staticTestimonials = [
     {
       id: 1,
       name: t("Layla Kamal"),
@@ -49,10 +55,31 @@ export default function HomeTestimonial() {
     }
   ];
 
+  const testimonials =
+    data && data.length > 0
+      ? data.map((item) => ({
+          id: item.id,
+          name: item[`reviewer_name_${lang}`] || item.reviewer_name_en,
+          treatment: item[`reviewer_type_${lang}`] || item.reviewer_type_en,
+          quote: item[`content_${lang}`] || item.content_en,
+          image: item.image_url || "/SHAHD-IMAGE/HomeTestioniai/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
+          sideImage: item.image_url || "/SHAHD-IMAGE/HomeTestioniai/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
+          rating: 5,
+        }))
+      : staticTestimonials;
+
   const [selectedTestimonial, setSelectedTestimonial] = useState(testimonials[0]);
   const [isAnimating, setIsAnimating] = useState(false);
   const [swiperInstance, setSwiperInstance] = useState(null);
   const timeoutRef = useRef(null);
+
+  // Sync selectedTestimonial when API data loads
+  useEffect(() => {
+    if (testimonials.length > 0) {
+      setSelectedTestimonial(testimonials[0]);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   // Cleanup timeout on unmount
   useEffect(() => {

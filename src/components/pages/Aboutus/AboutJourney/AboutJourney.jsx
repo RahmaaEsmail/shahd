@@ -28,11 +28,20 @@ const TitleSection = ({ title, highlightedWord, lastPart }) => {
   );
 };
 
-export default function AboutJourney() {
+export default function AboutJourney({ data }) {
   const { t , i18n} = useTranslation();
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+    ? "sk"
+    : "en";
+
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const imagesWithVariations = [
+  // Helper to strip HTML tags from API title strings like "<h2>Title</h2>"
+  const stripHtml = (html) => html?.replace(/<[^>]*>/g, "").trim() ?? "";
+
+  const staticItems = [
     {
       id: 1,
       titleData: { main: t("Journey Title 1"), word: t("Journey Word 1"), end: t("Journey End 1") },
@@ -62,6 +71,24 @@ export default function AboutJourney() {
       thumbnail: "/SHAHD-IMAGE/About/about-content4.webp",
     },
   ];
+
+  const imagesWithVariations =
+    data && data.length > 0
+      ? [...data]
+          .sort((a, b) => a.step_order - b.step_order)
+          .map((item) => {
+            const rawTitle = item[`title_${lang}`] || item.title_en || "";
+            const cleanTitle = stripHtml(rawTitle);
+            const year = item[`subtitle_${lang}`] || item.subtitle_en || "";
+            return {
+              id: item.id,
+              titleData: { main: year, word: cleanTitle, end: "" },
+              description: item[`description_${lang}`] || item.description_en || "",
+              image: item.image_url || "/SHAHD-IMAGE/About/about-content1.webp",
+              thumbnail: item.image_url || "/SHAHD-IMAGE/About/about-content1.webp",
+            };
+          })
+      : staticItems;
 
   const [selectedImage, setSelectedImage] = useState(imagesWithVariations[0]);
 

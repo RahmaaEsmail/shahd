@@ -41,7 +41,8 @@ const containerVariants = {
   }
 }
 
-export default function HorseAbout() {
+export default function HorseAbout({ data }) {
+  console.log("data", data);
   return (
     <motion.section
       initial="hidden"
@@ -85,14 +86,14 @@ export default function HorseAbout() {
           {/* Content - Order 2 on mobile so image can show first if preferred, or Order 1 for standard */}
           <div className='order-2 lg:order-1 lg:col-span-5'>
             <div className='max-w-full lg:max-w-xl mx-auto lg:mx-0 text-center lg:text-left'>
-               <HorseAboutContent />
+               <HorseAboutContent data={data} />
             </div>
           </div>
 
           {/* Image - Order 1 on mobile to grab attention */}
           <div className='order-1 h-full lg:order-2 lg:col-span-7 w-full'>
             <div className='relative w-full h-full'>
-               <HorseAboutImage />
+               <HorseAboutImage data={data} />
             </div>
           </div>
           

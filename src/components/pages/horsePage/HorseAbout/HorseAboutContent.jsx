@@ -1,8 +1,8 @@
 "use client";
-import Image from 'next/image'
-import React from 'react'
-import { motion } from 'framer-motion'
-import { useTranslation } from 'react-i18next';
+import Image from "next/image";
+import React from "react";
+import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 // Animation variants
 const contentVariants = {
@@ -11,10 +11,10 @@ const contentVariants = {
     opacity: 1,
     transition: {
       staggerChildren: 0.2,
-      delayChildren: 0.1
-    }
-  }
-}
+      delayChildren: 0.1,
+    },
+  },
+};
 
 const itemVariants = {
   hidden: { y: 30, opacity: 0 },
@@ -24,10 +24,10 @@ const itemVariants = {
     transition: {
       type: "spring",
       stiffness: 100,
-      damping: 12
-    }
-  }
-}
+      damping: 12,
+    },
+  },
+};
 
 const imageVariants = {
   hidden: { scale: 0, rotate: -180 },
@@ -37,8 +37,8 @@ const imageVariants = {
     transition: {
       type: "spring",
       stiffness: 200,
-      damping: 20
-    }
+      damping: 20,
+    },
   },
   hover: {
     scale: 1.1,
@@ -46,10 +46,10 @@ const imageVariants = {
     transition: {
       type: "spring",
       stiffness: 400,
-      damping: 10
-    }
-  }
-}
+      damping: 10,
+    },
+  },
+};
 
 const headingVariants = {
   hidden: { x: -50, opacity: 0 },
@@ -59,26 +59,47 @@ const headingVariants = {
     transition: {
       type: "spring",
       stiffness: 100,
-      damping: 12
-    }
-  }
-}
+      damping: 12,
+    },
+  },
+};
 
-export default function HorseAboutContent() {
-  const { t  , i18n} = useTranslation();
+export default function HorseAboutContent({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : "en";
+
+  const formatText = (text) => {
+    if (!text) return "";
+    return text.replace(/&mdash;/g, "—").replace(/&amp;/g, "&");
+  };
+
+  const subtitle = formatText(
+    data?.[`subtitle_${lang}`] ||
+    data?.subtitle_en ||
+    t("Where Strength Meets Freedom")
+  );
+  const title = formatText(
+    data?.[`title_${lang}`] ||
+    data?.title_en ||
+    t("Horse Riding — A Passion Beyond Medicine")
+  );
   return (
     <motion.div
       variants={contentVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: false, amount: 0.3 }}
-      className='flex w-full flex-col  gap-2'
+      className="flex w-full flex-col  gap-2"
     >
       <motion.p
         variants={itemVariants}
-        className='text-lg text-center sm:text-2xl font-bold font-poppins text-dark-primary'
+        className="text-lg text-center sm:text-2xl font-bold font-poppins text-dark-primary"
       >
-        {t("Where Strength Meets Freedom")}
+        {subtitle}
       </motion.p>
 
       <motion.h1
@@ -90,31 +111,32 @@ export default function HorseAboutContent() {
             background: "linear-gradient(180deg, #DDB2B5 0%, #362114 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
-            display: "inline-block"
+            display: "inline-block",
           }}
           whileHover={{
             scale: 1.02,
-            transition: { duration: 0.3 }
+            transition: { duration: 0.3 },
           }}
         >
           {/* Use 'hidden lg:block' to only break lines on large screens */}
-          <span>{t("Horse Riding &mdash;")}</span>
+          <span>{title}</span>
+          {/* <span>{t("Horse Riding &mdash;")}</span>
           <br className="hidden lg:block" />
 
           <span className="ml-1 lg:ml-0">{t("A Passion Beyond")}</span>
-          <br className="hidden lg:block" />
+          <br className="hidden lg:block" /> */}
 
           <motion.div
             whileHover="hover"
             className="inline-flex lg:flex gap-3 items-center"
           >
-            <span>{t("Medicine")}</span>
+            {/* <span>{t("Medicine")}</span> */}
             <Image
-              src="/SHAHD-IMAGE/horse/heading.webp"
+              src={data?.small_image_url || "/SHAHD-IMAGE/horse/heading.webp"}
               alt="small about image"
               width={157}
               height={69}
-              className='rounded-full object-cover w-[60px] h-[35px] sm:w-[110px] sm:h-[55px] lg:w-[157px] lg:h-[69px]'
+              className="rounded-full object-cover w-[60px] h-[35px] sm:w-[110px] sm:h-[55px] lg:w-[157px] lg:h-[69px]"
             />
           </motion.div>
         </motion.span>
@@ -127,5 +149,5 @@ export default function HorseAboutContent() {
         {t("Horse About Desc")}
       </motion.p>
     </motion.div>
-  )
+  );
 }

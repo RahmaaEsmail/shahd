@@ -10,20 +10,35 @@ import { useTranslation } from 'react-i18next';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 
-const data = [
-  { id: 1, img: "/SHAHD-IMAGE/hair-therapy/Rectangle 62.webp", titleKey: "FUE Title", descriptionKey: "FUE Desc" },
-  { id: 2, img: "/SHAHD-IMAGE/hair-therapy/Rectangle 62.webp", titleKey: "FUE Title", descriptionKey: "FUE Desc" },
-  { id: 3, img: "/SHAHD-IMAGE/hair-therapy/Rectangle 62.webp", titleKey: "FUE Title", descriptionKey: "FUE Desc" },
-  { id: 4, img: "/SHAHD-IMAGE/hair-therapy/Rectangle 62.webp", titleKey: "FUE Title", descriptionKey: "FUE Desc" },
-  { id: 5, img: "/SHAHD-IMAGE/hair-therapy/Rectangle 62.webp", titleKey: "FUE Title", descriptionKey: "FUE Desc" },
-  { id: 6, img: "/SHAHD-IMAGE/hair-therapy/Rectangle 62.webp", titleKey: "FUE Title", descriptionKey: "FUE Desc" },
-];
+export default function HairTherapyTestimonial({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : "en";
+  const dir = i18n?.language == "ar" ? "rtl" : "ltr";
 
-export default function HairTherapyTestimonial() {
-  const { t , i18n } = useTranslation();
-  const dir =  i18n?.language == "ar" ? "rtl" : "ltr";
+  const staticSlides = [
+    { id: 1, img: "/SHAHD-IMAGE/hair-therapy/Rectangle 62.webp", title: t("FUE Title"), description: t("FUE Desc") },
+    { id: 2, img: "/SHAHD-IMAGE/hair-therapy/Rectangle 62.webp", title: t("FUE Title"), description: t("FUE Desc") },
+    { id: 3, img: "/SHAHD-IMAGE/hair-therapy/Rectangle 62.webp", title: t("FUE Title"), description: t("FUE Desc") },
+    { id: 4, img: "/SHAHD-IMAGE/hair-therapy/Rectangle 62.webp", title: t("FUE Title"), description: t("FUE Desc") },
+    { id: 5, img: "/SHAHD-IMAGE/hair-therapy/Rectangle 62.webp", title: t("FUE Title"), description: t("FUE Desc") },
+    { id: 6, img: "/SHAHD-IMAGE/hair-therapy/Rectangle 62.webp", title: t("FUE Title"), description: t("FUE Desc") },
+  ];
+
+  const slides = data && data.length > 0
+    ? data.map(item => ({
+        id: item.id,
+        img: item.image_url || item.image || "/SHAHD-IMAGE/hair-therapy/Rectangle 62.webp",
+        title: item[`title_${lang}`] || item.title_en || "",
+        description: item[`description_${lang}`] || item.description_en || ""
+      }))
+    : staticSlides;
+
   const [isMobile, setIsMobile] = useState(false);
-  const START_INDEX = Math.floor(data.length / 2);
+  const START_INDEX = Math.floor(slides.length / 2);
   const swiperRef = useRef(null);
   useEffect(() => {
     const handleResize = () => {
@@ -39,7 +54,7 @@ export default function HairTherapyTestimonial() {
     const swiper = swiperRef.current;
     if (!swiper || swiper.destroyed || swiper.animating) return;
 
-    const total = data.length;
+    const total = slides.length;
     const current = swiper.realIndex;
 
     const nextIndex =
@@ -94,33 +109,32 @@ export default function HairTherapyTestimonial() {
           onClick={() => goToSlide("prev")}
 
           className="w-10 h-10 md:w-14 md:h-14 bg-[#7189A2] rounded-full flex items-center justify-center cursor-pointer text-white shadow-lg hover:bg-[#5a6e84] transition-all z-50"
-        >
+         >
           <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
-        </button>
+         </button>
 
-        <button
+         <button
           type="button"
           onClick={() => goToSlide("next")}
 
           className="w-10 h-10 md:w-14 md:h-14 bg-[#7189A2] rounded-full flex items-center justify-center cursor-pointer text-white shadow-lg hover:bg-[#5a6e84] transition-all z-50"
-        >
+         >
           <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
-        </button>
+         </button>
        </div>
 
         <div className="relative w-full">
 
           <Swiper
             dir={dir}
-            key={dir}
-            key={isMobile ? "mobile" : "desktop"}
+            key={`${dir}-${isMobile ? "mobile" : "desktop"}`}
             modules={[Navigation, EffectCoverflow, Autoplay]}
             effect={isMobile ? "slide" : "coverflow"}
             grabCursor={true}
             centeredSlides={true}
             loop={true}
             initialSlide={START_INDEX}
-            loopAdditionalSlides={data.length}
+            loopAdditionalSlides={slides.length}
             slidesPerView="auto"
             spaceBetween={24}
             speed={800}
@@ -173,7 +187,7 @@ export default function HairTherapyTestimonial() {
             }}
             className="!overflow-visible !px-4"
           >
-            {data.map((item, index) => (
+            {slides.map((item, index) => (
               <SwiperSlide
                 key={`${item.id}-${index}`}
                 className="group rounded-[30px] !w-[280px] sm:!w-[320px] md:!w-[380px] lg:!w-[448px] !flex justify-center items-center"
@@ -194,11 +208,11 @@ export default function HairTherapyTestimonial() {
                       }`}
                   >
                     <p className="text-base text-white sm:text-lg md:text-xl lg:text-2xl font-medium leading-snug">
-                      {t(item.titleKey)}
+                      {item.title}
                     </p>
 
                     <p className="text-[#414141] text-xs sm:text-sm md:text-base font-normal line-clamp-2">
-                      {t(item.descriptionKey)}
+                      {item.description}
                     </p>
 
                     <button className="w-full mt-4 bg-secondary bg-hair-slate text-primary-foreground py-2 md:py-4 rounded-full text-xs sm:text-sm md:text-base lg:text-lg font-medium uppercase hover:bg-hair-slate-dark transition-colors">

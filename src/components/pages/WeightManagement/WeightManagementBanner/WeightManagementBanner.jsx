@@ -4,8 +4,14 @@ import React from 'react'
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
-export default function WeightManagementBanner() {
-  const { t } = useTranslation();
+export default function WeightManagementBanner({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+
+  const title = data?.[`title_${lang}`] || data?.title_en;
+  const description = data?.[`description_${lang}`] || data?.description_en || t("Weight Management Banner Desc");
+  const bgImage = data?.image_url || "/SHAHD-IMAGE/Weight-management/c2857fea874132417eb59e6746a6e12f95e0aca9.webp";
+
   return (
     <motion.div 
     initial={{
@@ -19,7 +25,7 @@ export default function WeightManagementBanner() {
     viewport={{once : false}}
     transition={{duration : 0.4 , ease : "easeIn"}}
     className='h-screen relative'>
-      <Image src="/SHAHD-IMAGE/Weight-management/c2857fea874132417eb59e6746a6e12f95e0aca9.webp" height={725} width={1440} className='h-screen w-full object-cover' alt="service banner image" />
+      <Image src={bgImage} height={725} width={1440} className='h-screen w-full object-cover' alt="service banner image" />
       <div
         style={{
           background:
@@ -29,12 +35,18 @@ export default function WeightManagementBanner() {
         <div className='max-w-7xl h-[80%] xl:h-[70%] mt-0 lg:mt-3 xl:mt-5 w-full flex flex-col  justify-center lg:justify-between pt-13 pb-10 lg:pb-20 mx-auto px-4 md:px-10 '>
           <div className='flex flex-col gap-4 xl:gap-6 mt-0'>
             <div className='flex flex-col  lg:flex-row w-full  justify-center lg:gap-10 items-center text-center lg:text-left gap-2'>
-            <h1 className='font-normal text-white text-4xl sm:text-6xl md:text-5xl  leading-tight'>{t("Transform Your")}</h1>
-            <h1 className='font-normal text-white text-4xl sm:text-6xl md:text-5xl leading-tight'>{t("Body & Confidence")}</h1>
-          </div>
-          <p className='font-normal max-w-2xl mx-auto text-white mt-4 text-center font-poppins text-lg md:text-2xl leading-relaxed'>
-            {t("Weight Management Banner Desc")}
-          </p>
+              {title ? (
+                <h1 className='font-normal text-white text-4xl sm:text-6xl md:text-5xl leading-tight'>{title}</h1>
+              ) : (
+                <>
+                  <h1 className='font-normal text-white text-4xl sm:text-6xl md:text-5xl  leading-tight'>{t("Transform Your")}</h1>
+                  <h1 className='font-normal text-white text-4xl sm:text-6xl md:text-5xl leading-tight'>{t("Body & Confidence")}</h1>
+                </>
+              )}
+            </div>
+            <p className='font-normal max-w-2xl mx-auto text-white mt-4 text-center font-poppins text-lg md:text-2xl leading-relaxed'>
+              {description}
+            </p>
           </div>
           <motion.div
             whileHover={{ scale: 1.02 }}

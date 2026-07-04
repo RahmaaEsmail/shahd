@@ -28,8 +28,47 @@ const data = [
   }
 ];
 
-export default function HairTherapyAbout() {
-  const { t } = useTranslation();
+export default function HairTherapyAbout({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : "en";
+
+  const subtitle = data?.ht_about_main?.[`subtitle_${lang}`] || data?.ht_about_main?.subtitle_en || t("About The Surgery");
+  const title = data?.ht_about_main?.[`title_${lang}`] || data?.ht_about_main?.title_en || t("What is hair transplant?");
+  const mainImage = data?.ht_about_main?.image_url || "/SHAHD-IMAGE/hair-therapy/Image_fx - 2026-02-04T001320.240 1.webp";
+
+  const aboutCards = data?.ht_about_cards && data.ht_about_cards.length > 0
+    ? data.ht_about_cards.map((item, idx) => ({
+        id: item.id,
+        img: item.image_url || item.image || `/SHAHD-IMAGE/hair-therapy/Frame 1000005833 (${(idx % 4) + 1}).webp`,
+        title: item[`title_${lang}`] || item.title_en || item.title_sk || item.title_ar || ""
+      }))
+    : [
+        {
+          id: 1,
+          img: "/SHAHD-IMAGE/hair-therapy/Frame 1000005833 (1).webp",
+          title: t("Hair Journey Step 1"),
+        },
+        {
+          id: 2,
+          img: "/SHAHD-IMAGE/hair-therapy/Frame 1000005833 (2).webp",
+          title: t("Hair Journey Step 2"),
+        },
+        {
+          id: 3,
+          img: "/SHAHD-IMAGE/hair-therapy/Frame 1000005833 (3).webp",
+          title: t("Hair Journey Step 3"),
+        },
+        {
+          id: 4,
+          img: "/SHAHD-IMAGE/hair-therapy/Frame 1000005833 (4).webp",
+          title: t("Hair Journey Step 4"),
+        }
+      ];
+
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.2 });
 
@@ -158,14 +197,14 @@ export default function HairTherapyAbout() {
               className="text-secondary font-bold text-sm sm:text-base md:text-lg uppercase tracking-[0.2em] font-poppins inline-block"
               variants={badgeVariants}
             >
-              {t("About The Surgery")}
+              {subtitle}
             </motion.span>
             
             <motion.h2 
               className="text-primary text-3xl  font-light leading-[1.1] uppercase tracking-tight"
               variants={titleVariants}
             >
-              {t("What is hair transplant?")}
+              {title}
             </motion.h2>
           </div>
 
@@ -173,7 +212,7 @@ export default function HairTherapyAbout() {
             className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6"
             variants={containerVariants}
           >
-            {data.map((item, index) => (
+            {aboutCards.map((item, index) => (
               <motion.div 
                 key={item.id} 
                 className="bg-white/40 border border-white/60 backdrop-blur-md rounded-[24px] sm:rounded-[32px] p-6 flex flex-col items-center text-center shadow-lg hover:shadow-xl transition-all duration-300 h-full"
@@ -197,7 +236,7 @@ export default function HairTherapyAbout() {
                     className="text-[#414141] text-sm font-medium font-poppins leading-relaxed"
                     variants={textVariants}
                   >
-                    {t(item.titleKey)}
+                    {item.title}
                   </motion.p>
                 </div>
               </motion.div>
@@ -211,12 +250,12 @@ export default function HairTherapyAbout() {
           variants={imageVariants}
         >
           <motion.div 
-            className="relative w-full h-full max-w-[540px] lg:max-w-none rounded-[32px] overflow-hidden"
+            className="relative w-full h-full min-h-[350px] max-w-[540px] lg:max-w-none rounded-[32px] overflow-hidden"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.4 }}
           >
             <Image
-              src="/SHAHD-IMAGE/hair-therapy/Image_fx - 2026-02-04T001320.240 1.webp"
+              src={mainImage}
               alt="Dr. Shahd Hair Transplant"
               fill
               className="object-contain"

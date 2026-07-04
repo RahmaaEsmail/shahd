@@ -51,9 +51,9 @@ const tabContent = {
   }
 }
 
-export default function CoachingExpert() {
-  const { t  , i18n} = useTranslation();
-  const [activeTab, setActiveTab] = useState(1);
+export default function CoachingExpert({ data }) {
+  const { t, i18n } = useTranslation();
+  const [activeTab, setActiveTab] = useState(null);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
 
   useEffect(() => {
@@ -70,6 +70,47 @@ export default function CoachingExpert() {
     // Cleanup listener on unmount
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
+
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+
+  // Build resolved tabs from dynamic data or fallback to static
+  const isDynamic = data && data.length > 0;
+  const resolvedTabs = isDynamic
+    ? data.map((item, idx) => ({
+        id: item.id || idx + 1,
+        name: item[`type_${lang}`] || item.type_en
+      }))
+    : tabs.map(tab => ({
+        id: tab.id,
+        name: t(tab.nameKey)
+      }));
+
+  const currentActiveTab = activeTab !== null ? activeTab : (resolvedTabs[0]?.id || 1);
+
+  // Set default active tab on load/data change
+  useEffect(() => {
+    if (resolvedTabs.length > 0) {
+      setActiveTab(resolvedTabs[0].id);
+    }
+  }, [data]);
+
+  // Extract content fields
+  let problemImg, problemText, solutionImg, solutionText, buttonText;
+  if (isDynamic) {
+    const selectedItem = data.find((item, idx) => (item.id || idx + 1) === currentActiveTab) || data[0];
+    problemImg = selectedItem?.problem_image_url || "/SHAHD-IMAGE/Coaching/3.webp";
+    problemText = selectedItem?.[`problem_text_${lang}`] || selectedItem?.problem_text_en;
+    solutionImg = selectedItem?.solution_image_url || "/SHAHD-IMAGE/Coaching/4.webp";
+    solutionText = selectedItem?.[`solution_text_${lang}`] || selectedItem?.solution_text_en;
+    buttonText = t("Book Now");
+  } else {
+    const activeTabDetails = tabContent[currentActiveTab] || tabContent[1];
+    problemImg = activeTabDetails.problem_img;
+    problemText = t(activeTabDetails.problemKey);
+    solutionImg = activeTabDetails.solution_img;
+    solutionText = t(activeTabDetails.solutionKey);
+    buttonText = t(activeTabDetails.buttonTextKey);
+  }
 
   const slantPath = 'polygon(52% 0, 100% 0, 100% 100%, 38% 100%)';
 
@@ -89,17 +130,17 @@ export default function CoachingExpert() {
           </h3>
 
           <div className='flex flex-wrap justify-center gap-3 mt-4'>
-            {tabs.map((tab) => (
+            {resolvedTabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-6 py-2.5 rounded-full border border-[#7189A2] text-sm  uppercase tracking-widest transition-all duration-300 ${
-                  activeTab === tab.id
+                  currentActiveTab === tab.id
                     ? "bg-[#7189A2] text-white font-bold shadow-md"
                     : "bg-white text-[#838383] hover:bg-slate-50"
                 }`}
               >
-                {t(tab.nameKey)}
+                {tab.name}
               </button>
             ))}
           </div>
@@ -109,7 +150,7 @@ export default function CoachingExpert() {
         <div className='relative w-full h-auto lg:h-[500px] rounded-[30px] md:rounded-[40px] overflow-hidden shadow-2xl bg-white flex flex-col lg:block'>
           <AnimatePresence mode='wait'>
             <motion.div
-              key={activeTab}
+              key={currentActiveTab}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -119,7 +160,7 @@ export default function CoachingExpert() {
               {/* --- PROBLEM SIDE (LEFT) --- */}
               <div className={`relative lg:absolute inset-0 w-full h-[450px] lg:h-full bg-[#b8c6c9] ${i18n?.language == "ar" ? "me-auto!" : "ms-auto!"}`}>
                 <Image
-                  src={tabContent[activeTab].problem_img}
+                  src={problemImg}
                   alt="Problem area"
                   fill
                   className={`object-contain max-w-full lg:max-w-[50%]  mix-blend-multiply opacity-90`}
@@ -137,7 +178,7 @@ export default function CoachingExpert() {
                 <div className='absolute bottom-8 left-8 md:bottom-12 md:left-12 z-20 max-w-[calc(100%-64px)] md:max-w-[360px] bg-white/20 backdrop-blur-xl border border-white/20 rounded-[30px] md:rounded-[35px] p-6 shadow-2xl'>
                   <h4 className='text-[#414141] font-semibold text-lg mb-3'>{t('The Problem')}</h4>
                   <p className='text-[#414141] font-normal text-base leading-relaxed'>
-                    {t(tabContent[activeTab].problemKey)}
+                    {problemText}
                   </p>
                 </div>
               </div>
@@ -160,7 +201,7 @@ export default function CoachingExpert() {
 
                 <div className='relative h-[400px] lg:h-full'>
                   <Image
-                    src={tabContent[activeTab].solution_img}
+                    src={solutionImg}
                     alt="Solution area"
                     fill
                     className={`object-cover lg:max-w-[55%] lg:${i18n?.language == "ar" ? "me-auto" :"ms-auto"} mix-blend-multiply opacity-90`}
@@ -178,11 +219,11 @@ export default function CoachingExpert() {
                   <div className='absolute bottom-8 right-8 left-8 md:left-auto md:bottom-12 md:right-12 z-20 max-w-full md:max-w-[480px] bg-white/15 backdrop-blur-2xl border border-white/30 rounded-[30px] md:rounded-[40px] p-4 shadow-2xl'>
                     <h4 className='text-[#414141] font-bold text-lg mb-4'>{t('The Solution')}</h4>
                     <p className='text-[#414141] text-base leading-relaxed mb-8'>
-                      {t(tabContent[activeTab].solutionKey)}
+                      {solutionText}
                     </p>
 
                     <Button className='w-full bg-[#7189A2] hover:bg-[#5d7287] text-white rounded-full py-6  uppercase text-base font-bold shadow-xl transition-all active:scale-95'>
-                      {t(tabContent[activeTab].buttonTextKey)}
+                      {buttonText}
                     </Button>
                   </div>
                 </div>

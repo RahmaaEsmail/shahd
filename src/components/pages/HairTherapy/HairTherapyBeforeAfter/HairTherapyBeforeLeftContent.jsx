@@ -97,10 +97,10 @@ export default function HairTherapyBeforeLeftContent({ activeIndex, setActiveInd
           className="text-center md:text-left"
         >
           <h3 className="text-primary text-3xl font-normal leading-tight uppercase">
-            {t(activeTreatment.titleKey)}
+            {activeTreatment.title || (activeTreatment.titleKey ? t(activeTreatment.titleKey) : "")}
           </h3>
           <p className="text-secondary text-base font-light font-poppins leading-relaxed max-w-2xl mx-auto md:mx-0">
-            {t(activeTreatment.descriptionKey)}
+            {activeTreatment.description || (activeTreatment.descriptionKey ? t(activeTreatment.descriptionKey) : "")}
           </p>
         </motion.div>
       </AnimatePresence>
@@ -117,7 +117,7 @@ export default function HairTherapyBeforeLeftContent({ activeIndex, setActiveInd
                  ${index === activeIndex ? "ring-3  ring-[#E8A4A8] ring-offset-2 scale-105" : "opacity-70 hover:scale-105"}`}>
               <Image
                 src={treatment.thumbnail}
-                alt={t(treatment.titleKey)}
+                alt={treatment.title || (treatment.titleKey ? t(treatment.titleKey) : "")}
                 fill
                 className="object-cover"
               />

@@ -115,8 +115,15 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next';
 
-export default function BookAuthor() {
-  const { t , i18n} = useTranslation();
+export default function BookAuthor({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+
+  const subtitle = data?.[`subtitle_${lang}`] || data?.subtitle_en || t("About the author");
+  const title = data?.[`title_${lang}`] || data?.title_en || t("Dr. Shahd awad");
+  const description = data?.[`description_${lang}`] || data?.description_en;
+  const authorImg = data?.image_url || "/SHAHD-IMAGE/Book/shahd-img.webp";
+
   return (
     <motion.div
       dir="ltr"
@@ -128,22 +135,13 @@ export default function BookAuthor() {
       {/* Author Image */}
       <motion.div
         className="w-[300px] md:w-[242px] h-auto relative mx-auto lg:mx-0 z-10"
-        // 1. Refined Entrance Animation
         initial={{ opacity: 0, x: -80, scale: 0.9, rotate: -3, filter: "blur(5px)" }}
         whileInView={{ opacity: 1, x: 0, scale: 1, rotate: 0, filter: "blur(0px)" }}
-        // transition={{
-        //   type: "spring",
-        //   stiffness: 80,
-        //   damping: 20,
-        //   duration: 1.0
-        // }}
-        // 2. Interactive Hover State
         whileHover={{
           scale: 1.08,
           rotate: 2,
           transition: { type: "spring", stiffness: 400, damping: 10 }
         }}
-        // 3. Persistent Floating Loop
         animate={{
           y: [0, -12, 0],
         }}
@@ -158,7 +156,7 @@ export default function BookAuthor() {
       >
         <div className="relative overflow-hidden rounded-full lg:rounded-[121px] aspect-square lg:aspect-auto shadow-2xl">
           <Image
-            src="/SHAHD-IMAGE/Book/shahd-img.webp"
+            src={authorImg}
             alt='Dr. Shahd Awad'
             width={242}
             height={337}
@@ -196,7 +194,7 @@ export default function BookAuthor() {
           transition={{ delay: 0.3 }}
           className={`font-poppins text-secondary text-2xl  font-bold ${i18n?.language == "ar" ? "text-right" : "text-left"}`}
         >
-          {t("About the author")}
+          {subtitle}
         </motion.h4>
 
         <motion.h2
@@ -205,7 +203,7 @@ export default function BookAuthor() {
           transition={{ delay: 0.4, type: "spring" }}
           className={`text-primary text-3xl  font-normal leading-tight lg:leading-16 ${i18n?.language =="ar" ? "text-right" : "text-left"}`}
         >
-          {t("Dr. Shahd awad")}
+          {title}
         </motion.h2>
 
         <motion.div
@@ -223,12 +221,8 @@ export default function BookAuthor() {
             }
           }}
         >
-          {[
-            t("Book Author Line 1"),
-            t("Book Author Line 2")
-          ].map((line, index) => (
+          {description ? (
             <motion.p
-              key={index}
               variants={{
                 hidden: { y: 20, opacity: 0 },
                 visible: {
@@ -239,9 +233,29 @@ export default function BookAuthor() {
               }}
               className="mb-4 lg:mb-0"
             >
-              {line}
+              {description}
             </motion.p>
-          ))}
+          ) : (
+            [
+              t("Book Author Line 1"),
+              t("Book Author Line 2")
+            ].map((line, index) => (
+              <motion.p
+                key={index}
+                variants={{
+                  hidden: { y: 20, opacity: 0 },
+                  visible: {
+                    y: 0,
+                    opacity: 1,
+                    transition: { type: "spring", stiffness: 100 }
+                  }
+                }}
+                className="mb-4 lg:mb-0"
+              >
+                {line}
+              </motion.p>
+            ))
+          )}
         </motion.div>
       </motion.div>
     </motion.div>

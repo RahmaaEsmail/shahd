@@ -109,7 +109,7 @@ import { Button } from "@/components/ui/button";
 import { SlidersHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import { PlaceholderImg } from "../../../app/(pages)/before-after/page";
+import { PlaceholderImg } from "../../../app/(pages)/before-after/BeforeAfterClient";
 
 const staggerContainer = {
   visible: { transition: { staggerChildren: 0.1 } }
@@ -152,11 +152,13 @@ export default function BeforeAfterCard({ item, isActive }) {
             <div className="flex gap-10 border-y border-primary/10 py-6">
               {[
                 { label: "Downtime", value: "Minimal" },
-                { label: "Sessions", value: "1–2" },
+                { label: "Sessions", value: item.sessions || "1–2" },
                 { label: "Result", value: "Natural" },
               ].map((s) => (
                 <div key={s.label}>
-                  <p className="text-sm font-serif text-primary mb-1">{t(s.value)}</p>
+                  <p className="text-sm font-serif text-primary mb-1">
+                    {s.label === "Sessions" ? s.value : t(s.value)}
+                  </p>
                   <p className="text-[10px] tracking-[1.5px] uppercase text-[#a08080]/60 font-bold">
                     {t(s.label)}
                   </p>

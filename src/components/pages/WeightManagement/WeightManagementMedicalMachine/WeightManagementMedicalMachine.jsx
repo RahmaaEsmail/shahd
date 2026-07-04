@@ -66,8 +66,23 @@ const floatingAnimation = {
   }
 }
 
-export default function WeightManagementMedicalMachine() {
-  const { t } = useTranslation();
+export default function WeightManagementMedicalMachine({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+
+  const isDynamic = data && data.length > 0;
+  const resolvedDevices = isDynamic
+    ? data.map((item, idx) => ({
+        title: item[`title_${lang}`] || item.title_en,
+        description: item[`description_${lang}`] || item.description_en,
+        image: item.image_url || "/SHAHD-IMAGE/Weight-management/Frame 2147208095.webp",
+      }))
+    : devices.map(item => ({
+        title: t(item.titleKey),
+        description: t(item.descriptionKey),
+        image: item.image,
+      }));
+
   return (
     <section className='relative min-h-[85vh]! py-0 overflow-hidden'>
       {/* Background Image with Parallax Effect */}
@@ -129,7 +144,7 @@ export default function WeightManagementMedicalMachine() {
           viewport={{ once: true, margin: "-100px" }}
           className="flex flex-col gap-6 lg:gap-[20px] pb-10"
         >
-          {devices.map((device, index) => (
+          {resolvedDevices.map((device, index) => (
             <DeviceCard key={index} device={device} index={index} />
           ))}
         </motion.div>
@@ -228,7 +243,7 @@ function DeviceCard({ device, index }) {
           transition={{ duration: 0.3 }}
           className="text-primary font-medium uppercase text-xl font-poppins"
         >
-          {t(device.titleKey)}
+          {device.title}
         </motion.p>
         <motion.p 
           initial={{ opacity: 0 }}
@@ -236,7 +251,7 @@ function DeviceCard({ device, index }) {
           transition={{ delay: 0.2, duration: 0.8 }}
           className="text-[#414141] uppercase tracking-[-0.3px] mt-3 font-normal text-sm lg:text-base font-poppins leading-relaxed"
         >
-          {t(device.descriptionKey)}
+          {device.description}
         </motion.p>
         <motion.button 
           onClick={() => router.push(`/booking`)}

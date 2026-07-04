@@ -3,6 +3,7 @@ import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
 import { horse_product_tabs } from '@/data/horseData';
 import StoreProductCard from '@/components/pages/storePage/StoreProducts/StoreProductCard';
+import { useTranslation } from 'react-i18next';
 
 const products = [
   {
@@ -11,7 +12,7 @@ const products = [
     rating: 4,
     price: "23.00",
     img: "/SHAHD-IMAGE/horse/206c8be48988ac5b9bce6352927ab9782f8d48d8.webp",
-    category: "face",
+    category: "grooming",
   },
   {
     id: 2,
@@ -19,7 +20,7 @@ const products = [
     rating: 5,
     price: "35.00",
     img: "/SHAHD-IMAGE/horse/b1dfb2d20e7426a29aefe4ea741c2bf2a7e2419e.webp",
-    category: "hair",
+    category: "grooming",
   },
   {
     id: 3,
@@ -27,7 +28,7 @@ const products = [
     rating: 4,
     price: "28.00",
     img: "/SHAHD-IMAGE/horse/4c8ee52d8fa1007f43c0d4ad4f1c8bb459f29823.webp",
-    category: "body",
+    category: "tack accessories",
   },
   {
     id: 4,
@@ -35,7 +36,7 @@ const products = [
     rating: 5,
     price: "45.00",
     img: "/SHAHD-IMAGE/horse/0851bb4abfba7e11bfca1ef4224a4d3b262332be.webp",
-    category: "skin",
+    category: "tack accessories",
   },
   {
     id: 5,
@@ -43,7 +44,7 @@ const products = [
     rating: 4,
     price: "32.00",
     img: "/SHAHD-IMAGE/Store/product1.webp",
-    category: "face",
+    category: "grooming",
   },
   {
     id: 6,
@@ -51,7 +52,7 @@ const products = [
     rating: 4,
     price: "29.00",
     img: "/SHAHD-IMAGE/Store/product1.webp",
-    category: "hair",
+    category: "grooming",
   },
   {
     id: 7,
@@ -59,7 +60,7 @@ const products = [
     rating: 3,
     price: "19.00",
     img: "/SHAHD-IMAGE/Store/product1.webp",
-    category: "body",
+    category: "grooming",
   },
   {
     id: 8,
@@ -67,7 +68,7 @@ const products = [
     rating: 5,
     price: "52.00",
     img: "/SHAHD-IMAGE/Store/product1.webp",
-    category: "skin",
+    category: "grooming",
   }
 ];
 
@@ -120,11 +121,30 @@ const itemVariants = {
   }
 };
 
-export default function HorseProductsGrid({ activeTab }) {
+export default function HorseProductsGrid({ activeTab, data }) {
+  const { i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+
+  // Map dynamic products if data is available, otherwise use static fallback
+  const isDynamic = data && data.length > 0;
+  const baseProducts = isDynamic
+    ? data.map(p => ({
+        id: p.id,
+        name: p[`title_${lang}`] || p.title_en,
+        img: p.image_url,
+        price: p.price,
+        rating: 5,
+        category: (p[`category_${lang}`] || p.category_en || "").toLowerCase().trim(),
+      }))
+    : products.map(p => ({
+        ...p,
+        category: p.category.toLowerCase().trim(),
+      }));
+
   // Filter products based on active tab
-  const filteredProducts = products.filter(product => {
+  const filteredProducts = baseProducts.filter(product => {
     if (activeTab === 1) return true; // 'All' tab
-    const tabName = horse_product_tabs.find(tab => tab.id === activeTab)?.name.toLowerCase();
+    const tabName = horse_product_tabs.find(tab => tab.id === activeTab)?.name.toLowerCase().trim();
     return product.category === tabName;
   });
 
@@ -139,7 +159,7 @@ export default function HorseProductsGrid({ activeTab }) {
         exit="exit"
         className="grid grid-cols-1 mt-2 md:grid-cols-2 lg:grid-cols-4 gap-6  w-full"
       >
-        {products?.slice(0, 4).map((product, index) => (
+        {filteredProducts.slice(0, 4).map((product, index) => (
           <motion.div
             key={product?.id}
             variants={itemVariants}

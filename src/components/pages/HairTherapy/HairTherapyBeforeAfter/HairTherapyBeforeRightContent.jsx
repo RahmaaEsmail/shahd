@@ -156,6 +156,8 @@ export default function HairTherapyBeforeRightContentImages({ setActiveIndex, tr
     setActiveIndex((prev) => (prev === treatments.length - 1 ? 0 : prev + 1));
   };
 
+  const isSingleImage = activeTreatment?.before_img === activeTreatment?.after_img;
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 50 }}
@@ -168,7 +170,7 @@ export default function HairTherapyBeforeRightContentImages({ setActiveIndex, tr
       <div className="relative overflow-hidden flex flex-col lg:flex-row items-center justify-center min-h-[600px] lg:h-146">
         
         {/* Navigation Arrows - Moved to be at the top center for mobile/tablet */}
-        <div className="absolute  left-3 translate-x-0 top-3 z-40 flex items-center gap-1.5 md:gap-3">
+        <div className="absolute left-3 translate-x-0 top-3 z-40 flex items-center gap-1.5 md:gap-3">
           {/* Prev Arrow */}
           <motion.button
             whileHover={{ scale: 1.1 }}
@@ -190,101 +192,130 @@ export default function HairTherapyBeforeRightContentImages({ setActiveIndex, tr
           </motion.button>
         </div>
 
-        <motion.div
-          className="relative w-full lg:w-[50%] h-[300px] sm:h-[400px] lg:h-full cursor-pointer group"
-          onMouseEnter={() => setHoveredImage('before')}
-          onMouseLeave={() => setHoveredImage(null)}
-          transition={{ duration: 0.3 }}
-        >
-          {/* Before Label */}
-          {i18n?.language != "ar" && <div className='absolute z-30  -left-7  w-55 h-auto  -top-3 pointer-events-none'>
-            <Image 
-              width={220}
-              height={80}
-              className='w-full h-auto' 
-              src='/SHAHD-IMAGE/homebefore/output-onlinepngtools (1).webp' 
-              alt="Before label" 
-            />
-          </div>}
-
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`before-${activeIndex}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="absolute inset-0"
-            >
-              <Image
-                loading='lazy'
-                src={activeTreatment.before_img}
-                alt={`${activeTreatment.title} - Before`}
-                fill
-                className="object-cover object-center"
-                sizes="(max-width: 768px) 50vw, 40vw"
-              />
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Hover Overlay */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: hoveredImage === 'before' ? 1 : 0 }}
-            className="absolute inset-0 bg-black/10 transition-opacity pointer-events-none"
-          />
-        </motion.div>
-
-        {/* After Image */}
-        <motion.div
-          className="relative w-full lg:w-[50%] h-[300px] sm:h-[400px] lg:h-full cursor-pointer group"
-          onMouseEnter={() => setHoveredImage('after')}
-          onMouseLeave={() => setHoveredImage(null)}
-          transition={{ duration: 0.3 }}
-        >
-          {/* Optional: After Label for clarity on mobile */}
-          <div className='absolute z-30 -right-2 sm:-right-4 md:hidden w-20 h-auto -top-1 pointer-events-none opacity-80'>
-             <div className="bg-secondary/80 text-white text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-widest">After</div>
+        {isSingleImage ? (
+          <div className="relative w-full h-[500px] lg:h-full cursor-pointer">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`single-${activeIndex}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="absolute inset-0"
+              >
+                {activeTreatment?.before_img && (
+                  <Image
+                    loading="lazy"
+                    src={activeTreatment.before_img}
+                    alt={activeTreatment.title || "Transformation Result"}
+                    fill
+                    className="object-contain p-6"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                )}
+              </motion.div>
+            </AnimatePresence>
           </div>
-
-          {i18n?.language == "ar" && <div className='absolute z-30  -left-7  w-55 h-auto  -top-3 pointer-events-none'>
-            <Image 
-              width={220}
-              height={80}
-              className='w-full h-auto' 
-              src='/SHAHD-IMAGE/homebefore/output-onlinepngtools (1).webp' 
-              alt="Before label" 
-            />
-          </div>}
-
-          <AnimatePresence mode="wait">
+        ) : (
+          <>
+            {/* Before Image */}
             <motion.div
-              key={`after-${activeIndex}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="absolute inset-0"
+              className="relative w-full lg:w-[50%] h-[300px] sm:h-[400px] lg:h-full cursor-pointer group"
+              onMouseEnter={() => setHoveredImage('before')}
+              onMouseLeave={() => setHoveredImage(null)}
+              transition={{ duration: 0.3 }}
             >
-              <Image
-                loading='lazy'
-                src={activeTreatment.after_img}
-                alt={`${activeTreatment.title} - After`}
-                fill
-                className="object-cover object-center"
-                sizes="(max-width: 768px) 50vw, 40vw"
+              {/* Before Label */}
+              {i18n?.language != "ar" && <div className="absolute z-30 -left-7 w-55 h-auto -top-3 pointer-events-none">
+                <Image 
+                  width={220}
+                  height={80}
+                  className="w-full h-auto" 
+                  src="/SHAHD-IMAGE/homebefore/output-onlinepngtools (1).webp" 
+                  alt="Before label" 
+                />
+              </div>}
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`before-${activeIndex}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    loading="lazy"
+                    src={activeTreatment.before_img}
+                    alt={`${activeTreatment.title} - Before`}
+                    fill
+                    className="object-cover object-center"
+                    sizes="(max-width: 768px) 50vw, 40vw"
+                  />
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Hover Overlay */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: hoveredImage === 'before' ? 1 : 0 }}
+                className="absolute inset-0 bg-black/10 transition-opacity pointer-events-none"
               />
             </motion.div>
-          </AnimatePresence>
 
-          {/* Hover Overlay */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: hoveredImage === 'after' ? 1 : 0 }}
-            className="absolute inset-0 bg-black/10 transition-opacity pointer-events-none"
-          />
-        </motion.div>
+            {/* After Image */}
+            <motion.div
+              className="relative w-full lg:w-[50%] h-[300px] sm:h-[400px] lg:h-full cursor-pointer group"
+              onMouseEnter={() => setHoveredImage('after')}
+              onMouseLeave={() => setHoveredImage(null)}
+              transition={{ duration: 0.3 }}
+            >
+              {/* Optional: After Label for clarity on mobile */}
+              <div className="absolute z-30 -right-2 sm:-right-4 md:hidden w-20 h-auto -top-1 pointer-events-none opacity-80">
+                 <div className="bg-secondary/80 text-white text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-widest">After</div>
+              </div>
+
+              {i18n?.language == "ar" && <div className="absolute z-30 -left-7 w-55 h-auto -top-3 pointer-events-none">
+                <Image 
+                  width={220}
+                  height={80}
+                  className="w-full h-auto" 
+                  src="/SHAHD-IMAGE/homebefore/output-onlinepngtools (1).webp" 
+                  alt="Before label" 
+                />
+              </div>}
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`after-${activeIndex}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    loading="lazy"
+                    src={activeTreatment.after_img}
+                    alt={`${activeTreatment.title} - After`}
+                    fill
+                    className="object-cover object-center"
+                    sizes="(max-width: 768px) 50vw, 40vw"
+                  />
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Hover Overlay */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: hoveredImage === 'after' ? 1 : 0 }}
+                className="absolute inset-0 bg-black/10 transition-opacity pointer-events-none"
+              />
+            </motion.div>
+          </>
+        )}
       </div>
     </motion.div>
-  )
+  );
 }

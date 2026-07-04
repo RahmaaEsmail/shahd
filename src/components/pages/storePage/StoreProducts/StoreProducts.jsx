@@ -116,7 +116,7 @@ import StoreProductsGrid from './StoreProductsGrid';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
-export default function StoreProducts() {
+export default function StoreProducts({ data }) {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(1);
   const router = useRouter();
@@ -146,7 +146,7 @@ export default function StoreProducts() {
           <StoreProductsHeader setActiveTab={setActiveTab} activeTab={activeTab} />
           
           <AnimatePresence mode="wait">
-            <StoreProductsGrid key={activeTab} activeTab={activeTab} />
+            <StoreProductsGrid key={activeTab} activeTab={activeTab} data={data} />
           </AnimatePresence>
           
           <motion.button

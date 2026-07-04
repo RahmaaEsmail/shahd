@@ -5,10 +5,15 @@ import React, { useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { motion, useInView } from 'framer-motion'
 
-export default function AcademyAesthetic() {
-  const { t , i18n } = useTranslation();
+export default function AcademyAesthetic({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: false, amount: 0.2 })
+
+  const subtitle = data?.[`subtitle_${lang}`] || data?.subtitle_en || t('Aesthetic Medicine & Laser Notes');
+  const title = data?.[`title_${lang}`] || data?.title_en || t('Academy Aesthetic Title');
+  const description = data?.[`description_${lang}`] || data?.description_en || t('Academy Aesthetic Desc');
 
   // Animation variants
   const containerVariants = {
@@ -139,7 +144,7 @@ export default function AcademyAesthetic() {
             className='relative'
           >
             <Image
-              src={"/SHAHD-IMAGE/Academy/image 22.webp"}
+              src={data?.image_url || "/SHAHD-IMAGE/Academy/image 22.webp"}
               width={541}
               height={566}
               alt="Dr. Shahd"
@@ -162,7 +167,7 @@ export default function AcademyAesthetic() {
             variants={itemVariants}
             className='font-bold font-poppins text-secondary text-lg md:text-xl'
           >
-            {t('Aesthetic Medicine & Laser Notes')}
+            {subtitle}
           </motion.h4>
 
           {/* Main Title */}
@@ -170,7 +175,7 @@ export default function AcademyAesthetic() {
             variants={itemVariants}
             className='font-normal leading-tight text-primary text-3xl'
           >
-            {t('Academy Aesthetic Title')}
+            {title}
           </motion.h2>
 
           {/* Description */}
@@ -178,7 +183,7 @@ export default function AcademyAesthetic() {
             variants={itemVariants}
             className='text-sm md:text-base font-poppins text-white lg:text-[#414141] font-normal leading-relaxed max-w-xl'
           >
-            {t('Academy Aesthetic Desc')}
+            {description}
           </motion.p>
 
           {/* CTA Button */}

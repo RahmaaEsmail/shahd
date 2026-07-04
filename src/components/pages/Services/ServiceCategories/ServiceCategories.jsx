@@ -499,13 +499,27 @@ import 'swiper/css';
 import ServiceCategoryCard from "./ServiceCategoryCard";
 import { useTranslation } from "react-i18next";
 
-export default function ServiceCategories() {
+export default function ServiceCategories({ data, lang }) {
   // 1. Destructure i18n along with t
   const { t, i18n } = useTranslation();
   
   // 2. Dynamically check if the current language is Arabic (or use i18n.dir())
   const isRtl = i18n.language === 'ar' || i18n.dir() === 'rtl';
   const currentDir = isRtl ? "rtl" : "ltr";
+
+  // Build the categories list from API data or fall back to static serviceData (items from index 9)
+  const staticCategories = service_data?.slice(9);
+  const resolvedCategories = data && data.length > 0
+    ? data.map((cat, idx) => ({
+        id: cat.id,
+        image: cat.image_url || cat.image || staticCategories[idx % staticCategories.length]?.image || "/SHAHD-IMAGE/Services/service1.webp",
+        title: cat[`name_${lang}`] || cat.name_en || cat.name || "",
+        type: cat.id?.toString(),
+        service_num: cat.services_count ?? "",
+        mainColor: staticCategories[idx % staticCategories.length]?.mainColor || "#DDB2B5",
+        bgColor: staticCategories[idx % staticCategories.length]?.bgColor || "#F1E0E0",
+      }))
+    : staticCategories;
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -609,7 +623,7 @@ export default function ServiceCategories() {
             }}
             className="pb-0! lg:pb-6!"
           >
-            {service_data?.slice(9)?.map((item, index) => (
+            {resolvedCategories?.map((item, index) => (
               <SwiperSlide key={`${item.id}-${index}`}>
                 <ServiceCategoryCard cardVariants={cardVariants} item={item} itemVariants={itemVariants}/> 
               </SwiperSlide>

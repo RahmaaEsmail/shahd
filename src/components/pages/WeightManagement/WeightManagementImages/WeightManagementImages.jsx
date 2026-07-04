@@ -177,8 +177,17 @@ const images = [
   { id: 6, img: "/SHAHD-IMAGE/Weight-management/Component 38.webp" },
 ]
 
-export default function WeightManagementImages() {
+export default function WeightManagementImages({ data }) {
   const { t } = useTranslation();
+
+  const isDynamic = data && data.length > 0;
+  const resolvedImages = isDynamic
+    ? data.map((item, idx) => ({
+        id: item.id || idx + 1,
+        img: item.image_url,
+      }))
+    : images;
+
   return (
     <section className='min-h-screen relative py-6 flex flex-col items-center justify-center overflow-hidden'>
       {/* Background Layer */}
@@ -240,7 +249,7 @@ export default function WeightManagementImages() {
             }}
             className="pb-10"
           >
-            {images.map((item, index) => (
+            {resolvedImages.map((item, index) => (
               <SwiperSlide key={item.id}>
                 <motion.div
                   variants={slideVariants}

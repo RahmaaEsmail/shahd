@@ -1,17 +1,28 @@
 "use client";
-import React from 'react'
-import { motion } from 'framer-motion';
-import { ChevronRight, ChevronDown } from 'lucide-react';
-import Image from 'next/image';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { slugify } from '@/lib/utils';
-import { useTranslation } from 'react-i18next';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { ChevronRight, ChevronDown } from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { slugify } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
-export default function ServiceCategoryCard({cardVariants, item, itemVariants }) {
+export default function ServiceCategoryCard({
+  cardVariants,
+  item,
+  itemVariants,
+}) {
   const { t } = useTranslation();
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const currentCategory = searchParams.get('category');
+  const [currentCategory, setCurrentCategory] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      setCurrentCategory(params.get("category"));
+    }
+  }, []);
+
   const isSelected = currentCategory === item.type;
 
   const handleClick = () => {
@@ -22,7 +33,7 @@ export default function ServiceCategoryCard({cardVariants, item, itemVariants })
 
   return (
     <motion.div
-    onClick={handleClick}
+      onClick={handleClick}
       variants={itemVariants}
       whileHover="hover"
     >
@@ -45,13 +56,18 @@ export default function ServiceCategoryCard({cardVariants, item, itemVariants })
           alt="decorative element"
         />
 
-        <button 
-        onClick={(e) => {
-          e.stopPropagation();
-          handleClick();
-        }}
-        className="bg-secondary cursor-pointer absolute z-50 top-3 right-5 w-13 h-13 rounded-full flex justify-center items-center opacity-100  transition-opacity duration-300">
-          {isSelected ? <ChevronDown size={25} color="white" /> : <ChevronRight size={25} color="white" />}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleClick();
+          }}
+          className="bg-secondary cursor-pointer absolute z-50 top-3 right-5 w-13 h-13 rounded-full flex justify-center items-center opacity-100  transition-opacity duration-300"
+        >
+          {isSelected ? (
+            <ChevronDown size={25} color="white" />
+          ) : (
+            <ChevronRight size={25} color="white" />
+          )}
         </button>
 
         <Image
@@ -91,5 +107,5 @@ export default function ServiceCategoryCard({cardVariants, item, itemVariants })
         </motion.div>
       </motion.div>
     </motion.div>
-  )
+  );
 }

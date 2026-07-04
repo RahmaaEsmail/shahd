@@ -83,8 +83,12 @@ const lineVariants = {
   })
 }
 
-export default function BookWrite() {
-  const { t } = useTranslation();
+export default function BookWrite({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+
+  const content = data?.[`content_${lang}`] || data?.content_en;
+
   // Split the text into lines for staggered animation
   const lines = [
     t("Book Write Line 1"),
@@ -141,20 +145,29 @@ export default function BookWrite() {
           whileInView="visible"
           viewport={{ once: false }}
         >
-          {lines.map((line, index) => (
-            <motion.p
-              key={index}
-              custom={index}
+          {content ? (
+            <motion.div
               variants={lineVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false }}
-              className="font-poppins capitalize text-[#414141] mx-auto text-base lg:text-lg tracking-tight lg:tracking-[-0.3px] mb-4 lg:mb-0 leading-relaxed lg:leading-7"
-            >
-              {line}
-              {index < lines.length - 1 && <span className="hidden lg:inline"><br /></span>}
-            </motion.p>
-          ))}
+              custom={0}
+              className="font-poppins text-[#414141] mx-auto text-base lg:text-lg tracking-tight leading-relaxed lg:leading-7"
+              dangerouslySetInnerHTML={{ __html: content }}
+            />
+          ) : (
+            lines.map((line, index) => (
+              <motion.p
+                key={index}
+                custom={index}
+                variants={lineVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: false }}
+                className="font-poppins capitalize text-[#414141] mx-auto text-base lg:text-lg tracking-tight lg:tracking-[-0.3px] mb-4 lg:mb-0 leading-relaxed lg:leading-7"
+              >
+                {line}
+                {index < lines.length - 1 && <span className="hidden lg:inline"><br /></span>}
+              </motion.p>
+            ))
+          )}
         </motion.div>
       </motion.div>
     </motion.div>

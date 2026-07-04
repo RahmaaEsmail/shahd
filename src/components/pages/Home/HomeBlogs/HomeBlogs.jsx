@@ -6,10 +6,25 @@ import HomeBlogRightContent from './HomeBlogRightContent';
 import { blogsData } from '@/data/blogs';
 import { useTranslation } from 'react-i18next';
 
-export default function HomeBlogs() {
-  const { t } = useTranslation();
-  const [selectedBlog, setSelectedBlog] = useState(blogsData[0]);
+export default function HomeBlogs({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+    ? "sk"
+    : "en";
 
+  const blogs =
+    data && data.length > 0
+      ? data.map((item) => ({
+          id: item.id,
+          img: item.image_1_url || "/SHAHD-IMAGE/HomeBlogs/blog1.webp",
+          title: item[`title_${lang}`] || item.title_en,
+          sub_title: item[`description_${lang}`] || item.description_en,
+        }))
+      : blogsData;
+
+  const [selectedBlog, setSelectedBlog] = useState(blogs[0]);
 
   return (
     <div className='relative min-h-[90vh] py-2 overflow-hidden flex flex-col justify-center'>
@@ -41,10 +56,10 @@ export default function HomeBlogs() {
 
           {/* Carousel */}
           <div className="order-1 lg:order-2 w-full">
-            <HomeBlogRightContent setSelectedBlog={setSelectedBlog} selectedBlog={selectedBlog} images={blogsData} />
+            <HomeBlogRightContent setSelectedBlog={setSelectedBlog} selectedBlog={selectedBlog} images={blogs} />
           </div>
         </div>
       </div>
     </div>
   )
-}
+}

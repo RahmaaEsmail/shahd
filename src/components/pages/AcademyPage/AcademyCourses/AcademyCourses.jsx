@@ -26,10 +26,26 @@ const courses = [
   }
 ]
 
-export default function AcademyCourses() {
-  const { t } = useTranslation();
+export default function AcademyCourses({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: false, amount: 0.2 })
+
+  const isDynamic = data && data.length > 0;
+  const resolvedCourses = isDynamic
+    ? data.map(course => ({
+        id: course.id,
+        title: course[`title_${lang}`] || course.title_en,
+        desc: course[`description_${lang}`] || course.description_en,
+        image: course.image_url,
+      }))
+    : courses.map(course => ({
+        id: course.id,
+        title: t(course.titleKey),
+        desc: t(course.descKey),
+        image: course.image,
+      }));
 
   // Animation variants
   const containerVariants = {
@@ -114,7 +130,7 @@ export default function AcademyCourses() {
           variants={containerVariants}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {courses?.map((item, index) => (
+          {resolvedCourses?.map((item, index) => (
             <CourseCard key={item?.id} item={item} index={index} />
           ))}
         </motion.div>

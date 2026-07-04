@@ -10,11 +10,22 @@ import {
   DialogContent,
   DialogTrigger,
   DialogTitle,
-} from "@/components/ui/dialog"; // Adjust path based on your setup
+} from "@/components/ui/dialog";
 
-export default function HomeBannerSliderContent() {
-  const { t } = useTranslation();
+export default function HomeBannerSliderContent({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+    ? "sk"
+    : "en";
+
   const [isHovered, setIsHovered] = useState(false);
+
+  const title = data?.[`video_title_${lang}`] || data?.video_title_en || t("Meet Dr. Shahd Awad");
+  const description = data?.[`video_description_${lang}`] || data?.video_description_en || t("Dr. Shahd Awad Specialist");
+  const videoUrl = data?.video_url || "https://www.youtube.com/watch?v=your-video-id";
+  const thumbnail = data?.video_thumbnail_url || "/SHAHD-IMAGE/BannerImage/banner-image-2.webp";
 
   return (
     <motion.div
@@ -30,7 +41,7 @@ export default function HomeBannerSliderContent() {
         transition={{ delay: 0.5, duration: 0.5 }}
       >
         <h2 className="text-xl sm:text-2xl lg:text-[28px] font-normal tracking-[1px] sm:tracking-[2px] text-[#DDB2B5] uppercase leading-tight">
-          {t("Meet Dr. Shahd Awad")}
+          {title}
         </h2>
       </motion.div>
 
@@ -41,7 +52,7 @@ export default function HomeBannerSliderContent() {
         transition={{ delay: 0.6, duration: 0.5 }}
         className="text-[#414141] font-poppins! text-sm sm:text-base lg:text-[18px] font-normal leading-relaxed"
       >
-        {t("Dr. Shahd Awad Specialist")}
+        {description}
       </motion.p>
 
       {/* Video/Image Card wrapped in Dialog */}
@@ -56,7 +67,7 @@ export default function HomeBannerSliderContent() {
             className="relative w-full h-[220px] xs:h-[260px] sm:h-[340px] md:h-[420px] lg:h-74 rounded-[24px] sm:rounded-[40px] overflow-hidden group cursor-pointer"
           >
             <Image
-              src="/SHAHD-IMAGE/BannerImage/banner-image-2.webp"
+              src={thumbnail}
               alt="Dr. Shahd Awad"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -104,7 +115,7 @@ export default function HomeBannerSliderContent() {
             
             <div className="aspect-video w-full">
               <ReactPlayer
-                url="https://www.youtube.com/watch?v=your-video-id"
+                url={videoUrl}
                 controls
                 playing
                 width="100%"
@@ -115,4 +126,4 @@ export default function HomeBannerSliderContent() {
       </Dialog>
     </motion.div>
   );
-}
+}

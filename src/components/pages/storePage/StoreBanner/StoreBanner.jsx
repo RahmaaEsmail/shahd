@@ -6,9 +6,15 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
-export default function StoreBanner() {
+export default function StoreBanner({ data }) {
   const router = useRouter();
-  const { t  , i18n} = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+
+  const title = data?.[`title_${lang}`] || data?.title_en;
+  const description = data?.[`description_${lang}`] || data?.description_en || t("Store Banner Desc");
+  const bgImage = data?.image_url || '/SHAHD-IMAGE/Store/store_banner.webp';
+
   // Animation variants for smoother, more coordinated animations
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -157,27 +163,33 @@ export default function StoreBanner() {
             variants={textVariants}
             className='text-4xl text-primary font-normal leading-tight'
           >
-            {t("Because Your Skin Deserves")}{' '}
-            <motion.span
-              variants={gradientVariants}
-              style={{
-                background: "linear-gradient(90deg, #DDB2B5 0%, #EFD4CE 100%)",
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                display: "inline-block"
-              }}
-              className='underline decoration-wavy decoration-primary decoration-2 md:decoration-4'
-            >
-              {t("pure luxury")}
-            </motion.span>
+            {title ? (
+              title
+            ) : (
+              <>
+                {t("Because Your Skin Deserves")}{' '}
+                <motion.span
+                  variants={gradientVariants}
+                  style={{
+                    background: "linear-gradient(90deg, #DDB2B5 0%, #EFD4CE 100%)",
+                    backgroundClip: "text",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    display: "inline-block"
+                  }}
+                  className='underline decoration-wavy decoration-primary decoration-2 md:decoration-4'
+                >
+                  {t("pure luxury")}
+                </motion.span>
+              </>
+            )}
           </motion.h1>
 
           <motion.p
             variants={textVariants}
             className={`text-lg md:text-2xl text-[#414141] max-w-2xl font-normal font-poppins ${i18n?.language == "ar" ?"text-right" :"text-left"}`}
           >
-            {t("Store Banner Desc")}
+            {description}
           </motion.p>
 
           <motion.div
@@ -230,7 +242,7 @@ export default function StoreBanner() {
             className="relative w-full h-full"
           >
             <Image
-              src='/SHAHD-IMAGE/Store/store_banner.webp'
+              src={bgImage}
               fill
               alt='store banner image'
               className="object-cover w-full! h-full! lg:object-cover z-10"

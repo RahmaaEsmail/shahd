@@ -132,10 +132,15 @@ const languageButtonVariants = {
   }
 }
 
-export default function BookBanner() {
-  const { t , i18n} = useTranslation();
-  const translatedTitle = t("Glow in All Areas of Your Life");
-  const titleWords = translatedTitle.split(' ');
+export default function BookBanner({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+
+  const title = data?.[`title_${lang}`] || data?.title_en || t("Glow in All Areas of Your Life");
+  const description = data?.[`description_${lang}`] || data?.description_en || t("Book Banner Desc");
+  const bgImage = data?.image_url || "/SHAHD-IMAGE/Book/book.webp";
+
+  const titleWords = title.split(' ');
   
   const router = useRouter();
   return (
@@ -156,7 +161,7 @@ export default function BookBanner() {
         whileHover="hover"
       >
         <Image
-          src="/SHAHD-IMAGE/Book/book.webp"
+          src={bgImage}
           alt="book"
           width={374}
           height={495}
@@ -272,7 +277,7 @@ export default function BookBanner() {
           viewport={{ once: false, amount: 0.2, margin: "-50px" }}
           custom={4}
         >
-          {t("Book Banner Desc")}
+          {description}
         </motion.p>
 
         {/* Buy Now button with animations */}

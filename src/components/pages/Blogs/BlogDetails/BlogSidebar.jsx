@@ -35,19 +35,25 @@ export default function BlogSidebar({ blog, relatedBlogs }) {
               >
                 <Link href={`/blogs/${related.id}`} className="group flex gap-6 items-center">
                   <div className="relative w-24 h-24 shrink-0 rounded-2xl overflow-hidden shadow-lg">
-                    <Image 
-                       src={related.img} 
-                       fill 
-                       className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110" 
-                       alt={related.title} 
-                    />
+                    {related.img ? (
+                      <Image 
+                         src={related.img} 
+                         fill 
+                         className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110" 
+                         alt={related.title || "Related blog"} 
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-[#7189A2] to-[#DDB2B5]" />
+                    )}
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <span className="text-[10px] text-[#DDB2B5] font-bold uppercase tracking-[0.2em]">
-                      {t(related.category)}
-                    </span>
+                    {related.category && (
+                      <span className="text-[10px] text-[#DDB2B5] font-bold uppercase tracking-[0.2em]">
+                        {related.category}
+                      </span>
+                    )}
                     <h4 className="text-base font-light text-[#414141] group-hover:text-[#7189A2] transition-colors line-clamp-2 leading-snug font-poppins">
-                      {t(related.title)}
+                      {related.title}
                     </h4>
                   </div>
                 </Link>

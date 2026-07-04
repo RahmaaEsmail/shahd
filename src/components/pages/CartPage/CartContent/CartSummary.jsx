@@ -54,7 +54,7 @@ export default function CartSummary({ itemCount = 4, subtotal = 23.00 }) {
       whileInView="visible"
     >
       <motion.h2
-        className="text-primary font-semibold text-[22px] border-b-2 border-primary pb-4"
+        className="text-primary font-semibold text-md border-b-2 border-primary pb-4"
         variants={itemVariants}
         custom={0}
       >
@@ -67,10 +67,10 @@ export default function CartSummary({ itemCount = 4, subtotal = 23.00 }) {
           variants={itemVariants}
           custom={1}
         >
-          <span className="text-[22px] font-bold tracking-[-0.3px] text-primary">{itemCount} Products</span>
+          <span className="text-md font-bold tracking-[-0.3px] text-primary">{itemCount} Products</span>
           <motion.span
             key={subtotal}
-            className="text-[28px] font-semibold text-[#414141]"
+            className="text-md font-semibold text-[#414141]"
             initial={{ scale: 1 }}
             whileInView={{ scale: [1, 1.05, 1] }}
             transition={{ duration: 0.3 }}
@@ -84,8 +84,8 @@ export default function CartSummary({ itemCount = 4, subtotal = 23.00 }) {
           variants={itemVariants}
           custom={2}
         >
-          <span className="text-[22px] font-bold tracking-[-0.3px] text-primary">Shipping</span>
-          <span className="text-[28px] font-semibold text-[#414141]">{shipping.toFixed(2)} S.R</span>
+          <span className="text-md font-bold tracking-[-0.3px] text-primary">Shipping</span>
+          <span className="text-md font-semibold text-[#414141]">{shipping.toFixed(2)} S.R</span>
         </motion.div>
       </div>
 
@@ -102,10 +102,10 @@ export default function CartSummary({ itemCount = 4, subtotal = 23.00 }) {
         variants={itemVariants}
         custom={3}
       >
-        <span className="text-[22px] font-bold tracking-[-0.3px] text-primary uppercase">Total</span>
+        <span className="text-md font-bold tracking-[-0.3px] text-primary uppercase">Total</span>
         <motion.span
           key={total}
-          className="text-[28px] font-semibold text-[#414141]"
+          className="text-md font-semibold text-[#414141]"
           initial={{ scale: 1 }}
           whileInView={{ scale: [1, 1.05, 1] }}
           transition={{ duration: 0.3 }}
@@ -122,7 +122,7 @@ export default function CartSummary({ itemCount = 4, subtotal = 23.00 }) {
         variants={buttonVariants}
         whileHover="hover"
         whileTap="tap"
-        className="w-full md:w-fit md:ms-auto py-4 md:py-3 px-10 mt-4 rounded-full text-white text-lg font-normal uppercase transition-colors shadow-lg shadow-[#EFD4CE]/40"
+        className="w-full md:w-fit md:ms-auto py-4  px-10 mt-4 rounded-full text-white text-md font-normal uppercase transition-colors shadow-lg shadow-[#EFD4CE]/40"
       >
         Check Out
       </motion.button>

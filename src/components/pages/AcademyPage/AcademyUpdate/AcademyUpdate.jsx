@@ -326,14 +326,33 @@ const images = [
   },
 ]
 
-export default function AcademyUpdate() {
-  const { t , i18n } = useTranslation();
-  const dir = i18n?.language == "ar" ? "rtl" :'ltr';
+export default function AcademyUpdate({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+  const dir = i18n?.language == "ar" ? "rtl" : "ltr";
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 })
   const swiperRef = useRef(null)
   const [selectedItemIndex, setSelectedItemIndex] = React.useState(null)
   const [isMuted, setIsMuted] = React.useState(true)
+
+  const isDynamic = data && data.length > 0;
+  const resolvedImages = isDynamic
+    ? data.map((item, idx) => ({
+        id: item.id || idx + 1,
+        img: item.image_url,
+        title: item[`title_${lang}`] || item.title_en,
+        caption: item[`caption_${lang}`] || item.caption_en,
+        date: item.created_at || "Recent",
+        social: item.social_platform || "instagram",
+        user: {
+          name: "dr.shahd_academy",
+          avatar: "/SHAHD-IMAGE/Academy/logo 1.webp"
+        },
+        isVideo: item.is_video || false,
+        videoUrl: item.video_url || null
+      }))
+    : images;
 
   const openModal = (index) => {
     setSelectedItemIndex(index)
@@ -344,14 +363,14 @@ export default function AcademyUpdate() {
   }
 
   const nextItem = () => {
-    setSelectedItemIndex((prev) => (prev + 1) % images.length)
+    setSelectedItemIndex((prev) => (prev + 1) % resolvedImages.length)
   }
 
   const prevItem = () => {
-    setSelectedItemIndex((prev) => (prev - 1 + images.length) % images.length)
+    setSelectedItemIndex((prev) => (prev - 1 + resolvedImages.length) % resolvedImages.length)
   }
 
-  const selectedItem = selectedItemIndex !== null ? images[selectedItemIndex] : null
+  const selectedItem = selectedItemIndex !== null ? resolvedImages[selectedItemIndex] : null
 
   // Animation variants
   const containerVariants = {
@@ -461,7 +480,7 @@ export default function AcademyUpdate() {
             }}
             className='h-[400px] lg:h-[450px] rounded-[24px]'
           >
-            {images?.map((item, index) => (
+            {resolvedImages?.map((item, index) => (
               <SwiperSlide key={item?.id}>
                 <div 
                   onClick={() => openModal(index)}
@@ -565,7 +584,7 @@ export default function AcademyUpdate() {
                       </Avatar>
                       <div className="text-[15px] leading-relaxed whitespace-pre-wrap text-[#414141]">
                         <span className="font-bold mr-2 text-[#1E1E1E]">{selectedItem?.user.name}</span>
-                        {t(selectedItem?.captionKey)}
+                        {selectedItem?.captionKey ? t(selectedItem.captionKey) : selectedItem?.caption}
                       </div>
                     </div>
                   </div>

@@ -6,9 +6,10 @@ import { motion } from 'framer-motion';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'swiper/css/navigation'; // <-- Added Navigation CSS
 
 // import required modules
-import { Pagination, Autoplay } from 'swiper/modules';
+import { Pagination, Autoplay, Navigation } from 'swiper/modules'; // <-- Added Navigation Module
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
@@ -126,10 +127,28 @@ const slideVariants = {
   }
 };
 
-export default function StoreSwiper() {
+export default function StoreSwiper({ data }) {
   const [swiperInstance, setSwiperInstance] = useState(null);
   const router = useRouter();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+
+  const isDynamic = data && data.length > 0;
+  const resolvedSlides = isDynamic
+    ? data.map((item, idx) => ({
+        id: item.id || idx + 1,
+        image: item.image_url,
+        title: item[`title_${lang}`] || item.title_en,
+        desc: item[`description_${lang}`] || item.description_en,
+        btn_name: t("SHOP BUNDLE"),
+        btn_link: "/products",
+      }))
+    : images.map(item => ({
+        ...item,
+        title: t(item.title),
+        desc: t(item.desc),
+        btn_name: t(item.btn_name),
+      }));
 
   useEffect(() => {
     if (swiperInstance) {
@@ -144,7 +163,7 @@ export default function StoreSwiper() {
       whileInView="visible"
       viewport={{ once: false }}
       variants={containerVariants}
-      className="relative w-full py-8"
+      className="relative w-full py-8 group/swiper-container"
     >
       <Swiper
         onSwiper={setSwiperInstance}
@@ -161,7 +180,11 @@ export default function StoreSwiper() {
           clickable: true,
           dynamicBullets: true,
         }}
-        modules={[Pagination, Autoplay]}
+        navigation={{
+          nextEl: '.swiper-button-next-custom',
+          prevEl: '.swiper-button-prev-custom',
+        }}
+        modules={[Pagination, Autoplay, Navigation]} // <-- Enabled Navigation module
         className="store-swiper"
         breakpoints={{
           640: {
@@ -174,7 +197,7 @@ export default function StoreSwiper() {
           },
         }}
       >
-        {images?.map((item, index) => (
+        {resolvedSlides?.map((item, index) => (
           <SwiperSlide key={item?.id}>
             <motion.div
               variants={slideVariants}
@@ -222,14 +245,14 @@ export default function StoreSwiper() {
                   variants={itemVariants}
                   className='text-3xl md:text-5xl text-primary font-normal leading-tight mb-2 md:mb-4'
                 >
-                  {t(item?.title)}
+                  {item?.title}
                 </motion.h2>
 
                 <motion.p
                   variants={itemVariants}
                   className='font-poppins text-white text-sm md:text-xl mb-6 md:mb-8 max-w-md md:max-w-none'
                 >
-                  {t("Store Swiper Desc")}
+                  {item?.desc}
                 </motion.p>
 
                 <motion.button
@@ -237,7 +260,7 @@ export default function StoreSwiper() {
                   variants={buttonVariants}
                   className="bg-white text-primary font-medium text-sm md:text-xl rounded-full h-[44px] md:h-[52px] w-[160px] md:w-[190px] shadow-xl hover:bg-opacity-90 transition-all duration-300"
                 >
-                  {t(item?.btn_name)}
+                  {item?.btn_name}
                 </motion.button>
               </motion.div>
 
@@ -261,6 +284,18 @@ export default function StoreSwiper() {
           </SwiperSlide>
         ))}
       </Swiper>
+
+      {/* Custom Navigation Arrows */}
+      <button className="swiper-button-prev-custom group/btn md:flex hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6 transition-transform group-hover/btn:-translate-x-0.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
+      </button>
+      <button className="swiper-button-next-custom group/btn md:flex hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6 transition-transform group-hover/btn:translate-x-0.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+        </svg>
+      </button>
 
       {/* Custom CSS for Swiper styling */}
       <style jsx global>{`
@@ -306,6 +341,54 @@ export default function StoreSwiper() {
             opacity: 1;
             transform: scale(1);
           }
+        }
+
+        /* Custom Navigation Styles */
+        .swiper-button-prev-custom,
+        .swiper-button-next-custom {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          background-color: white;
+          color: #DEB3B6;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+          z-index: 10;
+          cursor: pointer;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+          opacity: 0;
+        }
+
+        /* Fade arrows in smoothly on container hover */
+        .group\/swiper-container:hover .swiper-button-prev-custom,
+        .group\/swiper-container:hover .swiper-button-next-custom {
+          opacity: 1;
+        }
+
+        .swiper-button-prev-custom {
+          left: 4%;
+        }
+
+        .swiper-button-next-custom {
+          right: 4%;
+        }
+
+        .swiper-button-prev-custom:hover,
+        .swiper-button-next-custom:hover {
+          background-color: #DEB3B6;
+          color: white;
+          box-shadow: 0 6px 25px rgba(222, 179, 182, 0.4);
+        }
+
+        /* Swiper disabled state handling */
+        .swiper-button-disabled {
+          opacity: 0.3 !important;
+          cursor: not-allowed;
+          pointer-events: none;
         }
       `}</style>
     </motion.div>

@@ -1,12 +1,13 @@
 "use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import HomeBannerContentWithImage from './HomeBannerContentWithImage';
-import HomeBannerSliderContent from './HomeBannerSliderContent';
-import HomeBannerMobileSwiper from './HomeBannerMobileSwiper';
+import React from "react";
+import { motion } from "framer-motion";
+import HomeBannerContentWithImage from "./HomeBannerContentWithImage";
+import HomeBannerSliderContent from "./HomeBannerSliderContent";
+import HomeBannerMobileSwiper from "./HomeBannerMobileSwiper";
 
-export default function HomeBanner() {
+export default function HomeBanner({ data }) {
+  console.log("data", data);
   return (
     <section className="relative min-h-[90vh] overflow-hidden">
       {/* Mobile: Normal Swiper (hidden on xl+) */}
@@ -24,12 +25,12 @@ export default function HomeBanner() {
         >
           {/* Left Side - Main Banner Content */}
           <div className="flex-[1.2]">
-            <HomeBannerContentWithImage />
+            <HomeBannerContentWithImage data={data?.banners_section} />
           </div>
 
           {/* Right Side - Slider Content */}
           <div className="flex-[0.6]">
-            <HomeBannerSliderContent />
+            <HomeBannerSliderContent data={data?.video_section} />
           </div>
         </motion.div>
       </div>

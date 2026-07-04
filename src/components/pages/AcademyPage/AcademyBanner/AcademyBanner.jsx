@@ -2,8 +2,13 @@
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-export default function AcademyBanner() {
-  const { t } = useTranslation();
+export default function AcademyBanner({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+
+  const title = data?.[`title_${lang}`] || data?.title_en;
+  const description = data?.[`description_${lang}`] || data?.description_en || t('Academy Banner Desc');
+  const bgImage = data?.image_url || "/SHAHD-IMAGE/Academy/Frame 1000005536.webp";
 
   return (
     <motion.div
@@ -14,7 +19,7 @@ export default function AcademyBanner() {
       className='min-h-[90vh] relative overflow-hidden'
     >
       <Image 
-        src="/SHAHD-IMAGE/Academy/Frame 1000005536.webp" 
+        src={bgImage} 
         fill
         className='object-cover z-0' 
         alt="Academy banner image" 
@@ -31,8 +36,14 @@ export default function AcademyBanner() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className='flex w-full lg:max-w-6xl mx-auto flex-col lg:flex-row justify-between items-center text-center lg:text-left gap-2 lg:gap-0 leading-none'
             >
-              <h1 className='font-normal text-white   text-5xl md:text-7xl'>{t('Empowering')}</h1>
-              <h1 className='font-normal text-white text-5xl md:text-7xl'>{t('next generation')}</h1>
+              {title ? (
+                <h1 className='font-normal text-white text-4xl sm:text-5xl lg:text-7xl text-center w-full'>{title}</h1>
+              ) : (
+                <>
+                  <h1 className='font-normal text-white   text-5xl md:text-7xl'>{t('Empowering')}</h1>
+                  <h1 className='font-normal text-white text-5xl md:text-7xl'>{t('next generation')}</h1>
+                </>
+              )}
             </motion.div>
             
             <motion.p
@@ -41,7 +52,7 @@ export default function AcademyBanner() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className='font-normal text-white/90 mt-2 text-center font-poppins text-lg md:text-xl max-w-4xl mx-auto leading-relaxed'
             >
-              {t('Academy Banner Desc')}
+              {description}
             </motion.p>
           </div>
 
