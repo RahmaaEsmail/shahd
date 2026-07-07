@@ -1,16 +1,22 @@
 "use client";
-import Image from 'next/image'
-import React from 'react'
-import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
+import Image from "next/image";
+import React from "react";
+import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export default function HorseBanner({ data }) {
   const { t, i18n } = useTranslation();
-  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : "en";
 
-  const bgImage = data?.image_url || "/SHAHD-IMAGE/horse/67adf9f6bdfe8688747e9c5a7a3bc089d5b6199c.webp";
-  const title = data?.[`title_${lang}`] || data?.title_en || t("A Lifestyle of Balance");
-  const description = data?.[`description_${lang}`] || data?.description_en || t("Horse Banner Desc");
+  const bgImage =
+    data?.image_url ||
+    "/SHAHD-IMAGE/horse/67adf9f6bdfe8688747e9c5a7a3bc089d5b6199c.webp";
+  const title = data?.title || t("A Lifestyle of Balance");
+  const description = data?.description || t("Horse Banner Desc");
 
   return (
     <motion.div
@@ -18,33 +24,33 @@ export default function HorseBanner({ data }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false }}
       transition={{ duration: 0.4, ease: "easeIn" }}
-      className='min-h-screen relative overflow-hidden'
+      className="min-h-screen relative overflow-hidden"
     >
       {/* Background Image */}
-      <Image 
+      <Image
         src={bgImage}
         fill
         priority
-        className='object-cover' 
-        alt="service banner image" 
+        className="object-cover"
+        alt="service banner image"
       />
 
       {/* Overlay Gradients */}
       <div
         style={{
-          background: "linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.8) 100%), linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))"
+          background:
+            "linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.8) 100%), linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))",
         }}
-        className='absolute inset-0 flex flex-col justify-center items-center px-4 pt-20 pb-10'
+        className="absolute inset-0 flex flex-col justify-center items-center px-4 pt-20 pb-10"
       >
-        <div className='max-w-7xl w-full flex flex-col items-center justify-center text-center'>
-          
+        <div className="max-w-7xl w-full flex flex-col items-center justify-center text-center">
           {/* Text Content Container */}
-          <div className='flex flex-col items-center space-y-4 md:space-y-6'>
-            <h1 className='font-normal text-white text-[48px] sm:text-[64px]  leading-[1.1] max-w-4xl'>
+          <div className="flex flex-col items-center space-y-4 md:space-y-6">
+            <h1 className="font-normal text-white text-[48px] sm:text-[64px]  leading-[1.1] max-w-4xl">
               {title}
             </h1>
-            
-            <p className='font-normal max-w-xs sm:max-w-md md:max-w-xl text-white mx-auto font-poppins text-lg sm:text-xl  opacity-90'>
+
+            <p className="font-normal max-w-xs sm:max-w-md md:max-w-xl text-white mx-auto font-poppins text-lg sm:text-xl  opacity-90">
               {description}
             </p>
           </div>
@@ -60,16 +66,16 @@ export default function HorseBanner({ data }) {
               className="absolute -inset-0.5 rounded-full opacity-80 group-hover:opacity-100 transition-opacity blur-[2px] group-hover:blur-[4px]"
               style={{
                 background: "linear-gradient(90deg, #D19B9B 0%, #B6C7D6 100%)",
-                boxShadow: "0px 4px 60px 0px rgba(255, 255, 255, 0.2), -4px 0px 15px 0px #F7A5A5, 4px 0px 15px 0px #5D688A",
+                boxShadow:
+                  "0px 4px 60px 0px rgba(255, 255, 255, 0.2), -4px 0px 15px 0px #F7A5A5, 4px 0px 15px 0px #5D688A",
               }}
             />
             <button className="relative bg-white rounded-full px-6 py-3 md:px-10 md:py-4 text-primary font-medium text-base md:text-lg uppercase tracking-wider hover:bg-gray-50 transition-colors">
               {t("follow the passion")}
             </button>
           </motion.div>
-          
         </div>
       </div>
     </motion.div>
-  )
-}
+  );
+}

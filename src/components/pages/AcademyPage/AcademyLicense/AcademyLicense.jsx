@@ -1,62 +1,61 @@
 "use client";
-import Image from 'next/image'
-import { useTranslation } from 'react-i18next';
-import {motion} from 'framer-motion'
-import { Button } from '@/components/ui/button'
+import Image from "next/image";
+import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
 export default function AcademyLicense({ data }) {
   const { t, i18n } = useTranslation();
-  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
 
-  const subtitle = data?.[`subtitle_${lang}`] || data?.subtitle_en || t('License Exam Prep');
-  const title = data?.[`title_${lang}`] || data?.title_en || t('Study Smarter. Pass with Pride.');
-  const description = data?.[`description_${lang}`] || data?.description_en || t('Academy License Desc');
+  const subtitle = data?.subtitle || t("License Exam Prep");
+  const title = data?.title || t("Study Smarter. Pass with Pride.");
+  const description = data?.description || t("Academy License Desc");
   const bgImage = data?.image_url || "/SHAHD-IMAGE/Academy/Component 18.webp";
 
   return (
     <motion.div
-    dir="ltr"
+      dir="ltr"
       initial={{ opacity: 0, y: -24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false }}
       transition={{ duration: 0.4, ease: "easeIn" }}
-      className='min-h-screen  my-4 py-3 relative overflow-hidden flex items-center'
+      className="min-h-screen  my-4 py-3 relative overflow-hidden flex items-center"
     >
-      <Image 
-        src={bgImage} 
+      <Image
+        src={bgImage}
         fill
-        className='object-cover z-0' 
-        alt="License prep background" 
+        className="object-cover z-0"
+        alt="License prep background"
       />
-      <div className='absolute inset-0 bg-black/30 z-1' />
+      <div className="absolute inset-0 bg-black/30 z-1" />
 
-      <div className='relative z-10 w-full main-container mx-auto px-4 py-20 lg:py-0 text-center'>
-        <div className='max-w-7xl mx-auto flex flex-col gap-8 md:gap-10'>
-          <div className='flex flex-col gap-4'>
+      <div className="relative z-10 w-full main-container mx-auto px-4 py-20 lg:py-0 text-center">
+        <div className="max-w-7xl mx-auto flex flex-col gap-8 md:gap-10">
+          <div className="flex flex-col gap-4">
             <motion.p
               initial={{ opacity: 0, y: -20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className='text-white font-poppins text-lg md:text-xl  font-bold'
+              className="text-white font-poppins text-lg md:text-xl  font-bold"
             >
               {subtitle}
             </motion.p>
-            
+
             <motion.div
               initial={{ opacity: 0, y: -30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <h1 className='font-normal text-white text-4xl leading-tight'>
+              <h1 className="font-normal text-white text-4xl leading-tight">
                 {title}
               </h1>
             </motion.div>
-            
+
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className='font-normal text-white/90 mt-4 font-poppins text-base md:text-lg max-w-4xl mx-auto leading-relaxed'
+              className="font-normal text-white/90 mt-4 font-poppins text-base md:text-lg max-w-4xl mx-auto leading-relaxed"
             >
               {description}
             </motion.p>
@@ -78,11 +77,11 @@ export default function AcademyLicense({ data }) {
               }}
             />
             <button className="relative bg-white w-[220px] md:w-[280px] rounded-full px-8 py-4 font-bold text-[#414141] md:text-lg hover:bg-gray-50 transition-colors">
-              {t('Get the Exam Prep Bundle')}
+              {t("Get the Exam Prep Bundle")}
             </button>
           </motion.div>
         </div>
       </div>
     </motion.div>
-  )
+  );
 }

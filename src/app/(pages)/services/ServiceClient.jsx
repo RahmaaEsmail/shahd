@@ -12,7 +12,11 @@ import { useTranslation } from "react-i18next";
 export default function page() {
   const { data, isLoading } = useServices();
   const { i18n } = useTranslation();
-  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : "en";
 
   console.log("services data", data);
   if (isLoading) {
@@ -22,9 +26,13 @@ export default function page() {
     <div>
       <ServiceBanner data={data?.data?.service_banner} lang={lang} />
       <ServiceCategories data={data?.data?.service_categories} lang={lang} />
-      <OurServices data={data?.data?.services} categories={data?.data?.service_categories} lang={lang} />
+      <OurServices
+        data={data?.data?.services}
+        categories={data?.data?.service_categories}
+        lang={lang}
+      />
       <ServiceOffers />
-      <ServicePlans />
+      <ServicePlans data={[]} />
     </div>
   );
 }

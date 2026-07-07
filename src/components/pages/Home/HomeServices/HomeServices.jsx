@@ -235,12 +235,12 @@
 // //                   className={cn(
 // //                     "px-8 py-3 rounded-full text-2xl font-normal tracking-wider transition-all duration-300",
 // //                     isActive ? "bg-white" : "bg-transparent",
-// //                     isWomen 
-// //                       ? (isActive 
-// //                           ? "shadow-[4px_5px_5px_#DDB2B5] border-2 border-primary text-primary" 
+// //                     isWomen
+// //                       ? (isActive
+// //                           ? "shadow-[4px_5px_5px_#DDB2B5] border-2 border-primary text-primary"
 // //                           : "text-primary/70  hover:text-primary hover:border-primary")
-// //                       : (isActive 
-// //                           ? "shadow-[4px_5px_5px_rgba(0,0,0,0.1)] border-2 border-secondary text-secondary" 
+// //                       : (isActive
+// //                           ? "shadow-[4px_5px_5px_rgba(0,0,0,0.1)] border-2 border-secondary text-secondary"
 // //                           : "text-secondary/70 hover:text-secondary hover:border-secondary")
 // //                   )}
 // //                   whileHover={{ scale: 1.05 }}
@@ -501,7 +501,7 @@
 
 // //         {/* MOBILE SERVICES LIST */}
 // //         <div className="mt-8 px-4 min-[900px]:hidden space-y-4">
-// //           <motion.div 
+// //           <motion.div
 // //             initial={{ opacity: 0, y: 20 }}
 // //             whileInView={{ opacity: 1, y: 0 }}
 // //             viewport={{ once: true }}
@@ -522,7 +522,7 @@
 // //                   }
 // //                 }}
 // //               >
-// //                 <ServiceCard 
+// //                 <ServiceCard
 // //                   image={service.images[0]?.img}
 // //                   serviceTitle={service.title}
 // //                   isMobileList={true}
@@ -542,8 +542,8 @@
 // //     <motion.div
 // //       className={cn(
 // //         "relative overflow-hidden group cursor-pointer shadow-lg pointer-events-auto transition-all duration-300",
-// //         isMobileList 
-// //           ? "w-full aspect-[344/140] rounded-[24px]" 
+// //         isMobileList
+// //           ? "w-full aspect-[344/140] rounded-[24px]"
 // //           : "w-60 h-30 xl:w-95 xl:h-35 2xl:w-112.5 2xl:h-45 rounded-[30px]",
 // //         isHighlighted && "ring-4 ring-primary ring-offset-4 ring-offset-[#FFF9F7]"
 // //       )}
@@ -1410,7 +1410,6 @@
 //   );
 // }
 
-
 "use client";
 
 import React, { useState } from "react";
@@ -1418,6 +1417,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import { useGetHomeServices } from "../../../../hooks/home/useHome";
 
 const tabs = [
   { id: "women", label: "SERVICES FOR WOMEN" },
@@ -1724,7 +1724,7 @@ function getMobileLabelClass(hotspot, isRTL) {
       return cn(
         "-left-[118px] top-0 sm:-left-[145px] sm:top-0",
         hotspot.key === "cheek" && "-left-[125px] top-1",
-        hotspot.key === "lip" && "-left-[118px] top-1"
+        hotspot.key === "lip" && "-left-[118px] top-1",
       );
     }
 
@@ -1735,7 +1735,7 @@ function getMobileLabelClass(hotspot, isRTL) {
     return cn(
       "right-12 top-0 sm:right-14 sm:top-0",
       hotspot.key === "cheek" && "right-12 top-1",
-      hotspot.key === "lip" && "right-12 top-1"
+      hotspot.key === "lip" && "right-12 top-1",
     );
   }
 
@@ -1751,14 +1751,74 @@ export default function HomeServices() {
   const [hoveredKey, setHoveredKey] = useState("all");
   const [selectedKey, setSelectedKey] = useState(null);
 
+  const params = {
+    gender: activeTab,
+    hover_key: hoveredKey,
+  };
+
+  const { data: servicesResponse, isLoading } = useGetHomeServices(params);
+  console.log("servicesResponse", servicesResponse);
+  const lang = i18n.language?.startsWith("ar") ? "ar" : "en";
+  const titleField = `title_${lang}`;
+
+  const mappedServices = React.useMemo(() => {
+    const rawServices = servicesResponse?.data || [];
+    if (!rawServices.length) {
+      return servicesData[activeTab] || [];
+    }
+
+    const getPositionDataForHoverKey = (hoverKey) => {
+      const mapping = {
+        wrinkle: { side: "left", top: "14%" },
+        cheek: { side: "left", top: "50%" },
+        lip: { side: "left", top: "60%" },
+        hair: { side: "right", top: "3%" },
+        eyebrow: { side: "right", top: "30%" },
+        nose: { side: "right", top: "50%" },
+      };
+      return mapping[hoverKey] || { side: "left", top: "10%" };
+    };
+
+    const hoverKeyToIdMap = {
+      wrinkle: 1,
+      cheek: 2,
+      lip: 3,
+      hair: 4,
+      eyebrow: 5,
+      nose: 6,
+    };
+
+    const grouped = {};
+    rawServices.forEach((item) => {
+      const hk = item.hover_key || "all";
+      if (!grouped[hk]) {
+        const pos = getPositionDataForHoverKey(hk);
+        grouped[hk] = {
+          id: hoverKeyToIdMap[hk] || 99,
+          title: item[titleField] || item.title_en || item.title || "",
+          hoverKey: hk,
+          side: pos.side,
+          top: pos.top,
+          images: [],
+        };
+      }
+      grouped[hk].images.push({
+        img: item.image_url || item.image || "",
+        title: item[titleField] || item.title_en || item.title || "",
+      });
+    });
+
+    return Object.values(grouped);
+  }, [servicesResponse, activeTab, titleField]);
+
   const currentKey = selectedKey || hoveredKey;
   const isAllView = currentKey === "all";
 
   const visibleServiceIds =
     hoverToServiceMap[currentKey] || hoverToServiceMap.all;
 
-  const visibleServices = servicesData[activeTab].filter((service) =>
-    visibleServiceIds.includes(service.id)
+  const visibleServices = mappedServices.filter((service) =>
+    visibleServiceIds.includes(service.id),
   );
 
   const activeService = !isAllView ? visibleServices[0] : null;
@@ -1797,6 +1857,14 @@ export default function HomeServices() {
     resetActiveService();
   };
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#FFF9F7] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
   return (
     <section
       dir={direction}
@@ -1826,7 +1894,7 @@ export default function HomeServices() {
           <div
             className={cn(
               "inline-flex flex-col p-[10px_6px] rounded-full bg-[#FCF7F8]/20 backdrop-blur-lg border-2 border-[#FCF7F8]",
-              isRTL ? "sm:flex-row-reverse" : "sm:flex-row"
+              isRTL ? "sm:flex-row-reverse" : "sm:flex-row",
             )}
           >
             {tabs.map((tab, index) => {
@@ -1846,8 +1914,8 @@ export default function HomeServices() {
                         ? "shadow-[4px_5px_5px_#DDB2B5] border-2 border-primary text-primary"
                         : "text-primary/70 hover:text-primary hover:border-primary"
                       : isActive
-                      ? "shadow-[4px_5px_5px_rgba(0,0,0,0.1)] border-2 border-secondary text-secondary"
-                      : "text-secondary/70 hover:text-secondary hover:border-secondary"
+                        ? "shadow-[4px_5px_5px_rgba(0,0,0,0.1)] border-2 border-secondary text-secondary"
+                        : "text-secondary/70 hover:text-secondary hover:border-secondary",
                   )}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -1869,7 +1937,7 @@ export default function HomeServices() {
             "relative min-h-[500px]",
             "flex flex-col items-center justify-center gap-8",
             "min-[900px]:grid min-[900px]:grid-cols-[minmax(220px,420px)_minmax(340px,520px)_minmax(220px,420px)]",
-            "min-[900px]:items-center min-[900px]:gap-2"
+            "min-[900px]:items-center min-[900px]:gap-2",
           )}
           onMouseLeave={handleAreaLeave}
         >
@@ -1921,7 +1989,7 @@ export default function HomeServices() {
                       hotspot.position,
                       hotspot.side === "left" ? "flex-row-reverse" : "flex-row",
                       isActive && "z-30",
-                      isDimmed && "opacity-40"
+                      isDimmed && "opacity-40",
                     )}
                     onMouseEnter={() => handleHotspotEnter(hotspot.key)}
                     onClick={(event) => {
@@ -1942,7 +2010,7 @@ export default function HomeServices() {
                         "transition-all block min-[900px]:hidden",
                         "w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12",
                         "object-contain duration-300 drop-shadow-lg",
-                        isActive && "scale-110"
+                        isActive && "scale-110",
                       )}
                     />
 
@@ -1952,7 +2020,7 @@ export default function HomeServices() {
                       className={cn(
                         "absolute min-[900px]:hidden bg-primary text-white text-[10px] xs:text-xs sm:text-sm leading-tight px-3 py-2 rounded-full flex justify-center items-center max-w-[116px] sm:max-w-[145px] min-h-8 text-center shadow-lg border border-white/30",
                         getMobileLabelClass(hotspot, isRTL),
-                        isRTL ? "font-medium" : "uppercase tracking-wide"
+                        isRTL ? "font-medium" : "uppercase tracking-wide",
                       )}
                     >
                       {t(hotspot.title)}
@@ -1985,7 +2053,7 @@ export default function HomeServices() {
                   <div
                     className={cn(
                       "flex items-center justify-between gap-4",
-                      isRTL && "flex-row-reverse"
+                      isRTL && "flex-row-reverse",
                     )}
                   >
                     <h4
@@ -1994,7 +2062,7 @@ export default function HomeServices() {
                         isRTL ? "text-right" : "text-left",
                         activeTab === "women"
                           ? "text-primary"
-                          : "text-secondary"
+                          : "text-secondary",
                       )}
                     >
                       {t(activeService.title)}
@@ -2023,7 +2091,7 @@ export default function HomeServices() {
                   <div
                     className={cn(
                       "flex flex-col gap-3 max-h-[40vh] overflow-y-auto",
-                      isRTL ? "pl-2" : "pr-2"
+                      isRTL ? "pl-2" : "pr-2",
                     )}
                   >
                     {activeService.images.map((item, index) => (
@@ -2031,7 +2099,7 @@ export default function HomeServices() {
                         key={`${item.title}-${index}`}
                         className={cn(
                           "flex items-center gap-4 p-3 rounded-2xl bg-[#FFF9F7] border border-primary/10",
-                          isRTL && "flex-row-reverse text-right"
+                          isRTL && "flex-row-reverse text-right",
                         )}
                       >
                         <div className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0">
@@ -2046,7 +2114,7 @@ export default function HomeServices() {
                         <span
                           className={cn(
                             "font-medium text-gray-800 text-sm uppercase leading-snug",
-                            isRTL && "normal-case"
+                            isRTL && "normal-case",
                           )}
                         >
                           {t(item.title)}
@@ -2060,17 +2128,14 @@ export default function HomeServices() {
           </AnimatePresence>
         </div>
 
-        <div
-          dir={direction}
-          className="mt-8 px-4 min-[900px]:hidden space-y-4"
-        >
+        <div dir={direction} className="mt-8 px-4 min-[900px]:hidden space-y-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="grid grid-cols-1 gap-4"
           >
-            {servicesData[activeTab].map((service, index) => (
+            {mappedServices.map((service, index) => (
               <motion.div
                 key={service.id}
                 initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
@@ -2104,7 +2169,7 @@ function SideCards({
   t,
 }) {
   const servicesForSide = visibleServices.filter(
-    (service) => getVisualSide(service.side) === visualSide
+    (service) => getVisualSide(service.side) === visualSide,
   );
 
   const isActiveServiceOnSide =
@@ -2114,7 +2179,7 @@ function SideCards({
     <motion.div
       className={cn(
         "hidden min-[900px]:flex w-full h-full z-20 pointer-events-none",
-        visualSide === "left" ? "justify-end" : "justify-start"
+        visualSide === "left" ? "justify-end" : "justify-start",
       )}
       initial={{ opacity: 0, x: visualSide === "left" ? -40 : 40 }}
       whileInView={{ opacity: 1, x: 0 }}
@@ -2203,7 +2268,7 @@ function ServiceCard({
           ? "w-full aspect-[344/140] rounded-[24px]"
           : "w-full max-w-[360px] h-[120px] xl:max-w-[400px] xl:h-[135px] 2xl:max-w-[430px] 2xl:h-[150px] rounded-[30px]",
         isHighlighted &&
-          "ring-4 ring-primary ring-offset-4 ring-offset-[#FFF9F7]"
+          "ring-4 ring-primary ring-offset-4 ring-offset-[#FFF9F7]",
       )}
       whileHover="hover"
       variants={cardVariants}
@@ -2222,7 +2287,7 @@ function ServiceCard({
           isRTL
             ? "bg-gradient-to-l from-black/50 via-black/10 to-transparent"
             : "bg-gradient-to-r from-black/50 via-black/10 to-transparent",
-          isMobileList && "bg-black/30"
+          isMobileList && "bg-black/30",
         )}
         variants={{ hover: { opacity: 0.8 } }}
         transition={{ duration: 0.3 }}
@@ -2232,7 +2297,7 @@ function ServiceCard({
         className={cn(
           "absolute bg-[#E8A4A8]/90 backdrop-blur-sm rounded-full flex items-center shadow-lg border border-white/20 max-w-[90%]",
           isMobileList ? "top-4 px-4 py-1.5" : "top-4 px-6 py-3",
-          isRTL ? "right-4 text-right" : "left-4 text-left"
+          isRTL ? "right-4 text-right" : "left-4 text-left",
         )}
         variants={{ hover: { scale: 1.05, x: isRTL ? -5 : 5 } }}
         transition={{ duration: 0.3 }}
@@ -2241,7 +2306,7 @@ function ServiceCard({
           className={cn(
             "text-[#FFF9F7] font-medium tracking-wider truncate",
             isMobileList ? "text-xs" : "text-sm lg:text-base",
-            isRTL ? "normal-case" : "uppercase"
+            isRTL ? "normal-case" : "uppercase",
           )}
         >
           {serviceTitle || "Service"}

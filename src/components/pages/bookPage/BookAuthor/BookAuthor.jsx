@@ -110,18 +110,22 @@
 // }
 
 "use client";
-import Image from 'next/image'
-import React from 'react'
-import { motion } from 'framer-motion'
-import { useTranslation } from 'react-i18next';
+import Image from "next/image";
+import React from "react";
+import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export default function BookAuthor({ data }) {
   const { t, i18n } = useTranslation();
-  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : "en";
 
-  const subtitle = data?.[`subtitle_${lang}`] || data?.subtitle_en || t("About the author");
-  const title = data?.[`title_${lang}`] || data?.title_en || t("Dr. Shahd awad");
-  const description = data?.[`description_${lang}`] || data?.description_en;
+  const subtitle = data?.subtitle || t("About the author");
+  const title = data?.title || t("Dr. Shahd awad");
+  const description = data?.description;
   const authorImg = data?.image_url || "/SHAHD-IMAGE/Book/shahd-img.webp";
 
   return (
@@ -135,12 +139,24 @@ export default function BookAuthor({ data }) {
       {/* Author Image */}
       <motion.div
         className="w-[300px] md:w-[242px] h-auto relative mx-auto lg:mx-0 z-10"
-        initial={{ opacity: 0, x: -80, scale: 0.9, rotate: -3, filter: "blur(5px)" }}
-        whileInView={{ opacity: 1, x: 0, scale: 1, rotate: 0, filter: "blur(0px)" }}
+        initial={{
+          opacity: 0,
+          x: -80,
+          scale: 0.9,
+          rotate: -3,
+          filter: "blur(5px)",
+        }}
+        whileInView={{
+          opacity: 1,
+          x: 0,
+          scale: 1,
+          rotate: 0,
+          filter: "blur(0px)",
+        }}
         whileHover={{
           scale: 1.08,
           rotate: 2,
-          transition: { type: "spring", stiffness: 400, damping: 10 }
+          transition: { type: "spring", stiffness: 400, damping: 10 },
         }}
         animate={{
           y: [0, -12, 0],
@@ -150,25 +166,25 @@ export default function BookAuthor({ data }) {
             duration: 4,
             ease: "easeInOut",
             repeat: Infinity,
-            repeatType: "mirror"
-          }
+            repeatType: "mirror",
+          },
         }}
       >
         <div className="relative overflow-hidden rounded-full lg:rounded-[121px] aspect-square lg:aspect-auto shadow-2xl">
           <Image
             src={authorImg}
-            alt='Dr. Shahd Awad'
+            alt="Dr. Shahd Awad"
             width={242}
             height={337}
-            className='object-cover w-full h-full'
+            className="object-cover w-full h-full"
           />
 
           {/* Subtle Shine Overlay Effect */}
           <motion.div
-            initial={{ x: '-100%' }}
-            whileHover={{ x: '100%' }}
+            initial={{ x: "-100%" }}
+            whileHover={{ x: "100%" }}
             transition={{ duration: 0.6 }}
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none"
+            className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent pointer-events-none"
           />
         </div>
 
@@ -185,7 +201,7 @@ export default function BookAuthor({ data }) {
           type: "spring",
           stiffness: 70,
           damping: 15,
-          delay: 0.2
+          delay: 0.2,
         }}
       >
         <motion.h4
@@ -201,7 +217,7 @@ export default function BookAuthor({ data }) {
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.4, type: "spring" }}
-          className={`text-primary text-3xl  font-normal leading-tight lg:leading-16 ${i18n?.language =="ar" ? "text-right" : "text-left"}`}
+          className={`text-primary text-3xl  font-normal leading-tight lg:leading-16 ${i18n?.language == "ar" ? "text-right" : "text-left"}`}
         >
           {title}
         </motion.h2>
@@ -216,48 +232,46 @@ export default function BookAuthor({ data }) {
               opacity: 1,
               transition: {
                 staggerChildren: 0.2,
-                delayChildren: 0.5
-              }
-            }
+                delayChildren: 0.5,
+              },
+            },
           }}
         >
           {description ? (
             <motion.p
+              dangerouslySetInnerHTML={{ __html: description }}
               variants={{
                 hidden: { y: 20, opacity: 0 },
                 visible: {
                   y: 0,
                   opacity: 1,
-                  transition: { type: "spring", stiffness: 100 }
-                }
+                  transition: { type: "spring", stiffness: 100 },
+                },
               }}
               className="mb-4 lg:mb-0"
-            >
-              {description}
-            </motion.p>
+            ></motion.p>
           ) : (
-            [
-              t("Book Author Line 1"),
-              t("Book Author Line 2")
-            ].map((line, index) => (
-              <motion.p
-                key={index}
-                variants={{
-                  hidden: { y: 20, opacity: 0 },
-                  visible: {
-                    y: 0,
-                    opacity: 1,
-                    transition: { type: "spring", stiffness: 100 }
-                  }
-                }}
-                className="mb-4 lg:mb-0"
-              >
-                {line}
-              </motion.p>
-            ))
+            [t("Book Author Line 1"), t("Book Author Line 2")].map(
+              (line, index) => (
+                <motion.p
+                  key={index}
+                  variants={{
+                    hidden: { y: 20, opacity: 0 },
+                    visible: {
+                      y: 0,
+                      opacity: 1,
+                      transition: { type: "spring", stiffness: 100 },
+                    },
+                  }}
+                  className="mb-4 lg:mb-0"
+                >
+                  {line}
+                </motion.p>
+              ),
+            )
           )}
         </motion.div>
       </motion.div>
     </motion.div>
-  )
+  );
 }

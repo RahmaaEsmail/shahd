@@ -1,34 +1,33 @@
 "use client";
-import React from 'react'
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { slugify } from '@/lib/utils';
-import { useTranslation } from 'react-i18next';
- const cardVariants = {
-    hidden: { scale: 0.8, opacity: 0 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 200,
-        damping: 15,
-      },
+import React from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { slugify } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
+const cardVariants = {
+  hidden: { scale: 0.8, opacity: 0 },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 200,
+      damping: 15,
     },
+  },
+};
 
-  };
-  
 export default function OurServiceCard({ item }) {
   const { t } = useTranslation();
   const router = useRouter();
   return (
     <motion.div
-    onClick={() => {
-       if (item?.id && item?.title) {
-        router.push(`/services/${item.id}/${slugify(item.title)}`);
-      }
-    }}
+      onClick={() => {
+        if (item?.id && item?.title) {
+          router.push(`/services/${item.id}/${slugify(item.title)}`);
+        }
+      }}
       variants={cardVariants}
       initial="hidden"
       whileInView="visible"
@@ -40,9 +39,11 @@ export default function OurServiceCard({ item }) {
         <div className="flex justify-between items-center">
           <div
             style={{ backgroundColor: item?.bgColor }}
-            className="w-22.25 h-10 flex justify-center font-poppins uppercase items-center rounded-full text-black"
+            className="w-fit px-4 h-10 flex justify-center font-poppins uppercase items-center rounded-full text-black text-xs font-medium"
           >
-            {t(item?.type + " Tab")}
+            {t(item?.type + " Tab") !== item?.type + " Tab"
+              ? t(item?.type + " Tab")
+              : t(item?.type)}
           </div>
 
           <motion.div
@@ -60,23 +61,25 @@ export default function OurServiceCard({ item }) {
             whileHover={{ x: 5 }}
             className="text-2xl md:text-[27px] 2xl:text-[40px] font-normal text-text"
           >
-            {t(item?.title)}
+            {item?.title}
           </motion.h2>
-          <p className="font-poppins= text-sm  lg:text-base font-light">{t(item?.desc)}</p>
+          <p className="font-poppins text-sm  line-clamp-3 lg:text-base text-gray-400 font-light">
+            {t(item?.desc)}
+          </p>
         </div>
       </div>
 
       <motion.div
-        className="relative rounded-[30px] mt-5 overflow-hidden"
+        className="relative rounded-[30px] h-[200px] mt-5 overflow-hidden"
         whileHover={{ scale: 1.05 }}
         transition={{ duration: 0.3 }}
       >
         <Image
           src={item?.image}
-          alt={t(item?.title)}
+          alt={item?.title}
           width={332}
           height={308}
-          className="w-full"
+          className="w-full h-full"
         />
         <motion.div
           className="absolute inset-0 z-3 bg-black/20"
@@ -85,5 +88,5 @@ export default function OurServiceCard({ item }) {
         />
       </motion.div>
     </motion.div>
-  )
+  );
 }

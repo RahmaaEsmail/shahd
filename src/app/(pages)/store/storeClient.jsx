@@ -9,10 +9,14 @@ import { useShop } from "../../../hooks/shop/useShop";
 import Loading from "../../loading";
 import { useTranslation } from "react-i18next";
 
-export default function page() {
+export default function StoreClient() {
   const { data, isLoading } = useShop();
   const { i18n } = useTranslation();
-  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : "en";
 
   console.log("data", data);
 
@@ -23,8 +27,8 @@ export default function page() {
   const resolvedFaqs = data?.data?.shop_faqs
     ? data.data.shop_faqs.map((faq) => ({
         id: faq.id,
-        question: faq[`question_${lang}`] || faq.question_en,
-        answer: faq[`answer_${lang}`] || faq.answer_en,
+        question: faq.question,
+        answer: faq.answer,
       }))
     : undefined;
 

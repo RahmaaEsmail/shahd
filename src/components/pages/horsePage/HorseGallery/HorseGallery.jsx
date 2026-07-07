@@ -5,7 +5,8 @@ import Image from 'next/image';
 import { Play, X } from 'lucide-react';
 import GalleryItem from './HorseGalleryItem';
 import { useTranslation } from 'react-i18next';
-import ReactPlayer from 'react-player';
+import dynamic from 'next/dynamic';
+const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
 // Animation variants
 const sectionVariants = {

@@ -79,13 +79,13 @@ export default function HorseAboutContent({ data }) {
 
   const subtitle = formatText(
     data?.[`subtitle_${lang}`] ||
-    data?.subtitle_en ||
-    t("Where Strength Meets Freedom")
+      data?.subtitle_en ||
+      t("Where Strength Meets Freedom"),
   );
   const title = formatText(
     data?.[`title_${lang}`] ||
-    data?.title_en ||
-    t("Horse Riding — A Passion Beyond Medicine")
+      data?.title_en ||
+      t("Horse Riding — A Passion Beyond Medicine"),
   );
   return (
     <motion.div

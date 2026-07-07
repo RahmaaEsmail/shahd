@@ -15,7 +15,7 @@ import 'swiper/css/effect-fade';
 
 const AUTOPLAY_DELAY = 5000;
 
-const slides = [
+const defaultSlides = [
   { id: 1, image: "/SHAHD-IMAGE/BannerImage/image_banner_1.webp" },
   { id: 2, image: "/SHAHD-IMAGE/BannerImage/Ellipse 10.webp" },
   { id: 3, image: "/SHAHD-IMAGE/BannerImage/Ellipse 11.webp" },
@@ -23,12 +23,21 @@ const slides = [
   { id: 5, image: "/SHAHD-IMAGE/BannerImage/Ellipse 13.webp" },
 ];
 
-export default function HomeBannerMobileSwiper() {
+export default function HomeBannerMobileSwiper({ data }) {
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const swiperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const isRtl = i18n.language === "ar";
+
+  const slides =
+    data?.images && data.images.length > 0
+      ? data.images.map((img) => ({
+          id: img.id,
+          image: img.image_url,
+          description: img.description,
+        }))
+      : defaultSlides;
 
   const handleSlideChange = (swiper) => {
     setActiveIndex(swiper.realIndex);
@@ -139,6 +148,11 @@ export default function HomeBannerMobileSwiper() {
                 {t("Dr.Shahd Awad")}
               </h1>
             </div>
+
+            {/* Description */}
+            <p className="text-white/85 font-poppins text-[13px] sm:text-[15px] font-normal leading-relaxed mb-6 max-w-md">
+              {slides[activeIndex]?.description || t("Home Banner Desc")}
+            </p>
 
             {/* CTA row */}
             <div className="flex items-center gap-4">

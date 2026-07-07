@@ -1,9 +1,9 @@
 "use client";
-import React, { useRef } from 'react'
-import { Button } from '@/components/ui/button'
-import { motion, useInView } from 'framer-motion'
-import { useTranslation } from 'react-i18next';
-import CourseCard from './CourseCard';
+import React, { useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { motion, useInView } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import CourseCard from "./CourseCard";
 
 const courses = [
   {
@@ -23,24 +23,28 @@ const courses = [
     titleKey: "PRP & Regenerative Medicine",
     descKey: "PRP Course Desc",
     image: "/SHAHD-IMAGE/Academy/Rectangle 61.webp",
-  }
-]
+  },
+];
 
 export default function AcademyCourses({ data }) {
   const { t, i18n } = useTranslation();
-  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
-  const sectionRef = useRef(null)
-  const isInView = useInView(sectionRef, { once: false, amount: 0.2 })
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : "en";
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: false, amount: 0.2 });
 
   const isDynamic = data && data.length > 0;
   const resolvedCourses = isDynamic
-    ? data.map(course => ({
+    ? data.map((course) => ({
         id: course.id,
-        title: course[`title_${lang}`] || course.title_en,
-        desc: course[`description_${lang}`] || course.description_en,
+        title: course.title,
+        desc: course.description,
         image: course.image_url,
       }))
-    : courses.map(course => ({
+    : courses.map((course) => ({
         id: course.id,
         title: t(course.titleKey),
         desc: t(course.descKey),
@@ -54,20 +58,19 @@ export default function AcademyCourses({ data }) {
       opacity: 1,
       transition: {
         staggerChildren: 0.2,
-        delayChildren: 0.3
-      }
-    }
-  }
+        delayChildren: 0.3,
+      },
+    },
+  };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
-    }
-  }
-
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
 
   return (
     <motion.div
@@ -82,31 +85,27 @@ export default function AcademyCourses({ data }) {
         minHeight: "100vh",
         width: "100%",
       }}
-      className='relative overflow-hidden'
+      className="relative overflow-hidden"
     >
-
-      <div className='main-container py-8 mx-auto px-4 relative z-10'>
+      <div className="main-container py-8 mx-auto px-4 relative z-10">
         {/* Header Section */}
-        <motion.div
-          variants={containerVariants}
-          className='mb-6'
-        >
+        <motion.div variants={containerVariants} className="mb-6">
           <motion.p
             variants={itemVariants}
-            className='text-secondary font-poppins font-bold text-2xl  mb-2'
+            className="text-secondary font-poppins font-bold text-2xl  mb-2"
           >
-            {t('From Foundation to Mastery')}
+            {t("From Foundation to Mastery")}
           </motion.p>
 
           <motion.div
             variants={itemVariants}
-            className='flex flex-col lg:flex-row justify-between items-start gap-6 lg:gap-12'
+            className="flex flex-col lg:flex-row justify-between items-start gap-6 lg:gap-12"
           >
             <motion.h1
               variants={itemVariants}
-              className='text-3xl max-w-3xl text-primary leading-tight font-normal'
+              className="text-3xl max-w-3xl text-primary leading-tight font-normal"
             >
-              {t('Academy Courses Heading')}
+              {t("Academy Courses Heading")}
             </motion.h1>
 
             <motion.div
@@ -116,10 +115,12 @@ export default function AcademyCourses({ data }) {
               className="mt-4 lg:mt-0"
             >
               <Button
-                variant='secondary'
-                className={"text-white px-5 py-4 rounded-full text-lg  font-normal! flex justify-center items-center shadow-lg shadow-secondary/30 hover:shadow-xl transition-all"}
+                variant="secondary"
+                className={
+                  "text-white px-5 py-4 rounded-full text-lg  font-normal! flex justify-center items-center shadow-lg shadow-secondary/30 hover:shadow-xl transition-all"
+                }
               >
-                {t('Explore our courses')}
+                {t("Explore our courses")}
               </Button>
             </motion.div>
           </motion.div>
@@ -136,5 +137,5 @@ export default function AcademyCourses({ data }) {
         </motion.div>
       </div>
     </motion.div>
-  )
+  );
 }

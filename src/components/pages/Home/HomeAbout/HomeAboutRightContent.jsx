@@ -250,6 +250,10 @@ export default function HomeAboutRightContent({
   const router = useRouter();
   const pathname = usePathname();
 
+  const repeatedCards = CARDS.length > 0 && CARDS.length < 6
+    ? [...CARDS, ...CARDS, ...CARDS]
+    : CARDS;
+
   // Navigation handlers
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -267,17 +271,17 @@ export default function HomeAboutRightContent({
 
     const onSelect = () => {
       const selected = emblaApi.selectedScrollSnap();
-      setActiveIndex(selected);
+      setActiveIndex(CARDS.length ? selected % CARDS.length : selected);
     };
 
     emblaApi.on("select", onSelect);
     return () => emblaApi.off("select", onSelect);
-  }, [emblaApi, setActiveIndex]);
+  }, [emblaApi, setActiveIndex, CARDS.length]);
 
   const handleCardClick = (index) => {
     const newDirection = index > activeIndex ? 1 : -1;
     setDirection(newDirection);
-    setActiveIndex(index);
+    setActiveIndex(CARDS.length ? index % CARDS.length : index);
 
     if (emblaApi) {
       emblaApi.scrollTo(index);
@@ -351,13 +355,14 @@ export default function HomeAboutRightContent({
         className="mt-auto w-full overflow-hidden relative group/carousel"
       >
         {/* Embla Viewport */}
-        <div ref={emblaRef} className="overflow-hidden">
-          <div className="flex h-[320px] md:h-[380px]">
-            {CARDS.map((card, index) => {
+        <div key={dir} ref={emblaRef} className="overflow-hidden">
+          <div className="flex h-[300px]">
+            {repeatedCards.map((card, index) => {
               const isHovered = hoveredId === card.id;
+              const realIndex = CARDS.length ? index % CARDS.length : index;
               return (
                 <div
-                  key={card.id}
+                  key={`${card.id}-${index}`}
                   className="flex-[0_0_50%] md:flex-[0_0_30%] px-2 first:ps-4 min-w-0 h-full"
                 >
                   <motion.div
@@ -377,7 +382,7 @@ export default function HomeAboutRightContent({
 
                     <div
                       className={`absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent transition-opacity duration-300 ${
-                        activeIndex === index
+                        activeIndex === realIndex
                           ? "opacity-100"
                           : "opacity-70 group-hover:opacity-90"
                       }`}
@@ -394,7 +399,7 @@ export default function HomeAboutRightContent({
                           >
                             <h4
                               className={`text-lg xl:text-xl font-normal uppercase tracking-wider mb-1 transition-all duration-300 ${
-                                activeIndex === index ? "text-[#D29B9F]" : ""
+                                activeIndex === realIndex ? "text-[#D29B9F]" : ""
                               }`}
                             >
                               {card.label}

@@ -14,7 +14,7 @@
 
 // export default function AestheticGynecologyTestimonial() {
 //   return (
-//     <div 
+//     <div
 //       className="relative py-20 min-h-[1000px] overflow-hidden"
 //       style={{
 //         background: "url('/SHAHD-IMAGE/aethesic/bg.webp'), linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(221, 178, 181, 0.4) 50%, rgba(255, 255, 255, 0.55) 100%)",
@@ -23,7 +23,7 @@
 //     >
 //       <div className="container mx-auto px-4 relative z-10">
 //         {/* Header */}
-//         <motion.div 
+//         <motion.div
 //           initial={{ opacity: 0, y: -20 }}
 //           whileInView={{ opacity: 1, y: 0 }}
 //           className="text-center mb-20"
@@ -35,15 +35,15 @@
 //         </motion.div>
 
 //         <div className="relative flex flex-row justify-end items-start">
-          
+
 //           {/* Bubbles Container */}
 //           <div className="relative w-2/3 h-[800px]">
 //             {data.map((item, index) => {
 //               // MATH LOGIC BASED ON INDEX:
 //               // 1. Even/Odd shift (Zig-Zag)
-//               const xOffset = index % 2 === 0 ? 20 : 80; 
+//               const xOffset = index % 2 === 0 ? 20 : 80;
 //               // 2. Vertical stacking
-//               const yOffset = index * 140; 
+//               const yOffset = index * 140;
 
 //               return (
 //                 <motion.div
@@ -69,13 +69,13 @@
 //           </div>
 
 //           {/* Image Container */}
-//           <motion.div 
+//           <motion.div
 //             initial={{ opacity: 0, scale: 0.9 }}
 //             whileInView={{ opacity: 1, scale: 1 }}
 //             className="w-1/3 flex h-full justify-center lg:mt-20"
 //           >
-//             <img 
-//               src="/SHAHD-IMAGE/763d61070e37d8f43ec385dbaa51742048b0e164.webp" 
+//             <img
+//               src="/SHAHD-IMAGE/763d61070e37d8f43ec385dbaa51742048b0e164.webp"
 //               alt="Model"
 //               className="w-[300px] lg:w-[500px] h-full object-cover relative z-10"
 //             />
@@ -92,20 +92,21 @@
 //       `}</style>
 //     </div>
 //   );
-// }"use client";
-import { motion } from 'framer-motion';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination } from 'swiper/modules';
-import { useTranslation } from 'react-i18next';
+// }
+"use client";
+import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import { useTranslation } from "react-i18next";
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
+import "swiper/css";
+import "swiper/css/pagination";
 
-const AestheticGynecologyTestimonial = () => {
+const AestheticGynecologyTestimonial = ({ data }) => {
   const { t, i18n } = useTranslation();
-  const isRtl = i18n.language === 'ar';
-  const data = [
+  const isRtl = i18n.language === "ar";
+  const dummy_data = [
     { id: 1, title: "Reem Elmahdy", descKey: "Testimonial 1" },
     { id: 2, title: "Janah Elaraby", descKey: "Testimonial 2" },
     { id: 3, title: "Toqa Mohammed", descKey: "Testimonial 3" },
@@ -115,15 +116,16 @@ const AestheticGynecologyTestimonial = () => {
   ];
 
   const staggerOffsets = [0, 8, 16, 24, 10, 18];
-
+  const testimonialData = data?.length > 0 ? data : dummy_data;
   return (
-    <section 
-      dir={isRtl ? 'rtl' : 'ltr'}
+    <section
+      dir={isRtl ? "rtl" : "ltr"}
       style={{
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        background: "url(/SHAHD-IMAGE/aethesic/bg.webp), linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(221, 178, 181, 0.55) 50%, rgba(255, 255, 255, 0.55) 100%)"
+        background:
+          "url(/SHAHD-IMAGE/aethesic/bg.webp), linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(221, 178, 181, 0.55) 50%, rgba(255, 255, 255, 0.55) 100%)",
       }}
       className="relative w-full py-10  overflow-hidden"
     >
@@ -142,7 +144,7 @@ const AestheticGynecologyTestimonial = () => {
           {/* DESKTOP LAYOUT */}
           <div className="hidden lg:flex flex-row items-center min-h-[600px]">
             <div className="w-full lg:w-[60%] flex flex-col gap-2 relative z-20">
-              {data?.slice(0,5).map((item, index) => (
+              {testimonialData?.slice(0, 5).map((item, index) => (
                 <motion.div
                   key={item.id}
                   initial={{ opacity: 0, x: isRtl ? 30 : -30 }}
@@ -153,10 +155,10 @@ const AestheticGynecologyTestimonial = () => {
                   className="bg-white/95 backdrop-blur-sm rounded-2xl p-2 shadow-sm border border-[#F4E7E8] max-w-[450px]"
                 >
                   <h4 className="text-[#414141] font-medium font-poppins text-base mb-1">
-                    {item.title}
+                    {item.client_name}
                   </h4>
                   <p className="text-[#414141] text-sm font-poppins font-light leading-relaxed">
-                    {t(item.descKey)}
+                    {item.review}
                   </p>
                 </motion.div>
               ))}
@@ -213,17 +215,19 @@ const AestheticGynecologyTestimonial = () => {
                       const slide = swiper.slides[i];
                       const progress = slide.progress;
                       const absProgress = Math.abs(progress);
-                      
+
                       // Scale down based on distance from center
-                      const scale = 1 - absProgress * 0.2; 
+                      const scale = 1 - absProgress * 0.2;
                       // Move backward in Z-space
-                      const translate = progress * 10; 
+                      const translate = progress * 10;
                       // Reduce opacity for background slides
                       const opacity = 1 - absProgress * 0.4;
 
                       slide.style.transform = `scale(${scale}) translateX(${translate}%)`;
                       slide.style.opacity = opacity.toString();
-                      slide.style.zIndex = (10 - Math.abs(Math.round(progress))).toString();
+                      slide.style.zIndex = (
+                        10 - Math.abs(Math.round(progress))
+                      ).toString();
                     }
                   }}
                   onSetTransition={(swiper, duration) => {
@@ -235,19 +239,20 @@ const AestheticGynecologyTestimonial = () => {
                     640: { slidesPerView: 1.8, spaceBetween: -30 },
                   }}
                   dir="ltr" // Force LTR for this 3D swiper effect
-                  key={isRtl ? 'rtl' : 'ltr'}
+                  key={isRtl ? "rtl" : "ltr"}
                   className="testimonial-swiper !pb-12"
                 >
-                  {data.map((item) => (
-                    <SwiperSlide key={item.id} className="transition-all duration-500">
-                      <div
-                        className="bg-white rounded-[32px] p-6 shadow-xl border border-[#F4E7E8] h-[200px] flex flex-col justify-center"
-                      >
+                  {testimonialData.map((item) => (
+                    <SwiperSlide
+                      key={item.id}
+                      className="transition-all duration-500"
+                    >
+                      <div className="bg-white rounded-[32px] p-6 shadow-xl border border-[#F4E7E8] h-[200px] flex flex-col justify-center">
                         <h4 className="text-[#414141] font-semibold font-poppins text-lg mb-2">
-                          {item.title}
+                          {item.client_name}
                         </h4>
                         <p className="text-[#414141] text-xs font-poppins font-light leading-relaxed line-clamp-4">
-                          {t(item.descKey)}
+                          {item.review}
                         </p>
                       </div>
                     </SwiperSlide>
@@ -260,20 +265,20 @@ const AestheticGynecologyTestimonial = () => {
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 z-20 w-full h-[60px] pointer-events-none">
-        <img 
-          src="/SHAHD-IMAGE/aethesic/Rectangle 24.webp" 
-          className="w-full h-full object-cover" 
-          alt="decorative wave" 
+        <img
+          src="/SHAHD-IMAGE/aethesic/Rectangle 24.webp"
+          className="w-full h-full object-cover"
+          alt="decorative wave"
         />
       </div>
 
       <style jsx global>{`
         .testimonial-swiper .swiper-pagination-bullet {
-          background: #DDB2B5;
+          background: #ddb2b5;
           opacity: 0.5;
         }
         .testimonial-swiper .swiper-pagination-bullet-active {
-          background: #7189A2;
+          background: #7189a2;
           opacity: 1;
         }
         /* Ensure the container doesn't clip the scaling slides */
@@ -283,6 +288,6 @@ const AestheticGynecologyTestimonial = () => {
       `}</style>
     </section>
   );
-}
+};
 
 export default AestheticGynecologyTestimonial;

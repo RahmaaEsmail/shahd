@@ -23,9 +23,9 @@ export default function HomeClient() {
       <div className="main-container   mx-auto px-4 lg:px-8">
         <HomeBanner data={homeData?.data?.home_banner} />
       </div>
-      <BannerMarquee />
+      <BannerMarquee data={homeData?.data?.services} />
       <HomeAbout data={homeData?.data?.about_banners} />
-      <HomeServices />
+      <HomeServices data={homeData?.data?.services} />
       <HomeBeforeAfter data={homeData?.data?.before_after} />
       <HomeTestimonial data={homeData?.data?.testimonials} />
       <HomeBlogs data={homeData?.data?.blogs} />

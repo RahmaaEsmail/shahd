@@ -9,10 +9,9 @@ import { useAbout } from "@/hooks/about/useAbout";
 import Loading from "../../loading";
 
 export default function AboutClient() {
-  const {
-    data: aboutData,
-    isLoading: aboutIsLoading,
-  } = useAbout();
+  const { data: aboutData, isLoading: aboutIsLoading } = useAbout();
+
+  console.log("aboutData", aboutData);
 
   if (aboutIsLoading) {
     return <Loading />;
@@ -35,7 +34,7 @@ export default function AboutClient() {
         }}
       >
         <div className="main-container mt-10 mx-auto px-4 lg:px-8">
-          <AboutChooseUs data={aboutData?.data?.about_choose_us} />
+          <AboutChooseUs data={aboutData?.data?.about_choose} />
         </div>
       </div>
       <AboutContact />

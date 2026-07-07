@@ -154,29 +154,40 @@ import useWishlistStore from '@/zustandStore/WishlistStore';
 
 // ... (keep constants)
 
-export default function ProductDetailsContent() {
+export default function ProductDetailsContent({ data }) {
   const { toggleWishlist, isInWishlist } = useWishlistStore();
   const { t } = useTranslation();
-  const [selectedSize, setSelectedSize] = useState('30 ml');
+
+  const product = {
+    id: data?.id || 1,
+    name: data?.title || data?.name || "Product",
+    category: data?.category_name || data?.category || "Skin",
+    inStock: data?.stock_status === "in_stock" || (data?.quantity != null && Number(data.quantity) > 0),
+    price: Number(data?.price) || 23.00,
+    originalPrice: Number(data?.original_price) || (data?.price ? Number(data.price) * 1.2 : 29.00),
+    rating: Number(data?.rating) || 5,
+    reviewCount: Number(data?.review_count) || 245,
+    img: data?.main_image || data?.image_url || "/SHAHD-IMAGE/horse/206c8be48988ac5b9bce6352927ab9782f8d48d8.webp",
+    description: data?.description || data?.desc || ""
+  };
+
+  const sizesPriceList = data?.sizes_price || [];
+  const sizes = sizesPriceList.length > 0 
+    ? sizesPriceList.map(item => item.size) 
+    : ['30 ml', '60 ml', '80 ml', '100 ml'];
+
+  const [selectedSize, setSelectedSize] = useState(sizes[0] || '30 ml');
   const [quantity, setQuantity] = useState(1);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [showAddedMessage, setShowAddedMessage] = useState(false);
   const router = useRouter();
-  const sizes = ['30 ml', '60 ml', '80 ml', '100 ml'];
 
-  // Mock product data
-  const product = {
-    id: 1, // Added ID for store consistency
-    name: "Gentle Foaming Cleanser",
-    category: "Skin",
-    inStock: true,
-    price: 23.00,
-    originalPrice: 29.00,
-    rating: 5,
-    reviewCount: 245,
-    img: "/SHAHD-IMAGE/horse/206c8be48988ac5b9bce6352927ab9782f8d48d8.webp", // Added img
-    description: "A gentle yet effective formula designed to nourish, hydrate, and enhance your natural glow. This product delivers smooth, radiant skin while supporting your overall skin health — perfect for daily use and all skin types."
-  };
+  // Dynamic price calculation based on selected size
+  const activeSizeObj = sizesPriceList.find(item => item.size === selectedSize);
+  const currentPrice = activeSizeObj ? Number(activeSizeObj.price) : Number(product.price);
+  const currentOriginalPrice = activeSizeObj 
+    ? (activeSizeObj.original_price ? Number(activeSizeObj.original_price) : Number(activeSizeObj.price) * 1.2) 
+    : Number(product.originalPrice);
 
   const isLiked = isInWishlist(product.id);
 
@@ -214,7 +225,7 @@ export default function ProductDetailsContent() {
         product: product.name,
         size: selectedSize,
         quantity: quantity,
-        price: product.price
+        price: currentPrice
       });
     }, 1500);
   };
@@ -321,13 +332,13 @@ export default function ProductDetailsContent() {
           className='text-3xl font-poppins font-semibold text-primary'
           whileHover={{ scale: 1.05 }}
         >
-          {product.price.toFixed(2)} {t('S.R')}
+          {currentPrice.toFixed(2)} {t('S.R')}
         </motion.h3>
         <motion.p
           className='text-xl font-poppins font-light text-[#6A6A6A] line-through'
           whileHover={{ scale: 1.05 }}
         >
-          {product.originalPrice.toFixed(2)} {t('S.R')}
+          {currentOriginalPrice.toFixed(2)} {t('S.R')}
         </motion.p>
       </motion.div>
  

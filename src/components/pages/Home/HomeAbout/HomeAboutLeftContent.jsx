@@ -1,8 +1,7 @@
 "use client";
-import React from 'react'
-import { AnimatePresence, motion } from 'framer-motion';
-import Image from 'next/image';
-
+import React from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 
 // Animation variants for the main image
 // const imageVariants = {
@@ -26,7 +25,7 @@ import Image from 'next/image';
 // };
 const imageVariants = {
   enter: (direction) => ({
-    x: '100%', // Use percentages for cleaner transitions
+    x: "100%", // Use percentages for cleaner transitions
     opacity: 0,
     scale: 1.1,
   }),
@@ -39,13 +38,13 @@ const imageVariants = {
   exit: (direction) => ({
     zIndex: 0,
     // If we are going "next" (direction > 0), the current image should slide "left" (-100%)
-    x: '-100%', 
+    x: "-100%",
     opacity: 0,
     scale: 0.9,
     transition: {
       x: { type: "spring", stiffness: 300, damping: 30 },
-      opacity: { duration: 0.3 }
-    }
+      opacity: { duration: 0.3 },
+    },
   }),
 };
 
@@ -55,16 +54,20 @@ const textVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: "easeOut" }
+    transition: { duration: 0.5, ease: "easeOut" },
   },
   exit: {
     opacity: 0,
     y: -20,
-    transition: { duration: 0.3 }
-  }
+    transition: { duration: 0.3 },
+  },
 };
 
-export default function HomeAboutLeftContent({ activeIndex, direction, currentCard }) {
+export default function HomeAboutLeftContent({
+  activeIndex,
+  direction,
+  currentCard,
+}) {
   return (
     <motion.div
       initial={{ opacity: 0, x: -50 }}
@@ -85,7 +88,7 @@ export default function HomeAboutLeftContent({ activeIndex, direction, currentCa
           transition={{
             x: { type: "spring", stiffness: 300, damping: 30 },
             opacity: { duration: 0.4 },
-            scale: { duration: 0.4 }
+            scale: { duration: 0.4 },
           }}
           className="absolute inset-0"
         >
@@ -112,24 +115,18 @@ export default function HomeAboutLeftContent({ activeIndex, direction, currentCa
             animate="visible"
             exit="exit"
           >
-            <motion.p
-              className="text-sm md:text-[20px] font-normal font-poppins tracking-[0.2em] uppercase mb-3"
-            >
+            <motion.p className="text-sm md:text-[20px] font-normal font-poppins tracking-[0.2em] uppercase mb-3">
               {currentCard.label}
             </motion.p>
-            <motion.h2
-              className="text-3xl md:text-4xl lg:text-[44px] font-normal leading-[1.1] mb-4 uppercase"
-            >
-             {currentCard?.desc}
+            <motion.h2 className="text-3xl md:text-4xl font-normal leading-[1.1] mb-4 uppercase">
+              {currentCard?.desc}
             </motion.h2>
-            <motion.p
-              className="text-sm md:text-base font-normal font-poppins uppercase leading-7 tracking-[1px]"
-            >
+            <motion.p className="text-sm md:text-base font-normal font-poppins uppercase leading-7 tracking-[1px]">
               {currentCard.subtitle}
             </motion.p>
           </motion.div>
         </AnimatePresence>
       </div>
     </motion.div>
-  )
+  );
 }

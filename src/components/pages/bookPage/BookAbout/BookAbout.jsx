@@ -1,8 +1,8 @@
 "use client";
-import Image from 'next/image'
-import React from 'react'
-import { motion } from 'framer-motion'
-import { useTranslation } from 'react-i18next';
+import Image from "next/image";
+import React from "react";
+import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const list = [
   {
@@ -35,17 +35,21 @@ const list = [
   },
   {
     id: 8,
-    name: "Become the woman you admire"
-  }
-]
+    name: "Become the woman you admire",
+  },
+];
 
 export default function BookAbout({ data }) {
   const { t, i18n } = useTranslation();
-  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : "en";
 
-  const subtitle = data?.[`subtitle_${lang}`] || data?.subtitle_en || t("Take a look inside");
-  const title = data?.[`title_${lang}`] || data?.title_en || t("Inside this book, you'll discover how to:");
-  const description = data?.[`description_${lang}`] || data?.description_en;
+  const subtitle = data?.subtitle || t("Take a look inside");
+  const title = data?.title || t("Inside this book, you'll discover how to:");
+  const description = data?.description;
   const bgImage = data?.image_url || "/SHAHD-IMAGE/Book/book (2) 1.webp";
 
   return (
@@ -72,23 +76,21 @@ export default function BookAbout({ data }) {
         </motion.p>
 
         <motion.h3
+          dangerouslySetInnerHTML={{ __html: title }}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.5 }}
           className={`text-2xl  max-w-xl mx-auto lg:mx-0 text-primary font-normal leading-tight lg:leading-16  ${i18n?.language == "ar" ? "text-right" : "text-left"}`}
-        >
-          {title}
-        </motion.h3>
+        ></motion.h3>
 
         {/* List or description block with animated items */}
         {description ? (
           <motion.p
+            dangerouslySetInnerHTML={{ __html: description }}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             className={`text-sm lg:text-base font-poppins text-[#414141] leading-7 lg:leading-8 ${i18n?.language == "ar" ? "text-right" : "text-left"}`}
-          >
-            {description}
-          </motion.p>
+          ></motion.p>
         ) : (
           <ul className="space-y-2 text-left inline-block mx-auto lg:mx-0">
             {list?.map((item, index) => (
@@ -100,9 +102,9 @@ export default function BookAbout({ data }) {
                 whileHover={{
                   x: 10,
                   color: "#B97C7C",
-                  transition: { type: "spring", stiffness: 400 }
+                  transition: { type: "spring", stiffness: 400 },
                 }}
-                className={`text-sm lg:text-base list-disc list-inside font-poppins text-[#414141] leading-7 lg:leading-8 cursor-default ${i18n?.language == "ar" ? "lg:text-right" :"lg:text-left"}`}
+                className={`text-sm lg:text-base list-disc list-inside font-poppins text-[#414141] leading-7 lg:leading-8 cursor-default ${i18n?.language == "ar" ? "lg:text-right" : "lg:text-left"}`}
               >
                 {t(item?.name)}
               </motion.li>
@@ -121,23 +123,23 @@ export default function BookAbout({ data }) {
           type: "spring",
           stiffness: 70,
           damping: 15,
-          delay: 0.3
+          delay: 0.3,
         }}
         whileHover={{
           scale: 1.02,
           rotateY: 5,
-          transition: { type: "spring", stiffness: 300 }
+          transition: { type: "spring", stiffness: 300 },
         }}
       >
         <Image
           src={bgImage}
           width={810}
           height={524}
-          objectFit='cover'
-          className='w-full h-auto rounded-lg shadow-xl'
+          objectFit="cover"
+          className="w-full h-auto rounded-lg shadow-xl"
           alt="Dr. Shahd Book"
         />
       </motion.div>
     </motion.div>
-  )
+  );
 }

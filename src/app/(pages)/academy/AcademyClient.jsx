@@ -24,7 +24,7 @@ export default function page() {
       <AcademyWorkshop data={data?.data?.academy_workshop} />
       <AcademyAesthetic data={data?.data?.academy_about} />
       <AcademyLicense data={data?.data?.academy_license} />
-      <AcademyTeam />
+      <AcademyTeam data={data?.data?.team_members} />
     </div>
   );
 }

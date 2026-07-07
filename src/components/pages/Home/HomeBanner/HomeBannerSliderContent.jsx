@@ -1,10 +1,11 @@
 "use client";
-import { useState } from 'react';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { Play } from 'lucide-react';
-import ReactPlayer from 'react-player';
-import { useTranslation } from 'react-i18next';
+import { useState } from "react";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { Play } from "lucide-react";
+import dynamic from "next/dynamic";
+const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
+import { useTranslation } from "react-i18next";
 import {
   Dialog,
   DialogContent,
@@ -17,15 +18,26 @@ export default function HomeBannerSliderContent({ data }) {
   const lang = i18n.language?.startsWith("ar")
     ? "ar"
     : i18n.language?.startsWith("sk")
-    ? "sk"
-    : "en";
+      ? "sk"
+      : "en";
 
   const [isHovered, setIsHovered] = useState(false);
 
-  const title = data?.[`video_title_${lang}`] || data?.video_title_en || t("Meet Dr. Shahd Awad");
-  const description = data?.[`video_description_${lang}`] || data?.video_description_en || t("Dr. Shahd Awad Specialist");
-  const videoUrl = data?.video_url || "https://www.youtube.com/watch?v=your-video-id";
-  const thumbnail = data?.video_thumbnail_url || "/SHAHD-IMAGE/BannerImage/banner-image-2.webp";
+  const isValidText = (text) =>
+    text && !["en", "ar", "sk", "de"].includes(text.toLowerCase().trim());
+  const title =
+    data?.video_title?.length > 0
+      ? data?.video_title
+      : t("Meet Dr. Shahd Awad");
+  const description =
+    data?.video_description?.length > 0
+      ? data?.video_description
+      : t("Dr. Shahd Awad Specialist");
+  const videoUrl =
+    data?.video_url || "https://www.youtube.com/watch?v=your-video-id";
+  console.log("video url", videoUrl);
+    const thumbnail =
+    data?.video_thumbnail_url || "/SHAHD-IMAGE/BannerImage/banner-image-2.webp";
 
   return (
     <motion.div
@@ -92,7 +104,9 @@ export default function HomeBannerSliderContent({ data }) {
               whileTap={{ scale: 0.95 }}
               className="absolute border border-white/20 bottom-4 right-4 sm:bottom-6 sm:right-6 flex items-center gap-2 sm:gap-3 bg-white/20 backdrop-blur-lg px-3 sm:px-5 py-2 sm:py-3 rounded-full transition-all duration-300 group/btn"
             >
-              <span className="text-md font-normal font-noto! text-white">{t("watch video")}</span>
+              <span className="text-md font-normal font-noto! text-white">
+                {t("watch video")}
+              </span>
               <motion.div
                 className="w-5 h-5 rounded-full flex items-center justify-center"
                 animate={{
@@ -100,7 +114,7 @@ export default function HomeBannerSliderContent({ data }) {
                 }}
                 transition={{
                   repeat: isHovered ? Infinity : 0,
-                  duration: 1.5
+                  duration: 1.5,
                 }}
               >
                 <Play className="w-10 h-10 text-secondary fill-secondary ml-0.5" />
@@ -110,20 +124,22 @@ export default function HomeBannerSliderContent({ data }) {
         </DialogTrigger>
 
         <DialogContent className="max-w-4xl! p-0 overflow-hidden bg-black border-none sm:rounded-[20px]">
-            {/* Screen reader title (hidden) */}
-            <DialogTitle className="sr-only">Video Introduction</DialogTitle>
-            
-            <div className="aspect-video w-full">
-              <ReactPlayer
-                url={videoUrl}
-                controls
-                playing
-                width="100%"
-                height="100%"
-              />
-            </div>
+          {/* Screen reader title (hidden) */}
+          <DialogTitle className="sr-only">Video Introduction</DialogTitle>
+
+          <div className="aspect-video w-full">
+            <ReactPlayer
+              src={videoUrl}
+              controls 
+              loop
+              playing
+              muted
+              width="100%"
+              height="100%"
+            />
+          </div>
         </DialogContent>
       </Dialog>
     </motion.div>
   );
-}
+}

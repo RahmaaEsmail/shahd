@@ -1,31 +1,23 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import Loading from "@/app/loading";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 import BeforeAfterBanner from "../../../components/pages/BeforeAfter/BeforeAfterBanner";
 import BeforeAfterFeatureSection from "../../../components/pages/BeforeAfter/BeforeAfterFeatureSection";
-import {
-  useBeforeAfter,
-} from "@/hooks/before-after/useBeforeAfter";
-
-/**
- * IMPORTANT:
- * Change this path based on where you placed React Bits CircularGallery.
- *
- * Example paths:
- * "@/components/CircularGallery"
- * "@/components/react-bits/CircularGallery"
- * "../../../components/CircularGallery/CircularGallery"
- */
-const CircularGallery = dynamic(() => import("@/components/CircularGallery"), {
-  ssr: false,
-});
+import { useBeforeAfter } from "@/hooks/before-after/useBeforeAfter";
 
 const CASES = [
   {
@@ -112,7 +104,7 @@ export function PlaceholderImg({
             src={src}
             alt={alt || label || "Before after image"}
             fill
-            className="object-cover"
+            className="object-fill"
             sizes="(max-width: 768px) 100vw, 900px"
           />
 
@@ -129,16 +121,9 @@ export function PlaceholderImg({
   );
 }
 
-function CircularGallerySection({ filtered, setActiveCase }) {
-  const { t } = useTranslation();
-  const galleryKey = filtered.map((item) => item.id).join("-");
-
-  const galleryItems = useMemo(() => {
-    return filtered.map((item) => ({
-      image: item.afterImg || item.beforeImg,
-      text: t(item.title),
-    }));
-  }, [filtered]);
+function CircularGallerySection({ filtered, mappedCases, setActiveCase }) {
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === "ar";
 
   if (!filtered.length) {
     return (
@@ -155,21 +140,142 @@ function CircularGallerySection({ filtered, setActiveCase }) {
     );
   }
 
-  return (
-    <div className="relative  w-fullbg-transparent! -mt-9!">
-      <div className="relative w-full h-[430px] overflow-hidden rounded-[2.5rem]   bg-transparent sm:h-[520px] lg:h-[500px]">
-        <div className="pointer-events-none absolute inset-0 z-10" />
+  const handleCaseClick = (item) => {
+    const originalIndex = mappedCases.findIndex((c) => c.id === item.id);
+    if (originalIndex !== -1) {
+      setActiveCase(originalIndex);
+      const element = document.getElementById("featured-before-after");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
 
-        <CircularGallery
-          key={galleryKey}
-          items={galleryItems}
-          bend={1}
-          textColor="#ddb2b5"
-          borderRadius={0.05}
-          scrollSpeed={2}
-          scrollEase={0.05}
-        />
+  return (
+    <div className="relative w-full py-6">
+      <Swiper
+        modules={[Autoplay, Pagination, Navigation]}
+        spaceBetween={24}
+        slidesPerView={1}
+        autoplay={{ delay: 4000, disableOnInteraction: false }}
+        pagination={{ clickable: true, el: ".custom-swiper-pagination" }}
+        navigation={{
+          nextEl: ".custom-swiper-button-next",
+          prevEl: ".custom-swiper-button-prev",
+        }}
+        breakpoints={{
+          640: { slidesPerView: 1.5, spaceBetween: 20 },
+          768: { slidesPerView: 2, spaceBetween: 24 },
+          1024: { slidesPerView: 3, spaceBetween: 24 },
+        }}
+        loop={filtered.length > 2}
+        className="before-after-swiper !pb-14"
+      >
+        {filtered.map((item) => (
+          <SwiperSlide key={item.id}>
+            <motion.div
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.3 }}
+              onClick={() => handleCaseClick(item)}
+              className="bg-white rounded-[2rem] border border-[#f4e7e8] overflow-hidden p-4 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col h-full group"
+            >
+              {/* Images Container */}
+              <div className="grid grid-cols-2 gap-2 h-48 md:h-56 relative rounded-[1.5rem] overflow-hidden mb-4">
+                {/* Before Image */}
+                <div className="relative h-full w-full bg-[#fdf2f0] overflow-hidden">
+                  {item.beforeImg ? (
+                    <Image
+                      src={item.beforeImg}
+                      alt={`${item.title} before`}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 50vw, 300px"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center text-primary/30 text-xs font-bold uppercase tracking-wider">
+                      {t("Before")}
+                    </div>
+                  )}
+                  <span className="absolute left-3 top-3 z-10 rounded-full bg-white/95 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-secondary shadow-sm">
+                    {t("Before")}
+                  </span>
+                </div>
+
+                {/* After Image */}
+                <div className="relative h-full w-full bg-[#fdf2f0] overflow-hidden">
+                  {item.afterImg ? (
+                    <Image
+                      src={item.afterImg}
+                      alt={`${item.title} after`}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 50vw, 300px"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center text-primary/30 text-xs font-bold uppercase tracking-wider">
+                      {t("After")}
+                    </div>
+                  )}
+                  <span className="absolute left-3 top-3 z-10 rounded-full bg-[#ddb2b5] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">
+                    {t("After")}
+                  </span>
+                </div>
+              </div>
+
+              {/* Text / Info Details */}
+              <div className="flex flex-col flex-grow text-start">
+                <div className="flex items-center gap-2 mb-2 flex-wrap">
+                  <span className="bg-primary/10 text-primary border-none text-[10px] tracking-[2px] font-bold uppercase px-3 py-1 rounded-full">
+                    {t(item.category)}
+                  </span>
+                  {item.sessions && (
+                    <span className="bg-secondary/10 text-secondary border-none text-[10px] tracking-[1.5px] font-bold uppercase px-3 py-1 rounded-full">
+                      {item.sessions}
+                    </span>
+                  )}
+                </div>
+
+                <h4 className="font-main text-lg md:text-xl font-normal text-primary line-clamp-1 mb-2 group-hover:text-secondary transition-colors duration-300">
+                  {t(item.title)}
+                </h4>
+                <p className="text-xs text-text font-light leading-relaxed line-clamp-2">
+                  {t(item.description)}
+                </p>
+              </div>
+            </motion.div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      {/* Custom Swiper Controls (Navigation & Pagination) */}
+      <div className="absolute top-[50%] translate-y-[-50%] left-0 right-0 z-50  w-full  px-2">
+        {/* <div className="custom-swiper-pagination !w-auto flex gap-1.5" /> */}
+
+        <div className="flex items-center w-full! justify-between gap-3">
+          <button className="custom-swiper-button-prev w-10 h-10 rounded-full border border-primary/20 flex items-center justify-center  bg-secondary text-white transition-all duration-300 disabled:opacity-30 disabled:pointer-events-none">
+            <ChevronLeft size={18} />
+          </button>
+          <button className="custom-swiper-button-next w-10 h-10 rounded-full border border-primary/20 flex items-center justify-center  bg-secondary text-white transition-all duration-300 disabled:opacity-30 disabled:pointer-events-none">
+            <ChevronRight size={18} />
+          </button>
+        </div>
       </div>
+
+      <style jsx global>{`
+        .before-after-swiper .swiper-pagination-bullet {
+          background: #ddb2b5;
+          opacity: 0.4;
+          width: 8px;
+          height: 8px;
+          transition: all 0.3s ease;
+        }
+        .before-after-swiper .swiper-pagination-bullet-active {
+          background: #7189a2;
+          opacity: 1;
+          width: 20px;
+          border-radius: 4px;
+        }
+      `}</style>
     </div>
   );
 }
@@ -188,7 +294,7 @@ export default function BeforeAfterPage() {
       : "en";
 
   const banner = beforeAfterData?.data?.banner;
-  const results = beforeAfterData?.data?.results || [];
+  const results = beforeAfterData?.data?.results;
 
   const mappedCases = useMemo(() => {
     if (!results || results.length === 0) {
@@ -196,18 +302,18 @@ export default function BeforeAfterPage() {
     }
     return results.map((item) => ({
       id: item.id,
-      category: item[`type_${lang}`] || item.type_en || "",
-      title: item[`title_${lang}`] || item.title_en || "",
-      description: item[`description_${lang}`] || item.description_en || "",
+      category: item.type || "",
+      title: item.title || "",
+      description: item.description || "",
       beforeImg: item.before_image_url || "",
       afterImg: item.after_image_url || "",
       sessions: item.sessions ? `${item.sessions} ${t("Sessions")}` : "",
     }));
-  }, [results, lang, t]);
+  }, [results, t]);
 
   const categories = useMemo(() => {
     const uniqTypes = Array.from(
-      new Set(mappedCases.map((item) => item.category).filter(Boolean))
+      new Set(mappedCases.map((item) => item.category).filter(Boolean)),
     );
     return ["All", ...uniqTypes];
   }, [mappedCases]);
@@ -280,6 +386,7 @@ export default function BeforeAfterPage() {
 
           <CircularGallerySection
             filtered={filtered}
+            mappedCases={mappedCases}
             setActiveCase={setActiveCase}
           />
         </div>

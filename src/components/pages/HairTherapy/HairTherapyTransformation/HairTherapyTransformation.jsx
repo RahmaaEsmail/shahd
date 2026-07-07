@@ -51,8 +51,8 @@ export default function HairTherapyTransformation({ data }) {
         id: item.id,
         num_img: `/SHAHD-IMAGE/hair-therapy/Vector ${(idx % 4) + 1}.webp`,
         img: item.image_url || item.image || "/SHAHD-IMAGE/hair-therapy/52ac59b8ad9b63f5128dcc7210d21f26f62a829a.webp",
-        title: item[`title_${lang}`] || item.title_en || "",
-        desc: item[`description_${lang}`] || item.description_en || ""
+        title:  item.title || "",
+        desc:  item.description || ""
       }))
     : staticCards.map(item => ({
         id: item.id,

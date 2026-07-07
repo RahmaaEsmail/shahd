@@ -5,22 +5,39 @@ import Image from "next/image";
 import React, { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 // Optimized Title Component for responsiveness
-const TitleSection = ({ title, highlightedWord, lastPart }) => {
+const TitleSection = ({ title, highlightedWord, lastPart, smallImage }) => {
+  // Split the title into two parts by finding the middle space character
+  const words = title.split(" ");
+  const halfIndex = Math.ceil(words.length / 2);
+  const firstHalfTitle = words.slice(0, halfIndex).join(" ");
+  const secondHalfTitle = words.slice(halfIndex).join(" ");
+
   return (
-    <h1 className="text-white  pt-0 text-4xl md:text-6xl font-light leading-[1.1] md:leading-[0.9] tracking-tight px-4">
-      <span className="block mb-2">{title}</span>
-      <span className="flex flex-wrap items-center justify-center gap-3 md:gap-4 lg:gap-8">
-        <span className="font-medium italic md:not-italic">{highlightedWord}</span>
-        <span className="relative w-16 h-8 md:w-24 md:h-12 lg:w-40 lg:h-16 rounded-full overflow-hidden inline-block border border-white/20">
+    <h1 className="text-white pt-0 text-4xl md:text-6xl font-light leading-[1.2] md:leading-[1.1] tracking-tight px-4 text-center flex flex-col gap-3 justify-center items-center">
+      {/* Top Line: Title split perfectly with the Image in the center */}
+      <span className="flex flex-wrap items-center justify-center gap-3 md:gap-4 lg:gap-6">
+        <span>{firstHalfTitle}</span>
+
+        <span className="relative w-16 h-8 md:w-24 md:h-12 lg:w-40 lg:h-16 rounded-full overflow-hidden inline-block border border-white/20 shrink-0">
           <Image
-            src="/SHAHD-IMAGE/About/aboutcontent.webp"
+            src={smallImage || "/SHAHD-IMAGE/About/aboutcontent.webp"}
             alt="Beauty detail"
             fill
             className="object-cover"
+            priority // Optional: Helps load above-the-fold header images faster
           />
+        </span>
+
+        <span>{secondHalfTitle}</span>
+      </span>
+
+      {/* Bottom Line: Highlighted word and the last part */}
+      <span className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
+        <span className="font-medium italic md:not-italic">
+          {highlightedWord}
         </span>
         <span>{lastPart}</span>
       </span>
@@ -29,93 +46,125 @@ const TitleSection = ({ title, highlightedWord, lastPart }) => {
 };
 
 export default function AboutJourney({ data }) {
-  const { t , i18n} = useTranslation();
+  const { t, i18n } = useTranslation();
   const lang = i18n.language?.startsWith("ar")
     ? "ar"
     : i18n.language?.startsWith("sk")
-    ? "sk"
-    : "en";
+      ? "sk"
+      : "en";
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   // Helper to strip HTML tags from API title strings like "<h2>Title</h2>"
   const stripHtml = (html) => html?.replace(/<[^>]*>/g, "").trim() ?? "";
 
-  const staticItems = [
-    {
-      id: 1,
-      titleData: { main: t("Journey Title 1"), word: t("Journey Word 1"), end: t("Journey End 1") },
-      description: t("Journey Desc 1"),
-      image: "/SHAHD-IMAGE/About/about-content1.webp",
-      thumbnail: "/SHAHD-IMAGE/About/about-content1.webp",
-    },
-    {
-      id: 2,
-      titleData: { main: t("Journey Title 2"), word: t("Journey Word 2"), end: t("Journey End 2") },
-      description: t("Journey Desc 2"),
-      image: "/SHAHD-IMAGE/About/about-content2.webp",
-      thumbnail: "/SHAHD-IMAGE/About/about-content2.webp",
-    },
-    {
-      id: 3,
-      titleData: { main: t("Journey Title 3"), word: t("Journey Word 3"), end: t("Journey End 3") },
-      description: t("Journey Desc 3"),
-      image: "/SHAHD-IMAGE/About/about-content3.webp",
-      thumbnail: "/SHAHD-IMAGE/About/about-content3.webp",
-    },
-    {
-      id: 4,
-      titleData: { main: t("Journey Title 4"), word: t("Journey Word 4"), end: t("Journey End 4") },
-      description: t("Journey Desc 4"),
-      image: "/SHAHD-IMAGE/About/about-content4.webp",
-      thumbnail: "/SHAHD-IMAGE/About/about-content4.webp",
-    },
-  ];
+  const imagesWithVariations = React.useMemo(() => {
+    const staticItems = [
+      {
+        id: 1,
+        titleData: {
+          main: t("Journey Title 1"),
+          word: t("Journey Word 1"),
+          end: t("Journey End 1"),
+        },
+        description: t("Journey Desc 1"),
+        image: "/SHAHD-IMAGE/About/about-content1.webp",
+        thumbnail: "/SHAHD-IMAGE/About/about-content1.webp",
+      },
+      {
+        id: 2,
+        titleData: {
+          main: t("Journey Title 2"),
+          word: t("Journey Word 2"),
+          end: t("Journey End 2"),
+        },
+        description: t("Journey Desc 2"),
+        image: "/SHAHD-IMAGE/About/about-content2.webp",
+        thumbnail: "/SHAHD-IMAGE/About/about-content2.webp",
+      },
+      {
+        id: 3,
+        titleData: {
+          main: t("Journey Title 3"),
+          word: t("Journey Word 3"),
+          end: t("Journey End 3"),
+        },
+        description: t("Journey Desc 3"),
+        image: "/SHAHD-IMAGE/About/about-content3.webp",
+        thumbnail: "/SHAHD-IMAGE/About/about-content3.webp",
+      },
+      {
+        id: 4,
+        titleData: {
+          main: t("Journey Title 4"),
+          word: t("Journey Word 4"),
+          end: t("Journey End 4"),
+        },
+        description: t("Journey Desc 4"),
+        image: "/SHAHD-IMAGE/About/about-content4.webp",
+        thumbnail: "/SHAHD-IMAGE/About/about-content4.webp",
+      },
+    ];
 
-  const imagesWithVariations =
-    data && data.length > 0
+    return data && data.length > 0
       ? [...data]
           .sort((a, b) => a.step_order - b.step_order)
           .map((item) => {
-            const rawTitle = item[`title_${lang}`] || item.title_en || "";
+            const rawTitle = item.title || "";
             const cleanTitle = stripHtml(rawTitle);
-            const year = item[`subtitle_${lang}`] || item.subtitle_en || "";
+            const year = item.subtitle || "";
             return {
               id: item.id,
               titleData: { main: year, word: cleanTitle, end: "" },
-              description: item[`description_${lang}`] || item.description_en || "",
+              description: item.description || "",
               image: item.image_url || "/SHAHD-IMAGE/About/about-content1.webp",
-              thumbnail: item.image_url || "/SHAHD-IMAGE/About/about-content1.webp",
+              thumbnail:
+                item.image_url || "/SHAHD-IMAGE/About/about-content1.webp",
             };
           })
       : staticItems;
+  }, [data, t]);
 
   const [selectedImage, setSelectedImage] = useState(imagesWithVariations[0]);
+  const [prevButtonDisabled, setPrevButtonDisabled] = useState(true);
+  const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
+
+  // Sync selected image if array changes
+  useEffect(() => {
+    setSelectedImage(imagesWithVariations[0]);
+    setSelectedIndex(0);
+  }, [imagesWithVariations]);
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
       loop: true,
       align: "center",
-      direction: i18n?.language == "ar" ? "right" : "left",
+      dragFree: true,
+      direction: i18n?.language === "ar" ? "rtl" : "ltr",
       containScroll: "trimSnaps",
     },
-    [Autoplay({ delay: 4000, stopOnInteraction: true })]
+    [Autoplay({ delay: 2000, stopOnInteraction: true })],
   );
 
   const scrollPrev = useCallback(() => {
+    console.log("scrollPrev clicked, emblaApi exists:", !!emblaApi);
     if (emblaApi) emblaApi.scrollPrev();
   }, [emblaApi]);
 
   const scrollNext = useCallback(() => {
+    console.log("scrollNext clicked, emblaApi exists:", !!emblaApi);
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
-  const handleThumbnailClick = useCallback((index) => {
-    if (!emblaApi) return;
-    emblaApi.scrollTo(index);
-    setSelectedIndex(index);
-    setSelectedImage(imagesWithVariations[index]);
-  }, [emblaApi, imagesWithVariations]);
+  const handleThumbnailClick = useCallback(
+    (index) => {
+      if (!emblaApi) return;
+      emblaApi.scrollTo(index);
+      setSelectedIndex(index);
+      setSelectedImage(imagesWithVariations[index]);
+    },
+    [emblaApi, imagesWithVariations],
+  );
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -224,37 +273,37 @@ export default function AboutJourney({ data }) {
           </motion.div>
 
           {/* Thumbnails & Navigation */}
-          <div className="w-full md:w-auto max-w-[90vw] md:max-w-[400px] lg:max-w-[600px] flex flex-col gap-4">
+          <div className="w-full embla md:w-auto max-w-[90vw] md:max-w-[400px] lg:max-w-[600px] flex flex-col gap-4">
             {/* Navigation Buttons */}
-            <div className="flex justify-center md:justify-end gap-3 px-2">
+            <div className="flex justify-center md:justify-end gap-3 px-2 relative z-30 pointer-events-auto">
               <button
                 onClick={scrollPrev}
-                className="w-10 h-10 rounded-full border border-white flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm"
+                className="w-10 h-10 embla__prev rounded-full border border-white flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm relative z-30 pointer-events-auto"
                 aria-label="Previous slide"
-              >
-                <ChevronRight size={20} />
-              </button>
-              <button
-                onClick={scrollNext}
-                className="w-10 h-10 rounded-full border border-white flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm"
-                aria-label="Next slide"
               >
                 <ChevronLeft size={20} />
               </button>
+              <button
+                onClick={scrollNext}
+                className="w-10 embla__next h-10 rounded-full border border-white flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm relative z-30 pointer-events-auto"
+                aria-label="Next slide"
+              >
+                <ChevronRight size={20} />
+              </button>
             </div>
 
-            <div className="overflow-hidden" ref={emblaRef}>
-              <div className="flex gap-3 md:gap-4">
+            <div className="overflow-hidden embla__viewport" ref={emblaRef}>
+              <div className="flex gap-3 embla__container md:gap-4">
                 {imagesWithVariations.map((item, index) => (
                   <div
                     key={item.id}
                     onClick={() => handleThumbnailClick(index)}
-                    className="flex-[0_0_120px] md:flex-[0_0_160px] lg:flex-[0_0_190px] py-2 cursor-pointer"
+                    className="flex-[0_0_120px] embla__slide md:flex-[0_0_160px] lg:flex-[0_0_190px] py-2 cursor-pointer"
                   >
                     <div
                       className={`relative aspect-[16/7] rounded-full overflow-hidden transition-all duration-500 ${
-                        selectedIndex === index 
-                          ? "ring-2 ring-white/50 scale-100 opacity-100 shadow-[0_0_20px_rgba(255,255,255,0.3)]" 
+                        selectedIndex === index
+                          ? "ring-2 ring-white/50 scale-100 opacity-100 shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                           : "scale-90 opacity-40 grayscale-[0.5]"
                       }`}
                     >

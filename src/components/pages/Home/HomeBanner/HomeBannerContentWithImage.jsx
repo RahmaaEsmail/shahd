@@ -406,7 +406,7 @@ export default function HomeBannerContentWithImage({ data }) {
   // Use API images if available, fall back to static array
   const galleryImages =
     data?.images && data.images.length > 0
-      ? data.images.map((img) => ({ id: img.id, image: img.image_url, title: "banner image" }))
+      ? data.images.map((img) => ({ id: img.id, image: img.image_url, title: "banner image", description: img.description }))
       : images;
 
   const [selectedImage, setSelectedImage] = useState(galleryImages[0]);
@@ -552,7 +552,7 @@ export default function HomeBannerContentWithImage({ data }) {
         variants={textVariants}
         className="text-[#414141] pe-4 font-poppins! text-sm sm:text-base font-normal leading-relaxed w-full mt-4 lg:max-w-88 lg:text-start"
       >
-        {t("Home Banner Desc")}
+        {selectedImage?.description || t("Home Banner Desc")}
       </motion.p>
 
       {/* CTA Buttons - Mobile */}

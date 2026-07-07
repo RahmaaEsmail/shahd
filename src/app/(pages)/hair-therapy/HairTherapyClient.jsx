@@ -9,26 +9,31 @@ import HairTherapyBeforeAfter from "@/components/pages/HairTherapy/HairTherapyBe
 import HairTherapyPackage from "@/components/pages/HairTherapy/HairTherapyPackage/HairTherapyPackage";
 import { useHairTherapy } from "../../../hooks/hair-therapy/useHairTherapy";
 import Loading from "../../loading";
+import { useMemo } from "react";
 
-export default function page() {
+export default function HairTherapyPage() {
   const { data, isLoading } = useHairTherapy();
+
+  const hairTherapyAbout = useMemo(() => {
+    return {
+      main_image: data?.data?.ht_about_main?.image_url,
+      cards: data?.data?.ht_about_cards,
+    };
+  }, [data]);
 
   if (isLoading) {
     return <Loading />;
   }
-
-  console.log("hair therapy data", data);
-
   return (
     <div>
       <HairTherapyBanner />
-      <HairTherapyAbout data={data?.data} />
+      <HairTherapyAbout data={hairTherapyAbout} />
       <HairTherapyTestimonial data={data?.data?.ht_transplant} />
-      <HairTherapyPrePost data={data?.data?.ht_care_guide} />
+      <HairTherapyPrePost data={[]} />
       <HairTherapyTransformation data={data?.data?.ht_transformation} />
-      <HairTherapyBeforeAfter data={data?.data?.ht_transformation} />
+      <HairTherapyBeforeAfter data={data?.data?.before_after} />
       <HairTherapyPackage />
-      <HairTherapyTeam />
+      <HairTherapyTeam data={data?.data?.team_members} />
     </div>
   );
 }

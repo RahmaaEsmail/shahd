@@ -24,10 +24,13 @@ export default function page() {
     <div>
       <WeightManagementBanner data={data?.data?.wm_banner} />
       <WeightManagementNutritionFood data={data?.data?.wm_nutrition} />
-      <WeightManagementChooseUs cardsData={data?.data?.wm_why_choose_us_cards} mainData={data?.data?.wm_why_choose_us_main} />
+      <WeightManagementChooseUs
+        cardsData={data?.data?.wm_why_choose_us_cards}
+        mainData={data?.data?.wm_why_choose_us_main}
+      />
       <WeightManagementMedicalMachine data={data?.data?.wm_medical_expertise} />
       <MedicalWeightManagement />
-      <WeightManagementTeam />
+      <WeightManagementTeam data={data?.data?.team_members} />
       <WeightManagementFoodieProject />
       <WeightManagementImages data={data?.data?.wm_swiper} />
       <WeightManagementApp />

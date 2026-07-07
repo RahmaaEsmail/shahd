@@ -12,7 +12,7 @@ export default function HomeBanner({ data }) {
     <section className="relative min-h-[90vh] overflow-hidden">
       {/* Mobile: Normal Swiper (hidden on xl+) */}
       <div className="xl:hidden">
-        <HomeBannerMobileSwiper />
+        <HomeBannerMobileSwiper data={data?.banners_section} />
       </div>
 
       {/* Desktop: Two-column design (hidden below xl) */}

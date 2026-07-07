@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
           <main>{children}</main>
           <Footer />
 
-          <div className="flex justify-between items-center fixed z-[9999999] bottom-6 left-5 right-5 pointer-events-none">
+          <div className="flex justify-between items-end fixed z-[9999999] bottom-6 left-5 right-5 pointer-events-none">
             <div className="booking-button">
               <LanguageCurrencySettings/>
             </div>

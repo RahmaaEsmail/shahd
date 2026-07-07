@@ -13,8 +13,8 @@ export default function HomeBeforeAfter({ data }) {
   const lang = i18n.language?.startsWith("ar")
     ? "ar"
     : i18n.language?.startsWith("sk")
-    ? "sk"
-    : "en";
+      ? "sk"
+      : "en";
 
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -24,31 +24,38 @@ export default function HomeBeforeAfter({ data }) {
       id: 1,
       title: t("Non-Surgical Nose Reshaping"),
       description: t("Nose Reshaping Desc"),
-      before_img: "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
-      after_img: "/SHAHD-IMAGE/homebefore/0402d70a66c38d6594b9a42587cf70e03e81233f.webp",
-      thumbnail: "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
+      before_img:
+        "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
+      after_img:
+        "/SHAHD-IMAGE/homebefore/0402d70a66c38d6594b9a42587cf70e03e81233f.webp",
+      thumbnail:
+        "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
     },
     {
       id: 2,
       title: t("Lip Enhancement"),
       description: t("Lip Enhancement Desc"),
-      before_img: "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
+      before_img:
+        "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
       after_img: "/SHAHD-IMAGE/homebefore/mainImg.webp",
-      thumbnail: "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
+      thumbnail:
+        "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
     },
     {
       id: 4,
       title: t("Facial Contouring"),
       description: t("Facial Contouring Desc"),
       before_img: "/SHAHD-IMAGE/homebefore/mainImg.webp",
-      after_img: "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
+      after_img:
+        "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
       thumbnail: "/SHAHD-IMAGE/homebefore/mainImg.webp",
     },
     {
       id: 5,
       title: t("Hair Restoration"),
       description: t("Hair Restoration Desc"),
-      before_img: "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
+      before_img:
+        "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
       after_img: "/SHAHD-IMAGE/homebefore/mainImg.webp",
       thumbnail: "/SHAHD-IMAGE/homebefore/mainImg.webp",
     },
@@ -57,23 +64,29 @@ export default function HomeBeforeAfter({ data }) {
       title: t("Botox Treatment"),
       description: t("Botox Treatment Desc"),
       before_img: "/SHAHD-IMAGE/homebefore/mainImg.webp",
-      after_img: "/SHAHD-IMAGE/homebefore/0402d70a66c38d6594b9a42587cf70e03e81233f.webp",
-      thumbnail: "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
+      after_img:
+        "/SHAHD-IMAGE/homebefore/0402d70a66c38d6594b9a42587cf70e03e81233f.webp",
+      thumbnail:
+        "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
     },
     {
       id: 7,
       title: t("Laser Therapy"),
       description: t("Laser Therapy Desc"),
-      before_img: "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
-      after_img: "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
+      before_img:
+        "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
+      after_img:
+        "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
       thumbnail: "/SHAHD-IMAGE/homebefore/mainImg.webp",
     },
     {
       id: 8,
       title: t("Chemical Peel"),
       description: t("Chemical Peel Desc"),
-      before_img: "/SHAHD-IMAGE/homebefore/0402d70a66c38d6594b9a42587cf70e03e81233f.webp",
-      after_img: "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
+      before_img:
+        "/SHAHD-IMAGE/homebefore/0402d70a66c38d6594b9a42587cf70e03e81233f.webp",
+      after_img:
+        "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
       thumbnail: "/SHAHD-IMAGE/homebefore/mainImg.webp",
     },
   ];
@@ -82,11 +95,14 @@ export default function HomeBeforeAfter({ data }) {
     data?.results && data.results.length > 0
       ? data.results.map((item) => ({
           id: item.id,
-          title: item[`title_${lang}`] || item.title_en,
-          description: item[`description_${lang}`] || item.description_en,
-          before_img: item.before_image_url || "/SHAHD-IMAGE/homebefore/mainImg.webp",
-          after_img: item.after_image_url || "/SHAHD-IMAGE/homebefore/mainImg.webp",
-          thumbnail: item.before_image_url || "/SHAHD-IMAGE/homebefore/mainImg.webp",
+          title: item.title,
+          description: item.description,
+          before_img:
+            item.before_image_url || "/SHAHD-IMAGE/homebefore/mainImg.webp",
+          after_img:
+            item.after_image_url || "/SHAHD-IMAGE/homebefore/mainImg.webp",
+          thumbnail:
+            item.before_image_url || "/SHAHD-IMAGE/homebefore/mainImg.webp",
         }))
       : staticTreatments;
 

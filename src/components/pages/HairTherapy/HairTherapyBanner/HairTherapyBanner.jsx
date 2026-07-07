@@ -1,12 +1,12 @@
 "use client";
-import Image from 'next/image'
-import React from 'react'
-import { motion } from 'framer-motion'
-import { useTranslation } from 'react-i18next';
+import Image from "next/image";
+import React from "react";
+import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export default function HairTherapyBanner() {
-  const { t , i18n } = useTranslation();
-  const dir  = i18n?.language == "ar" ? "right" :"left";
+  const { t, i18n } = useTranslation();
+  const dir = i18n?.language == "ar" ? "right" : "left";
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -17,7 +17,7 @@ export default function HairTherapyBanner() {
         delayChildren: 0.3,
       },
     },
-  }
+  };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -29,7 +29,7 @@ export default function HairTherapyBanner() {
         ease: "easeOut",
       },
     },
-  }
+  };
 
   const cardVariants = {
     hidden: { opacity: 0, scale: 0.9, y: 20 },
@@ -49,7 +49,7 @@ export default function HairTherapyBanner() {
         ease: "easeInOut",
       },
     },
-  }
+  };
 
   const buttonVariants = {
     hidden: { opacity: 0, x: -50 },
@@ -72,7 +72,7 @@ export default function HairTherapyBanner() {
     tap: {
       scale: 0.95,
     },
-  }
+  };
 
   const imageVariants = {
     hidden: { opacity: 0, scale: 0.8 },
@@ -91,7 +91,7 @@ export default function HairTherapyBanner() {
         ease: "easeInOut",
       },
     },
-  }
+  };
 
   const textVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -103,10 +103,10 @@ export default function HairTherapyBanner() {
         ease: "easeOut",
       },
     },
-  }
+  };
 
   return (
-    <div className='min-h-fit py-20 lg:min-h-screen lg:py-0 relative overflow-hidden flex flex-col items-center justify-center'>
+    <div className="min-h-fit py-20 lg:min-h-screen lg:py-0 relative overflow-hidden flex flex-col items-center justify-center">
       {/* Animated background image */}
       <motion.div
         initial={{ scale: 1.1, opacity: 0 }}
@@ -114,31 +114,35 @@ export default function HairTherapyBanner() {
         transition={{ duration: 1.2, ease: "easeOut" }}
         className="absolute inset-0"
       >
-        <Image 
-          src="/SHAHD-IMAGE/hair-therapy/Frame 1000005536.webp" 
-          alt="Hair Therapy Banner" 
-          width={1920} 
-          height={1080} 
-          className='w-full h-full object-cover object-center lg:object-top'
+        <Image
+          src="/SHAHD-IMAGE/hair-therapy/Frame 1000005536.webp"
+          alt="Hair Therapy Banner"
+          width={1920}
+          height={1080}
+          className="w-full h-full object-cover object-center lg:object-top"
           priority
         />
       </motion.div>
 
-      <motion.div 
-        className='relative h-screen mt-2 lg:mt-30 mb-7 z-10 w-full main-container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center pt-24 lg:pt-0 pb-12 lg:pb-0 px-4 sm:px-8'
+      <motion.div
+        className="relative h-screen mt-2 lg:mt-30 mb-7 z-10 w-full main-container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center pt-24 lg:pt-0 pb-12 lg:pb-0 px-4 sm:px-8"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
       >
-        <div className={`flex flex-col gap-8 lg:gap-10 text-center lg:text-[${dir}]`}>
+        <div
+          className={`flex flex-col gap-8 lg:gap-10 text-center lg:text-[${dir}]`}
+        >
           <motion.div variants={itemVariants}>
-            <motion.h1 
-              className={`text-white text-3xl sm:text-5xl md:text-6xl text-[${dir}] font-normal leading-tight lg:leading-[1.1] uppercase tracking-tight`}
+            <motion.h1
+              className={`text-white text-3xl sm:text-5xl md:text-6xl text-[${dir}]  font-normal leading-tight lg:leading-[1.1] uppercase tracking-tight`}
               variants={textVariants}
             >
               {t("Medical Precision")}
               <br />
-              <span className='text-secondary lg:text-white'>{t("Natural Results")}</span>
+              <span className="text-secondary lg:text-white">
+                {t("Natural Results")}
+              </span>
             </motion.h1>
           </motion.div>
 
@@ -171,18 +175,18 @@ export default function HairTherapyBanner() {
           </motion.div>
         </div>
 
-        <motion.div 
-          className='grid grid-cols-1 sm:grid-cols-2 gap-4'
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4"
           variants={containerVariants}
         >
           {/* Card 1: Text */}
-          <motion.div 
+          <motion.div
             className="bg-white/10 backdrop-blur-md rounded-[24px] p-2 flex flex-col justify-center border border-white/20 order-1"
             variants={cardVariants}
             whileHover="hover"
           >
-            <motion.p 
-              className='text-base px-2 text-wrap! text-center font-normal font-poppins leading-relaxed text-white tracking-wide'
+            <motion.p
+              className="text-base px-2 text-wrap! text-center font-normal font-poppins leading-relaxed text-white tracking-wide"
               variants={textVariants}
             >
               {t("Hair Banner Desc 1")}
@@ -190,41 +194,41 @@ export default function HairTherapyBanner() {
           </motion.div>
 
           {/* Card 2: Image 1 */}
-          <motion.div 
+          <motion.div
             className="relative aspect-square w-full lg:h-auto overflow-hidden rounded-[24px] shadow-2xl order-2"
             variants={imageVariants}
             whileHover="hover"
           >
-            <Image 
-              src="/SHAHD-IMAGE/hair-therapy/Frame 1000005828.webp" 
-              fill 
-              alt="Hair Therapy" 
-              className='object-cover'
+            <Image
+              src="/SHAHD-IMAGE/hair-therapy/Frame 1000005828.webp"
+              fill
+              alt="Hair Therapy"
+              className="object-cover"
             />
           </motion.div>
 
           {/* Card 3: Image 2 */}
-          <motion.div 
+          <motion.div
             className="relative aspect-square w-full lg:h-auto overflow-hidden rounded-[24px] shadow-2xl order-3"
             variants={imageVariants}
             whileHover="hover"
           >
-            <Image 
-              src="/SHAHD-IMAGE/hair-therapy/Frame 1000005828-1.webp" 
-              fill 
-              alt="Hair Therapy" 
-              className='object-cover'
+            <Image
+              src="/SHAHD-IMAGE/hair-therapy/Frame 1000005828-1.webp"
+              fill
+              alt="Hair Therapy"
+              className="object-cover"
             />
           </motion.div>
 
           {/* Card 4: Text */}
-          <motion.div 
+          <motion.div
             className="bg-white/10 backdrop-blur-md text-wrap!  rounded-[24px] p-2 flex flex-col justify-center border border-white/20 order-4"
             variants={cardVariants}
             whileHover="hover"
           >
-            <motion.p 
-              className='text-base px-2 text-center font-normal font-poppins leading-relaxed text-white tracking-wide'
+            <motion.p
+              className="text-base px-2 text-center font-normal font-poppins leading-relaxed text-white tracking-wide"
               variants={textVariants}
             >
               {t("Hair Banner Desc 2")}
@@ -233,5 +237,5 @@ export default function HairTherapyBanner() {
         </motion.div>
       </motion.div>
     </div>
-  )
+  );
 }

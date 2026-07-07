@@ -10,8 +10,8 @@ export default function AboutChooseUs({ data }) {
   const lang = i18n.language?.startsWith("ar")
     ? "ar"
     : i18n.language?.startsWith("sk")
-    ? "sk"
-    : "en";
+      ? "sk"
+      : "en";
 
   const staticCards = [
     {
@@ -40,13 +40,15 @@ export default function AboutChooseUs({ data }) {
     },
   ];
 
+  // console.log("about choose us data", data);
   const cards =
     data?.feature_cards && data.feature_cards.length > 0
       ? data.feature_cards.map((item) => ({
           id: item.id,
-          img: item.image_url || "/SHAHD-IMAGE/About/icon_2-removebg-preview.webp",
-          title: item[`title_${lang}`] || item.title_en,
-          desc: item[`description_${lang}`] || item.description_en,
+          img:
+            item.image_url || "/SHAHD-IMAGE/About/icon_2-removebg-preview.webp",
+          title: item.title,
+          desc: item.description,
         }))
       : staticCards;
 
@@ -80,7 +82,7 @@ export default function AboutChooseUs({ data }) {
           {t("Experience beauty")}
         </motion.p>
 
-         <motion.p
+        <motion.p
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
@@ -92,7 +94,6 @@ export default function AboutChooseUs({ data }) {
 
       {/* Responsive Grid: 2 Cards | Image | 2 Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 items-stretch mx-auto">
-        
         {/* First 2 Cards */}
         <div className="flex flex-col gap-3 order-2 lg:order-1">
           {cards.slice(0, 2).map((item) => (
@@ -128,4 +129,4 @@ export default function AboutChooseUs({ data }) {
       </div>
     </motion.div>
   );
-}
+}

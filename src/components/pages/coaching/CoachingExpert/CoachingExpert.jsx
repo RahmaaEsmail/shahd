@@ -1,17 +1,17 @@
 "use client";
-import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { useTranslation } from 'react-i18next';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 const tabs = [
-  { id: 1, nameKey: 'Hair care' },
+  { id: 1, nameKey: "Hair care" },
   { id: 2, nameKey: "skin care" },
   { id: 3, nameKey: "bride plan" },
   { id: 4, nameKey: "nutrition coaching" },
-  { id: 5, nameKey: "Weight management" }
-]
+  { id: 5, nameKey: "Weight management" },
+];
 
 const tabContent = {
   1: {
@@ -19,37 +19,37 @@ const tabContent = {
     solutionKey: "Hair Solution",
     buttonTextKey: "book my hair audit",
     problem_img: "/SHAHD-IMAGE/Coaching/3.webp",
-    solution_img: "/SHAHD-IMAGE/Coaching/4.webp"
+    solution_img: "/SHAHD-IMAGE/Coaching/4.webp",
   },
   2: {
     problemKey: "Skin Problem",
     solutionKey: "Skin Solution",
     buttonTextKey: "book my skin consult",
     problem_img: "/SHAHD-IMAGE/Coaching/3.webp",
-    solution_img: "/SHAHD-IMAGE/Coaching/4.webp"
+    solution_img: "/SHAHD-IMAGE/Coaching/4.webp",
   },
   3: {
     problemKey: "Bride Problem",
     solutionKey: "Bride Solution",
     buttonTextKey: "book my bride plan",
     problem_img: "/SHAHD-IMAGE/Coaching/3.webp",
-    solution_img: "/SHAHD-IMAGE/Coaching/4.webp"
+    solution_img: "/SHAHD-IMAGE/Coaching/4.webp",
   },
   4: {
     problemKey: "Nutrition Problem",
     solutionKey: "Nutrition Solution",
     buttonTextKey: "book nutrition coaching",
     problem_img: "/SHAHD-IMAGE/Coaching/3.webp",
-    solution_img: "/SHAHD-IMAGE/Coaching/4.webp"
+    solution_img: "/SHAHD-IMAGE/Coaching/4.webp",
   },
   5: {
     problemKey: "Weight Problem",
     solutionKey: "Weight Solution",
     buttonTextKey: "book weight consult",
     problem_img: "/SHAHD-IMAGE/Coaching/3.webp",
-    solution_img: "/SHAHD-IMAGE/Coaching/4.webp"
-  }
-}
+    solution_img: "/SHAHD-IMAGE/Coaching/4.webp",
+  },
+};
 
 export default function CoachingExpert({ data }) {
   const { t, i18n } = useTranslation();
@@ -61,31 +61,36 @@ export default function CoachingExpert({ data }) {
     const checkScreenSize = () => {
       setIsLargeScreen(window.innerWidth >= 1024);
     };
-    
+
     checkScreenSize();
 
     // Listen for resize events
-    window.addEventListener('resize', checkScreenSize);
-    
+    window.addEventListener("resize", checkScreenSize);
+
     // Cleanup listener on unmount
-    return () => window.removeEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : "en";
 
   // Build resolved tabs from dynamic data or fallback to static
   const isDynamic = data && data.length > 0;
   const resolvedTabs = isDynamic
     ? data.map((item, idx) => ({
         id: item.id || idx + 1,
-        name: item[`type_${lang}`] || item.type_en
+        name: item.type,
       }))
-    : tabs.map(tab => ({
+    : tabs.map((tab) => ({
         id: tab.id,
-        name: t(tab.nameKey)
+        name: t(tab.nameKey),
       }));
 
-  const currentActiveTab = activeTab !== null ? activeTab : (resolvedTabs[0]?.id || 1);
+  const currentActiveTab =
+    activeTab !== null ? activeTab : resolvedTabs[0]?.id || 1;
 
   // Set default active tab on load/data change
   useEffect(() => {
@@ -97,11 +102,15 @@ export default function CoachingExpert({ data }) {
   // Extract content fields
   let problemImg, problemText, solutionImg, solutionText, buttonText;
   if (isDynamic) {
-    const selectedItem = data.find((item, idx) => (item.id || idx + 1) === currentActiveTab) || data[0];
-    problemImg = selectedItem?.problem_image_url || "/SHAHD-IMAGE/Coaching/3.webp";
-    problemText = selectedItem?.[`problem_text_${lang}`] || selectedItem?.problem_text_en;
-    solutionImg = selectedItem?.solution_image_url || "/SHAHD-IMAGE/Coaching/4.webp";
-    solutionText = selectedItem?.[`solution_text_${lang}`] || selectedItem?.solution_text_en;
+    const selectedItem =
+      data.find((item, idx) => (item.id || idx + 1) === currentActiveTab) ||
+      data[0];
+    problemImg =
+      selectedItem?.problem_image_url || "/SHAHD-IMAGE/Coaching/3.webp";
+    problemText = selectedItem?.problem_text;
+    solutionImg =
+      selectedItem?.solution_image_url || "/SHAHD-IMAGE/Coaching/4.webp";
+    solutionText = selectedItem?.solution_text;
     buttonText = t("Book Now");
   } else {
     const activeTabDetails = tabContent[currentActiveTab] || tabContent[1];
@@ -112,24 +121,27 @@ export default function CoachingExpert({ data }) {
     buttonText = t(activeTabDetails.buttonTextKey);
   }
 
-  const slantPath = 'polygon(52% 0, 100% 0, 100% 100%, 38% 100%)';
+  const slantPath = "polygon(52% 0, 100% 0, 100% 100%, 38% 100%)";
 
   return (
-    <section 
-      style={{background: "linear-gradient(180deg, rgba(255, 254, 254, 0.48) 0%, rgba(113, 137, 162, 0.48) 50%, rgba(255, 255, 255, 0.48) 100%)"}}
-      className='py-12 font-poppins'
+    <section
+      style={{
+        background:
+          "linear-gradient(180deg, rgba(255, 254, 254, 0.48) 0%, rgba(113, 137, 162, 0.48) 50%, rgba(255, 255, 255, 0.48) 100%)",
+      }}
+      className="py-12 font-poppins"
     >
-      <div className='max-w-[1440px] mx-auto px-4'>
+      <div className="max-w-[1440px] mx-auto px-4">
         {/* Header Section */}
-        <div className='text-center mb-10'>
-          <p className='text-[#7189A2] font-bold text-2xl mb-2'>
-            {t('Expert Online Coaching')}
+        <div className="text-center mb-10">
+          <p className="text-[#7189A2] font-bold text-2xl mb-2">
+            {t("Expert Online Coaching")}
           </p>
-          <h3 className='text-[#DDB2B5] text-3xl  uppercase font-normal font-main leading-[1.1] max-w-5xl mx-auto'>
-            {t('Get expert guidance from anywhere')}
+          <h3 className="text-[#DDB2B5] text-3xl  uppercase font-normal font-main leading-[1.1] max-w-5xl mx-auto">
+            {t("Get expert guidance from anywhere")}
           </h3>
 
-          <div className='flex flex-wrap justify-center gap-3 mt-4'>
+          <div className="flex flex-wrap justify-center gap-3 mt-4">
             {resolvedTabs.map((tab) => (
               <button
                 key={tab.id}
@@ -147,18 +159,20 @@ export default function CoachingExpert({ data }) {
         </div>
 
         {/* Diagonal Split Container */}
-        <div className='relative w-full h-auto lg:h-[500px] rounded-[30px] md:rounded-[40px] overflow-hidden shadow-2xl bg-white flex flex-col lg:block'>
-          <AnimatePresence mode='wait'>
+        <div className="relative w-full h-auto lg:h-[500px] rounded-[30px] md:rounded-[40px] overflow-hidden shadow-2xl bg-white flex flex-col lg:block">
+          <AnimatePresence mode="wait">
             <motion.div
               key={currentActiveTab}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.6 }}
-              className='relative lg:absolute inset-0 w-full h-full'
+              className="relative lg:absolute inset-0 w-full h-full"
             >
               {/* --- PROBLEM SIDE (LEFT) --- */}
-              <div className={`relative lg:absolute inset-0 w-full h-[450px] lg:h-full bg-[#b8c6c9] ${i18n?.language == "ar" ? "me-auto!" : "ms-auto!"}`}>
+              <div
+                className={`relative lg:absolute inset-0 w-full h-[450px] lg:h-full bg-[#b8c6c9] ${i18n?.language == "ar" ? "me-auto!" : "ms-auto!"}`}
+              >
                 <Image
                   src={problemImg}
                   alt="Problem area"
@@ -167,17 +181,19 @@ export default function CoachingExpert({ data }) {
                   priority
                 />
 
-                <div className='absolute top-8 left-8 md:top-12 md:left-12 z-20 w-[150px]'>
-                  <img 
-                    src="/SHAHD-IMAGE/Coaching/Gemini_Generated_Image_qxqifhqxqifhqxqi-removebg-preview.webp" 
+                <div className="absolute top-8 left-8 md:top-12 md:left-12 z-20 w-[150px]">
+                  <img
+                    src="/SHAHD-IMAGE/Coaching/Gemini_Generated_Image_qxqifhqxqifhqxqi-removebg-preview.webp"
                     alt="Problems Label"
                     className="w-full h-auto"
                   />
                 </div>
 
-                <div className='absolute bottom-8 left-8 md:bottom-12 md:left-12 z-20 max-w-[calc(100%-64px)] md:max-w-[360px] bg-white/20 backdrop-blur-xl border border-white/20 rounded-[30px] md:rounded-[35px] p-6 shadow-2xl'>
-                  <h4 className='text-[#414141] font-semibold text-lg mb-3'>{t('The Problem')}</h4>
-                  <p className='text-[#414141] font-normal text-base leading-relaxed'>
+                <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 z-20 max-w-[calc(100%-64px)] md:max-w-[360px] bg-white/20 backdrop-blur-xl border border-white/20 rounded-[30px] md:rounded-[35px] p-6 shadow-2xl">
+                  <h4 className="text-[#414141] font-semibold text-lg mb-3">
+                    {t("The Problem")}
+                  </h4>
+                  <p className="text-[#414141] font-normal text-base leading-relaxed">
                     {problemText}
                   </p>
                 </div>
@@ -185,44 +201,46 @@ export default function CoachingExpert({ data }) {
 
               {/* --- WHITE DIVIDER (Desktop Only) --- */}
               <div
-                className='hidden lg:block absolute inset-0 w-full h-full z-[9] bg-white'
+                className="hidden lg:block absolute inset-0 w-full h-full z-[9] bg-white"
                 style={{
                   clipPath: slantPath,
-                  transform: 'translateX(-4px)' 
+                  transform: "translateX(-4px)",
                 }}
               />
 
               {/* --- SOLUTION SIDE (RIGHT) --- */}
               <div
-                className='relative lg:absolute inset-0 w-full h-auto lg:h-full z-10 bg-[#dbbcb7]'
-                style={{ clipPath: isLargeScreen ? slantPath : 'none' }}
+                className="relative lg:absolute inset-0 w-full h-auto lg:h-full z-10 bg-[#dbbcb7]"
+                style={{ clipPath: isLargeScreen ? slantPath : "none" }}
               >
-                <div className='lg:hidden absolute inset-0 bg-[#dbbcb7]' />
+                <div className="lg:hidden absolute inset-0 bg-[#dbbcb7]" />
 
-                <div className='relative h-[400px] lg:h-full'>
+                <div className="relative h-[400px] lg:h-full">
                   <Image
                     src={solutionImg}
                     alt="Solution area"
                     fill
-                    className={`object-cover lg:max-w-[55%] lg:${i18n?.language == "ar" ? "me-auto" :"ms-auto"} mix-blend-multiply opacity-90`}
+                    className={`object-cover lg:max-w-[55%] lg:${i18n?.language == "ar" ? "me-auto" : "ms-auto"} mix-blend-multiply opacity-90`}
                     priority
                   />
 
-                  <div className='absolute top-8 right-8 md:top-12 md:right-12 z-20 w-[150px]'>
-                    <img 
-                      src="/SHAHD-IMAGE/Coaching/Screenshot__722_-removebg-preview.webp" 
+                  <div className="absolute top-8 right-8 md:top-12 md:right-12 z-20 w-[150px]">
+                    <img
+                      src="/SHAHD-IMAGE/Coaching/Screenshot__722_-removebg-preview.webp"
                       alt="Solutions Label"
                       className="w-full h-auto"
                     />
                   </div>
 
-                  <div className='absolute bottom-8 right-8 left-8 md:left-auto md:bottom-12 md:right-12 z-20 max-w-full md:max-w-[480px] bg-white/15 backdrop-blur-2xl border border-white/30 rounded-[30px] md:rounded-[40px] p-4 shadow-2xl'>
-                    <h4 className='text-[#414141] font-bold text-lg mb-4'>{t('The Solution')}</h4>
-                    <p className='text-[#414141] text-base leading-relaxed mb-8'>
+                  <div className="absolute bottom-8 right-8 left-8 md:left-auto md:bottom-12 md:right-12 z-20 max-w-full md:max-w-[480px] bg-white/15 backdrop-blur-2xl border border-white/30 rounded-[30px] md:rounded-[40px] p-4 shadow-2xl">
+                    <h4 className="text-[#414141] font-bold text-lg mb-4">
+                      {t("The Solution")}
+                    </h4>
+                    <p className="text-[#414141] text-base leading-relaxed mb-8">
                       {solutionText}
                     </p>
 
-                    <Button className='w-full bg-[#7189A2] hover:bg-[#5d7287] text-white rounded-full py-6  uppercase text-base font-bold shadow-xl transition-all active:scale-95'>
+                    <Button className="w-full bg-[#7189A2] hover:bg-[#5d7287] text-white rounded-full py-6  uppercase text-base font-bold shadow-xl transition-all active:scale-95">
                       {buttonText}
                     </Button>
                   </div>
@@ -233,5 +251,5 @@ export default function CoachingExpert({ data }) {
         </div>
       </div>
     </section>
-  )
+  );
 }

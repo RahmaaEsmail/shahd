@@ -5,15 +5,19 @@ import BannerMarqueeCard from "./BannerMarqueeCard";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
-export default function BannerMarquee() {
-  const {i18n} = useTranslation();
-   const dir = i18n.language === 'ar' ? 'right' : 'left';
+export default function BannerMarquee({ data }) {
+  const { i18n } = useTranslation();
+  const dir = i18n.language === "ar" ? "right" : "left";
+
+  // Prevent rendering if data isn't loaded yet to avoid 0-width calculation bugs
+  if (!data || data.length === 0) return null;
+
   return (
     <motion.div
-      initial={{ y: 24, opacity: 0 }}          // أقل من 100 عشان مايبقاش “قفزة”
+      initial={{ y: 24, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }} // ease-out ناعم
-      viewport={{ once: false, amount: 0.3 }}   // يمنع إعادة الأنيميشن مع السكرول
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, amount: 0.3 }}
       className="bg-[#EDC5C84D] flex justify-center items-center h-25.25 overflow-hidden"
       style={{
         willChange: "transform, opacity",
@@ -22,20 +26,20 @@ export default function BannerMarquee() {
     >
       <Marquee
         className="w-full"
-        autoFill
-        pauseOnHover
+        autoFill={true}
+        pauseOnHover={true}
         gradient={false}
         speed={35}
-        loop={true}
-        direction={dir}         // قلّل/زوّد حسب مزاجك (الأقل = أنعم)
-        delay={0.2}        // بداية أهدى
+        direction={dir}
+        // Key forces a re-render if the language direction changes
+        key={dir}
       >
-        <div className="flex items-center gap-8 px-4">
-          <BannerMarqueeCard id={5} img={"/SHAHD-IMAGE/BannerImage/Rectangle 7.webp"} title={"Eyebrow Enhancement"} />
-          <BannerMarqueeCard id={4} img={"/SHAHD-IMAGE/BannerImage/Rectangle 7 (1).webp"} title={"Hair Routine"} />
-          <BannerMarqueeCard id={1} img={"/SHAHD-IMAGE/BannerImage/Rectangle 7 (2).webp"} title={"Wrinkle Treatment"} />
-          <BannerMarqueeCard id={5} img={"/SHAHD-IMAGE/BannerImage/Rectangle 7 (3).webp"} title={"Eyebrow Enhancement"} />
-        </div>
+        {data.map((item) => (
+          // Add margin/padding directly to the card wrapper for spacing
+          <div key={item.id} className="mx-4 flex items-center">
+            <BannerMarqueeCard img={item.image_url} title={item.label} />
+          </div>
+        ))}
       </Marquee>
     </motion.div>
   );

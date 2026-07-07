@@ -2,12 +2,12 @@
 import React from "react";
 import { blogsData } from "@/data/blogs";
 import BlogDetailsContent from "@/components/pages/Blogs/BlogDetails/BlogDetailsContent";
-import useBlogs from "@/hooks/blogs/useBlogs";
+import useBlogs, { useBlogDetails } from "@/hooks/blogs/useBlogs";
 import Loading from "@/app/loading";
 import { useTranslation } from "react-i18next";
 
 export default function BlogDetailsPage({ id }) {
-  const { blogsData: apiData, isLoading } = useBlogs({ id });
+  const { blogDetailsData: apiData, isLoading } = useBlogDetails(id);
   const { i18n } = useTranslation();
 
   if (isLoading) return <Loading />;
@@ -27,12 +27,18 @@ export default function BlogDetailsPage({ id }) {
     // Map API fields to a unified blog shape
     blog = {
       ...raw,
-      title: raw[`title_${lang}`] || raw.title_en,
-      content: raw[`content_${lang}`] || raw.content_en,
-      description: raw[`description_${lang}`] || raw.description_en,
-      img: raw.image_1_url || raw.image_2_url || null,
-      img2: raw.image_2_url || null,
-      img3: raw.image_3_url || null,
+      title: raw[`title_${lang}`] || raw.title_en || raw.title || "",
+      content: raw[`content_${lang}`] || raw.content_en || raw.content || "",
+      description: raw[`description_${lang}`] || raw.description_en || raw.description || "",
+      img: raw.image_1_url || (raw.image_1
+        ? `https://drshahdawad.com/ShahdAwad/uploads/blogs/${raw.image_1}`
+        : null),
+      img2: raw.image_2_url || (raw.image_2
+        ? `https://drshahdawad.com/ShahdAwad/uploads/blogs/${raw.image_2}`
+        : null),
+      img3: raw.image_3_url || (raw.image_3
+        ? `https://drshahdawad.com/ShahdAwad/uploads/blogs/${raw.image_3}`
+        : null),
       date: raw.created_at ? raw.created_at.split(" ")[0] : "",
       category: raw.category || "",
     };
@@ -40,11 +46,13 @@ export default function BlogDetailsPage({ id }) {
     // Related blogs come from the API response
     relatedBlogs = (raw.related_blogs || []).map((r) => ({
       ...r,
-      title: r[`title_${lang}`] || r.title_en,
-      img: r.image_1_url || r.image_1_raw
+      title: r[`title_${lang}`] || r.title_en || r.title || "",
+      description: r[`description_${lang}`] || r.description_en || r.description || "",
+      img: r.image_1_url || (r.image_1_raw || r.image_1
         ? `https://drshahdawad.com/ShahdAwad/uploads/blogs/${r.image_1_raw || r.image_1}`
-        : null,
+        : null),
       category: r.category || "",
+      date: r.created_at ? r.created_at.split(" ")[0] : "",
     }));
   } else {
     // Fallback to static data

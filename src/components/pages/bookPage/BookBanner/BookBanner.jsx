@@ -1,10 +1,10 @@
 "use client";
-import Image from 'next/image'
-import React from 'react'
-import { motion } from 'framer-motion'
-import { Button } from '@/components/ui/button'
-import { useRouter } from 'next/navigation';
-import { useTranslation } from 'react-i18next';
+import Image from "next/image";
+import React from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 // Animation variants
 const containerVariants = {
@@ -14,10 +14,10 @@ const containerVariants = {
     transition: {
       staggerChildren: 0.2,
       delayChildren: 0.3,
-      duration: 0.8
-    }
-  }
-}
+      duration: 0.8,
+    },
+  },
+};
 
 const itemVariants = {
   hidden: { y: 50, opacity: 0 },
@@ -27,10 +27,10 @@ const itemVariants = {
     transition: {
       type: "spring",
       stiffness: 100,
-      damping: 12
-    }
-  }
-}
+      damping: 12,
+    },
+  },
+};
 
 const imageVariants = {
   hidden: { x: -100, opacity: 0, rotate: -10 },
@@ -42,8 +42,8 @@ const imageVariants = {
       type: "spring",
       stiffness: 80,
       damping: 15,
-      delay: 0.2
-    }
+      delay: 0.2,
+    },
   },
   hover: {
     scale: 1.05,
@@ -51,10 +51,10 @@ const imageVariants = {
     transition: {
       type: "spring",
       stiffness: 300,
-      damping: 15
-    }
-  }
-}
+      damping: 15,
+    },
+  },
+};
 
 const titleVariants = {
   hidden: { y: 30, opacity: 0 },
@@ -65,10 +65,10 @@ const titleVariants = {
       type: "spring",
       stiffness: 100,
       damping: 10,
-      delay: 0.3
-    }
-  }
-}
+      delay: 0.3,
+    },
+  },
+};
 
 const titleWordVariants = {
   hidden: { y: 50, opacity: 0 },
@@ -79,10 +79,10 @@ const titleWordVariants = {
       type: "spring",
       stiffness: 100,
       damping: 12,
-      delay: 0.4 + custom * 0.1
-    }
-  })
-}
+      delay: 0.4 + custom * 0.1,
+    },
+  }),
+};
 
 const buttonVariants = {
   hidden: { scale: 0, opacity: 0 },
@@ -93,8 +93,8 @@ const buttonVariants = {
       type: "spring",
       stiffness: 200,
       damping: 15,
-      delay: 0.8
-    }
+      delay: 0.8,
+    },
   },
   hover: {
     scale: 1.05,
@@ -102,13 +102,13 @@ const buttonVariants = {
     transition: {
       type: "spring",
       stiffness: 400,
-      damping: 10
-    }
+      damping: 10,
+    },
   },
   tap: {
-    scale: 0.95
-  }
-}
+    scale: 0.95,
+  },
+};
 
 const languageButtonVariants = {
   hidden: { y: -20, opacity: 0 },
@@ -119,33 +119,37 @@ const languageButtonVariants = {
       type: "spring",
       stiffness: 100,
       damping: 12,
-      delay: 0.5 + custom * 0.1
-    }
+      delay: 0.5 + custom * 0.1,
+    },
   }),
   hover: {
     scale: 1.05,
     transition: {
       type: "spring",
       stiffness: 400,
-      damping: 10
-    }
-  }
-}
+      damping: 10,
+    },
+  },
+};
 
 export default function BookBanner({ data }) {
   const { t, i18n } = useTranslation();
-  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : "en";
 
-  const title = data?.[`title_${lang}`] || data?.title_en || t("Glow in All Areas of Your Life");
-  const description = data?.[`description_${lang}`] || data?.description_en || t("Book Banner Desc");
+  const title = data?.title || t("Glow in All Areas of Your Life");
+  const description = data?.description || t("Book Banner Desc");
   const bgImage = data?.image_url || "/SHAHD-IMAGE/Book/book.webp";
 
-  const titleWords = title.split(' ');
-  
+  const titleWords = title.split(" ");
+
   const router = useRouter();
   return (
     <motion.div
-      className='h-[100vh] md:h-[80vh]! flex flex-col lg:grid lg:grid-cols-[3fr_9fr] gap-10 items-center'
+      className="h-[100vh] md:h-[80vh]! flex flex-col lg:grid lg:grid-cols-[3fr_9fr] gap-10 items-center"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
@@ -165,7 +169,7 @@ export default function BookBanner({ data }) {
           alt="book"
           width={374}
           height={495}
-          className='object-contain lg:object-cover w-full h-full drop-shadow-2xl'
+          className="object-contain lg:object-cover w-full h-full drop-shadow-2xl"
         />
 
         {/* Floating shine effect on hover */}
@@ -185,9 +189,9 @@ export default function BookBanner({ data }) {
         whileInView="visible"
         viewport={{ once: false, amount: 0.2, margin: "-50px" }}
       >
-        <div className='flex w-full flex-col lg:flex-row justify-between gap-6 lg:gap-3 items-center lg:items-start'>
+        <div className="flex w-full flex-col lg:flex-row justify-between gap-6 lg:gap-3 items-center lg:items-start">
           <motion.h1
-            className='text-4xl  w-full leading-[110%] md:leading-[100%] font-normal text-primary'
+            className="text-4xl  w-full leading-[110%] md:leading-[100%] font-normal text-primary"
             variants={titleVariants}
             initial="hidden"
             whileInView="visible"
@@ -227,8 +231,10 @@ export default function BookBanner({ data }) {
                   whileHover="hover"
                 >
                   <Button
-                    variant='default'
-                    className={"rounded-full px-6 lg:px-10 h-[44px] lg:h-[52px] font-normal font-poppins text-base lg:text-lg"}
+                    variant="default"
+                    className={
+                      "rounded-full px-6 lg:px-10 h-[44px] lg:h-[52px] font-normal font-poppins text-base lg:text-lg"
+                    }
                   >
                     English
                   </Button>
@@ -241,8 +247,10 @@ export default function BookBanner({ data }) {
                   className="h-fit! flex"
                 >
                   <Button
-                    variant='default'
-                    className={"rounded-full px-6 lg:px-10 bg-white hover:text-white transition-all duration-300 text-primary h-[44px] lg:h-[52px] font-normal font-poppins text-base lg:text-lg"}
+                    variant="default"
+                    className={
+                      "rounded-full px-6 lg:px-10 bg-white hover:text-white transition-all duration-300 text-primary h-[44px] lg:h-[52px] font-normal font-poppins text-base lg:text-lg"
+                    }
                   >
                     العربية
                   </Button>
@@ -282,9 +290,10 @@ export default function BookBanner({ data }) {
 
         {/* Buy Now button with animations */}
         <motion.button
-          className='w-full max-w-[200px] lg:w-[183px] text-white h-[57px] mt-8 lg:mt-5 rounded-full text-xl lg:text-2xl font-normal relative overflow-hidden mx-auto lg:mx-0'
+          className="w-full max-w-[200px] lg:w-[183px] text-white h-[57px] mt-8 lg:mt-5 rounded-full text-xl lg:text-2xl font-normal relative overflow-hidden mx-auto lg:mx-0"
           style={{
-            background: "radial-gradient(78.45% 156.63% at 44.89% 100%, #DDB2B5 0%, #A4B3C1 80.98%) ,radial-gradient(66.48% 185.23% at 0% 35.94%, #DDB2B5 10.55%, rgba(253, 160, 154, 0) 100%)"
+            background:
+              "radial-gradient(78.45% 156.63% at 44.89% 100%, #DDB2B5 0%, #A4B3C1 80.98%) ,radial-gradient(66.48% 185.23% at 0% 35.94%, #DDB2B5 10.55%, rgba(253, 160, 154, 0) 100%)",
           }}
           variants={buttonVariants}
           initial="hidden"
@@ -307,5 +316,5 @@ export default function BookBanner({ data }) {
         </motion.button>
       </motion.div>
     </motion.div>
-  )
+  );
 }

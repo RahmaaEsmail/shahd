@@ -3,13 +3,13 @@ import React, { useState, useEffect } from "react";
 import { cn } from "../../../../lib/utils";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 import OurServiceCard from "./OurServiceCard";
 import OurServiceTabs from "./OurServiceTabs";
 import { service_data } from "@/data/serviceData";
@@ -25,69 +25,82 @@ const staticTabs = [
 import { useTranslation } from "react-i18next";
 
 export default function OurServices({ data, categories, lang }) {
-  const { t , i18n} = useTranslation();
-  const isRtl = i18n.language === 'ar' || i18n.dir() === 'rtl';
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === "ar" || i18n.dir() === "rtl";
   const currentDir = isRtl ? "rtl" : "ltr";
 
   const [activeTab, setActiveTab] = useState(1);
   const [categoryParam, setCategoryParam] = useState(null);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
-      setCategoryParam(params.get('category'));
+      setCategoryParam(params.get("category"));
     }
   }, []);
 
   // Build tabs: "All" + one per category from API (or static fallback)
-  const tabs = categories && categories.length > 0
-    ? [
-        { id: 1, name: t("All") },
-        ...categories.map((cat) => ({
-          id: cat.id + 1,  // offset to avoid collision with "All" id=1
-          name: cat[`name_${lang}`] || cat.name_en || cat.name || "",
-          categoryId: cat.id
-        }))
-      ]
-    : staticTabs.map(tab => ({ ...tab, name: t(tab.name) }));
+  const tabs =
+    categories && categories.length > 0
+      ? [
+          { id: 1, name: t("All") },
+          ...categories.map((cat) => ({
+            id: cat.id + 1, // offset to avoid collision with "All" id=1
+            name: cat[`name_${lang}`] || cat.name_en || cat.name || "",
+            categoryId: cat.id,
+          })),
+        ]
+      : staticTabs.map((tab) => ({ ...tab, name: t(tab.name) }));
 
   // Build service cards list from API data or static fallback
   const staticServices = service_data?.slice(0, 8);
-  const resolvedServices = data && data.length > 0
-    ? data.map((item, idx) => ({
-        id: item.id,
-        image: item.image_url || item.image || staticServices[idx % staticServices.length]?.image || "/SHAHD-IMAGE/Services/our-service-1.webp",
-        type: item.category_id?.toString(),
-        mainColor: staticServices[idx % staticServices.length]?.mainColor || "#DDB2B5",
-        bgColor: staticServices[idx % staticServices.length]?.bgColor || "#F1E0E0",
-        title: item.title || "",
-        desc: item.description || "",
-        categoryId: item.category_id,
-      }))
-    : staticServices;
+  const resolvedServices =
+    data && data.length > 0
+      ? data.map((item, idx) => ({
+          id: item.id,
+          image:
+            item.image_url ||
+            item.image ||
+            staticServices[idx % staticServices.length]?.image ||
+            "/SHAHD-IMAGE/Services/our-service-1.webp",
+          type: item.category_name || item.type || item.category_id?.toString(),
+          mainColor:
+            staticServices[idx % staticServices.length]?.mainColor || "#DDB2B5",
+          bgColor:
+            staticServices[idx % staticServices.length]?.bgColor || "#F1E0E0",
+          title: item.title || "",
+          desc: item.description || item.desc || "",
+          categoryId: item.category || item.category_id,
+        }))
+      : staticServices;
 
   useEffect(() => {
     if (categoryParam) {
-      const foundTab = tabs.find(t => t.name?.toLowerCase() === categoryParam.toLowerCase());
+      const foundTab = tabs.find(
+        (t) =>
+          (t.categoryId != null && t.categoryId.toString() === categoryParam) ||
+          t.name?.toLowerCase() === categoryParam.toLowerCase(),
+      );
       if (foundTab) {
         setActiveTab(foundTab.id);
       }
     } else {
       setActiveTab(1); // Default to "All" if no category is present
     }
-  }, [categoryParam]);
+  }, [categoryParam, tabs]);
 
   // Filter data based on active tab
-  const filteredData = activeTab === 1
-    ? resolvedServices
-    : resolvedServices.filter(item => {
-        const activeTabObj = tabs.find(tab => tab.id === activeTab);
-        if (!activeTabObj) return true;
-        // Match by categoryId (for dynamic) or type name (for static)
-        return activeTabObj.categoryId != null
-          ? item.categoryId === activeTabObj.categoryId
-          : item.type?.toLowerCase() === activeTabObj.name?.toLowerCase();
-      });
+  const filteredData =
+    activeTab === 1
+      ? resolvedServices
+      : resolvedServices.filter((item) => {
+          const activeTabObj = tabs.find((tab) => tab.id === activeTab);
+          if (!activeTabObj) return true;
+          // Match by categoryId (for dynamic) or type name (for static)
+          return activeTabObj.categoryId != null
+            ? Number(item.categoryId) === Number(activeTabObj.categoryId)
+            : item.type?.toLowerCase() === activeTabObj.name?.toLowerCase();
+        });
 
   const cardVariants = {
     hidden: { scale: 0.8, opacity: 0 },
@@ -100,11 +113,14 @@ export default function OurServices({ data, categories, lang }) {
         damping: 15,
       },
     },
-
   };
 
   return (
-    <div id="our-services" dir={currentDir} className="min-h-[85vh] relative scroll-mt-24">
+    <div
+      id="our-services"
+      dir={currentDir}
+      className="min-h-[85vh] relative scroll-mt-24"
+    >
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
@@ -124,7 +140,11 @@ export default function OurServices({ data, categories, lang }) {
             {t("Our Services Title")}
           </motion.h1>
 
-          <OurServiceTabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+          <OurServiceTabs
+            tabs={tabs}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
         </div>
 
         <motion.div
@@ -147,7 +167,6 @@ export default function OurServices({ data, categories, lang }) {
                 delay: 3000,
                 disableOnInteraction: false,
               }}
-
               breakpoints={{
                 640: {
                   slidesPerView: 2,

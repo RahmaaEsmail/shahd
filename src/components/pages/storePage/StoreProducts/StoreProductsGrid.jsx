@@ -1,11 +1,11 @@
 "use client";
-import React from 'react'
-import { motion, AnimatePresence } from 'framer-motion';
-import StoreProductCard from './StoreProductCard'
-import { store_product_tabs } from '@/data/storeData';
-import { productData } from '@/data/productFilters';
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import StoreProductCard from "./StoreProductCard";
+import { store_product_tabs } from "@/data/storeData";
+import { productData } from "@/data/productFilters";
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 // Animation variants for grid
 const containerVariants = {
@@ -15,24 +15,24 @@ const containerVariants = {
     transition: {
       staggerChildren: 0.15,
       delayChildren: 0.2,
-      when: "beforeChildren"
-    }
+      when: "beforeChildren",
+    },
   },
   exit: {
     opacity: 0,
     transition: {
       staggerChildren: 0.05,
       staggerDirection: -1,
-      when: "afterChildren"
-    }
-  }
+      when: "afterChildren",
+    },
+  },
 };
 
 const itemVariants = {
   hidden: {
     y: 50,
     opacity: 0,
-    scale: 0.9
+    scale: 0.9,
   },
   visible: {
     y: 0,
@@ -42,8 +42,8 @@ const itemVariants = {
       type: "spring",
       stiffness: 100,
       damping: 15,
-      mass: 1
-    }
+      mass: 1,
+    },
   },
   exit: {
     y: -30,
@@ -51,34 +51,41 @@ const itemVariants = {
     scale: 0.8,
     transition: {
       duration: 0.3,
-      ease: "easeIn"
-    }
-  }
+      ease: "easeIn",
+    },
+  },
 };
 
 export default function StoreProductsGrid({ activeTab, data }) {
   const { i18n } = useTranslation();
-  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : "en";
 
   const isDynamic = data && data.length > 0;
   const baseProducts = isDynamic
-    ? data.map(p => ({
+    ? data.map((p) => ({
         id: p.id,
-        name: p[`title_${lang}`] || p.title_en || "Product",
-        img: p.image_url,
+        name: p.title || "Product",
+        img: p.main_image,
         price: p.price,
         rating: p.rating || 5,
-        category: (p[`category_${lang}`] || p.category_en || "").toLowerCase().trim(),
+        category: (p.category_name || "").toLowerCase().trim(),
       }))
-    : productData.map(p => ({
+    : productData.map((p) => ({
         ...p,
         category: p.category.toLowerCase().trim(),
       }));
 
   // Filter products based on active tab
-  const filteredProducts = baseProducts.filter(product => {
+  const filteredProducts = baseProducts.filter((product) => {
     if (activeTab === 1) return true; // 'All' tab
-    const tabName = store_product_tabs.find(tab => tab.id === activeTab)?.name.toLowerCase().trim();
+    const tabName = store_product_tabs
+      .find((tab) => tab.id === activeTab)
+      ?.name.toLowerCase()
+      .trim();
     return product.category === tabName || product.category.includes(tabName);
   });
 
@@ -108,5 +115,5 @@ export default function StoreProductsGrid({ activeTab, data }) {
         ))}
       </motion.div>
     </AnimatePresence>
-  )
+  );
 }

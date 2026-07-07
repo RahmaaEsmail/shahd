@@ -4,16 +4,43 @@ import React, { useRef } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 
-export default function ProductDetailsImages() {
-  // Sample thumbnail images - replace with your actual images
-  const thumbnails = [
-    { id: 1, src: "/SHAHD-IMAGE/product-details/Rectangle 36.webp", alt: "Book thumbnail 1" },
-    { id: 2, src: "/SHAHD-IMAGE/product-details/Rectangle 36.webp", alt: "Book thumbnail 2" },
-    { id: 3, src: "/SHAHD-IMAGE/product-details/Rectangle 36.webp", alt: "Book thumbnail 3" },
-    { id: 4, src: "/SHAHD-IMAGE/product-details/Rectangle 36.webp", alt: "Book thumbnail 4" },
-    { id: 5, src: "/SHAHD-IMAGE/product-details/Rectangle 36.webp", alt: "Book thumbnail 5" },
-    { id: 6, src: "/SHAHD-IMAGE/product-details/Rectangle 36.webp", alt: "Book thumbnail 6" },
-    { id: 7, src: "/SHAHD-IMAGE/product-details/Rectangle 36.webp", alt: "Book thumbnail 7" },
+export default function ProductDetailsImages({ data }) {
+  const resolveImageUrl = (imgUrl, rawImg) => {
+    if (imgUrl && imgUrl.includes("http") && !imgUrl.includes("/uploads/shop/http")) {
+      return imgUrl;
+    }
+    if (rawImg && rawImg.includes("http")) {
+      return rawImg;
+    }
+    if (rawImg) {
+      return `https://drshahdawad.com/ShahdAwad/uploads/shop/${rawImg}`;
+    }
+    return imgUrl || "/placeholder.jpg";
+  };
+
+  const images = [];
+
+  const main = resolveImageUrl(data?.main_image_url, data?.main_image);
+  if (main) {
+    images.push({ id: "main", src: main, alt: data?.title || "Main Product Image" });
+  }
+
+  const hover = resolveImageUrl(data?.hover_image_url, data?.hover_image);
+  if (hover && hover !== main) {
+    images.push({ id: "hover", src: hover, alt: data?.title || "Hover Product Image" });
+  }
+
+  if (data?.gallery && Array.isArray(data.gallery)) {
+    data.gallery.forEach((item, idx) => {
+      const src = resolveImageUrl(item.image_url, item.image);
+      if (src && src !== main && src !== hover) {
+        images.push({ id: item.id || `gal-${idx}`, src, alt: `Gallery image ${idx + 1}` });
+      }
+    });
+  }
+
+  const thumbnails = images.length > 0 ? images : [
+    { id: 1, src: "/SHAHD-IMAGE/product-details/Rectangle 36.webp", alt: "Fallback Image" }
   ];
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -44,7 +71,7 @@ export default function ProductDetailsImages() {
         });
       }
     }
-  }, [selectedIndex]);
+  }, [selectedIndex, thumbnails.length]);
 
   return (
     <motion.div

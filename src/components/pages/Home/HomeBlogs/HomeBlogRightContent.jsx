@@ -5,7 +5,11 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 
-export default function HomeBlogRightContent({ setSelectedBlog , images  , selectedBlog}) {
+export default function HomeBlogRightContent({
+  setSelectedBlog,
+  images,
+  selectedBlog,
+}) {
   const [axis, setAxis] = useState("y");
 
   useEffect(() => {
@@ -25,7 +29,7 @@ export default function HomeBlogRightContent({ setSelectedBlog , images  , selec
       containScroll: "trimSnaps",
       slidesToScroll: 1,
     },
-    [Autoplay({ delay: 3000, stopOnInteraction: false })]
+    [Autoplay({ delay: 3000, stopOnInteraction: false })],
   );
 
   const scrollPrev = useCallback(() => {
@@ -60,21 +64,25 @@ export default function HomeBlogRightContent({ setSelectedBlog , images  , selec
     >
       {/* Carousel Viewport */}
       <div className="overflow-hidden h-full rounded-[25px]" ref={emblaRef}>
-        <div className={`flex ${axis === "x" ? "flex-row" : "flex-col"} w-full h-full gap-4`}>
+        <div
+          className={`flex ${axis === "x" ? "flex-row" : "flex-col"} w-full h-full gap-4`}
+        >
           {images.map((item) => (
             <div
               key={item.id}
-              className={`${axis === "x" ? "flex-[0_0_70%] sm:flex-[0_0_40%]" : "flex-[0_0_25%]"} min-h-0 cursor-pointer`}
+              className={`${axis === "x" ? "flex-[0_0_70%] sm:flex-[0_0_50%]" : "flex-[0_0_35%]"} min-h-0 cursor-pointer`}
               onClick={() => handleBlogSelect(item)}
             >
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className={`relative rounded-[15px] flex justify-center overflow-hidden transition-all duration-300 h-full! ${
-                  selectedBlog.id === item.id ? "shadow-[-12px_2px_60px_15px_#B97C7C]" : "opacity-70 hover:opacity-100"
+                className={`relative rounded-[15px] flex justify-center overflow-hidden transition-all bg-red-500 duration-300 h-full! ${
+                  selectedBlog.id === item.id
+                    ? "shadow-[-12px_2px_60px_15px_#B97C7C]"
+                    : "opacity-70 hover:opacity-100"
                 }`}
               >
-                <div className="relative w-full aspect-video lg:aspect-auto lg:h-[100px]">
+                <div className="relative w-full aspect-video lg:aspect-auto lg:h-full">
                   <Image
                     src={item.img}
                     className="rounded-[15px] transition-transform duration-500 hover:scale-110 object-cover"

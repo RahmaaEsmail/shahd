@@ -1,15 +1,104 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Image from "next/image";
-
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import { useRegister, useCheckEmail } from "@/hooks/auth/useAuth";
+import Swal from "sweetalert2";
 
 export default function SignupPage() {
   const { t } = useTranslation();
+  const router = useRouter();
+  const registerMutation = useRegister();
+  const checkEmailMutation = useCheckEmail();
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!formData.name || !formData.email || !formData.phone || !formData.password || !formData.confirmPassword) {
+      Swal.fire({
+        icon: "error",
+        title: t("Error"),
+        text: t("Please fill in all fields"),
+      });
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      Swal.fire({
+        icon: "error",
+        title: t("Error"),
+        text: t("Passwords do not match"),
+      });
+      return;
+    }
+
+    const { name, email, phone, password } = formData;
+
+    registerMutation.mutate({ name, email, phone, password }, {
+      onSuccess: (data) => {
+        if (data.status === "success") {
+          // Immediately check/verify email after signup
+          checkEmailMutation.mutate({ email }, {
+            onSuccess: () => {
+              Swal.fire({
+                icon: "success",
+                title: t("Success"),
+                text: t("Registration successful! Please sign in."),
+                timer: 2000,
+                showConfirmButton: false,
+              }).then(() => {
+                router.push("/login");
+              });
+            },
+            onError: (err) => {
+              Swal.fire({
+                icon: "success",
+                title: t("Success"),
+                text: t("Registration successful! Please sign in."),
+                timer: 2000,
+                showConfirmButton: false,
+              }).then(() => {
+                router.push("/login");
+              });
+            }
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: t("Error"),
+            text: data.message || t("Registration failed"),
+          });
+        }
+      },
+      onError: (error) => {
+        Swal.fire({
+          icon: "error",
+          title: t("Error"),
+          text: error?.response?.data?.message || error?.message || t("Something went wrong"),
+        });
+      },
+    });
+  };
+
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -31,14 +120,11 @@ export default function SignupPage() {
     <div className="min-h-screen relative flex items-center justify-center py-16 px-4 sm:px-6 overflow-hidden">
       {/* Background with decorative elements */}
       <div 
-  className="absolute inset-0 z-0 bg-cover bg-center opacity-40 bg-no-repeat"
-  style={{
-    backgroundImage: `url("/SHAHD-IMAGE/Untitled design.png")`
-  }}
->
-  {/* <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px]" />
-  <div className="absolute bottom-[-10%] left-[-5%] w-[40%] h-[40%] bg-secondary/5 rounded-full blur-[120px]" /> */}
-</div>
+        className="absolute inset-0 z-0 bg-cover bg-center opacity-40 bg-no-repeat"
+        style={{
+          backgroundImage: `url("/SHAHD-IMAGE/Untitled design.png")`
+        }}
+      />
 
       {/* Main Content */}
       <motion.div
@@ -71,11 +157,14 @@ export default function SignupPage() {
           </div>
 
           {/* Form */}
-          <form className="w-full grid grid-cols-1 md:grid-cols-2 gap-3">
+          <form onSubmit={handleSubmit} className="w-full grid grid-cols-1 md:grid-cols-2 gap-3">
             <motion.div variants={itemVariants} className="space-y-2 md:col-span-1">
               <label className="text-primary font-poppins font-medium text-sm ml-1">{t('Full Name')}</label>
               <Input
                 type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
                 placeholder={t('Jane Doe')}
                 className="rounded-2xl font-poppins border-primary/20 focus-visible:ring-primary/30 h-12 bg-white/50"
               />
@@ -85,6 +174,9 @@ export default function SignupPage() {
               <label className="text-primary font-poppins font-medium text-sm ml-1">{t('Email Address')}</label>
               <Input
                 type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 placeholder="jane@example.com"
                 className="rounded-2xl font-poppins border-primary/20 focus-visible:ring-primary/30 h-12 bg-white/50"
               />
@@ -93,8 +185,11 @@ export default function SignupPage() {
             <motion.div variants={itemVariants} className="space-y-2 md:col-span-2">
               <label className="text-primary font-poppins font-medium text-sm ml-1">{t('phone Number')}</label>
               <Input
-                type="phone"
-                placeholder="+20 112 123 4567"
+                type="text"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="0120398243"
                 className="rounded-2xl font-poppins border-primary/20 focus-visible:ring-primary/30 h-12 bg-white/50"
               />
             </motion.div>
@@ -103,6 +198,9 @@ export default function SignupPage() {
               <label className="text-primary font-poppins font-medium text-sm ml-1">{t('Password')}</label>
               <Input
                 type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
                 placeholder="••••••••"
                 className="rounded-2xl border-primary/20 focus-visible:ring-primary/30 h-12 bg-white/50"
               />
@@ -112,6 +210,9 @@ export default function SignupPage() {
               <label className="text-primary font-poppins font-medium text-sm ml-1">{t('Confirm Password')}</label>
               <Input
                 type="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
                 placeholder="••••••••"
                 className="rounded-2xl border-primary/20 focus-visible:ring-primary/30 h-12 bg-white/50"
               />
@@ -119,9 +220,11 @@ export default function SignupPage() {
 
             <motion.div variants={itemVariants} className="pt-6 md:col-span-2">
               <Button
+                type="submit"
+                disabled={registerMutation.isPending}
                 className="w-full h-14 rounded-2xl text-lg font-poppins font-semibold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
-                {t('Create Account')}
+                {registerMutation.isPending ? t('Creating Account...') : t('Create Account')}
               </Button>
             </motion.div>
           </form>

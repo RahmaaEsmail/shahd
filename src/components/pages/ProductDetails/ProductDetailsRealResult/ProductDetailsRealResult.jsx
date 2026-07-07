@@ -4,8 +4,31 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 
-export default function ProductDetailsRealResult() {
-  const { t , i18n} = useTranslation();
+export default function ProductDetailsRealResult({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+
+  const afterAppRaw = data?.after_application || [];
+  const activeAppObj = afterAppRaw.find(item => item.lang === lang) || afterAppRaw.find(item => item.lang === "en");
+  const appStats = activeAppObj?.text || [];
+
+  const afterWeeksRaw = data?.after_weeks || [];
+  const activeWeeksObj = afterWeeksRaw.find(item => item.lang === lang) || afterWeeksRaw.find(item => item.lang === "en");
+  const weekStats = activeWeeksObj?.text || [];
+
+  const fallbackAppStats = [
+    { label: "100%", value: t("that it has a pleasant foam") }
+  ];
+
+  const fallbackWeekStats = [
+    { label: "94%", value: t("that skin feels smoother") }
+  ];
+
+  const renderedAppStats = appStats.length > 0 ? appStats : fallbackAppStats;
+  const renderedWeekStats = weekStats.length > 0 ? weekStats : fallbackWeekStats;
+
+  const realResultImage = data?.real_results_image || "/SHAHD-IMAGE/product-details/Group 30.webp";
+
   // Animation variants for staggered children
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -107,7 +130,7 @@ export default function ProductDetailsRealResult() {
             className='rounded-[32px] w-full max-w-[535px] mx-auto lg:mx-0 relative overflow-hidden aspect-535/500 shadow-2xl'
           >
             <Image 
-              src={"/SHAHD-IMAGE/product-details/Group 30.webp"} 
+              src={realResultImage} 
               fill
               className='object-cover transition-transform duration-500 group-hover:scale-105' 
               alt={t("real result image")}
@@ -130,7 +153,7 @@ export default function ProductDetailsRealResult() {
                   {t('after the 1st application:')}
                 </motion.h3>
                 
-                {[1, 2, 3, 4].map((item, index) => (
+                {renderedAppStats.map((item, index) => (
                   <motion.div
                     key={`left-stat-${index}`}
                     custom={index}
@@ -148,9 +171,9 @@ export default function ProductDetailsRealResult() {
                       className='text-xl  font-poppins font-semibold text-gray-900'
                       whileHover={{ color: "#DDB2B5" }}
                     >
-                      {t('100% agree')}
+                      {t(item.label)}
                     </motion.p>
-                    <p className='text-base  font-poppins font-normal text-gray-700'>{t('that it has a pleasant foam')}</p>
+                    <p className='text-base  font-poppins font-normal text-gray-700'>{t(item.value)}</p>
                   </motion.div>
                 ))}
               </motion.div>
@@ -167,7 +190,7 @@ export default function ProductDetailsRealResult() {
                   {t('after 4 weeks:')}
                 </motion.h3>
                 
-                {[1, 2, 3, 4].map((item, index) => (
+                {renderedWeekStats.map((item, index) => (
                   <motion.div
                     key={`right-stat-${index}`}
                     custom={index + 4}
@@ -185,9 +208,9 @@ export default function ProductDetailsRealResult() {
                       className='text-xl font-poppins font-semibold text-gray-900'
                       whileHover={{ color: "#DDB2B5" }}
                     >
-                      {t('94% agree')}
+                      {t(item.label)}
                     </motion.p>
-                    <p className='text-base font-poppins font-normal text-gray-700'>{t('that skin feels smoother')}</p>
+                    <p className='text-base font-poppins font-normal text-gray-700'>{t(item.value)}</p>
                   </motion.div>
                 ))}
               </motion.div>

@@ -8,8 +8,27 @@ import { useTranslation } from 'react-i18next';
 
 export default function HorseProducts({ data }) {
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState(1);
+  const [activeTab, setActiveTab] = useState("all");
   const router = useRouter();
+
+  const staticProducts = React.useMemo(() => [
+    { category: "grooming" },
+    { category: "tack accessories" },
+  ], []);
+
+  const tabs = React.useMemo(() => {
+    const productsList = data && data.length > 0 ? data : staticProducts;
+    const uniqueCategories = Array.from(
+      new Set(productsList.map((p) => p.category).filter(Boolean))
+    );
+    return [
+      { id: "all", name: "All" },
+      ...uniqueCategories.map((cat) => ({
+        id: cat.toLowerCase().trim(),
+        name: cat,
+      })),
+    ];
+  }, [data, staticProducts]);
 
   return (
     <section
@@ -33,7 +52,7 @@ export default function HorseProducts({ data }) {
       {/* Content Container */}
       <div className="relative z-10 w-full">
         <div className="main-container mx-auto px-4 flex flex-col items-center">
-          <HorseProductsHeader setActiveTab={setActiveTab} activeTab={activeTab} />
+          <HorseProductsHeader setActiveTab={setActiveTab} activeTab={activeTab} tabs={tabs} />
 
           <AnimatePresence mode="wait">
             <HorseProductsGrid key={activeTab} activeTab={activeTab} data={data} />

@@ -1,7 +1,8 @@
 "use client";
 import React, { useRef, useState } from 'react';
 import Image from 'next/image';
-import ReactPlayer from 'react-player';
+import dynamic from 'next/dynamic';
+const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 import {
   Dialog,
   DialogContent,
@@ -129,21 +130,23 @@ const dialogVariants = {
   }
 };
 
-export default function ProductDetailsUsage() {
+export default function ProductDetailsUsage({ data }) {
   const { t } = useTranslation();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const playerRef = useRef(null);
 
-  const usageSteps = [
-    "Wet Your Face With Lukewarm Water",
-    "Apply A Small Amount To Your Hands",
-    "Gently Massage Onto Face In Circular Motions",
-    "Rinse Thoroughly",
-    "Pat Dry With A Clean Towel",
-    "Apply your favorite moisturizer",
-    "Enjoy your glowing skin!"
-  ];
+  const usageSteps = data?.how_to_use && Array.isArray(data.how_to_use)
+    ? data.how_to_use
+    : [
+        "Wet Your Face With Lukewarm Water",
+        "Apply A Small Amount To Your Hands",
+        "Gently Massage Onto Face In Circular Motions",
+        "Rinse Thoroughly",
+        "Pat Dry With A Clean Towel",
+        "Apply your favorite moisturizer",
+        "Enjoy your glowing skin!"
+      ];
 
   const handleDialogClose = () => {
     setIsPlaying(false);

@@ -133,9 +133,58 @@ const plans = [
   }
 ]
 
-export default function HairTherapyPackage() {
-  const { t } = useTranslation();
+export default function HairTherapyPackage({ data }) {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
   const [hoveredCard, setHoveredCard] = useState(null);
+
+  const staticPlans = [
+    {
+      id: 1,
+      nameKey: "FRESH START",
+      img: "/SHAHD-IMAGE/Services/151784f3bce476935cf0d7f6c8fd712a8563af4a.webp",
+      price: "$150",
+      descriptionKey: "FRESH START Desc",
+      featuresKeys: ["skin check", "hydra facial", "light botox", "aftercare"],
+      popular: false
+    },
+    {
+      id: 2,
+      nameKey: "SIGNATURE BEAUTY",
+      price: "$320",
+      img: "/SHAHD-IMAGE/Services/f591c51b224049891c5e2235b64968fcddec3d88.webp",
+      descriptionKey: "SIGNATURE BEAUTY Desc",
+      featuresKeys: ["full facial analysis", "botox forehead", "lip cheek filler", "skin glow"],
+      popular: true
+    },
+    {
+      id: 3,
+      nameKey: "TOTAL MAKEOVER",
+      price: "$650",
+      img: "/SHAHD-IMAGE/Services/c117c55556fe9873b9dca05f51eb50263ce8a7db.webp",
+      descriptionKey: "TOTAL MAKEOVER Desc",
+      featuresKeys: ["full face design", "botox filler combo", "prp under eye", "premium skincare"],
+      popular: false
+    }
+  ];
+
+  const resolvedPlans = data && data.length > 0
+    ? data.map((item, idx) => {
+        const fallbackPlan = staticPlans[idx % staticPlans.length];
+        const featuresList = item.features 
+          ? (Array.isArray(item.features) ? item.features : JSON.parse(item.features))
+          : (fallbackPlan ? fallbackPlan.featuresKeys : []);
+        return {
+          id: item.id || idx + 1,
+          nameKey: item[`name_${lang}`] || item.name_en || item.name || item.title || fallbackPlan?.nameKey || "",
+          price: item.price ? (item.price.toString().startsWith("$") ? item.price : `$${item.price}`) : (fallbackPlan?.price || "$150"),
+          img: item.image_url || (item.image ? (item.image.startsWith("http") ? item.image : `https://drshahdawad.com/ShahdAwad/uploads/booking/${item.image}`) : null) || fallbackPlan?.img || "/SHAHD-IMAGE/Services/151784f3bce476935cf0d7f6c8fd712a8563af4a.webp",
+          descriptionKey: item[`description_${lang}`] || item.description_en || item.description || fallbackPlan?.descriptionKey || "",
+          featuresKeys: featuresList,
+          popular: idx === 1
+        };
+      })
+    : staticPlans;
 
   return (
     <div
@@ -166,9 +215,8 @@ export default function HairTherapyPackage() {
         {/* Responsive Grid Container */}
         <div className="main-container mx-auto px-4 lg:px-8 mt-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
-            {plans.map((plan, index) => {
+            {resolvedPlans.map((plan, index) => {
               const isHovered = hoveredCard === plan.id;
-              const isPopular = plan.popular;
               const shouldScale = isHovered;
 
               return (
@@ -189,5 +237,5 @@ export default function HairTherapyPackage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

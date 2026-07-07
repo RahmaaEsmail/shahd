@@ -3,7 +3,7 @@ import ServicePlanContent from './ServicePlanContent';
 import ServicePlansGrid from './ServicePlansGrid';
 
 
-export default function ServicePlans() {
+export default function ServicePlans({ data }) {
 
   return (
     <div className='relative min-h-[50vh] bg-white'>
@@ -12,7 +12,7 @@ export default function ServicePlans() {
       {/* Plans Section - Overlapping Cards */}
       <div className='relative -mt-4   md:-mt-30 pb-10 px-4'>
         <div className='max-w-7xl mx-auto'>
-          <ServicePlansGrid />
+          <ServicePlansGrid data={data} />
         </div>
       </div>
     </div>

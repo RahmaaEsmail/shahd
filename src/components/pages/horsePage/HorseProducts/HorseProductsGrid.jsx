@@ -1,9 +1,8 @@
 "use client";
-import React from 'react'
-import { motion, AnimatePresence } from 'framer-motion';
-import { horse_product_tabs } from '@/data/horseData';
-import StoreProductCard from '@/components/pages/storePage/StoreProducts/StoreProductCard';
-import { useTranslation } from 'react-i18next';
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import StoreProductCard from "@/components/pages/storePage/StoreProducts/StoreProductCard";
+import { useTranslation } from "react-i18next";
 
 const products = [
   {
@@ -69,7 +68,7 @@ const products = [
     price: "52.00",
     img: "/SHAHD-IMAGE/Store/product1.webp",
     category: "grooming",
-  }
+  },
 ];
 
 // Animation variants for grid
@@ -80,24 +79,24 @@ const containerVariants = {
     transition: {
       staggerChildren: 0.15, // Increased stagger for more noticeable sequential effect
       delayChildren: 0.2,
-      when: "beforeChildren"
-    }
+      when: "beforeChildren",
+    },
   },
   exit: {
     opacity: 0,
     transition: {
       staggerChildren: 0.05,
       staggerDirection: -1,
-      when: "afterChildren"
-    }
-  }
+      when: "afterChildren",
+    },
+  },
 };
 
 const itemVariants = {
   hidden: {
     y: 50,
     opacity: 0,
-    scale: 0.9
+    scale: 0.9,
   },
   visible: {
     y: 0,
@@ -107,8 +106,8 @@ const itemVariants = {
       type: "spring",
       stiffness: 100,
       damping: 15,
-      mass: 1
-    }
+      mass: 1,
+    },
   },
   exit: {
     y: -30,
@@ -116,36 +115,39 @@ const itemVariants = {
     scale: 0.8,
     transition: {
       duration: 0.3,
-      ease: "easeIn"
-    }
-  }
+      ease: "easeIn",
+    },
+  },
 };
 
 export default function HorseProductsGrid({ activeTab, data }) {
   const { i18n } = useTranslation();
-  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : "en";
 
   // Map dynamic products if data is available, otherwise use static fallback
   const isDynamic = data && data.length > 0;
   const baseProducts = isDynamic
-    ? data.map(p => ({
+    ? data.map((p) => ({
         id: p.id,
-        name: p[`title_${lang}`] || p.title_en,
+        name: p.title,
         img: p.image_url,
         price: p.price,
         rating: 5,
-        category: (p[`category_${lang}`] || p.category_en || "").toLowerCase().trim(),
+        category: (p.category || "").toLowerCase().trim(),
       }))
-    : products.map(p => ({
+    : products.map((p) => ({
         ...p,
         category: p.category.toLowerCase().trim(),
       }));
 
   // Filter products based on active tab
-  const filteredProducts = baseProducts.filter(product => {
-    if (activeTab === 1) return true; // 'All' tab
-    const tabName = horse_product_tabs.find(tab => tab.id === activeTab)?.name.toLowerCase().trim();
-    return product.category === tabName;
+  const filteredProducts = baseProducts.filter((product) => {
+    if (activeTab === "all" || activeTab === 1) return true; // 'All' tab
+    return product.category.toLowerCase().trim() === String(activeTab).toLowerCase().trim();
   });
 
   return (
@@ -174,5 +176,5 @@ export default function HorseProductsGrid({ activeTab, data }) {
         ))}
       </motion.div>
     </AnimatePresence>
-  )
+  );
 }

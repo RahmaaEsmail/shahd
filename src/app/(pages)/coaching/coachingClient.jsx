@@ -28,8 +28,8 @@ export default function CoachingClient() {
     dynamicFaqs && dynamicFaqs.length > 0
       ? dynamicFaqs.map((faq) => ({
           id: faq.id,
-          question: faq[`question_${lang}`] || faq.question_en,
-          answer: faq[`answer_${lang}`] || faq.answer_en,
+          question: faq.question,
+          answer: faq.answer,
         }))
       : undefined;
 

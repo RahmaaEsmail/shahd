@@ -1,5 +1,6 @@
 import axios from "axios";
 import { config } from "./config";
+import i18n from "../i18n/i18n";
 
 export const apiInstance = axios.create({
   baseURL: config.BASE_URL,
@@ -10,19 +11,20 @@ export const apiInstance = axios.create({
 
 apiInstance.interceptors.request.use((req) => {
   const token = localStorage.getItem(config.localStorageTokenName) ? localStorage?.getItem(config.localStorageTokenName) : "";
+   console.log("i18n.language", i18n.language);
+  const currentLang = i18n.language ? i18n.language.split("-")[0] : "en";
+
   if (token) {
     req.headers.Authorization = `Bearer ${token}`;
-    req.params = {
-      ...req.params,
-      lang: localStorage.getItem("lang") || "en",
-    }
   } else {
     delete req.headers.Authorization;
-    req.params = {
-      ...req.params,
-      lang: localStorage.getItem("lang") || "en",
-    }
   }
+
+  req.params = {
+    ...req.params,
+    lang: currentLang,
+  };
+
   return req;
 
 }, (error) => Promise.reject(error))

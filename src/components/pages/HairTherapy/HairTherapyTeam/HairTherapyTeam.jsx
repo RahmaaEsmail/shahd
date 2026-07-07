@@ -1,10 +1,10 @@
 "use client";
-import Image from 'next/image'
-import React from 'react'
-import { motion } from 'framer-motion'
-import { useTranslation } from 'react-i18next';
+import Image from "next/image";
+import React from "react";
+import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
-export default function HairTherapyTeam() {
+export default function HairTherapyTeam({ data }) {
   const { t } = useTranslation();
   // Animation variants
   const containerVariants = {
@@ -14,8 +14,8 @@ export default function HairTherapyTeam() {
       transition: {
         staggerChildren: 0.2,
         delayChildren: 0.3,
-      }
-    }
+      },
+    },
   };
 
   const backgroundVariants = {
@@ -25,9 +25,9 @@ export default function HairTherapyTeam() {
       scale: 1,
       transition: {
         duration: 1.2,
-        ease: "easeOut"
-      }
-    }
+        ease: "easeOut",
+      },
+    },
   };
 
   const overlayVariants = {
@@ -36,9 +36,9 @@ export default function HairTherapyTeam() {
       opacity: 1,
       transition: {
         duration: 0.8,
-        ease: "easeOut"
-      }
-    }
+        ease: "easeOut",
+      },
+    },
   };
 
   const titleVariants = {
@@ -48,9 +48,9 @@ export default function HairTherapyTeam() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
-      }
-    }
+        ease: "easeOut",
+      },
+    },
   };
 
   const subtitleVariants = {
@@ -61,9 +61,9 @@ export default function HairTherapyTeam() {
       transition: {
         delay: 0.2,
         duration: 0.6,
-        ease: "easeOut"
-      }
-    }
+        ease: "easeOut",
+      },
+    },
   };
 
   const imageVariants = {
@@ -74,15 +74,15 @@ export default function HairTherapyTeam() {
       scale: 1,
       transition: {
         duration: 0.7,
-        ease: "easeOut"
-      }
+        ease: "easeOut",
+      },
     },
     hover: {
       scale: 1.05,
       transition: {
-        duration: 0.3
-      }
-    }
+        duration: 0.3,
+      },
+    },
   };
 
   const imageRightVariants = {
@@ -93,15 +93,15 @@ export default function HairTherapyTeam() {
       scale: 1,
       transition: {
         duration: 0.7,
-        ease: "easeOut"
-      }
+        ease: "easeOut",
+      },
     },
     hover: {
       scale: 1.05,
       transition: {
-        duration: 0.3
-      }
-    }
+        duration: 0.3,
+      },
+    },
   };
 
   const cardVariants = {
@@ -113,16 +113,16 @@ export default function HairTherapyTeam() {
       transition: {
         delay: custom * 0.2,
         duration: 0.6,
-        ease: "easeOut"
-      }
+        ease: "easeOut",
+      },
     }),
     hover: {
       y: -10,
       scale: 1.02,
       transition: {
-        duration: 0.3
-      }
-    }
+        duration: 0.3,
+      },
+    },
   };
 
   const cardContentVariants = {
@@ -132,9 +132,9 @@ export default function HairTherapyTeam() {
       y: 0,
       transition: {
         delay: 0.3,
-        duration: 0.5
-      }
-    }
+        duration: 0.5,
+      },
+    },
   };
 
   const nameVariants = {
@@ -143,15 +143,15 @@ export default function HairTherapyTeam() {
       opacity: 1,
       x: 0,
       transition: {
-        duration: 0.4
-      }
+        duration: 0.4,
+      },
     },
     hover: {
       x: 10,
       transition: {
-        duration: 0.2
-      }
-    }
+        duration: 0.2,
+      },
+    },
   };
 
   const descriptionVariants = {
@@ -160,9 +160,9 @@ export default function HairTherapyTeam() {
       opacity: 1,
       transition: {
         delay: 0.2,
-        duration: 0.5
-      }
-    }
+        duration: 0.5,
+      },
+    },
   };
 
   return (
@@ -177,7 +177,8 @@ export default function HairTherapyTeam() {
         className="relative overflow-hidden rounded-[32px] min-h-[600px]"
         variants={backgroundVariants}
         style={{
-          backgroundImage: "url('/SHAHD-IMAGE/hair-therapy/0dfa4723e2f3e9d48a080580fa685952b58207be.webp')",
+          backgroundImage:
+            "url('/SHAHD-IMAGE/hair-therapy/0dfa4723e2f3e9d48a080580fa685952b58207be.webp')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -191,7 +192,7 @@ export default function HairTherapyTeam() {
           className="relative inset-0 px-6 pt-6 lg:px-10 lg:pt-10 pb-0! z-20 flex flex-col min-h-[600px]"
           variants={containerVariants}
         >
-          <div className='flex flex-col items-center justify-center text-center mb-4'>
+          <div className="flex flex-col items-center justify-center text-center mb-4">
             <motion.p
               className="text-2xl font-bold font-poppins text-secondary capitalize mb-2"
               variants={titleVariants}
@@ -220,8 +221,11 @@ export default function HairTherapyTeam() {
               {/* Set a specific height or h-full and remove max-width constraints if you want them larger */}
               <div className="relative w-full h-[400px] lg:h-[500px]">
                 <Image
-                  src="/SHAHD-IMAGE/hair-therapy/Image_fx - 2026-03-07T150053.361 1.webp"
-                  alt="Doctor"
+                  src={
+                    data[0]?.profile1_image_url ||
+                    "/SHAHD-IMAGE/hair-therapy/Image_fx - 2026-03-07T150053.361 1.webp"
+                  }
+                  alt={data[0]?.profile1_name}
                   fill
                   className="object-contain object-bottom" // Changed to contain + bottom
                   priority
@@ -236,34 +240,46 @@ export default function HairTherapyTeam() {
             >
               {/* Doctor Card 1 */}
               <motion.div
-                className='bg-white/40 backdrop-blur-3xl flex flex-col gap-3 rounded-[24px] p-6 border border-white/60 shadow-xl'
+                className="bg-white/40 backdrop-blur-3xl flex flex-col gap-3 rounded-[24px] p-6 border border-white/60 shadow-xl"
                 custom={0}
                 variants={cardVariants}
                 whileHover="hover"
               >
-                <div className='flex flex-col'>
-                  <motion.p className="text-secondary font-bold font-poppins text-xl mb-2" variants={nameVariants}>
-                    DR. Shahd Awad
+                <div className="flex flex-col">
+                  <motion.p
+                    className="text-secondary font-bold font-poppins text-xl mb-2"
+                    variants={nameVariants}
+                  >
+                    {data[0]?.profile1_name}
                   </motion.p>
-                  <motion.p className="text-[#414141] uppercase font-semibold font-poppins text-sm leading-relaxed tracking-wider" variants={descriptionVariants}>
-                    {t("Dr Shahd Description")}
+                  <motion.p
+                    className="text-[#414141] uppercase font-semibold font-poppins text-sm leading-relaxed tracking-wider"
+                    variants={descriptionVariants}
+                  >
+                    {data[0]?.profile1_description}
                   </motion.p>
                 </div>
               </motion.div>
 
               {/* Doctor Card 2 */}
               <motion.div
-                className='bg-white/40 backdrop-blur-3xl flex flex-col gap-4 rounded-[24px] p-6 border border-white/60 shadow-xl'
+                className="bg-white/40 backdrop-blur-3xl flex flex-col gap-4 rounded-[24px] p-6 border border-white/60 shadow-xl"
                 custom={1}
                 variants={cardVariants}
                 whileHover="hover"
               >
-                <div className='flex flex-col'>
-                  <motion.p className="text-secondary font-bold font-poppins text-xl mb-2" variants={nameVariants}>
-                    {t("Dr Islam Name")}
+                <div className="flex flex-col">
+                  <motion.p
+                    className="text-secondary font-bold font-poppins text-xl mb-2"
+                    variants={nameVariants}
+                  >
+                    {data[0]?.profile2_name}
                   </motion.p>
-                  <motion.p className="text-[#414141] uppercase font-semibold font-poppins text-sm leading-relaxed tracking-wider" variants={descriptionVariants}>
-                    {t("Dr Islam Description")}
+                  <motion.p
+                    className="text-[#414141] uppercase font-semibold font-poppins text-sm leading-relaxed tracking-wider"
+                    variants={descriptionVariants}
+                  >
+                    {data[0]?.profile2_description}
                   </motion.p>
                 </div>
               </motion.div>
@@ -275,12 +291,15 @@ export default function HairTherapyTeam() {
               whileHover="hover"
               className="flex justify-center order-3 h-full"
             >
-              <div className="relative w-full h-[400px] lg:h-[500px]">
+              <div className="relative rounded-full! w-full h-[400px] lg:h-[500px]">
                 <Image
-                  src="/SHAHD-IMAGE/hair-therapy/Image_fx (9) (1) 1.webp"
-                  alt="Doctor"
+                  src={
+                    data[0]?.profile2_image_url ||
+                    "/SHAHD-IMAGE/hair-therapy/Image_fx (9) (1) 1.webp"
+                  }
+                  alt={data[0]?.profile2_name}
                   fill
-                  className="object-contain object-bottom" // Changed to contain + bottom
+                  className="object-contain rounded-full! object-bottom" // Changed to contain + bottom
                   priority
                 />
               </div>
@@ -289,5 +308,5 @@ export default function HairTherapyTeam() {
         </motion.div>
       </motion.div>
     </motion.div>
-  )
+  );
 }

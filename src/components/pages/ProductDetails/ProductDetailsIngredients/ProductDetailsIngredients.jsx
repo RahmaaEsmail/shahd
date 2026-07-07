@@ -41,8 +41,20 @@ const ingredients = [
   },
 ]
 
-export default function ProductDetailsIngredients() {
+export default function ProductDetailsIngredients({ data }) {
   const { t } = useTranslation();
+
+  const rawIngredients = data?.ingredients || "";
+  const ingredientFocus = data?.ingredient_focus || "";
+
+  const resolvedIngredients = rawIngredients
+    ? rawIngredients.split(",").map((name, idx) => ({
+        id: idx + 1,
+        title: name.trim(),
+        sub_title: idx === 0 && ingredientFocus ? ingredientFocus : ""
+      }))
+    : ingredients;
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -86,7 +98,7 @@ export default function ProductDetailsIngredients() {
         </motion.p>
  
         <div className='flex flex-col gap-2 justify-center text-center items-center mt-3'>
-          {ingredients?.map((item, index) => (
+          {resolvedIngredients?.map((item, index) => (
             <motion.div
               key={item.id}
               initial={{ opacity: 0, x: -30 }}

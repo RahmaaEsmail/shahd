@@ -34,22 +34,29 @@ const data = [
 
 export default function WeightManagementChooseUs({ cardsData, mainData }) {
   const { t, i18n } = useTranslation();
-  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : "en";
 
-  const subtitle = mainData?.[`subtitle_${lang}`] || mainData?.subtitle_en || t("Why Choose Us?");
-  const title = mainData?.[`title_${lang}`] || mainData?.title_en || t("Why Choose Us Weight Desc 1");
-  const description = mainData?.[`description_${lang}`] || mainData?.description_en || t("Why Choose Us Weight Desc 2");
-  const centerImage = mainData?.image_url || "/SHAHD-IMAGE/Weight-management/Rectangle 21.webp";
+  const subtitle = mainData?.subtitle || t("Why Choose Us?");
+  const title = mainData?.title || t("Why Choose Us Weight Desc 1");
+  const description = mainData?.description || t("Why Choose Us Weight Desc 2");
+  const centerImage =
+    mainData?.image_url || "/SHAHD-IMAGE/Weight-management/Rectangle 21.webp";
 
   const isDynamic = cardsData && cardsData.length > 0;
   const resolvedCards = isDynamic
     ? cardsData.map((item, idx) => ({
         id: item.id || idx + 1,
-        img: item.image_url || "/SHAHD-IMAGE/Weight-management/Group 1597883563.webp",
-        title: item[`title_${lang}`] || item.title_en,
-        desc: item[`description_${lang}`] || item.description_en,
+        img:
+          item.image_url ||
+          "/SHAHD-IMAGE/Weight-management/Group 1597883563.webp",
+        title: item.title,
+        desc: item.description,
       }))
-    : data.map(item => ({
+    : data.map((item) => ({
         id: item.id,
         img: item.img,
         title: t(item.titleKey),
@@ -66,7 +73,8 @@ export default function WeightManagementChooseUs({ cardsData, mainData }) {
       whileInView={{ opacity: 1 }}
       viewport={{ once: false }}
       style={{
-        background: 'linear-gradient(181.13deg, #FFFFFF 1.07%, #FFEDEE 61.95%, #F8F1F1 99.15%)'
+        background:
+          "linear-gradient(181.13deg, #FFFFFF 1.07%, #FFEDEE 61.95%, #F8F1F1 99.15%)",
       }}
       transition={{ duration: 0.8 }}
       className="py-10  overflow-hidden"
@@ -107,7 +115,7 @@ export default function WeightManagementChooseUs({ cardsData, mainData }) {
             {description}
           </motion.p>
         </motion.div>
- 
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8  items-stretch">
           {/* Left Cards */}
           <motion.div
@@ -134,7 +142,7 @@ export default function WeightManagementChooseUs({ cardsData, mainData }) {
               </motion.div>
             ))}
           </motion.div>
- 
+
           {/* Center Image */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
@@ -156,7 +164,7 @@ export default function WeightManagementChooseUs({ cardsData, mainData }) {
               />
             </motion.div>
           </motion.div>
- 
+
           {/* Right Cards */}
           <motion.div
             initial={{ x: 100, opacity: 0 }}

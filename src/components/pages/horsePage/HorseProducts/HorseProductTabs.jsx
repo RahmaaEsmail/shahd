@@ -2,7 +2,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { horse_product_tabs } from '@/data/horseData';
 import { useTranslation } from 'react-i18next';
 
 // Tab animation variants
@@ -55,7 +54,7 @@ const activeIndicatorVariants = {
   }
 };
 
-export default function HorseProductsTabs({ setActiveTab, activeTab }) {
+export default function HorseProductsTabs({ setActiveTab, activeTab, tabs }) {
   const { t } = useTranslation();
   return (
     <motion.div
@@ -65,7 +64,7 @@ export default function HorseProductsTabs({ setActiveTab, activeTab }) {
       viewport={{ once: false, amount: 0.3 }}
       className="max-w-4xl flex gap-2 items-center justify-center mx-auto flex-wrap"
     >
-      {horse_product_tabs?.map(item => (
+      {tabs?.map(item => (
         <motion.button
           key={item?.id}
           variants={tabVariants}
@@ -82,27 +81,6 @@ export default function HorseProductsTabs({ setActiveTab, activeTab }) {
           )}
           onClick={() => setActiveTab(item?.id)}
         >
-          {/* Active background indicator */}
-          {/* {item?.id === activeTab && (
-            <motion.div
-              variants={activeIndicatorVariants}
-              initial="initial"
-              whileInView="active"
-              viewport={{ once: false, amount: 0.3 }}
-              className="absolute inset-0 bg-linear-to-r from-[#DDB2B5] to-[#EED2CD] -z-10"
-            />
-          )} */}
-
-          {/* Hover background effect for non-active tabs */}
-          {/* {item?.id !== activeTab && (
-            <motion.div
-              initial={{ x: "-100%" }}
-              whileHover={{ x: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="absolute inset-0 bg-linear-to-r from-[#DDB2B5] to-[#EED2CD] -z-10"
-            />
-          )} */}
-
           <span className="relative z-10">{t(item?.name)}</span>
         </motion.button>
       ))}

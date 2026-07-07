@@ -21,9 +21,9 @@ export default function HomeAbout({ data }) {
       ? data.map((item) => ({
           id: item.id,
           image: item.image_url,
-          label: item[`title_${lang}`] || item.title_en,
-          subtitle: item[`subtitle_${lang}`] || item.subtitle_en,
-          desc: item[`description_${lang}`] || item.description_en,
+          label: item.title,
+          subtitle: item.subtitle,
+          desc: item.description,
         }))
       : [
           {

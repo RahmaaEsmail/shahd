@@ -102,16 +102,10 @@ export default function WeightManagementNutritionFood({ data: backendData }) {
       ? "sk"
       : "en";
 
-  const subtitle =
-    backendData?.[`subtitle_${lang}`] || backendData?.subtitle_en || t("Nutrition & Food");
-  const title =
-    backendData?.[`title_${lang}`] ||
-    backendData?.title_en ||
-    t("Because real results start from within");
-  const description = backendData?.[`description_${lang}`] || backendData?.description_en;
-  const image =
-    backendData?.image_url ||
-    "/SHAHD-IMAGE/Weight-management/Gradient Mask Group.webp";
+  const subtitle = t("Nutrition & Food");
+  const title = t("Because real results start from within");
+  const description = data;
+  const image = "/SHAHD-IMAGE/Weight-management/Gradient Mask Group.webp";
 
   return (
     <motion.div
@@ -170,60 +164,50 @@ export default function WeightManagementNutritionFood({ data: backendData }) {
             variants={staggerContainer}
             className="flex flex-col gap-3 mt-4"
           >
-            {description ? (
+            {data?.map((item, index) => (
               <motion.div
+                key={item.id}
                 variants={fadeInRight}
-                className="text-base font-poppins text-[#414141] leading-relaxed select-none [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mb-2"
-                dangerouslySetInnerHTML={{ __html: description }}
-              />
-            ) : (
-              data?.map((item, index) => (
+                whileHover={{
+                  x: 10,
+                  transition: { type: "spring", stiffness: 300 },
+                }}
+                className="flex gap-4 items-start group"
+              >
                 <motion.div
-                  key={item.id}
-                  variants={fadeInRight}
+                  className="mt-1 shrink-0"
                   whileHover={{
-                    x: 10,
-                    transition: { type: "spring", stiffness: 300 },
+                    rotate: 360,
+                    scale: 1.1,
+                    transition: { duration: 0.6 },
                   }}
-                  className="flex gap-4 items-start group"
                 >
-                  <motion.div
-                    className="mt-1 shrink-0"
-                    whileHover={{
-                      rotate: 360,
-                      scale: 1.1,
-                      transition: { duration: 0.6 },
-                    }}
-                  >
-                    <Image
-                      src={
-                        "/SHAHD-IMAGE/Weight-management/Frame 1000005848.webp"
-                      }
-                      alt="icon"
-                      height={32}
-                      width={32}
-                      className="w-7 h-7 md:w-8 md:h-8"
-                    />
-                  </motion.div>
-                  <div className="flex-1">
-                    <motion.h4
-                      className="text-lg md:text-xl  font-medium text-[#414141] mb-1 md:mb-2"
-                      whileHover={{ color: "#95BCAA" }}
-                    >
-                      {t(item.titleKey)}
-                    </motion.h4>
-                    <motion.p
-                      className="text-sm  font-light font-poppins text-[#414141]/90 leading-relaxed"
-                      initial={{ opacity: 0.8 }}
-                      whileInView={{ opacity: 1 }}
-                      transition={{ delay: 0.3 + index * 0.1 }}
-                    >
-                      {t(item.descKey)}
-                    </motion.p>
-                  </div>
+                  <Image
+                    src={"/SHAHD-IMAGE/Weight-management/Frame 1000005848.webp"}
+                    alt="icon"
+                    height={32}
+                    width={32}
+                    className="w-7 h-7 md:w-8 md:h-8"
+                  />
                 </motion.div>
-              ))
-            )}
+                <div className="flex-1">
+                  <motion.h4
+                    className="text-lg md:text-xl  font-medium text-[#414141] mb-1 md:mb-2"
+                    whileHover={{ color: "#95BCAA" }}
+                  >
+                    {t(item.titleKey)}
+                  </motion.h4>
+                  <motion.p
+                    className="text-sm  font-light font-poppins text-[#414141]/90 leading-relaxed"
+                    initial={{ opacity: 0.8 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ delay: 0.3 + index * 0.1 }}
+                  >
+                    {t(item.descKey)}
+                  </motion.p>
+                </div>
+              </motion.div>
+            ))}
           </motion.div>
         </motion.div>
 

@@ -6,38 +6,45 @@ import HairTherapyBeforeAfterHeader from "./HairTherapyBeforeAfterHeader";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const staticTreatments = [
   {
     id: 1,
     titleKey: "Non Surgical Nose",
     descriptionKey: "Non Surgical Nose Desc",
-    before_img: "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
-    after_img: "/SHAHD-IMAGE/homebefore/0402d70a66c38d6594b9a42587cf70e03e81233f.webp",
-    thumbnail: "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
+    before_img:
+      "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
+    after_img:
+      "/SHAHD-IMAGE/homebefore/0402d70a66c38d6594b9a42587cf70e03e81233f.webp",
+    thumbnail:
+      "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
   },
   {
     id: 2,
     titleKey: "Lip Enhancement",
     descriptionKey: "Lip Enhancement Desc",
-    before_img: "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
+    before_img:
+      "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
     after_img: "/SHAHD-IMAGE/homebefore/mainImg.webp",
-    thumbnail: "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
+    thumbnail:
+      "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
   },
   {
     id: 4,
     titleKey: "Facial Contouring",
     descriptionKey: "Facial Contouring Desc",
     before_img: "/SHAHD-IMAGE/homebefore/mainImg.webp",
-    after_img: "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
+    after_img:
+      "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
     thumbnail: "/SHAHD-IMAGE/homebefore/mainImg.webp",
   },
   {
     id: 5,
     titleKey: "Hair Restoration",
     descriptionKey: "Hair Restoration Desc",
-    before_img: "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
+    before_img:
+      "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
     after_img: "/SHAHD-IMAGE/homebefore/mainImg.webp",
     thumbnail: "/SHAHD-IMAGE/homebefore/mainImg.webp",
   },
@@ -46,23 +53,29 @@ const staticTreatments = [
     titleKey: "Botox Treatment",
     descriptionKey: "Botox Treatment Desc",
     before_img: "/SHAHD-IMAGE/homebefore/mainImg.webp",
-    after_img: "/SHAHD-IMAGE/homebefore/0402d70a66c38d6594b9a42587cf70e03e81233f.webp",
-    thumbnail: "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
+    after_img:
+      "/SHAHD-IMAGE/homebefore/0402d70a66c38d6594b9a42587cf70e03e81233f.webp",
+    thumbnail:
+      "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
   },
   {
     id: 7,
     titleKey: "Laser Therapy",
     descriptionKey: "Laser Therapy Desc",
-    before_img: "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
-    after_img: "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
+    before_img:
+      "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
+    after_img:
+      "/SHAHD-IMAGE/homebefore/360192f749c1a01a3084ceeb2712b040de2415a4.webp",
     thumbnail: "/SHAHD-IMAGE/homebefore/mainImg.webp",
   },
   {
     id: 8,
     titleKey: "Chemical Peel",
     descriptionKey: "Chemical Peel Desc",
-    before_img: "/SHAHD-IMAGE/homebefore/0402d70a66c38d6594b9a42587cf70e03e81233f.webp",
-    after_img: "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
+    before_img:
+      "/SHAHD-IMAGE/homebefore/0402d70a66c38d6594b9a42587cf70e03e81233f.webp",
+    after_img:
+      "/SHAHD-IMAGE/homebefore/51d5b6c661c3da2fa95e8b494d25ea05fa35334b.webp",
     thumbnail: "/SHAHD-IMAGE/homebefore/mainImg.webp",
   },
 ];
@@ -77,16 +90,20 @@ export default function HairTherapyBeforeAfter({ data }) {
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const treatments = data && data.length > 0
-    ? data.map(item => ({
-        id: item.id,
-        title: item[`title_${lang}`] || item.title_en || "",
-        description: item[`description_${lang}`] || item.description_en || "",
-        before_img: item.image_url || "/SHAHD-IMAGE/homebefore/mainImg.webp",
-        after_img: item.image_url || "/SHAHD-IMAGE/homebefore/mainImg.webp",
-        thumbnail: item.image_url || "/SHAHD-IMAGE/homebefore/mainImg.webp"
-      }))
-    : staticTreatments;
+  const treatments =
+    data && data.length > 0
+      ? data.map((item) => ({
+          id: item.id,
+          title: item.title || "",
+          description: item.description || "",
+          before_img:
+            item.before_image_url || "/SHAHD-IMAGE/homebefore/mainImg.webp",
+          after_img:
+            item.after_image_url || "/SHAHD-IMAGE/homebefore/mainImg.webp",
+          thumbnail:
+            item.before_image_url || "/SHAHD-IMAGE/homebefore/mainImg.webp",
+        }))
+      : staticTreatments;
 
   const activeTreatment = treatments[activeIndex] || treatments[0] || {};
 

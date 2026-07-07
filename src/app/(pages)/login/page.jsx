@@ -1,15 +1,80 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Image from "next/image";
-
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import { useLogin } from "@/hooks/auth/useAuth";
+import Swal from "sweetalert2";
+import { config } from "@/api/config";
 
 export default function LoginPage() {
   const { t } = useTranslation();
+  const router = useRouter();
+  const loginMutation = useLogin();
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!formData.email || !formData.password) {
+      Swal.fire({
+        icon: "error",
+        title: t("Error"),
+        text: t("Please fill in all fields"),
+      });
+      return;
+    }
+
+    loginMutation.mutate(formData, {
+      onSuccess: (data) => {
+        if (data.status === "success") {
+          const token = data?.token || data?.data?.token || data?.data;
+          const user = data?.user || data?.data?.user || data?.data;
+
+          localStorage.setItem(config.localStorageTokenName, typeof token === "string" ? token : "dummy-token");
+          localStorage.setItem(config.localStorageUserData, JSON.stringify(user));
+
+          Swal.fire({
+            icon: "success",
+            title: t("Success"),
+            text: t("Login successful!"),
+            timer: 1500,
+            showConfirmButton: false,
+          }).then(() => {
+            router.push("/");
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: t("Error"),
+            text: data.message || t("Login failed"),
+          });
+        }
+      },
+      onError: (error) => {
+        Swal.fire({
+          icon: "error",
+          title: t("Error"),
+          text: error?.response?.data?.message || error?.message || t("Something went wrong"),
+        });
+      },
+    });
+  };
+
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -30,16 +95,12 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen relative flex items-center justify-center py-12 px-4 sm:px-6  lg:px-8 overflow-hidden">
       {/* Background with decorative elements */}
-      {/* Background with decorative elements */}
-<div 
-  className="absolute inset-0 z-0 bg-cover bg-center opacity-40 bg-no-repeat"
-  style={{
-    backgroundImage: `url("/SHAHD-IMAGE/Untitled design.png")`
-  }}
->
-  {/* <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px]" />
-  <div className="absolute bottom-[-10%] left-[-5%] w-[40%] h-[40%] bg-secondary/5 rounded-full blur-[120px]" /> */}
-</div>
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center opacity-40 bg-no-repeat"
+        style={{
+          backgroundImage: `url("/SHAHD-IMAGE/Untitled design.png")`
+        }}
+      />
 
       {/* Main Content */}
       <motion.div
@@ -72,11 +133,14 @@ export default function LoginPage() {
           </div>
 
           {/* Form */}
-          <form className="w-full space-y-6">
+          <form onSubmit={handleSubmit} className="w-full space-y-6">
             <motion.div variants={itemVariants} className="space-y-2">
               <label className="text-primary font-poppins font-medium text-sm ml-1">{t('Email Address')}</label>
               <Input 
                 type="email" 
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 placeholder={t('name@example.com')}
                 className="rounded-2xl border-primary/20 focus-visible:ring-primary/30 h-12 bg-white/50"
               />
@@ -91,6 +155,9 @@ export default function LoginPage() {
               </div>
               <Input 
                 type="password" 
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
                 placeholder="••••••••"
                 className="rounded-2xl border-primary/20 focus-visible:ring-primary/30 font-poppins text-primary h-12 bg-white/50"
               />
@@ -98,9 +165,11 @@ export default function LoginPage() {
 
             <motion.div variants={itemVariants} className="pt-4">
               <Button 
+                type="submit"
+                disabled={loginMutation.isPending}
                 className="w-full h-14 rounded-2xl text-lg font-poppins font-semibold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
-                {t('Sign In')}
+                {loginMutation.isPending ? t('Signing In...') : t('Sign In')}
               </Button>
             </motion.div>
           </form>
@@ -117,9 +186,6 @@ export default function LoginPage() {
 
         </div>
       </motion.div>
-
-      {/* Decorative stars/spots like in the banner */}
-     
     </div>
   );
 }

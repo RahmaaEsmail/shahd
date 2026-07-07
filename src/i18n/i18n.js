@@ -32,4 +32,13 @@ i18n
     }
   });
 
+
+i18n.on('languageChanged', (lng) => {
+  // Option A: If using standard Next.js / React Router, force a clean state refresh
+  window.location.reload(); 
+  
+  // Option B: If you prefer a soft state reset without a hard page reload:
+  // router.refresh(); (Next.js App Router)
+});
+
 export default i18n;

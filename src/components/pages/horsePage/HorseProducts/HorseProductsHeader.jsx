@@ -28,7 +28,7 @@ const itemVariants = {
   }
 };
 
-export default function HorseProductsHeader({ setActiveTab, activeTab }) {
+export default function HorseProductsHeader({ setActiveTab, activeTab, tabs }) {
   const { t } = useTranslation();
   return (
     <motion.div
@@ -59,7 +59,7 @@ export default function HorseProductsHeader({ setActiveTab, activeTab }) {
       </motion.h3>
 
       <motion.div variants={itemVariants}>
-        <HorseProductsTabs setActiveTab={setActiveTab} activeTab={activeTab} />
+        <HorseProductsTabs setActiveTab={setActiveTab} activeTab={activeTab} tabs={tabs} />
       </motion.div>
     </motion.div>
   )

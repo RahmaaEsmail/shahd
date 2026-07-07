@@ -1,6 +1,6 @@
 "use client";
-import { motion } from 'framer-motion'
-import { useTranslation } from 'react-i18next';
+import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 // Animation variants
 const containerVariants = {
@@ -10,10 +10,10 @@ const containerVariants = {
     transition: {
       staggerChildren: 0.15,
       delayChildren: 0.2,
-      duration: 0.8
-    }
-  }
-}
+      duration: 0.8,
+    },
+  },
+};
 
 const titleVariants = {
   hidden: { y: -50, opacity: 0 },
@@ -24,16 +24,16 @@ const titleVariants = {
       type: "spring",
       stiffness: 100,
       damping: 12,
-      duration: 0.6
-    }
-  }
-}
+      duration: 0.6,
+    },
+  },
+};
 
 const cardVariants = {
   hidden: {
     y: 100,
     opacity: 0,
-    scale: 0.9
+    scale: 0.9,
   },
   visible: {
     y: 0,
@@ -44,8 +44,8 @@ const cardVariants = {
       stiffness: 80,
       damping: 15,
       delay: 0.3,
-      duration: 0.8
-    }
+      duration: 0.8,
+    },
   },
   hover: {
     scale: 1.02,
@@ -53,10 +53,10 @@ const cardVariants = {
     transition: {
       type: "spring",
       stiffness: 400,
-      damping: 15
-    }
-  }
-}
+      damping: 15,
+    },
+  },
+};
 
 const textVariants = {
   hidden: { opacity: 0 },
@@ -64,10 +64,10 @@ const textVariants = {
     opacity: 1,
     transition: {
       staggerChildren: 0.08,
-      delayChildren: 0.5
-    }
-  }
-}
+      delayChildren: 0.5,
+    },
+  },
+};
 
 const lineVariants = {
   hidden: { y: 20, opacity: 0 },
@@ -78,16 +78,20 @@ const lineVariants = {
       type: "spring",
       stiffness: 100,
       damping: 12,
-      delay: 0.6 + custom * 0.1
-    }
-  })
-}
+      delay: 0.6 + custom * 0.1,
+    },
+  }),
+};
 
 export default function BookWrite({ data }) {
   const { t, i18n } = useTranslation();
-  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : "en";
 
-  const content = data?.[`content_${lang}`] || data?.content_en;
+  const content = data?.content;
 
   // Split the text into lines for staggered animation
   const lines = [
@@ -98,12 +102,12 @@ export default function BookWrite({ data }) {
     t("Book Write Line 5"),
     t("Book Write Line 6"),
     t("Book Write Line 7"),
-    t("Book Write Line 8")
+    t("Book Write Line 8"),
   ];
 
   return (
     <motion.div
-      className='mt-6'
+      className="mt-6"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
@@ -164,12 +168,16 @@ export default function BookWrite({ data }) {
                 className="font-poppins capitalize text-[#414141] mx-auto text-base lg:text-lg tracking-tight lg:tracking-[-0.3px] mb-4 lg:mb-0 leading-relaxed lg:leading-7"
               >
                 {line}
-                {index < lines.length - 1 && <span className="hidden lg:inline"><br /></span>}
+                {index < lines.length - 1 && (
+                  <span className="hidden lg:inline">
+                    <br />
+                  </span>
+                )}
               </motion.p>
             ))
           )}
         </motion.div>
       </motion.div>
     </motion.div>
-  )
-} 
+  );
+}
