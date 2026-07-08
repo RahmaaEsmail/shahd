@@ -209,7 +209,7 @@ export default function StoreSwiper({ data }) {
               whileInView={"visible"}
               viewport={{ once: false }}
               whileHover="hover"
-              className="relative w-full h-[250px] overflow-hidden rounded-[32px] md:rounded-[52px] group cursor-pointer"
+              className="relative w-full h-[270px] overflow-hidden rounded-[32px] md:rounded-[52px] group cursor-pointer"
             >
               <motion.div
                 initial={{ scale: 1.1 }}

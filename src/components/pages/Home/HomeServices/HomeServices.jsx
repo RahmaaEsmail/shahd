@@ -1742,7 +1742,7 @@ function getMobileLabelClass(hotspot, isRTL) {
   return "-left-[118px] top-1 sm:-left-[145px] sm:top-1";
 }
 
-export default function HomeServices() {
+export default function HomeServices({ data }) {
   const { t, i18n } = useTranslation();
   const isRTL = isRtlLanguage(i18n.resolvedLanguage || i18n.language);
   const direction = isRTL ? "rtl" : "ltr";
@@ -1758,11 +1758,22 @@ export default function HomeServices() {
 
   const { data: servicesResponse, isLoading } = useGetHomeServices(params);
   console.log("servicesResponse", servicesResponse);
-  const lang = i18n.language?.startsWith("ar") ? "ar" : "en";
-  const titleField = `title_${lang}`;
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : i18n.language?.startsWith("de")
+        ? "de"
+        : "en";
+  const titleField = `label_${lang}`;
 
   const mappedServices = React.useMemo(() => {
-    const rawServices = servicesResponse?.data || [];
+    const sourceData = servicesResponse?.data || data;
+    const rawServices =
+      sourceData?.[activeTab] ||
+      sourceData?.all ||
+      (Array.isArray(sourceData) ? sourceData : []);
+
     if (!rawServices.length) {
       return servicesData[activeTab] || [];
     }
@@ -1795,7 +1806,12 @@ export default function HomeServices() {
         const pos = getPositionDataForHoverKey(hk);
         grouped[hk] = {
           id: hoverKeyToIdMap[hk] || 99,
-          title: item[titleField] || item.title_en || item.title || "",
+          title:
+            item[titleField] ||
+            item.label_en ||
+            item.label_ar ||
+            item.title ||
+            "",
           hoverKey: hk,
           side: pos.side,
           top: pos.top,
@@ -1804,12 +1820,17 @@ export default function HomeServices() {
       }
       grouped[hk].images.push({
         img: item.image_url || item.image || "",
-        title: item[titleField] || item.title_en || item.title || "",
+        title:
+          item[titleField] ||
+          item.label_en ||
+          item.label_ar ||
+          item.title ||
+          "",
       });
     });
 
     return Object.values(grouped);
-  }, [servicesResponse, activeTab, titleField]);
+  }, [servicesResponse, data, activeTab, titleField]);
 
   const currentKey = selectedKey || hoveredKey;
   const isAllView = currentKey === "all";
@@ -1857,7 +1878,7 @@ export default function HomeServices() {
     resetActiveService();
   };
 
-  if (isLoading) {
+  if (isLoading && !data) {
     return (
       <div className="min-h-screen bg-[#FFF9F7] flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>

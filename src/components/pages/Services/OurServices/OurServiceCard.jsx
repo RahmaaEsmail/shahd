@@ -41,9 +41,7 @@ export default function OurServiceCard({ item }) {
             style={{ backgroundColor: item?.bgColor }}
             className="w-fit px-4 h-10 flex justify-center font-poppins uppercase items-center rounded-full text-black text-xs font-medium"
           >
-            {t(item?.type + " Tab") !== item?.type + " Tab"
-              ? t(item?.type + " Tab")
-              : t(item?.type)}
+            {item?.label || item?.type}
           </div>
 
           <motion.div
@@ -64,7 +62,7 @@ export default function OurServiceCard({ item }) {
             {item?.title}
           </motion.h2>
           <p className="font-poppins text-sm  line-clamp-3 lg:text-base text-gray-400 font-light">
-            {t(item?.desc)}
+            {item?.description}
           </p>
         </div>
       </div>

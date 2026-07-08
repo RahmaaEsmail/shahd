@@ -1,23 +1,23 @@
 "use client";
-import React, { useRef } from 'react';
-import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import { motion } from 'framer-motion';
-import { Sparkles } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import React, { useRef } from "react";
+import Image from "next/image";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { motion } from "framer-motion";
+import { Sparkles } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 // Swiper Styles
-import 'swiper/css';
-import { useRouter } from 'next/navigation';
+import "swiper/css";
+import { useRouter } from "next/navigation";
 
-const data = [
-  { id: 1, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/SHAHD-IMAGE/product-details/Rectangle 34.webp" },
-  { id: 2, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/SHAHD-IMAGE/product-details/Rectangle 34.webp" },
-  { id: 3, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/SHAHD-IMAGE/product-details/Rectangle 34.webp" },
-  { id: 4, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/SHAHD-IMAGE/product-details/Rectangle 34.webp" },
-  { id: 5, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/SHAHD-IMAGE/product-details/Rectangle 34.webp" }
-];
+// const data = [
+//   { id: 1, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/SHAHD-IMAGE/product-details/Rectangle 34.webp" },
+//   { id: 2, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/SHAHD-IMAGE/product-details/Rectangle 34.webp" },
+//   { id: 3, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/SHAHD-IMAGE/product-details/Rectangle 34.webp" },
+//   { id: 4, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/SHAHD-IMAGE/product-details/Rectangle 34.webp" },
+//   { id: 5, title: "Gentle Foaming Cleanser", desc: "Balance & prep the skin", price: "23.00 S.R", img: "/SHAHD-IMAGE/product-details/Rectangle 34.webp" }
+// ];
 
 // Animation Variants
 const containerVariants = {
@@ -27,9 +27,9 @@ const containerVariants = {
     transition: {
       duration: 0.8,
       when: "beforeChildren",
-      staggerChildren: 0.2
-    }
-  }
+      staggerChildren: 0.2,
+    },
+  },
 };
 
 const headerVariants = {
@@ -40,9 +40,9 @@ const headerVariants = {
     transition: {
       type: "spring",
       stiffness: 100,
-      damping: 20
-    }
-  }
+      damping: 20,
+    },
+  },
 };
 
 const titleVariants = {
@@ -53,17 +53,17 @@ const titleVariants = {
     transition: {
       type: "spring",
       stiffness: 200,
-      damping: 20
-    }
+      damping: 20,
+    },
   },
   hover: {
     scale: 1.02,
     color: "#DDB2B5",
     transition: {
       type: "spring",
-      stiffness: 400
-    }
-  }
+      stiffness: 400,
+    },
+  },
 };
 
 const subtitleVariants = {
@@ -75,16 +75,16 @@ const subtitleVariants = {
       type: "spring",
       stiffness: 200,
       damping: 20,
-      delay: 0.1
-    }
-  }
+      delay: 0.1,
+    },
+  },
 };
 
 const cardVariants = {
   hidden: {
     opacity: 0,
     scale: 0.8,
-    y: 50
+    y: 50,
   },
   visible: (index) => ({
     opacity: 1,
@@ -94,8 +94,8 @@ const cardVariants = {
       type: "spring",
       stiffness: 200,
       damping: 20,
-      delay: index * 0.15
-    }
+      delay: index * 0.15,
+    },
   }),
   hover: {
     scale: 1.02,
@@ -104,9 +104,9 @@ const cardVariants = {
     transition: {
       type: "spring",
       stiffness: 400,
-      damping: 10
-    }
-  }
+      damping: 10,
+    },
+  },
 };
 
 const imageVariants = {
@@ -116,9 +116,9 @@ const imageVariants = {
     transition: {
       type: "spring",
       stiffness: 300,
-      damping: 10
-    }
-  }
+      damping: 10,
+    },
+  },
 };
 
 const textVariants = {
@@ -128,17 +128,17 @@ const textVariants = {
     x: 0,
     transition: {
       type: "spring",
-      stiffness: 200
-    }
+      stiffness: 200,
+    },
   },
   hover: {
     color: "#DDB2B5",
     x: 5,
     transition: {
       type: "spring",
-      stiffness: 400
-    }
-  }
+      stiffness: 400,
+    },
+  },
 };
 
 const buttonVariants = {
@@ -149,8 +149,8 @@ const buttonVariants = {
     transition: {
       type: "spring",
       stiffness: 200,
-      delay: 0.2
-    }
+      delay: 0.2,
+    },
   },
   hover: {
     scale: 1.05,
@@ -161,12 +161,12 @@ const buttonVariants = {
     transition: {
       type: "spring",
       stiffness: 400,
-      damping: 10
-    }
+      damping: 10,
+    },
   },
   tap: {
-    scale: 0.95
-  }
+    scale: 0.95,
+  },
 };
 
 const priceVariants = {
@@ -177,20 +177,18 @@ const priceVariants = {
     transition: {
       type: "spring",
       stiffness: 300,
-      delay: 0.1
-    }
+      delay: 0.1,
+    },
   },
   hover: {
     scale: 1.1,
     color: "#DDB2B5",
     transition: {
       type: "spring",
-      stiffness: 400
-    }
-  }
+      stiffness: 400,
+    },
+  },
 };
-
-
 
 const sparkleVariants = {
   animate: {
@@ -200,13 +198,13 @@ const sparkleVariants = {
     transition: {
       duration: 3,
       repeat: Infinity,
-      ease: "easeInOut"
-    }
-  }
+      ease: "easeInOut",
+    },
+  },
 };
 
-export default function ProductDetailsRoutine() {
-  const { t , i18n } = useTranslation();
+export default function ProductDetailsRoutine({ data }) {
+  const { t, i18n } = useTranslation();
   const swiperRef = useRef(null);
   const router = useRouter();
   return (
@@ -237,26 +235,26 @@ export default function ProductDetailsRoutine() {
       {/* Header Section */}
       <motion.div
         variants={headerVariants}
-        className={`mb-8 px-6 text-center md:${i18n?.language == "ar" ? "text-right" :"text-left"}`}
+        className={`mb-8 px-6 text-center md:${i18n?.language == "ar" ? "text-right" : "text-left"}`}
       >
         <motion.div className="relative inline-block">
           <motion.h4
             variants={titleVariants}
             whileHover="hover"
-            className={`text-primary text-4xl  font-normal leading-tight relative z-10 ${i18n?.language == "ar" ? "text-right" :"text-left"}`}
+            className={`text-primary text-4xl  font-normal leading-tight relative z-10 ${i18n?.language == "ar" ? "text-right" : "text-left"}`}
           >
-            {t('build a routine')}
+            {t("build a routine")}
           </motion.h4>
         </motion.div>
- 
+
         <motion.p
           variants={subtitleVariants}
-          className={`font-medium font-poppins text-sm md:text-base text-[#414141] mt-2 max-w-2xl mx-auto md:mx-0 ${i18n?.language =="ar" ? "text-right" :"text-left"}`}
+          className={`font-medium font-poppins text-sm md:text-base text-[#414141] mt-2 max-w-2xl mx-auto md:mx-0 ${i18n?.language == "ar" ? "text-right" : "text-left"}`}
         >
-          {t('For optimal skin results, pair this cleanser with:')}
+          {t("For optimal skin results, pair this cleanser with:")}
         </motion.p>
       </motion.div>
- 
+
       {/* Routine Carousel */}
       <div className="relative px-4 md:px-8">
         <Swiper
@@ -272,13 +270,14 @@ export default function ProductDetailsRoutine() {
           }}
           className="pb-12 md:pb-16"
         >
-          {data.map((item, index) => (
-            <SwiperSlide key={item.id}>
+          {data?.data?.routines.map((item, index) => (
+            <SwiperSlide key={item.routine}>
               <motion.div
                 custom={index}
+                onClick={() => router.push(`/routine/${item.routine}`)}
                 variants={cardVariants}
                 whileHover="hover"
-                className="p-5 md:p-6 rounded-[28px] md:rounded-[32px] transition-all duration-300 bg-white hover:bg-linear-to-br from-white to-pink-50 border border-gray-100 h-full"
+                className="p-5 md:p-6 rounded-[28px] md:rounded-[32px] transition-all duration-300 bg-white hover:bg-linear-to-br from-white to-pink-50 border border-gray-100 h-full cursor-pointer"
               >
                 <div className="flex flex-col sm:grid sm:grid-cols-2 gap-4 items-center h-full">
                   {/* Image Container */}
@@ -291,13 +290,13 @@ export default function ProductDetailsRoutine() {
                       className="w-full h-full"
                     >
                       <Image
-                        src={item.img}
-                        alt={item.title}
+                        src={item.routine_image}
+                        alt={item.routine_title}
                         fill
-                        className='rounded-[20px] md:rounded-[24px] border border-primary/30 object-cover'
+                        className="rounded-[20px] md:rounded-[24px] border border-primary/30 object-cover"
                       />
                     </motion.div>
- 
+
                     {/* Image Overlay */}
                     <motion.div
                       initial={{ opacity: 0 }}
@@ -305,41 +304,41 @@ export default function ProductDetailsRoutine() {
                       className="absolute inset-0 bg-primary"
                     />
                   </motion.div>
- 
+
                   {/* Content */}
                   <motion.div
-                    className='flex flex-col justify-between h-full gap-3 md:gap-4 w-full text-center sm:text-left'
+                    className="flex flex-col justify-between h-full gap-3 md:gap-4 w-full text-center sm:text-left"
                     variants={{
                       hover: {
                         transition: {
-                          staggerChildren: 0.05
-                        }
-                      }
+                          staggerChildren: 0.05,
+                        },
+                      },
                     }}
                   >
                     <div>
                       <motion.h4
                         variants={textVariants}
-                        className='text-lg md:text-xl font-medium leading-snug text-[#4D3E3F] mb-1'
+                        className="text-lg md:text-xl font-medium leading-snug text-[#4D3E3F] mb-1"
                       >
-                        {t(item.title)}
+                        {t(item.routine_title)}
                       </motion.h4>
                       <motion.p
                         variants={textVariants}
-                        className='text-xs md:text-sm font-poppins text-[#6A6A6A]'
+                        className="text-xs md:text-sm font-poppins text-[#6A6A6A]"
                       >
-                        {t(item.desc)}
+                        {t(item.routine_des)}
                       </motion.p>
                     </div>
- 
+
                     <motion.p
                       variants={priceVariants}
                       whileHover="hover"
-                      className='text-xl md:text-2xl font-poppins text-primary font-semibold'
+                      className="text-xl md:text-2xl font-poppins text-primary font-semibold"
                     >
                       {t(item.price)}
                     </motion.p>
- 
+
                     <motion.button
                       onClick={() => router.push("/cart")}
                       variants={buttonVariants}
@@ -347,14 +346,14 @@ export default function ProductDetailsRoutine() {
                       whileInView="visible"
                       whileHover="hover"
                       whileTap="tap"
-                      className='rounded-full py-2.5 px-4 w-full border border-primary text-sm md:text-base font-medium text-[#414141] flex items-center justify-center gap-2 hover:text-white transition-all overflow-hidden'
+                      className="rounded-full py-2.5 px-4 w-full border border-primary text-sm md:text-base font-medium text-[#414141] flex items-center justify-center gap-2 hover:text-white transition-all overflow-hidden"
                     >
                       <motion.span
                         whileHover={{ x: 5 }}
                         transition={{ type: "spring", stiffness: 400 }}
                         className="flex items-center gap-2"
                       >
-                        {t('Add To Cart')}
+                        {t("Add To Cart")}
                       </motion.span>
                     </motion.button>
                   </motion.div>
@@ -367,47 +366,47 @@ export default function ProductDetailsRoutine() {
 
       {/* Custom Styles */}
       <style jsx global>{`
-        .swiper-button-next, 
-        .swiper-button-prev { 
-          color: #DDB2B5 !important;
+        .swiper-button-next,
+        .swiper-button-prev {
+          color: #ddb2b5 !important;
           background: white;
           width: 40px !important;
           height: 40px !important;
           border-radius: 50%;
           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        
-        .swiper-button-next:after, 
+
+        .swiper-button-next:after,
         .swiper-button-prev:after {
           font-size: 16px !important;
         }
-        
-        .swiper-button-next:hover, 
+
+        .swiper-button-next:hover,
         .swiper-button-prev:hover {
-          background: #DDB2B5;
+          background: #ddb2b5;
           color: white !important;
         }
-        
+
         .swiper-pagination-bullet {
           width: 10px;
           height: 10px;
-          background: #DDB2B5;
+          background: #ddb2b5;
           opacity: 0.5;
           transition: all 0.3s ease;
         }
-        
+
         .swiper-pagination-bullet-active {
           opacity: 1;
           width: 30px;
           border-radius: 5px;
-          background: #DDB2B5;
+          background: #ddb2b5;
         }
-        
+
         .swiper-pagination-bullet:hover {
           opacity: 1;
           transform: scale(1.2);
         }
       `}</style>
     </motion.section>
-  )
+  );
 }

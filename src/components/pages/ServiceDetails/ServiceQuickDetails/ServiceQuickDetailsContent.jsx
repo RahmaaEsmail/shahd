@@ -1,68 +1,68 @@
 "use client";
-import React from 'react'
-import { motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
-import { useTranslation } from 'react-i18next';
+import React from "react";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 // Animation Variants
 const containerVariants = {
-  hidden: { opacity: 0 , x : 20},
+  hidden: { opacity: 0, x: 20 },
   visible: {
     opacity: 1,
-    x:0,
+    x: 0,
     transition: {
       staggerChildren: 0.2,
-      delayChildren: 0.3
-    }
-  }
+      delayChildren: 0.3,
+    },
+  },
 };
 
 const itemVariants = {
-  hidden: { 
-    opacity: 0, 
+  hidden: {
+    opacity: 0,
     y: 30,
-    scale: 0.9
+    scale: 0.9,
   },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
+  visible: {
+    opacity: 1,
+    y: 0,
     scale: 1,
     transition: {
       type: "spring",
       stiffness: 100,
       damping: 12,
-      duration: 0.6
-    }
-  }
+      duration: 0.6,
+    },
+  },
 };
 
 const headerVariants = {
-  hidden: { 
-    opacity: 0, 
+  hidden: {
+    opacity: 0,
     x: -50,
-    skewX: -10
+    skewX: -10,
   },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     x: 0,
     skewX: 0,
     transition: {
       type: "spring",
       stiffness: 100,
       damping: 15,
-      duration: 0.8
-    }
-  }
+      duration: 0.8,
+    },
+  },
 };
 
 const paragraphVariants = {
-  hidden: { 
-    opacity: 0, 
+  hidden: {
+    opacity: 0,
     y: 20,
-    scale: 0.95
+    scale: 0.95,
   },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     scale: 1,
     transition: {
@@ -70,26 +70,26 @@ const paragraphVariants = {
       stiffness: 80,
       damping: 12,
       delay: 0.2,
-      duration: 0.7
-    }
-  }
+      duration: 0.7,
+    },
+  },
 };
 
 const subHeaderVariants = {
-  hidden: { 
-    opacity: 0, 
-    x: -30
+  hidden: {
+    opacity: 0,
+    x: -30,
   },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     x: 0,
     transition: {
       type: "spring",
       stiffness: 100,
       damping: 15,
-      delay: 0.3
-    }
-  }
+      delay: 0.3,
+    },
+  },
 };
 
 const detailCardVariants = {
@@ -98,7 +98,7 @@ const detailCardVariants = {
     scale: 0.8,
     y: 50,
     rotateY: index % 2 === 0 ? -30 : 30,
-    x: index % 2 === 0 ? -50 : 50
+    x: index % 2 === 0 ? -50 : 50,
   }),
   visible: {
     opacity: 1,
@@ -110,8 +110,8 @@ const detailCardVariants = {
       type: "spring",
       stiffness: 120,
       damping: 12,
-      duration: 0.8
-    }
+      duration: 0.8,
+    },
   },
   hover: {
     // scale: 1.05,
@@ -121,18 +121,18 @@ const detailCardVariants = {
     transition: {
       type: "spring",
       stiffness: 400,
-      damping: 10
-    }
-  }
+      damping: 10,
+    },
+  },
 };
 
 const priceVariants = {
-  hidden: { 
+  hidden: {
     opacity: 0,
     scale: 0.5,
-    x: -50
+    x: -50,
   },
-  visible: { 
+  visible: {
     opacity: 1,
     scale: 1,
     x: 0,
@@ -140,41 +140,41 @@ const priceVariants = {
       type: "spring",
       stiffness: 200,
       damping: 15,
-      delay: 0.6
-    }
+      delay: 0.6,
+    },
   },
   hover: {
     // scale: 1.1,
     color: "#6B4E4F",
     transition: {
       type: "spring",
-      stiffness: 400
-    }
-  }
+      stiffness: 400,
+    },
+  },
 };
 
 const priceTextVariants = {
-  hidden: { 
+  hidden: {
     opacity: 0,
-    x: -20
+    x: -20,
   },
-  visible: { 
+  visible: {
     opacity: 1,
     x: 0,
     transition: {
       delay: 0.7,
-      duration: 0.5
-    }
-  }
+      duration: 0.5,
+    },
+  },
 };
 
 const buttonVariants = {
-  hidden: { 
+  hidden: {
     opacity: 0,
     y: 30,
-    scale: 0.8
+    scale: 0.8,
   },
-  visible: { 
+  visible: {
     opacity: 1,
     y: 0,
     scale: 1,
@@ -182,20 +182,20 @@ const buttonVariants = {
       type: "spring",
       stiffness: 100,
       damping: 12,
-      delay: 0.8
-    }
+      delay: 0.8,
+    },
   },
   hover: {
     transition: {
       type: "spring",
       stiffness: 400,
-      damping: 10
-    }
+      damping: 10,
+    },
   },
   tap: {
     scale: 0.95,
-    boxShadow: "0 5px 15px rgba(77, 62, 63, 0.2)"
-  }
+    boxShadow: "0 5px 15px rgba(77, 62, 63, 0.2)",
+  },
 };
 
 const labelVariants = {
@@ -204,10 +204,10 @@ const labelVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      delay: 0.4 + (i * 0.1),
-      duration: 0.4
-    }
-  })
+      delay: 0.4 + i * 0.1,
+      duration: 0.4,
+    },
+  }),
 };
 
 const valueVariants = {
@@ -216,21 +216,26 @@ const valueVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      delay: 0.5 + (i * 0.1),
-      duration: 0.4
-    }
-  })
+      delay: 0.5 + i * 0.1,
+      duration: 0.4,
+    },
+  }),
 };
 
 export default function ServiceQuickDetailsContent({ service }) {
   const { t } = useTranslation();
   const router = useRouter();
+  console.log("quick details service", service);
 
+  const clinical = service?.clinical_details;
   const quickDetails = [
-    { labelKey: "DURATION", value: "(45-60) m" },
-    { labelKey: "TYPE", value: "non-surgical treatment" },
-    { labelKey: "DOWNTIME", value: "none" },
-    { labelKey: "RECOMMENDED SESSIONS", value: "3-6" },
+    { labelKey: "DURATION", value: clinical?.duration || "(45-60) m" },
+    {
+      labelKey: "TYPE",
+      value: clinical?.treatment_type || "non-surgical treatment",
+    },
+    { labelKey: "DOWNTIME", value: clinical?.downtime || "none" },
+    { labelKey: "RECOMMENDED SESSIONS", value: clinical?.sessions || "3-6" },
   ];
 
   return (
@@ -239,30 +244,35 @@ export default function ServiceQuickDetailsContent({ service }) {
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ 
-          once: false, 
+        viewport={{
+          once: false,
           amount: 0.2,
-          margin: "-50px"
+          margin: "-50px",
         }}
       >
         {/* Main Header */}
-        <motion.h2 
+        <motion.h2
           variants={headerVariants}
           className="text-[25px] font-normal text-primary uppercase mb-4 leading-tight"
         >
-          {service?.titleKey ? t(service.titleKey) : (service?.title || t("Revive Your Beauty, Naturally."))}
+          {service?.titleKey
+            ? t(service.titleKey)
+            : service?.title || t("Revive Your Beauty, Naturally.")}
         </motion.h2>
 
         {/* Description Paragraph */}
-        <motion.p 
+        <motion.p
           variants={paragraphVariants}
           className="text-[#414141] text-lg font-poppins font-normal mb-8 leading-relaxed"
         >
-          {service?.descKey ? t(service.descKey) : (service?.desc || t("Experience the power of your own body's healing potential."))}
+          {service?.descKey
+            ? t(service.descKey)
+            : service?.desc ||
+              t("Experience the power of your own body's healing potential.")}
         </motion.p>
 
         {/* Sub Header */}
-        <motion.h3 
+        <motion.h3
           variants={subHeaderVariants}
           className="text-[28px] font-bold text-secondary mb-4 uppercase"
         >
@@ -270,7 +280,7 @@ export default function ServiceQuickDetailsContent({ service }) {
         </motion.h3>
 
         {/* Details Grid */}
-        <motion.div 
+        <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8"
           variants={containerVariants}
         >
@@ -289,57 +299,58 @@ export default function ServiceQuickDetailsContent({ service }) {
               <motion.span
                 custom={index}
                 variants={labelVariants}
-                className="text-xl font-semibold font-poppins text-[#40464B] relative z-10"
+                className="text-lg font-medium font-poppins text-[#40464B] relative z-10"
               >
                 {t(detail.labelKey)}
               </motion.span>
-              
+
               {/* Value with staggered animation */}
               <motion.span
                 custom={index}
                 variants={valueVariants}
-                className="text-xl font-poppins text-[#8995A1] font-normal relative z-10"
+                className="text-md font-poppins text-[#8995A1] font-normal relative z-10"
               >
                 {t(detail.value)}
               </motion.span>
 
               {/* Decorative corner accent */}
-              
             </motion.div>
           ))}
         </motion.div>
 
         {/* Pricing & CTA */}
-        <motion.div 
+        <motion.div
           className="flex flex-col gap-8"
           variants={containerVariants}
         >
           <div className="flex flex-wrap max-w-xl items-baseline gap-2">
-            {/* Price */}
-            <motion.span 
+            <motion.span
               variants={priceVariants}
               whileHover="hover"
-              className="text-[40px] font-poppins font-bold text-[#4D3E3F] cursor-default"
+              className="text-[30px] font-poppins font-semibold text-[#4D3E3F] cursor-default"
             >
-              $250
+              {clinical?.price ? `${clinical.price} ${t("S.R")}` : `$250`}
             </motion.span>
-            
+
             {/* Price Description */}
-            <motion.p 
+            <motion.p
               variants={priceTextVariants}
-              className="text-lg font-poppins font-normal text-[#4D3E3F] uppercase"
+              className="text-md font-poppins font-normal text-[#4D3E3F] uppercase"
             >
-              {t("per session")} <span className="text-gray-400 uppercase">{t("(varies depending on treatment area)")}</span>
+              {t("per session")}{" "}
+              <span className="text-gray-400 uppercase">
+                {t("(varies depending on treatment area)")}
+              </span>
             </motion.p>
           </div>
 
           {/* Book Now Button */}
-          <motion.button 
-          onClick={() => router.push("/booking")}
+          <motion.button
+            onClick={() => router.push("/booking")}
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"
-            className="w-full sm:w-fit text-xl md:text-[26px] font-normal px-10 py-3 bg-secondary text-white rounded-full uppercase tracking-widest shadow-lg relative overflow-hidden group"
+            className="w-full sm:w-fit text-lg font-normal px-10 py-3 bg-secondary text-white rounded-full shadow-lg relative overflow-hidden group"
           >
             {/* Button shine effect */}
             <motion.span
@@ -348,7 +359,7 @@ export default function ServiceQuickDetailsContent({ service }) {
               whileHover={{ x: "200%", skewX: -15 }}
               transition={{ duration: 0.8, ease: "easeInOut" }}
             />
-            
+
             {/* Button text with scale animation on hover */}
             <motion.span
               className="relative z-10 inline-block"
@@ -368,12 +379,12 @@ export default function ServiceQuickDetailsContent({ service }) {
               transition={{
                 duration: 2,
                 repeat: Infinity,
-                delay: 0.5
+                delay: 0.5,
               }}
             />
           </motion.button>
         </motion.div>
       </motion.div>
     </div>
-  )
+  );
 }

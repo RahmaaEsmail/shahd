@@ -32,4 +32,10 @@ export const userEndPoints = {
     sms_sender:"user/auth/sms_sender.php",
     verified_code:"user/auth/verified_code.php",
     verified_code_forget:"user/auth/verified_code_forget.php",
+
+    // routine details 
+    routine_details:"user/home/shop/select_routine_details.php",
+    get_products : "user/home/shop/select_products.php",
+    get_products_filteration : "user/home/shop/select_filters.php",
+    get_horse_product_details:"user/home/horse_products/get_product_details.php"
 }

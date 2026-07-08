@@ -69,7 +69,7 @@ export default function OurServices({ data, categories, lang }) {
           bgColor:
             staticServices[idx % staticServices.length]?.bgColor || "#F1E0E0",
           title: item.title || "",
-          desc: item.description || item.desc || "",
+          description: item.description || item.desc || "",
           categoryId: item.category || item.category_id,
         }))
       : staticServices;

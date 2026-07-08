@@ -129,15 +129,34 @@ const itemVariants = {
 };
 
 export default function ServiceDetailsCases({ service }) {
+  const steps = React.useMemo(() => {
+    const rawSteps = service?.service_steps || [];
+    if (rawSteps.length > 0) {
+      return rawSteps.map((step, idx) => ({
+        id: idx + 1,
+        img: step.image || "/SHAHD-IMAGE/service-details/63dca66b0e22df555f6fa459b4aa3d00585b7e5b.webp",
+        title: step.title || "",
+        desc: step.description || "",
+      }));
+    }
+    return data;
+  }, [service]);
+
+  const gridColsClass = 
+    steps.length === 1 ? "grid-cols-1" :
+    steps.length === 2 ? "grid-cols-1 md:grid-cols-2" :
+    steps.length === 3 ? "grid-cols-1 md:grid-cols-3" :
+    "grid-cols-1 md:grid-cols-2 lg:grid-cols-4";
+
   return (
     <motion.div 
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: false, amount: 0.1, margin: "-50px" }}
-      className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full overflow-hidden border-y border-[#EBEBEB]'
+      className={`grid ${gridColsClass} w-full overflow-hidden border-y border-[#EBEBEB]`}
     >
-      {data.map((item) => (
+      {steps.map((item) => (
         <motion.div 
           key={item.id}
           variants={itemVariants}

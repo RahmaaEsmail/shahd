@@ -6,7 +6,9 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import { useLogin } from "@/hooks/auth/useAuth";
+import { useLogin, useCheckEmail } from "@/hooks/auth/useAuth";
+import VerifyEmailModal from "@/components/shared/VerifyEmailModal";
+import ResetPasswordModal from "@/components/shared/ResetPasswordModal";
 import Swal from "sweetalert2";
 import { config } from "@/api/config";
 
@@ -14,6 +16,11 @@ export default function LoginPage() {
   const { t } = useTranslation();
   const router = useRouter();
   const loginMutation = useLogin();
+
+  const checkEmailMutation = useCheckEmail();
+  const [isVerifyOpen, setIsVerifyOpen] = useState(false);
+  const [verifyEmail, setVerifyEmail] = useState("");
+  const [isResetOpen, setIsResetOpen] = useState(false);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -58,11 +65,30 @@ export default function LoginPage() {
             router.push("/");
           });
         } else {
-          Swal.fire({
-            icon: "error",
-            title: t("Error"),
-            text: data.message || t("Login failed"),
-          });
+          const msg = data.message || "";
+          if (
+            msg.toLowerCase().includes("verify") ||
+            msg.toLowerCase().includes("unverified") ||
+            msg.toLowerCase().includes("activate") ||
+            msg.toLowerCase().includes("activation")
+          ) {
+            setVerifyEmail(formData.email);
+            checkEmailMutation.mutate({ email: formData.email });
+            setIsVerifyOpen(true);
+            Swal.fire({
+              icon: "warning",
+              title: t("Verification Required"),
+              text: t("Please verify your email before logging in. A code has been sent."),
+              timer: 3000,
+              showConfirmButton: false,
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: t("Error"),
+              text: data.message || t("Login failed"),
+            });
+          }
         }
       },
       onError: (error) => {
@@ -149,7 +175,14 @@ export default function LoginPage() {
             <motion.div variants={itemVariants} className="space-y-2">
               <div className="flex justify-between items-center">
                 <label className="text-primary font-poppins font-medium text-sm ml-1">{t('Password')}</label>
-                <Link href="#" className="text-secondary font-poppins text-xs hover:underline decoration-secondary/30">
+                <Link 
+                  href="#" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsResetOpen(true);
+                  }}
+                  className="text-secondary font-poppins text-xs hover:underline decoration-secondary/30"
+                >
                   {t('Forgot?')}
                 </Link>
               </div>
@@ -186,6 +219,28 @@ export default function LoginPage() {
 
         </div>
       </motion.div>
+
+      <VerifyEmailModal
+        isOpen={isVerifyOpen}
+        email={verifyEmail}
+        onClose={() => setIsVerifyOpen(false)}
+        onSuccess={() => {
+          setIsVerifyOpen(false);
+          Swal.fire({
+            icon: "success",
+            title: t("Success"),
+            text: t("Email verified successfully! You can now log in."),
+          });
+        }}
+      />
+
+      <ResetPasswordModal
+        isOpen={isResetOpen}
+        onClose={() => setIsResetOpen(false)}
+        onSuccess={() => {
+          setIsResetOpen(false);
+        }}
+      />
     </div>
   );
 }

@@ -8,11 +8,11 @@ export default function ProductDetailsRealResult({ data }) {
   const { t, i18n } = useTranslation();
   const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
 
-  const afterAppRaw = data?.after_application || [];
+  const afterAppRaw = data?.data?.after_application || [];
   const activeAppObj = afterAppRaw.find(item => item.lang === lang) || afterAppRaw.find(item => item.lang === "en");
   const appStats = activeAppObj?.text || [];
 
-  const afterWeeksRaw = data?.after_weeks || [];
+  const afterWeeksRaw = data?.data?.after_weeks || [];
   const activeWeeksObj = afterWeeksRaw.find(item => item.lang === lang) || afterWeeksRaw.find(item => item.lang === "en");
   const weekStats = activeWeeksObj?.text || [];
 
@@ -27,7 +27,7 @@ export default function ProductDetailsRealResult({ data }) {
   const renderedAppStats = appStats.length > 0 ? appStats : fallbackAppStats;
   const renderedWeekStats = weekStats.length > 0 ? weekStats : fallbackWeekStats;
 
-  const realResultImage = data?.real_results_image || "/SHAHD-IMAGE/product-details/Group 30.webp";
+  const realResultImage = data?.data?.real_results_image || "/SHAHD-IMAGE/product-details/Group 30.webp";
 
   // Animation variants for staggered children
   const containerVariants = {

@@ -76,7 +76,7 @@ export default function HomeBlogRightContent({
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className={`relative rounded-[15px] flex justify-center overflow-hidden transition-all bg-red-500 duration-300 h-full! ${
+                className={`relative rounded-[15px] flex justify-center overflow-hidden transition-all  duration-300 h-full! ${
                   selectedBlog.id === item.id
                     ? "shadow-[-12px_2px_60px_15px_#B97C7C]"
                     : "opacity-70 hover:opacity-100"

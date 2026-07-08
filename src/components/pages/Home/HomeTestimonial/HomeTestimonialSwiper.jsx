@@ -48,16 +48,18 @@ export default function HomeTestimonialSwiper({
       <div className="flex items-center justify-between gap-4 lg:gap-10">
         
         {/* Left Preview - Desktop (XL) only */}
-        <div className="hidden lg:block w-40 shrink-0  hover:grayscale-0 transition-all duration-500 cursor-pointer"
-             onClick={() => swiperInstance?.slidePrev()}>
-           <div className="relative aspect-[3/4] rounded-3xl overflow-hidden border-4 border-white/10">
-              <Image 
-                src={testimonials[(activeIndex - 1 + testimonials.length) % testimonials.length]?.sideImage || testimonials[0].sideImage} 
-                fill className="object-cover" alt="prev" 
-              />
-              {/* <div className="absolute inset-0 bg-[#312222]/40" /> */}
-           </div>
-        </div>
+        {testimonials.length > 1 && (
+          <div className="hidden lg:block w-40 shrink-0  hover:grayscale-0 transition-all duration-500 cursor-pointer"
+               onClick={() => swiperInstance?.slidePrev()}>
+             <div className="relative aspect-[3/4] rounded-3xl overflow-hidden border-4 border-white/10">
+                <Image 
+                  src={testimonials[(activeIndex - 1 + testimonials.length) % testimonials.length]?.sideImage || testimonials[0].sideImage} 
+                  fill className="object-cover" alt="prev" 
+                />
+                {/* <div className="absolute inset-0 bg-[#312222]/40" /> */}
+             </div>
+          </div>
+        )}
 
         {/* Main Content Area */}
         <div className="flex-1  relative w-full">
@@ -68,7 +70,9 @@ export default function HomeTestimonialSwiper({
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4 }}
-              className="flex flex-col lg:flex-row items-center gap-6"
+              className={`flex flex-col lg:flex-row items-center gap-6 ${
+                testimonials.length === 1 ? "justify-center" : ""
+              }`}
             >
               {/* Profile Image */}
               <div className="relative shrink-0 mb-6 lg:mb-0">
@@ -119,16 +123,18 @@ export default function HomeTestimonialSwiper({
         </div>
 
         {/* Right Preview - Desktop (XL) only */}
-        <div className="hidden lg:block w-40 shrink-0 hover:grayscale-0 transition-all duration-500 cursor-pointer"
-             onClick={() => swiperInstance?.slideNext()}>
-           <div className="relative aspect-[3/4] rounded-3xl overflow-hidden border-4 border-white/10">
-              <Image 
-                src={testimonials[(activeIndex + 1) % testimonials.length]?.sideImage || testimonials[0].sideImage} 
-                fill className="object-cover" alt="next" 
-              />
-              {/* <div className="absolute inset-0 bg-[#312222]/40" /> */}
-           </div>
-        </div>
+        {testimonials.length > 1 && (
+          <div className="hidden lg:block w-40 shrink-0 hover:grayscale-0 transition-all duration-500 cursor-pointer"
+               onClick={() => swiperInstance?.slideNext()}>
+             <div className="relative aspect-[3/4] rounded-3xl overflow-hidden border-4 border-white/10">
+                <Image 
+                  src={testimonials[(activeIndex + 1) % testimonials.length]?.sideImage || testimonials[0].sideImage} 
+                  fill className="object-cover" alt="next" 
+                />
+                {/* <div className="absolute inset-0 bg-[#312222]/40" /> */}
+             </div>
+          </div>
+        )}
       </div>
 
       {/* Hidden Functional Swiper */}
@@ -137,8 +143,12 @@ export default function HomeTestimonialSwiper({
           modules={[Autoplay]}
           onSwiper={setSwiperInstance}
           onSlideChange={handleSlideChange}
-          loop={true}
-          autoplay={{ delay: 5000, disableOnInteraction: false }}
+          loop={testimonials.length > 1}
+          autoplay={
+            testimonials.length > 1
+              ? { delay: 5000, disableOnInteraction: false }
+              : false
+          }
           slidesPerView={1}
         >
           {testimonials.map((t) => (

@@ -70,6 +70,7 @@ export default function StoreProductsGrid({ activeTab, data }) {
         id: p.id,
         name: p.title || "Product",
         img: p.main_image,
+        hover_image: p?.hover_image,
         price: p.price,
         rating: p.rating || 5,
         category: (p.category_name || "").toLowerCase().trim(),

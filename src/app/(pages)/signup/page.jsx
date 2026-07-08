@@ -8,12 +8,19 @@ import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { useRegister, useCheckEmail } from "@/hooks/auth/useAuth";
 import Swal from "sweetalert2";
+import VerifyEmailModal from "@/components/shared/VerifyEmailModal";
+import Toast from "@/components/shared/Toast";
 
 export default function SignupPage() {
   const { t } = useTranslation();
   const router = useRouter();
   const registerMutation = useRegister();
   const checkEmailMutation = useCheckEmail();
+
+  const [isVerifyOpen, setIsVerifyOpen] = useState(false);
+  const [verifyEmail, setVerifyEmail] = useState("");
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   const [formData, setFormData] = useState({
     name: "",
@@ -53,39 +60,18 @@ export default function SignupPage() {
 
     const { name, email, phone, password } = formData;
 
-    registerMutation.mutate({ name, email, phone, password }, {
-      onSuccess: (data) => {
-        if (data.status === "success") {
-          // Immediately check/verify email after signup
-          checkEmailMutation.mutate({ email }, {
-            onSuccess: () => {
-              Swal.fire({
-                icon: "success",
-                title: t("Success"),
-                text: t("Registration successful! Please sign in."),
-                timer: 2000,
-                showConfirmButton: false,
-              }).then(() => {
-                router.push("/login");
-              });
-            },
-            onError: (err) => {
-              Swal.fire({
-                icon: "success",
-                title: t("Success"),
-                text: t("Registration successful! Please sign in."),
-                timer: 2000,
-                showConfirmButton: false,
-              }).then(() => {
-                router.push("/login");
-              });
-            }
-          });
+    checkEmailMutation.mutate({ email }, {
+      onSuccess: (checkData) => {
+        if (checkData.status === "success") {
+          setToastMessage(checkData.message || t("Verification code sent to your email."));
+          setShowToast(true);
+          setVerifyEmail(email);
+          setIsVerifyOpen(true);
         } else {
           Swal.fire({
             icon: "error",
             title: t("Error"),
-            text: data.message || t("Registration failed"),
+            text: checkData.message || t("Email check failed"),
           });
         }
       },
@@ -221,10 +207,10 @@ export default function SignupPage() {
             <motion.div variants={itemVariants} className="pt-6 md:col-span-2">
               <Button
                 type="submit"
-                disabled={registerMutation.isPending}
+                disabled={registerMutation.isPending || checkEmailMutation.isPending}
                 className="w-full h-14 rounded-2xl text-lg font-poppins font-semibold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
-                {registerMutation.isPending ? t('Creating Account...') : t('Create Account')}
+                {checkEmailMutation.isPending ? t('Checking Email...') : registerMutation.isPending ? t('Creating Account...') : t('Create Account')}
               </Button>
             </motion.div>
           </form>
@@ -241,6 +227,51 @@ export default function SignupPage() {
 
         </div>
       </motion.div>     
+
+      <VerifyEmailModal
+        isOpen={isVerifyOpen}
+        email={verifyEmail}
+        onClose={() => setIsVerifyOpen(false)}
+        onSuccess={() => {
+          const { name, email, phone, password } = formData;
+          registerMutation.mutate({ name, email, phone, password }, {
+            onSuccess: (regData) => {
+              if (regData.status === "success") {
+                Swal.fire({
+                  icon: "success",
+                  title: t("Success"),
+                  text: t("Registration successful! Please sign in."),
+                  timer: 2000,
+                  showConfirmButton: false,
+                }).then(() => {
+                  setIsVerifyOpen(false);
+                  router.push("/login");
+                });
+              } else {
+                Swal.fire({
+                  icon: "error",
+                  title: t("Error"),
+                  text: regData.message || t("Registration failed"),
+                });
+              }
+            },
+            onError: (error) => {
+              Swal.fire({
+                icon: "error",
+                title: t("Error"),
+                text: error?.response?.data?.message || error?.message || t("Something went wrong"),
+              });
+            }
+          });
+        }}
+      />
+
+      <Toast
+        show={showToast}
+        message={toastMessage}
+        type="success"
+        onClose={() => setShowToast(false)}
+      />
     </div>
   );
 }

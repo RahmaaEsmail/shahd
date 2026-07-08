@@ -1,57 +1,57 @@
 "use client";
-import React from 'react'
-import { motion } from 'framer-motion'
-import { useTranslation } from 'react-i18next';
+import React from "react";
+import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const ingredients = [
   {
     id: 1,
     title: "Hyaluronic Acid ",
-    sub_title: "Deep hydration and moisture retention"
+    sub_title: "Deep hydration and moisture retention",
   },
   {
     id: 2,
     title: "Niacinamide (Vitamin B3) ",
-    sub_title: "Brightens skin tone and strengthens the barrier"
+    sub_title: "Brightens skin tone and strengthens the barrier",
   },
   {
     id: 3,
     title: "Aloe Vera Extract ",
-    sub_title: "Soothes irritation and redness"
+    sub_title: "Soothes irritation and redness",
   },
   {
     id: 4,
     title: "Green Tea Extract",
-    sub_title: "Antioxidant protection"
+    sub_title: "Antioxidant protection",
   },
   {
     id: 5,
     title: "Chamomile ",
-    sub_title: "Calms sensitive skin"
+    sub_title: "Calms sensitive skin",
   },
   {
     id: 6,
     title: "Vitamin E",
-    sub_title: "Nourishes and protects"
+    sub_title: "Nourishes and protects",
   },
   {
     id: 7,
     title: "Glycerin",
-    sub_title: "Maintains hydration balance"
+    sub_title: "Maintains hydration balance",
   },
-]
+];
 
 export default function ProductDetailsIngredients({ data }) {
   const { t } = useTranslation();
 
-  const rawIngredients = data?.ingredients || "";
-  const ingredientFocus = data?.ingredient_focus || "";
+  const rawIngredients = data?.data?.ingredients || "";
+  const ingredientFocus = data?.data?.ingredient_focus || "";
 
   const resolvedIngredients = rawIngredients
     ? rawIngredients.split(",").map((name, idx) => ({
         id: idx + 1,
         title: name.trim(),
-        sub_title: idx === 0 && ingredientFocus ? ingredientFocus : ""
+        sub_title: idx === 0 && ingredientFocus ? ingredientFocus : "",
       }))
     : ingredients;
 
@@ -61,12 +61,13 @@ export default function ProductDetailsIngredients({ data }) {
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: false, amount: 0.2 }}
-      className='relative min-h-screen py-6'
+      className="relative min-h-screen py-6"
       style={{
-        background: "url('/SHAHD-IMAGE/product-details/c17080f024061945d283c30609d7dfd468f6fbf8.webp')",
+        background:
+          "url('/SHAHD-IMAGE/product-details/c17080f024061945d283c30609d7dfd468f6fbf8.webp')",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center center",
-        backgroundSize: "cover"
+        backgroundSize: "cover",
       }}
     >
       {/* Background overlay with opacity */}
@@ -83,36 +84,38 @@ export default function ProductDetailsIngredients({ data }) {
           initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className='text-4xl  font-normal text-primary text-center mb-4'
+          className="text-4xl  font-normal text-primary text-center mb-4"
         >
-          {t('key ingredients')}
+          {t("key ingredients")}
         </motion.h3>
- 
+
         <motion.p
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className='text-sm md:text-base  font-poppins font-medium text-[#414141] text-center mx-auto max-w-2xl px-4'
+          className="text-sm md:text-base  font-poppins font-medium text-[#414141] text-center mx-auto max-w-2xl px-4"
         >
-          {t('A carefully balanced blend of medical-grade and botanical ingredients designed to cleanse, soothe, and protect the skin barrier.')}
+          {t(
+            "A carefully balanced blend of medical-grade and botanical ingredients designed to cleanse, soothe, and protect the skin barrier.",
+          )}
         </motion.p>
- 
-        <div className='flex flex-col gap-2 justify-center text-center items-center mt-3'>
-          {resolvedIngredients?.map((item, index) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 + index * 0.1, duration: 0.5 }}
-              whileHover={{ scale: 1.02, x: 10 }}
-              className="w-full max-w-3xl"
-            >
-              <h5 className='text-xl md:text-2xl  font-bold font-poppins leading-snug text-black mb-2'>{t(item?.title)}</h5>
-              <p className='text-lg md:text-xl font-medium font-poppins leading-snug text-gray-700'>{t(item?.sub_title)}</p>
-            </motion.div>
-          ))}
+
+        <div className="flex flex-col gap-2 justify-center text-center items-center mt-3">
+          {/* {resolvedIngredients?.map((item, index) => ( */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+            whileHover={{ scale: 1.02, x: 10 }}
+            className="w-full max-w-3xl"
+            dangerouslySetInnerHTML={{ __html: rawIngredients }}
+          >
+            {/* <h5 className='text-xl md:text-2xl  font-bold font-poppins leading-snug text-black mb-2'>{t(item?.title)}</h5>
+              <p className='text-lg md:text-xl font-medium font-poppins leading-snug text-gray-700'>{t(item?.sub_title)}</p> */}
+          </motion.div>
+          {/* ))} */}
         </div>
       </div>
     </motion.div>
-  )
+  );
 }

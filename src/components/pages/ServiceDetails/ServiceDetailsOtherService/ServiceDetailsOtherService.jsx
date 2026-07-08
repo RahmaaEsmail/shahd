@@ -1,54 +1,85 @@
 "use client";
-import React from 'react'
-import { Button } from '../../../ui/button'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination, Autoplay, EffectCoverflow } from 'swiper/modules'
-import { motion } from 'framer-motion'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { service_data } from '../../../../data/serviceData'
-import OurServiceCard from '../../Services/OurServices/OurServiceCard'
+import React from "react";
+import { Button } from "../../../ui/button";
+import { Swiper, SwiperSlide } from "swiper/react";
+import {
+  Navigation,
+  Pagination,
+  Autoplay,
+  EffectCoverflow,
+} from "swiper/modules";
+import { motion } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { service_data } from "../../../../data/serviceData";
+import OurServiceCard from "../../Services/OurServices/OurServiceCard";
 
 // Import Swiper styles
-import 'swiper/css'
-import { useRouter } from 'next/navigation';
+import "swiper/css";
+import { useRouter } from "next/navigation";
 
-export default function ServiceDetailsOtherService() {
+export default function ServiceDetailsOtherService({ data }) {
   const router = useRouter();
+  const staticServices = service_data?.slice(0, 8);
+  
+  const resolvedOtherServices = React.useMemo(() => {
+    if (!data || data.length === 0) return [];
+    return data.map((item, idx) => {
+      const imageUrl = item.image_url || 
+        (item.image ? (item.image.startsWith("http") ? item.image : `https://drshahdawad.com/ShahdAwad/uploads/services/${item.image}`) : null) ||
+        staticServices[idx % staticServices.length]?.image ||
+        "/SHAHD-IMAGE/Services/our-service-1.webp";
+        
+      return {
+        id: item.id,
+        image: imageUrl,
+        type: item.category_name || item.type || item.category_id?.toString() || item.category?.toString() || item.label || "",
+        mainColor:
+          staticServices[idx % staticServices.length]?.mainColor || "#DDB2B5",
+        bgColor:
+          staticServices[idx % staticServices.length]?.bgColor || "#F1E0E0",
+        title: item.title || item.label || "",
+        description: item.description || item.desc || "",
+        categoryId: item.category || item.category_id,
+        label: item.label,
+      };
+    });
+  }, [data, staticServices]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: false, amount: 0.2 }}
-      className='min-h-screen py-12 relative overflow-hidden'
+      className="min-h-screen py-6 relative overflow-hidden"
       style={{
-        background: "url(/SHAHD-IMAGE/service-details/d1ce99293bb9df3fa18d3d8ad6f3c5802adf222d.webp)",
+        background:
+          "url(/SHAHD-IMAGE/service-details/d1ce99293bb9df3fa18d3d8ad6f3c5802adf222d.webp)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         // backgroundAttachment: "fixed"
       }}
     >
-
-      <div className='relative z-10 container mx-auto px-4'>
+      <div className="relative z-10 container mx-auto px-4">
         {/* Header Section with Animation */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className='flex flex-col md:flex-row justify-between items-center gap-6 mb-10'
+          className="flex flex-col md:flex-row justify-between items-center gap-6 mb-4"
         >
-          <div className='flex items-center gap-4'>
-            <motion.h3 
+          <div className="flex items-center gap-4">
+            <motion.h3
               whileHover={{ scale: 1.05, x: 10 }}
               transition={{ type: "spring", stiffness: 400 }}
-              className='font-bold text-secondary text-2xl sm:text-[27px] md:text-[32px] font-poppins drop-shadow-lg text-center md:text-left'
+              className="font-bold text-secondary text-2xl  font-poppins drop-shadow-lg text-center md:text-left"
             >
               Other Services
             </motion.h3>
 
             {/* Navigation Buttons */}
-            <div className='hidden md:flex gap-3'>
+            <div className="hidden md:flex gap-3">
               <button className="other-services-prev w-10 h-10 rounded-full border border-secondary/30 flex items-center justify-center text-secondary hover:bg-secondary hover:text-white transition-all duration-300">
                 <ChevronLeft size={20} />
               </button>
@@ -57,17 +88,17 @@ export default function ServiceDetailsOtherService() {
               </button>
             </div>
           </div>
-          
+
           <motion.div
             onClick={() => router.push(`/services`)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="w-full md:w-auto flex justify-center"
           >
-            <Button 
-            onClick={() => router.push(`/services`)}
-              variant='secondary' 
-              className="rounded-full h-12 sm:h-[54px] px-6 sm:px-[32px] text-lg sm:text-xl md:text-2xl font-normal text-[#FEF6F6] shadow-lg hover:shadow-xl transition-all w-full sm:w-auto"
+            <Button
+              onClick={() => router.push(`/services`)}
+              variant="secondary"
+              className="rounded-full h-12 px-6 sm:px-[32px] text-lg font-poppins font-normal text-[#FEF6F6] shadow-lg hover:shadow-xl transition-all w-full sm:w-auto"
             >
               Show More
             </Button>
@@ -84,10 +115,10 @@ export default function ServiceDetailsOtherService() {
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
             navigation={{
-              prevEl: '.other-services-prev',
-              nextEl: '.other-services-next',
+              prevEl: ".other-services-prev",
+              nextEl: ".other-services-next",
             }}
-            spaceBetween={30}
+            spaceBetween={10}
             slidesPerView={1}
             centeredSlides={true}
             loop={true}
@@ -95,8 +126,8 @@ export default function ServiceDetailsOtherService() {
             autoplay={{
               delay: 3000,
               disableOnInteraction: false,
-              pauseOnMouseEnter: true
-            }}           
+              pauseOnMouseEnter: true,
+            }}
             breakpoints={{
               640: {
                 slidesPerView: 1,
@@ -104,28 +135,28 @@ export default function ServiceDetailsOtherService() {
               },
               768: {
                 slidesPerView: 2,
-                spaceBetween: 30,
+                spaceBetween: 20,
               },
               1024: {
                 slidesPerView: 3,
-                spaceBetween: 30,
+                spaceBetween: 20,
               },
               1280: {
                 slidesPerView: 4,
-                spaceBetween: 40,
+                spaceBetween: 20,
               },
             }}
             className="other-services-swiper"
           >
-            {service_data?.map((item, index) => (
+            {resolvedOtherServices?.map((item, index) => (
               <SwiperSlide key={item?.id}>
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.1 }}
-                  whileHover={{ 
+                  whileHover={{
                     scale: 1.05,
-                    transition: { type: "spring", stiffness: 400 }
+                    transition: { type: "spring", stiffness: 400 },
                   }}
                 >
                   <OurServiceCard item={item} />
@@ -134,10 +165,8 @@ export default function ServiceDetailsOtherService() {
             ))}
           </Swiper>
 
- 
           {/* Custom Pagination Styling - to be added via CSS */}
         </motion.div>
-
       </div>
 
       {/* Custom CSS for Swiper styling */}
@@ -145,54 +174,54 @@ export default function ServiceDetailsOtherService() {
         :global(.other-services-swiper) {
           padding: 20px 10px 50px !important;
         }
-        
+
         :global(.other-services-swiper .swiper-slide) {
           transition: all 0.3s ease;
           opacity: 0.7;
           transform: scale(0.95);
         }
-        
+
         :global(.other-services-swiper .swiper-slide-active) {
           opacity: 1;
           transform: scale(1);
           z-index: 10;
         }
-        
+
         :global(.other-services-swiper .swiper-slide-next),
         :global(.other-services-swiper .swiper-slide-prev) {
           opacity: 0.8;
           transform: scale(0.97);
         }
-        
+
         :global(.swiper-pagination-bullet) {
           width: 10px;
           height: 10px;
           background: white;
           opacity: 0.5;
         }
-        
+
         :global(.swiper-pagination-bullet-active) {
-          background: #DDB2B5;
+          background: #ddb2b5;
           opacity: 1;
           transform: scale(1.2);
         }
-        
+
         :global(.swiper-button-prev:after),
         :global(.swiper-button-next:after) {
           font-size: 20px;
           font-weight: bold;
         }
-        
+
         :global(.swiper-button-prev:hover),
         :global(.swiper-button-next:hover) {
           transform: scale(1.1);
         }
-        
+
         :global(.swiper-button-disabled) {
           opacity: 0.3 !important;
           cursor: not-allowed;
         }
       `}</style>
     </motion.div>
-  )
+  );
 }

@@ -147,7 +147,10 @@ export default function HorseProductsGrid({ activeTab, data }) {
   // Filter products based on active tab
   const filteredProducts = baseProducts.filter((product) => {
     if (activeTab === "all" || activeTab === 1) return true; // 'All' tab
-    return product.category.toLowerCase().trim() === String(activeTab).toLowerCase().trim();
+    return (
+      product.category.toLowerCase().trim() ===
+      String(activeTab).toLowerCase().trim()
+    );
   });
 
   return (
@@ -171,7 +174,11 @@ export default function HorseProductsGrid({ activeTab, data }) {
             custom={index}
             layout
           >
-            <StoreProductCard is_btn={false} product={product} />
+            <StoreProductCard
+              is_horse={true}
+              is_btn={false}
+              product={product}
+            />
           </motion.div>
         ))}
       </motion.div>

@@ -11,18 +11,20 @@ import ProductDetailsReviews from "@/components/pages/ProductDetails/ProductDeta
 import ProductDetailsBundles from "@/components/pages/ProductDetails/ProductDetailsBundles/ProductDetailsBundles";
 import ProductDetailsPartners from "@/components/pages/ProductDetails/ProductDetailsPartners/ProductDetailsPartners";
 import { useProductDetails } from "@/hooks/shop/useShop";
+import Loading from "../../../../loading";
+import NotFound from "../../not-found";
 
 export default function ProductDetailsClient({ id, slug }) {
   const { data, isLoading, error } = useProductDetails(id);
 
   console.log("product details data", data);
+  console.log("product details error", error);
   if (isLoading) {
-    return <div className="loading-state">Loading product details...</div>;
-    // return <Loading />
+    return <Loading />;
   }
 
-  if (error || !data) {
-    return <div className="error-state">Product not found.</div>;
+  if (error || !data || data?.status == "error") {
+    return <NotFound />;
   }
 
   return (
