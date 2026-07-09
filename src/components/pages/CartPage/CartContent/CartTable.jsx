@@ -1,8 +1,9 @@
 "use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import CartProduct from './CartProduct';
+import React from "react";
+import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import CartProduct from "./CartProduct";
 
 // Animation variants
 const containerVariants = {
@@ -41,18 +42,19 @@ const productListVariants = {
   }
 };
 
-export default function CartTable() {
-  const cartItems = [1, 2, 3, 4]; // Placeholder for your actual cart state
+export default function CartTable({ items, userId }) {
+  const { t } = useTranslation();
+  const cartItems = items || [];
 
   return (
-    <motion.div 
+    <motion.div
       className="col-span-1"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
     >
       {/* Table Headers - Fixed for mobile */}
-      <motion.div 
+      <motion.div
         className="hidden md:grid grid-cols-[1.5fr_2fr_1fr_1fr_0.5fr] pb-4 border-b-2 border-primary text-primary font-poppins text-md font-semibold capitalize tracking-wider"
         variants={headerVariants}
       >
@@ -61,49 +63,50 @@ export default function CartTable() {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
         >
-          Products
+          {t("Products")}
         </motion.span>
         <motion.span
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.25 }}
         >
-          Description
+          {t("Description")}
         </motion.span>
         <motion.span
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3 }}
         >
-          Quantity
+          {t("Quantity")}
         </motion.span>
-        <motion.span 
+        <motion.span
           className="text-center"
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.35 }}
         >
-          Price
+          {t("Price")}
         </motion.span>
-        <motion.span 
+        <motion.span
           className="text-right"
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4 }}
         >
-          Delete
+          {t("Delete")}
         </motion.span>
       </motion.div>
 
-      <motion.div 
+      <motion.div
         className="flex flex-col"
         variants={productListVariants}
       >
         {cartItems.map((item, idx) => (
-          <CartProduct 
-            item={item} 
-            key={idx} 
+          <CartProduct
+            item={item}
+            key={item?.cart_id ?? item?.id ?? idx}
             index={idx}
+            userId={userId}
           />
         ))}
       </motion.div>

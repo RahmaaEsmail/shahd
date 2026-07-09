@@ -1,8 +1,11 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import CartCheckout from '../CartCheckout/CartCheckout';
+import { useRouter } from 'next/navigation';
+import Swal from 'sweetalert2';
+import { useTranslation } from 'react-i18next';
+import { useClearCart } from '@/hooks/cart/useCart';
 
 // Animation variants - preserving exact design
 const summaryVariants = {
@@ -40,11 +43,33 @@ const buttonVariants = {
   }
 };
 
-export default function CartSummary({ itemCount = 4, subtotal = 23.00 }) {
-  const shipping = 23.00;
-  const total = subtotal + shipping;
+export default function CartSummary({ itemCount = 0, subtotal = 0, userId }) {
+  const { t } = useTranslation();
+  const router = useRouter();
+  const { mutate: clearCart, isPending: isClearing } = useClearCart();
 
-  const [openCheckout, setOpenCheckout] = useState(false);
+  const handleClearCart = () => {
+    Swal.fire({
+      title: t("Clear cart?"),
+      text: t("All items will be removed from your cart."),
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: t("Clear"),
+      cancelButtonText: t("Cancel"),
+      confirmButtonColor: "#DDB2B5",
+      background: "#ffffff",
+      color: "#414141",
+      customClass: {
+        popup: "rounded-[25px] font-poppins",
+        confirmButton: "font-poppins",
+        cancelButton: "font-poppins",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        clearCart({ user_id: userId });
+      }
+    });
+  };
 
   return (
     <motion.div
@@ -58,7 +83,7 @@ export default function CartSummary({ itemCount = 4, subtotal = 23.00 }) {
         variants={itemVariants}
         custom={0}
       >
-        Order Summary
+        {t("Order Summary")}
       </motion.h2>
 
       <div className="flex flex-col gap-6 px-2">
@@ -67,7 +92,7 @@ export default function CartSummary({ itemCount = 4, subtotal = 23.00 }) {
           variants={itemVariants}
           custom={1}
         >
-          <span className="text-md font-bold tracking-[-0.3px] text-primary">{itemCount} Products</span>
+          <span className="text-md font-bold tracking-[-0.3px] text-primary">{itemCount} {t("Products")}</span>
           <motion.span
             key={subtotal}
             className="text-md font-semibold text-[#414141]"
@@ -77,15 +102,6 @@ export default function CartSummary({ itemCount = 4, subtotal = 23.00 }) {
           >
             {subtotal.toFixed(2)} S.R
           </motion.span>
-        </motion.div>
-
-        <motion.div
-          className="flex justify-between items-center uppercase"
-          variants={itemVariants}
-          custom={2}
-        >
-          <span className="text-md font-bold tracking-[-0.3px] text-primary">Shipping</span>
-          <span className="text-md font-semibold text-[#414141]">{shipping.toFixed(2)} S.R</span>
         </motion.div>
       </div>
 
@@ -102,32 +118,43 @@ export default function CartSummary({ itemCount = 4, subtotal = 23.00 }) {
         variants={itemVariants}
         custom={3}
       >
-        <span className="text-md font-bold tracking-[-0.3px] text-primary uppercase">Total</span>
+        <span className="text-md font-bold tracking-[-0.3px] text-primary uppercase">{t("Total")}</span>
         <motion.span
-          key={total}
+          key={subtotal}
           className="text-md font-semibold text-[#414141]"
           initial={{ scale: 1 }}
           whileInView={{ scale: [1, 1.05, 1] }}
           transition={{ duration: 0.3 }}
         >
-          {total.toFixed(2)} S.R
+          {subtotal.toFixed(2)} S.R
         </motion.span>
       </motion.div>
 
-      <motion.button
-        onClick={() => setOpenCheckout(true)}
-        style={{
-          background: "linear-gradient(90deg, #DDB2B5 0%, #EFD4CE 100%)"
-        }}
-        variants={buttonVariants}
-        whileHover="hover"
-        whileTap="tap"
-        className="w-full md:w-fit md:ms-auto py-4  px-10 mt-4 rounded-full text-white text-md font-normal uppercase transition-colors shadow-lg shadow-[#EFD4CE]/40"
-      >
-        Check Out
-      </motion.button>
+      <div className="flex flex-col md:flex-row-reverse gap-3 md:items-center">
+        <motion.button
+          onClick={() => router.push("/checkout")}
+          style={{
+            background: "linear-gradient(90deg, #DDB2B5 0%, #EFD4CE 100%)"
+          }}
+          variants={buttonVariants}
+          whileHover="hover"
+          whileTap="tap"
+          className="w-full md:w-fit py-4 px-10 rounded-full text-white text-md font-normal uppercase transition-colors shadow-lg shadow-[#EFD4CE]/40"
+        >
+          {t("Check Out")}
+        </motion.button>
 
-      <CartCheckout  open={openCheckout} setOpen={setOpenCheckout}/>
+        <motion.button
+          onClick={handleClearCart}
+          disabled={isClearing}
+          variants={buttonVariants}
+          whileHover="hover"
+          whileTap="tap"
+          className="w-full md:w-fit py-4 px-10 rounded-full text-primary border border-primary text-md font-normal uppercase transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {t("Clear Cart")}
+        </motion.button>
+      </div>
     </motion.div>
   );
 }

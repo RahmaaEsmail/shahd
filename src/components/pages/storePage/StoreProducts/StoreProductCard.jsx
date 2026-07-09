@@ -210,6 +210,7 @@ import { useRouter } from "next/navigation";
 import { cn, slugify } from "@/lib/utils";
 import useWishlistStore from "@/zustandStore/WishlistStore";
 import { useTranslation } from "react-i18next";
+import { useAddToCartAction } from "@/hooks/cart/useCart";
 
 // Card animation variants
 const cardVariants = {
@@ -262,11 +263,13 @@ export default function StoreProductCard({
   const { t } = useTranslation();
   const { toggleWishlist, isInWishlist } = useWishlistStore();
   const isLiked = isInWishlist(product?.id);
+  const { addToCart, isAddingToCart } = useAddToCartAction();
 
   const handleCardClick = (e) => {
+    console.log("product card", product);
     if (e.target.closest("button")) return;
     if (product?.id && product?.name && !is_horse) {
-      router.push(`/products/${product.id}/${slugify(product.name)}`);
+      router.push(`/products/${product.id}/${product.name}`);
     } else if (is_horse && product?.id && product?.name) {
       router.push(`/horse/products/${product.id}`);
     }
@@ -279,7 +282,8 @@ export default function StoreProductCard({
 
   const handleButtonClick = (e) => {
     e.stopPropagation();
-    router.push("/cart");
+    if (isAddingToCart) return;
+    addToCart(product?.id, 1);
   };
 
   return (
@@ -395,12 +399,13 @@ export default function StoreProductCard({
           {is_btn && (
             <motion.button
               onClick={handleButtonClick}
+              disabled={isAddingToCart}
               variants={buttonVariants}
               whileHover="hover"
               whileTap="tap"
-              className="w-full max-w-[189px] h-10 lg:h-[48px] rounded-full text-white flex justify-center items-center text-base font-normal bg-linear-to-r from-[#DDB2B5] to-[#EFD4CE] cursor-pointer"
+              className="w-full max-w-[189px] h-10 lg:h-[48px] rounded-full text-white flex justify-center items-center text-base font-normal bg-linear-to-r from-[#DDB2B5] to-[#EFD4CE] cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {t("Add To Cart")}
+              {isAddingToCart ? t("Adding...") : t("Add To Cart")}
             </motion.button>
           )}
         </div>

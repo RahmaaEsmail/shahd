@@ -11,6 +11,7 @@ import VerifyEmailModal from "@/components/shared/VerifyEmailModal";
 import ResetPasswordModal from "@/components/shared/ResetPasswordModal";
 import Swal from "sweetalert2";
 import { config } from "@/api/config";
+import { AUTH_CHANGE_EVENT } from "@/hooks/auth/useCurrentUser";
 
 export default function LoginPage() {
   const { t } = useTranslation();
@@ -52,8 +53,15 @@ export default function LoginPage() {
           const token = data?.token || data?.data?.token || data?.data;
           const user = data?.user || data?.data?.user || data?.data;
 
-          localStorage.setItem(config.localStorageTokenName, typeof token === "string" ? token : "dummy-token");
-          localStorage.setItem(config.localStorageUserData, JSON.stringify(user));
+          localStorage.setItem(
+            config.localStorageTokenName,
+            typeof token === "string" ? token : "dummy-token",
+          );
+          localStorage.setItem(
+            config.localStorageUserData,
+            JSON.stringify(user),
+          );
+          window.dispatchEvent(new Event(AUTH_CHANGE_EVENT));
 
           Swal.fire({
             icon: "success",
@@ -78,7 +86,9 @@ export default function LoginPage() {
             Swal.fire({
               icon: "warning",
               title: t("Verification Required"),
-              text: t("Please verify your email before logging in. A code has been sent."),
+              text: t(
+                "Please verify your email before logging in. A code has been sent.",
+              ),
               timer: 3000,
               showConfirmButton: false,
             });
@@ -95,7 +105,10 @@ export default function LoginPage() {
         Swal.fire({
           icon: "error",
           title: t("Error"),
-          text: error?.response?.data?.message || error?.message || t("Something went wrong"),
+          text:
+            error?.response?.data?.message ||
+            error?.message ||
+            t("Something went wrong"),
         });
       },
     });
@@ -121,10 +134,10 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen relative flex items-center justify-center py-12 px-4 sm:px-6  lg:px-8 overflow-hidden">
       {/* Background with decorative elements */}
-      <div 
+      <div
         className="absolute inset-0 z-0 bg-cover bg-center opacity-40 bg-no-repeat"
         style={{
-          backgroundImage: `url("/SHAHD-IMAGE/Untitled design.png")`
+          backgroundImage: `url("/SHAHD-IMAGE/Untitled design.png")`,
         }}
       />
 
@@ -136,58 +149,64 @@ export default function LoginPage() {
         className="relative mt-20 z-10 w-full max-w-md"
       >
         <div className="bg-white backdrop-blur-xl border-[2px] border-primary  p-8 md:p-10 rounded-[40px] shadow-[0_20px_50px_rgba(221,178,181,0.15)] flex flex-col items-center">
-          
           {/* Logo/Brand */}
           <motion.div variants={itemVariants} className="mb-8">
-             <img src="/SHAHD-IMAGE/6 (1).webp" className="aspect-auto p-3 rounded-full  border-primary" />
+            <img
+              src="/SHAHD-IMAGE/6 (1).webp"
+              className="aspect-auto p-3 rounded-full  border-primary"
+            />
           </motion.div>
 
           {/* Header */}
           <div className="text-center mb-10">
-            <motion.h1 
+            <motion.h1
               variants={itemVariants}
               className="text-primary font-main text-4xl  mb-2 uppercase"
             >
-              {t('Welcome Back')}
+              {t("Welcome Back")}
             </motion.h1>
-            <motion.p 
+            <motion.p
               variants={itemVariants}
               className="text-text/60 font-poppins text-sm"
             >
-              {t('Enter your credentials to access your account')}
+              {t("Enter your credentials to access your account")}
             </motion.p>
           </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="w-full space-y-6">
             <motion.div variants={itemVariants} className="space-y-2">
-              <label className="text-primary font-poppins font-medium text-sm ml-1">{t('Email Address')}</label>
-              <Input 
-                type="email" 
+              <label className="text-primary font-poppins font-medium text-sm ml-1">
+                {t("Email Address")}
+              </label>
+              <Input
+                type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder={t('name@example.com')}
+                placeholder={t("name@example.com")}
                 className="rounded-2xl border-primary/20 focus-visible:ring-primary/30 h-12 bg-white/50"
               />
             </motion.div>
 
             <motion.div variants={itemVariants} className="space-y-2">
               <div className="flex justify-between items-center">
-                <label className="text-primary font-poppins font-medium text-sm ml-1">{t('Password')}</label>
-                <Link 
-                  href="#" 
+                <label className="text-primary font-poppins font-medium text-sm ml-1">
+                  {t("Password")}
+                </label>
+                <Link
+                  href="#"
                   onClick={(e) => {
                     e.preventDefault();
                     setIsResetOpen(true);
                   }}
                   className="text-secondary font-poppins text-xs hover:underline decoration-secondary/30"
                 >
-                  {t('Forgot?')}
+                  {t("Forgot?")}
                 </Link>
               </div>
-              <Input 
-                type="password" 
+              <Input
+                type="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
@@ -197,12 +216,12 @@ export default function LoginPage() {
             </motion.div>
 
             <motion.div variants={itemVariants} className="pt-4">
-              <Button 
+              <Button
                 type="submit"
                 disabled={loginMutation.isPending}
                 className="w-full h-14 rounded-2xl text-lg font-poppins font-semibold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
-                {loginMutation.isPending ? t('Signing In...') : t('Sign In')}
+                {loginMutation.isPending ? t("Signing In...") : t("Sign In")}
               </Button>
             </motion.div>
           </form>
@@ -211,12 +230,14 @@ export default function LoginPage() {
           <motion.div variants={itemVariants} className="mt-10 text-center">
             <p className="text-text/60 font-poppins text-sm">
               {t("Don't have an account?")}{" "}
-              <Link href="/signup" className="text-primary font-bold hover:underline decoration-primary/30">
-                {t('Create Account')}
+              <Link
+                href="/signup"
+                className="text-primary font-bold hover:underline decoration-primary/30"
+              >
+                {t("Create Account")}
               </Link>
             </p>
           </motion.div>
-
         </div>
       </motion.div>
 

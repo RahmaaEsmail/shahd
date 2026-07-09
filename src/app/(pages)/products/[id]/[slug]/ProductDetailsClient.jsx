@@ -33,10 +33,16 @@ export default function ProductDetailsClient({ id, slug }) {
       <ProductDetailsGrid data={data} />
       <ProductDetailsIngredients data={data} />
       <ProductDetailsUsage data={data} />
-      <ProductDetailsRoutine data={data} />
+      {data?.data?.routines?.length > 0 && (
+        <ProductDetailsRoutine data={data} />
+      )}
       <ProductDetailsRealResult data={data} />
-      <ProductDetailsReviews data={data} />
-      <ProductDetailsBundles data={data} />
+      {data?.data?.testimonials?.length > 0 && (
+        <ProductDetailsReviews data={data} />
+      )}
+      {data?.data?.related_products?.length > 0 && (
+        <ProductDetailsBundles data={data} />
+      )}
       <ProductDetailsPartners data={data} />
     </main>
   );

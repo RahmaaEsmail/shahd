@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Minus, Plus, Star, ShoppingCart } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useHorse, useHorseProductDetails } from "@/hooks/horse/useHorse";
+import { useAddToCartAction } from "@/hooks/cart/useCart";
 import Loading from "../../../../loading";
 import Toast from "@/components/shared/Toast";
 
@@ -31,6 +32,7 @@ const HorseProductClientDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
+  const { addToCart, isAddingToCart } = useAddToCartAction();
 
   const lang = i18n.language?.startsWith("ar")
     ? "ar"
@@ -47,10 +49,16 @@ const HorseProductClientDetails = () => {
       productDetailsData?.data?.[`title_${lang}`] ||
       productDetailsData?.data?.title_en ||
       t("Product");
-    setToastMessage(
-      `${quantity} x ${title} ${t("added to cart successfully!")}`,
-    );
-    setShowToast(true);
+    addToCart(productDetailsData?.data?.id, quantity, {
+      onSuccess: (res) => {
+        if (res?.status === "success") {
+          setToastMessage(
+            `${quantity} x ${title} ${t("added to cart successfully!")}`,
+          );
+          setShowToast(true);
+        }
+      },
+    });
   };
 
   // Prevent scroll on body when modal is open
@@ -210,10 +218,11 @@ const HorseProductClientDetails = () => {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={handleAddToCart}
-                    className="w-full h-[52px] rounded-full text-white flex justify-center items-center gap-2 text-base font-normal bg-gradient-to-r from-[#DDB2B5] to-[#EFD4CE] hover:shadow-lg transition-all duration-300 cursor-pointer shadow-md"
+                    disabled={isAddingToCart}
+                    className="w-full h-[52px] rounded-full text-white flex justify-center items-center gap-2 text-base font-normal bg-gradient-to-r from-[#DDB2B5] to-[#EFD4CE] hover:shadow-lg transition-all duration-300 cursor-pointer shadow-md disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     <ShoppingCart size={18} />
-                    {t("Add To Cart")}
+                    {isAddingToCart ? t("Adding...") : t("Add To Cart")}
                   </motion.button>
                 </div>
               </div>

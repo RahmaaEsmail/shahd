@@ -40,7 +40,13 @@ export default function SignupPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.email || !formData.phone || !formData.password || !formData.confirmPassword) {
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
       Swal.fire({
         icon: "error",
         title: t("Error"),
@@ -60,29 +66,37 @@ export default function SignupPage() {
 
     const { name, email, phone, password } = formData;
 
-    checkEmailMutation.mutate({ email }, {
-      onSuccess: (checkData) => {
-        if (checkData.status === "success") {
-          setToastMessage(checkData.message || t("Verification code sent to your email."));
-          setShowToast(true);
-          setVerifyEmail(email);
-          setIsVerifyOpen(true);
-        } else {
+    checkEmailMutation.mutate(
+      { email },
+      {
+        onSuccess: (checkData) => {
+          if (checkData.status === "success") {
+            setToastMessage(
+              checkData.message || t("Verification code sent to your email."),
+            );
+            setShowToast(true);
+            setVerifyEmail(email);
+            setIsVerifyOpen(true);
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: t("Error"),
+              text: checkData.message || t("Email check failed"),
+            });
+          }
+        },
+        onError: (error) => {
           Swal.fire({
             icon: "error",
             title: t("Error"),
-            text: checkData.message || t("Email check failed"),
+            text:
+              error?.response?.data?.message ||
+              error?.message ||
+              t("Something went wrong"),
           });
-        }
+        },
       },
-      onError: (error) => {
-        Swal.fire({
-          icon: "error",
-          title: t("Error"),
-          text: error?.response?.data?.message || error?.message || t("Something went wrong"),
-        });
-      },
-    });
+    );
   };
 
   const containerVariants = {
@@ -105,10 +119,10 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen relative flex items-center justify-center py-16 px-4 sm:px-6 overflow-hidden">
       {/* Background with decorative elements */}
-      <div 
+      <div
         className="absolute inset-0 z-0 bg-cover bg-center opacity-40 bg-no-repeat"
         style={{
-          backgroundImage: `url("/SHAHD-IMAGE/Untitled design.png")`
+          backgroundImage: `url("/SHAHD-IMAGE/Untitled design.png")`,
         }}
       />
 
@@ -120,10 +134,12 @@ export default function SignupPage() {
         className="relative z-10 mt-20 w-full max-w-lg"
       >
         <div className="bg-white backdrop-blur-xl border-[2px] border-primary p-8 md:p-12 rounded-[40px] shadow-[0_20px_50px_rgba(221,178,181,0.15)] flex flex-col items-center">
-
           {/* Logo/Brand */}
           <motion.div variants={itemVariants} className="mb-8">
-            <img src="/SHAHD-IMAGE/6 (1).webp" className="aspect-auto p-3 rounded-full  border-primary" />
+            <img
+              src="/SHAHD-IMAGE/6 (1).webp"
+              className="aspect-auto p-3 rounded-full  border-primary"
+            />
           </motion.div>
 
           {/* Header */}
@@ -132,32 +148,36 @@ export default function SignupPage() {
               variants={itemVariants}
               className="text-primary font-main text-4xl mb-2 uppercase"
             >
-              {t('Start Your Journey')}
+              {t("Start Your Journey")}
             </motion.h1>
             <motion.p
               variants={itemVariants}
               className="text-text/60 font-poppins text-sm"
             >
-              {t('Sign up to unlock personalized aesthetic treatments')}
+              {t("Sign up to unlock personalized aesthetic treatments")}
             </motion.p>
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="w-full grid grid-cols-1 md:grid-cols-2 gap-3">
-            <motion.div variants={itemVariants} className="space-y-2 md:col-span-1">
-              <label className="text-primary font-poppins font-medium text-sm ml-1">{t('Full Name')}</label>
+          <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3">
+            <motion.div variants={itemVariants} className="space-y-2">
+              <label className="text-primary font-poppins font-medium text-sm ml-1">
+                {t("Full Name")}
+              </label>
               <Input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                placeholder={t('Jane Doe')}
+                placeholder={t("Jane Doe")}
                 className="rounded-2xl font-poppins border-primary/20 focus-visible:ring-primary/30 h-12 bg-white/50"
               />
             </motion.div>
 
-            <motion.div variants={itemVariants} className="space-y-2 md:col-span-1">
-              <label className="text-primary font-poppins font-medium text-sm ml-1">{t('Email Address')}</label>
+            <motion.div variants={itemVariants} className="space-y-2">
+              <label className="text-primary font-poppins font-medium text-sm ml-1">
+                {t("Email Address")}
+              </label>
               <Input
                 type="email"
                 name="email"
@@ -168,8 +188,10 @@ export default function SignupPage() {
               />
             </motion.div>
 
-            <motion.div variants={itemVariants} className="space-y-2 md:col-span-2">
-              <label className="text-primary font-poppins font-medium text-sm ml-1">{t('phone Number')}</label>
+            <motion.div variants={itemVariants} className="space-y-2">
+              <label className="text-primary font-poppins font-medium text-sm ml-1">
+                {t("phone Number")}
+              </label>
               <Input
                 type="text"
                 name="phone"
@@ -181,7 +203,9 @@ export default function SignupPage() {
             </motion.div>
 
             <motion.div variants={itemVariants} className="space-y-2">
-              <label className="text-primary font-poppins font-medium text-sm ml-1">{t('Password')}</label>
+              <label className="text-primary font-poppins font-medium text-sm ml-1">
+                {t("Password")}
+              </label>
               <Input
                 type="password"
                 name="password"
@@ -193,7 +217,9 @@ export default function SignupPage() {
             </motion.div>
 
             <motion.div variants={itemVariants} className="space-y-2">
-              <label className="text-primary font-poppins font-medium text-sm ml-1">{t('Confirm Password')}</label>
+              <label className="text-primary font-poppins font-medium text-sm ml-1">
+                {t("Confirm Password")}
+              </label>
               <Input
                 type="password"
                 name="confirmPassword"
@@ -207,10 +233,16 @@ export default function SignupPage() {
             <motion.div variants={itemVariants} className="pt-6 md:col-span-2">
               <Button
                 type="submit"
-                disabled={registerMutation.isPending || checkEmailMutation.isPending}
+                disabled={
+                  registerMutation.isPending || checkEmailMutation.isPending
+                }
                 className="w-full h-14 rounded-2xl text-lg font-poppins font-semibold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
-                {checkEmailMutation.isPending ? t('Checking Email...') : registerMutation.isPending ? t('Creating Account...') : t('Create Account')}
+                {checkEmailMutation.isPending
+                  ? t("Checking Email...")
+                  : registerMutation.isPending
+                    ? t("Creating Account...")
+                    : t("Create Account")}
               </Button>
             </motion.div>
           </form>
@@ -218,15 +250,17 @@ export default function SignupPage() {
           {/* Footer */}
           <motion.div variants={itemVariants} className="mt-10 text-center">
             <p className="text-text/60 font-poppins text-sm">
-              {t('Already have an account?')}{" "}
-              <Link href="/login" className="text-primary font-bold hover:underline decoration-primary/30">
-                {t('Sign In')}
+              {t("Already have an account?")}{" "}
+              <Link
+                href="/login"
+                className="text-primary font-bold hover:underline decoration-primary/30"
+              >
+                {t("Sign In")}
               </Link>
             </p>
           </motion.div>
-
         </div>
-      </motion.div>     
+      </motion.div>
 
       <VerifyEmailModal
         isOpen={isVerifyOpen}
@@ -234,35 +268,41 @@ export default function SignupPage() {
         onClose={() => setIsVerifyOpen(false)}
         onSuccess={() => {
           const { name, email, phone, password } = formData;
-          registerMutation.mutate({ name, email, phone, password }, {
-            onSuccess: (regData) => {
-              if (regData.status === "success") {
-                Swal.fire({
-                  icon: "success",
-                  title: t("Success"),
-                  text: t("Registration successful! Please sign in."),
-                  timer: 2000,
-                  showConfirmButton: false,
-                }).then(() => {
-                  setIsVerifyOpen(false);
-                  router.push("/login");
-                });
-              } else {
+          registerMutation.mutate(
+            { name, email, phone, password },
+            {
+              onSuccess: (regData) => {
+                if (regData.status === "success") {
+                  Swal.fire({
+                    icon: "success",
+                    title: t("Success"),
+                    text: t("Registration successful! Please sign in."),
+                    timer: 2000,
+                    showConfirmButton: false,
+                  }).then(() => {
+                    setIsVerifyOpen(false);
+                    router.push("/login");
+                  });
+                } else {
+                  Swal.fire({
+                    icon: "error",
+                    title: t("Error"),
+                    text: regData.message || t("Registration failed"),
+                  });
+                }
+              },
+              onError: (error) => {
                 Swal.fire({
                   icon: "error",
                   title: t("Error"),
-                  text: regData.message || t("Registration failed"),
+                  text:
+                    error?.response?.data?.message ||
+                    error?.message ||
+                    t("Something went wrong"),
                 });
-              }
+              },
             },
-            onError: (error) => {
-              Swal.fire({
-                icon: "error",
-                title: t("Error"),
-                text: error?.response?.data?.message || error?.message || t("Something went wrong"),
-              });
-            }
-          });
+          );
         }}
       />
 

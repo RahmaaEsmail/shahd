@@ -151,12 +151,14 @@ const quantityVariants = {
 };
 
 import useWishlistStore from "@/zustandStore/WishlistStore";
+import { useAddToCartAction } from "@/hooks/cart/useCart";
 
 // ... (keep constants)
 
 export default function ProductDetailsContent({ data }) {
   const { toggleWishlist, isInWishlist } = useWishlistStore();
   const { t } = useTranslation();
+  const { addToCart, isAddingToCart } = useAddToCartAction();
 
   console.log("ProductDetailsContent", data);
 
@@ -188,7 +190,6 @@ export default function ProductDetailsContent({ data }) {
 
   const [selectedSize, setSelectedSize] = useState(sizes[0] || "30 ml");
   const [quantity, setQuantity] = useState(1);
-  const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [showAddedMessage, setShowAddedMessage] = useState(false);
   const router = useRouter();
 
@@ -224,26 +225,14 @@ export default function ProductDetailsContent({ data }) {
   };
 
   const handleAddToCart = () => {
-    setIsAddingToCart(true);
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsAddingToCart(false);
-      setShowAddedMessage(true);
-
-      // Hide success message after 2 seconds
-      setTimeout(() => {
-        setShowAddedMessage(false);
-      }, 2000);
-
-      // Here you would typically add to cart state/context
-      console.log("Added to cart:", {
-        product: product.name,
-        size: selectedSize,
-        quantity: quantity,
-        price: currentPrice,
-      });
-    }, 1500);
+    addToCart(product.id, quantity, {
+      onSuccess: (res) => {
+        if (res?.status === "success") {
+          setShowAddedMessage(true);
+          setTimeout(() => setShowAddedMessage(false), 2000);
+        }
+      },
+    });
   };
 
   return (

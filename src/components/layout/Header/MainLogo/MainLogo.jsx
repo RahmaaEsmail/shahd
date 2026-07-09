@@ -13,10 +13,15 @@ import { useMemo } from "react";
 //   light: '/SHAHD-IMAGE/horizontal logo 4.webp',
 // };
 
+// const LOGO_VARIANTS = {
+//   default: "/SHAHD-IMAGE/6 (1).webp",
+//   dark: "/SHAHD-IMAGE/7.webp",
+//   light: "/SHAHD-IMAGE/7.webp",
+// };
 const LOGO_VARIANTS = {
-  default: "/SHAHD-IMAGE/6 (1).webp",
-  dark: "/SHAHD-IMAGE/7.webp",
-  light: "/SHAHD-IMAGE/7.webp",
+  default: "/SHAHD-IMAGE/logo.png",
+  dark: "/SHAHD-IMAGE/logo.png",
+  light: "/SHAHD-IMAGE/logo.png",
 };
 
 // Define which paths use which logo variant
@@ -73,11 +78,7 @@ export default function MainLogo({ isScrolled, isSidebarOpen }) {
   };
 
   return (
-    <Link
-      href="/"
-      className="block"
-      aria-label="Go to homepage"
-    >
+    <Link href="/" className="block" aria-label="Go to homepage">
       <motion.div {...logoAnimation} className="w-[230px]">
         <Image
           src={logoSrc}

@@ -37,5 +37,28 @@ export const userEndPoints = {
     routine_details:"user/home/shop/select_routine_details.php",
     get_products : "user/home/shop/select_products.php",
     get_products_filteration : "user/home/shop/select_filters.php",
-    get_horse_product_details:"user/home/horse_products/get_product_details.php"
+    get_horse_product_details:"user/home/horse_products/get_product_details.php",
+
+    // booking
+    get_booking_banner:"user/home/booking/get_banner.php",
+    get_booking_services:"user/home/booking/get_services.php",
+    get_booking_slots:"user/home/booking/get_available_slots.php",
+    get_booking_dates:"user/home/booking/get_available_dates.php",
+    get_booking_banner:"user/home/booking/get_banner.php",
+    create_booking :"user/home/booking/create_booking.php",
+
+
+   //cart
+   get_user_cart:"user/home/booking/cart/get_user_cart.php",
+   add_cart:"user/home/booking/cart/add_to_cart.php",
+   update_cart:"user/home/booking/cart/update_cart.php", 
+   delete_cart :"user/home/booking/cart/delete_from_cart.php",
+   
+    //checkout
+    checkout:"user/home/booking/orders/checkout.php",
+
+    ////////////////////// profile /////////////////
+    get_user_orders:"user/home/booking/orders/get_order.php",
+    get_profile_data :"user/home/profile/get_profile_data.php",
+    edit_profile_data : "user/home/profile/edit_profile.php",
 }

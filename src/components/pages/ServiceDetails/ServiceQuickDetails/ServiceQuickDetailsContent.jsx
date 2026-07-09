@@ -346,7 +346,11 @@ export default function ServiceQuickDetailsContent({ service }) {
 
           {/* Book Now Button */}
           <motion.button
-            onClick={() => router.push("/booking")}
+            onClick={() =>
+              router.push(
+                service?.id ? `/booking?service_id=${service.id}` : "/booking",
+              )
+            }
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"

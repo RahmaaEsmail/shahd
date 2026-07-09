@@ -8,10 +8,15 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Swal from "sweetalert2";
 
-export default function VerifyEmailModal({ isOpen, email, onClose, onSuccess }) {
+export default function VerifyEmailModal({
+  isOpen,
+  email,
+  onClose,
+  onSuccess,
+}) {
   const { t } = useTranslation();
   const [code, setCode] = useState("");
-  
+
   const verifyMutation = useVerifiedCode();
   const resendMutation = useCheckEmail();
 
@@ -45,7 +50,9 @@ export default function VerifyEmailModal({ isOpen, email, onClose, onSuccess }) 
             Swal.fire({
               icon: "error",
               title: t("Error"),
-              text: data.message || t("Verification failed. Please check the code."),
+              text:
+                data.message ||
+                t("Verification failed. Please check the code."),
             });
           }
         },
@@ -53,10 +60,13 @@ export default function VerifyEmailModal({ isOpen, email, onClose, onSuccess }) 
           Swal.fire({
             icon: "error",
             title: t("Error"),
-            text: err?.response?.data?.message || err?.message || t("Something went wrong"),
+            text:
+              err?.response?.data?.message ||
+              err?.message ||
+              t("Something went wrong"),
           });
         },
-      }
+      },
     );
   };
 
@@ -69,7 +79,8 @@ export default function VerifyEmailModal({ isOpen, email, onClose, onSuccess }) 
             Swal.fire({
               icon: "success",
               title: t("Success"),
-              text: t("Verification code resent to your email."),
+              text:
+                data?.message || t("Verification code resent to your email."),
               timer: 1500,
               showConfirmButton: false,
             });
@@ -85,10 +96,13 @@ export default function VerifyEmailModal({ isOpen, email, onClose, onSuccess }) 
           Swal.fire({
             icon: "error",
             title: t("Error"),
-            text: err?.response?.data?.message || err?.message || t("Something went wrong"),
+            text:
+              err?.response?.data?.message ||
+              err?.message ||
+              t("Something went wrong"),
           });
         },
-      }
+      },
     );
   };
 
@@ -104,7 +118,7 @@ export default function VerifyEmailModal({ isOpen, email, onClose, onSuccess }) 
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 280 }}
-            className="relative bg-white/95 backdrop-blur-2xl border border-primary/30 rounded-[32px] max-w-md w-full overflow-hidden shadow-2xl p-8 sm:p-10 flex flex-col items-center z-10"
+            className="relative bg-white backdrop-blur-2xl border border-primary rounded-[32px] max-w-md w-full overflow-hidden shadow-2xl p-8 sm:p-10 flex flex-col items-center z-10"
           >
             {/* Close Button */}
             <button
@@ -132,16 +146,18 @@ export default function VerifyEmailModal({ isOpen, email, onClose, onSuccess }) 
             {/* Form */}
             <form onSubmit={handleVerify} className="w-full space-y-6">
               <div className="space-y-2">
-                <label className="text-primary font-poppins font-medium text-xs ml-1 block text-center uppercase tracking-wider">
+                <label className="text-primary font-poppins font-medium text-sm ml-1 block text-center uppercase tracking-wider">
                   {t("Verification Code")}
                 </label>
                 <Input
                   type="text"
                   maxLength={6}
                   value={code}
-                  onChange={(e) => setCode(e.target.value.replace(/[^0-9]/g, ""))}
+                  onChange={(e) =>
+                    setCode(e.target.value.replace(/[^0-9]/g, ""))
+                  }
                   placeholder="123456"
-                  className="rounded-2xl font-poppins border-primary/20 focus-visible:ring-primary/30 h-14 bg-white/50 text-center text-2xl font-bold tracking-[8px] placeholder:tracking-[2px]"
+                  className="rounded-2xl font-poppins border-primary/20 focus-visible:ring-primary/30 h-14 bg-white/50 text-center text-2xl font-medium"
                 />
               </div>
 
@@ -150,7 +166,9 @@ export default function VerifyEmailModal({ isOpen, email, onClose, onSuccess }) 
                 disabled={verifyMutation.isPending}
                 className="w-full h-12 rounded-2xl text-base font-poppins font-semibold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-transform"
               >
-                {verifyMutation.isPending ? t("Verifying...") : t("Verify Email")}
+                {verifyMutation.isPending
+                  ? t("Verifying...")
+                  : t("Verify Email")}
               </Button>
             </form>
 
@@ -164,7 +182,9 @@ export default function VerifyEmailModal({ isOpen, email, onClose, onSuccess }) 
                   disabled={resendMutation.isPending}
                   className="text-primary font-bold hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {resendMutation.isPending ? t("Resending...") : t("Resend Code")}
+                  {resendMutation.isPending
+                    ? t("Resending...")
+                    : t("Resend Code")}
                 </button>
               </p>
             </div>
