@@ -2,7 +2,15 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "../../../../ui/badge";
-import { Heart, Star, ShoppingCart, Check, Minus, Plus } from "lucide-react";
+import {
+  Heart,
+  Star,
+  ShoppingCart,
+  Check,
+  Minus,
+  Plus,
+  Loader2,
+} from "lucide-react";
 import Toast from "../../../../shared/Toast";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
@@ -151,16 +159,29 @@ const quantityVariants = {
 };
 
 import useWishlistStore from "@/zustandStore/WishlistStore";
-import { useAddToCartAction } from "@/hooks/cart/useCart";
+import {
+  useAddToCartAction,
+  useCart,
+  useUpdateCart,
+  useDeleteCartItem,
+} from "@/hooks/cart/useCart";
 
 // ... (keep constants)
 
 export default function ProductDetailsContent({ data }) {
   const { toggleWishlist, isInWishlist } = useWishlistStore();
   const { t } = useTranslation();
-  const { addToCart, isAddingToCart } = useAddToCartAction();
+  const { addToCart, isAddingToCart, user } = useAddToCartAction();
+  const { mutate: updateCart, isPending: isUpdating } = useUpdateCart();
+  const { mutate: deleteCartItem, isPending: isDeleting } = useDeleteCartItem();
 
-  console.log("ProductDetailsContent", data);
+  // Find this product in the cart
+  const { data: cartData } = useCart(user?.user_id);
+  const cartItems = Array.isArray(cartData?.data)
+    ? cartData.data
+    : cartData?.data?.items || [];
+
+  console.log("cartItems", cartItems);
 
   const product = {
     id: data.data?.id || 1,
@@ -181,6 +202,17 @@ export default function ProductDetailsContent({ data }) {
       "/SHAHD-IMAGE/horse/206c8be48988ac5b9bce6352927ab9782f8d48d8.webp",
     description: data?.data?.description || data?.data?.desc || "",
   };
+
+  const cartItem = cartItems.find(
+    (item) =>
+      (item?.product?.id ?? item?.product_id ?? item?.id) == product?.id,
+  );
+  const cartItemId = cartItem?.cart_id ?? cartItem?.id;
+  const cartQuantity = cartItem
+    ? Number(cartItem.cart_quantity ?? cartItem.quantity ?? 0)
+    : 0;
+
+  console.log("ProductDetailsContent", data);
 
   const sizesPriceList = data?.data?.sizes_price || [];
   const sizes =
@@ -218,21 +250,63 @@ export default function ProductDetailsContent({ data }) {
 
   const handleQuantityChange = (type) => {
     if (type === "increment") {
-      setQuantity((prev) => prev + 1);
+      if (cartItem && cartItemId) {
+        // Already in cart — call update API
+        const newQty = cartQuantity + 1;
+        updateCart(
+          { cart_id: cartItemId, quantity: newQty },
+          {
+            onSuccess: (res) => {
+              if (res?.status !== "success") {
+              }
+            },
+          },
+        );
+      } else {
+        // Not yet in cart — just update local state (used when Add To Cart is clicked next)
+        setQuantity((prev) => prev + 1);
+      }
     } else {
-      setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+      if (cartItem && cartItemId) {
+        if (cartQuantity > 1) {
+          updateCart(
+            { cart_id: cartItemId, quantity: cartQuantity - 1 },
+            {
+              onSuccess: (res) => {
+                if (res?.status !== "success") {
+                }
+              },
+            },
+          );
+        } else {
+          deleteCartItem({ cart_id: cartItemId });
+        }
+      } else {
+        setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+      }
     }
   };
 
+  // The quantity shown: live cart quantity if item is in cart, otherwise local state
+  const displayQuantity = cartItem ? cartQuantity : quantity;
+
   const handleAddToCart = () => {
-    addToCart(product.id, quantity, {
-      onSuccess: (res) => {
-        if (res?.status === "success") {
-          setShowAddedMessage(true);
-          setTimeout(() => setShowAddedMessage(false), 2000);
-        }
+    const unit = activeSizeObj
+      ? { size: activeSizeObj.size, price: Number(activeSizeObj.price) }
+      : undefined;
+    addToCart(
+      product.id,
+      quantity,
+      {
+        onSuccess: (res) => {
+          if (res?.status === "success") {
+            setShowAddedMessage(true);
+            setTimeout(() => setShowAddedMessage(false), 2000);
+          }
+        },
       },
-    });
+      unit,
+    );
   };
 
   return (
@@ -402,25 +476,35 @@ export default function ProductDetailsContent({ data }) {
               whileHover={{ scale: 1.2, color: "#DDB2B5" }}
               whileTap={{ scale: 0.9 }}
               onClick={() => handleQuantityChange("decrement")}
-              className="w-8 h-8 flex items-center justify-center transition-colors"
+              disabled={isUpdating || isDeleting}
+              className="w-8 h-8 flex items-center justify-center transition-colors disabled:opacity-40"
             >
-              <Minus size={18} />
+              {isDeleting ? (
+                <Loader2 size={16} className="animate-spin" />
+              ) : (
+                <Minus size={18} />
+              )}
             </motion.button>
 
             <motion.p
-              key={quantity}
+              key={displayQuantity}
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               className="font-medium"
             >
-              {quantity}
+              {isUpdating ? (
+                <Loader2 size={16} className="animate-spin" />
+              ) : (
+                displayQuantity
+              )}
             </motion.p>
 
             <motion.button
               whileHover={{ scale: 1.2, color: "#DDB2B5" }}
               whileTap={{ scale: 0.9 }}
               onClick={() => handleQuantityChange("increment")}
-              className="w-8 h-8 flex items-center justify-center transition-colors"
+              disabled={isUpdating || isDeleting}
+              className="w-8 h-8 flex items-center justify-center transition-colors disabled:opacity-40"
             >
               <Plus size={18} />
             </motion.button>

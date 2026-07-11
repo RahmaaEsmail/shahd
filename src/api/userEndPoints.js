@@ -54,6 +54,10 @@ export const userEndPoints = {
    update_cart:"user/home/booking/cart/update_cart.php", 
    delete_cart :"user/home/booking/cart/delete_from_cart.php",
    
+
+    // wishlist 
+    toggle_wishlist : "user/home/wishlist/toggle_wishlist.php",
+    get_wishlist : "user/home/wishlist/get_wishlist.php",
     //checkout
     checkout:"user/home/booking/orders/checkout.php",
 
@@ -61,4 +65,6 @@ export const userEndPoints = {
     get_user_orders:"user/home/booking/orders/get_order.php",
     get_profile_data :"user/home/profile/get_profile_data.php",
     edit_profile_data : "user/home/profile/edit_profile.php",
+    get_user_profile_overview:"user/home/profile/user_overview.php",
+    get_user_bookings:"user/home/profile/get_user_bookings.php",
 }

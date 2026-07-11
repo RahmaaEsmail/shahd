@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import ProfileSidebar from "./ProfileSidebar";
+import { toast } from "sonner";
 
 export default function ProfileShell({ title, children }) {
   const { t } = useTranslation();
@@ -14,9 +15,10 @@ export default function ProfileShell({ title, children }) {
 
   useEffect(() => {
     if (user === null) {
+      toast.error(t ? t("Please login first.") : "Please login first.");
       router.replace("/login");
     }
-  }, [user, router]);
+  }, [user, router, t]);
 
   if (!user) return null;
 
@@ -30,7 +32,7 @@ export default function ProfileShell({ title, children }) {
       .join("") || "U";
 
   return (
-    <div className="min-h-screen relative py-16 px-4 sm:px-6 overflow-hidden">
+    <div className="min-h-screen relative py-16 px-4 sm:px-6">
       <div
         className="absolute inset-0 z-0 bg-cover bg-center opacity-40 bg-no-repeat"
         style={{

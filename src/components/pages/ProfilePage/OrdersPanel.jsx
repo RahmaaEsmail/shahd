@@ -1,35 +1,49 @@
 "use client";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { Package, ChevronRight } from "lucide-react";
+import { Package, ChevronRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import EmptyState from "./EmptyState";
-
-const ORDERS = [
-  { id: "10241", date: "Jul 05, 2026", status: "processing", items: 3, total: 480 },
-  { id: "10234", date: "Jun 28, 2026", status: "shipped", items: 1, total: 150 },
-  { id: "10221", date: "Jun 12, 2026", status: "delivered", items: 2, total: 310 },
-  { id: "10198", date: "May 30, 2026", status: "cancelled", items: 1, total: 95 },
-];
+import { useUserOrders } from "@/hooks/profile/useProfile";
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser";
 
 const STATUS_STYLES = {
-  processing: "bg-amber-50 text-amber-600 border-amber-200",
-  shipped: "bg-blue-50 text-blue-600 border-blue-200",
-  delivered: "bg-green-50 text-green-600 border-green-200",
+  pending: "bg-amber-50 text-amber-600 border-amber-200",
+  in_progress: "bg-blue-50 text-blue-600 border-blue-200",
+  confirmed: "bg-purple-50 text-purple-600 border-purple-200",
+  completed: "bg-green-50 text-green-600 border-green-200",
   cancelled: "bg-red-50 text-red-500 border-red-200",
 };
 
 const STATUS_LABELS = {
-  processing: "Processing",
-  shipped: "Shipped",
-  delivered: "Delivered",
+  pending: "Pending",
+  in_progress: "In Progress",
+  confirmed: "Confirmed",
+  completed: "Completed",
   cancelled: "Cancelled",
 };
 
 export default function OrdersPanel() {
   const { t } = useTranslation();
+  const user = useCurrentUser();
+  const { data: ordersData, isLoading } = useUserOrders(user?.user_id);
 
-  if (ORDERS.length === 0) {
+  if (isLoading) {
+    return (
+      <div className="py-20 flex justify-center items-center w-full">
+        <Loader2 className="animate-spin text-primary" size={32} />
+      </div>
+    );
+  }
+
+  const rawOrders = Array.isArray(ordersData)
+    ? ordersData
+    : Array.isArray(ordersData?.data)
+    ? ordersData.data
+    : ordersData?.data?.orders || [];
+
+  if (rawOrders.length === 0) {
     return (
       <EmptyState
         icon={Package}
@@ -43,46 +57,54 @@ export default function OrdersPanel() {
 
   return (
     <div className="space-y-4">
-      {ORDERS.map((order) => (
-        <div
-          key={order.id}
-          className="flex flex-col sm:flex-row sm:items-center gap-4 rounded-2xl border border-primary/15 bg-white px-5 py-4"
-        >
-          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-            <Package size={20} />
-          </span>
-          <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-2">
-              <p className="font-poppins font-semibold text-text">
-                {t("Order")} #{order.id}
+      {rawOrders.map((order) => {
+        const orderId = order?.id || order?.order_id;
+        const total = order?.total_price || order?.total || 0;
+        const itemsCount = order?.items_count || order?.items?.length || 0;
+        const date = order?.created_at ? order.created_at.split(" ")[0] : "";
+        const status = order?.status || "pending";
+
+        return (
+          <div
+            key={orderId}
+            className="flex flex-col sm:flex-row sm:items-center gap-4 rounded-2xl border border-primary/15 bg-white px-5 py-4"
+          >
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+              <Package size={20} />
+            </span>
+            <div className="min-w-0 flex-1">
+              <div className="flex flex-wrap items-center gap-2">
+                <p className="font-poppins font-semibold text-text">
+                  {t("Order")} #{orderId}
+                </p>
+                <span
+                  className={cn(
+                    "rounded-full border px-2.5 py-0.5 text-xs font-medium uppercase",
+                    STATUS_STYLES[status] || "bg-gray-50 text-gray-600 border-gray-200"
+                  )}
+                >
+                  {t(STATUS_LABELS[status] || status)}
+                </span>
+              </div>
+              <p className="font-poppins text-sm text-text/60 mt-1">
+                {date} · {itemsCount} {t("items")}
               </p>
-              <span
-                className={cn(
-                  "rounded-full border px-2.5 py-0.5 text-xs font-medium",
-                  STATUS_STYLES[order.status]
-                )}
-              >
-                {t(STATUS_LABELS[order.status])}
-              </span>
             </div>
-            <p className="font-poppins text-sm text-text/60 mt-1">
-              {order.date} · {order.items} {t("items")}
-            </p>
+            <div className="flex items-center gap-4 sm:shrink-0">
+              <p className="font-poppins font-semibold text-primary">
+                {total} {t("S.R")}
+              </p>
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-full border-primary text-primary hover:bg-primary/10 gap-1"
+              >
+                {t("View Details")} <ChevronRight size={14} />
+              </Button>
+            </div>
           </div>
-          <div className="flex items-center gap-4 sm:shrink-0">
-            <p className="font-poppins font-semibold text-primary">
-              {order.total} {t("S.R")}
-            </p>
-            <Button
-              variant="outline"
-              size="sm"
-              className="rounded-full border-primary text-primary hover:bg-primary/10 gap-1"
-            >
-              {t("View Details")} <ChevronRight size={14} />
-            </Button>
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

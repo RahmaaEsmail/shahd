@@ -12,8 +12,10 @@ import { Button } from "@/components/ui/button";
 import { Breadcrumb } from "@/components/shared/Breadcrumb";
 import { useCart } from "@/hooks/cart/useCart";
 import { useCheckout } from "@/hooks/checkout/useCheckout";
+import { useGetProducts } from "@/hooks/products/useProducts";
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser";
 import Loading from "@/app/loading";
+import CartBanner from "@/components/pages/CartPage/CartBanner/CartBanner";
 
 const fadeIn = {
   initial: { opacity: 0, y: 10 },
@@ -31,9 +33,16 @@ export default function CheckoutClient() {
   const router = useRouter();
   const user = useCurrentUser();
   const { data: cartData, isLoading: isLoadingCart } = useCart(user?.user_id);
+  const { data: productsData, isLoading: isLoadingProducts } = useGetProducts();
   const { mutate: checkout, isPending: isCheckingOut } = useCheckout();
 
-  const [form, setForm] = useState({ name: "", phone: "", address: "", city: "", notes: "" });
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    address: "",
+    city: "",
+    notes: "",
+  });
   const [paymentMethod, setPaymentMethod] = useState("card");
 
   useEffect(() => {
@@ -52,12 +61,32 @@ export default function CheckoutClient() {
     }
   }, [user]);
 
-  const items = Array.isArray(cartData?.data)
+  const rawItems = Array.isArray(cartData?.data)
     ? cartData.data
     : cartData?.data?.items || [];
 
+  const productsList = productsData?.data || [];
+
+  const items = rawItems.map((cartItem) => {
+    const productDetail = productsList.find((p) => p.id == cartItem.product_id);
+    return {
+      ...cartItem,
+      id: cartItem.product_id,
+      name:
+        productDetail?.name ||
+        productDetail?.title ||
+        `Product #${cartItem.product_id}`,
+      price: productDetail?.price || 0,
+      image:
+        productDetail?.img ||
+        productDetail?.main_image ||
+        productDetail?.image_url,
+    };
+  });
+
   const subtotal = items.reduce(
-    (sum, item) => sum + (Number(item?.price) || 0) * (Number(item?.quantity) || 1),
+    (sum, item) =>
+      sum + (Number(item?.price) || 0) * (Number(item?.quantity) || 1),
     0,
   );
 
@@ -99,14 +128,16 @@ export default function CheckoutClient() {
             Swal.fire({
               icon: "success",
               title: t("Order Placed!"),
-              text: res?.message || t("Your order has been placed successfully."),
+              text:
+                res?.message || t("Your order has been placed successfully."),
               confirmButtonColor: "#DDB2B5",
             }).then(() => router.push("/profile/orders"));
           } else {
             Swal.fire({
               icon: "error",
               title: t("Checkout Failed"),
-              text: res?.message || t("Something went wrong, please try again."),
+              text:
+                res?.message || t("Something went wrong, please try again."),
               confirmButtonColor: "#DDB2B5",
             });
           }
@@ -125,7 +156,7 @@ export default function CheckoutClient() {
     );
   };
 
-  if (user === undefined || (user && isLoadingCart)) {
+  if (user === undefined || (user && (isLoadingCart || isLoadingProducts))) {
     return <Loading />;
   }
 
@@ -156,23 +187,26 @@ export default function CheckoutClient() {
   }
 
   return (
-    <div className="main-container px-4 py-30 sm:py-34">
-      <Breadcrumb
+    <div className="">
+      {/* <Breadcrumb
         items={[
           { label: t("Home"), href: "/" },
           { label: t("My Cart"), href: "/cart" },
           { label: t("Checkout") },
         ]}
-      />
-
-      <motion.h1
+      /> */}
+      <CartBanner />
+      {/* <motion.h1
         {...fadeIn}
         className="text-2xl sm:text-3xl font-normal text-secondary uppercase mt-6 mb-8 leading-tight"
       >
         {t("Checkout")}
-      </motion.h1>
+      </motion.h1> */}
 
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+      >
         {/* Shipping & Payment */}
         <div className="lg:col-span-2 flex flex-col gap-6">
           <motion.div
@@ -193,31 +227,55 @@ export default function CheckoutClient() {
                 <label className="text-sm font-poppins text-[#6A6A6A]">
                   {t("Full Name")}
                 </label>
-                <Input name="name" value={form.name} onChange={handleChange} required />
+                <Input
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-sm font-poppins text-[#6A6A6A]">
                   {t("Phone Number")}
                 </label>
-                <Input name="phone" value={form.phone} onChange={handleChange} required />
+                <Input
+                  name="phone"
+                  value={form.phone}
+                  onChange={handleChange}
+                  required
+                />
               </div>
               <div className="flex flex-col gap-2 sm:col-span-2">
                 <label className="text-sm font-poppins text-[#6A6A6A]">
                   {t("Address")}
                 </label>
-                <Input name="address" value={form.address} onChange={handleChange} required />
+                <Input
+                  name="address"
+                  value={form.address}
+                  onChange={handleChange}
+                  required
+                />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-sm font-poppins text-[#6A6A6A]">
                   {t("City")}
                 </label>
-                <Input name="city" value={form.city} onChange={handleChange} required />
+                <Input
+                  name="city"
+                  value={form.city}
+                  onChange={handleChange}
+                  required
+                />
               </div>
               <div className="flex flex-col gap-2 sm:col-span-2">
                 <label className="text-sm font-poppins text-[#6A6A6A]">
                   {t("Notes")} ({t("optional")})
                 </label>
-                <Input name="notes" value={form.notes} onChange={handleChange} />
+                <Input
+                  name="notes"
+                  value={form.notes}
+                  onChange={handleChange}
+                />
               </div>
             </div>
           </motion.div>
@@ -267,7 +325,8 @@ export default function CheckoutClient() {
 
           <div className="flex flex-col gap-3 max-h-[300px] overflow-y-auto pr-1">
             {items.map((item, idx) => {
-              const name = item?.product_name || item?.name || item?.title || t("Product");
+              const name =
+                item?.product_name || item?.name || item?.title || t("Product");
               const quantity = Number(item?.quantity) || 1;
               const price = Number(item?.price) || 0;
               return (

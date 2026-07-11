@@ -52,18 +52,45 @@ const summaryVariants = {
 export default function CartContent() {
   const { t } = useTranslation();
   const user = useCurrentUser();
-  const { data: cartData, isLoading } = useCart(user?.user_id);
+  const { data: cartData, isLoading: isCartLoading } = useCart(user?.user_id);
 
-  const items = Array.isArray(cartData?.data)
+  const rawItems = Array.isArray(cartData?.data)
     ? cartData.data
     : cartData?.data?.items || [];
 
+  // Cart API already embeds the full product inside each cart item — no separate fetch needed
+  const items = rawItems.map((cartItem) => {
+    const p = cartItem?.product || {};
+    const unit = cartItem?.unit;
+
+    // Price: prefer unit.price (selected size price), fall back to product base price
+    const price = unit?.price != null ? Number(unit.price) : Number(p?.price ?? 0);
+
+    const image =
+      p?.main_image ||
+      p?.image_url ||
+      p?.hover_image ||
+      "/SHAHD-IMAGE/Cart/Rectangle 43.webp";
+
+    const name = p?.title_en || p?.title_ar || p?.title || p?.name || `#${cartItem.cart_id}`;
+
+    return {
+      ...cartItem,
+      name,
+      image,
+      price,
+      quantity: Number(cartItem.cart_quantity ?? cartItem.quantity ?? 1),
+      unit,
+    };
+  });
+
+  // Subtotal: price × quantity per line
   const subtotal = items.reduce(
-    (sum, item) => sum + (Number(item?.price) || 0) * (Number(item?.quantity) || 1),
+    (sum, item) => sum + (Number(item.price) || 0) * (Number(item.quantity) || 1),
     0,
   );
 
-  if (user === undefined || (user && isLoading)) {
+  if (user === undefined || (user && isCartLoading)) {
     return <Loading />;
   }
 

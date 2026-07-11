@@ -1,12 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Swal from "sweetalert2";
-import { Mail, Bell, MessageSquare, Trash2 } from "lucide-react";
+import { Mail, Bell, MessageSquare, Trash2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser";
+import { useProfileData, useUpdateProfile } from "@/hooks/profile/useProfile";
 
 function Toggle({ checked, onChange, label, description, icon: Icon }) {
   return (
@@ -44,10 +45,14 @@ function Toggle({ checked, onChange, label, description, icon: Icon }) {
 export default function SettingsPanel() {
   const { t } = useTranslation();
   const user = useCurrentUser();
+  const { data: profileResponse, isLoading } = useProfileData(user?.user_id);
+  const { mutate: updateProfile, isPending: isUpdating } = useUpdateProfile();
 
-  const [name, setName] = useState(user?.name || "");
-  const [email, setEmail] = useState(user?.email || "");
-  const [phone, setPhone] = useState(user?.phone || "");
+  const profile = profileResponse?.data || {};
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -56,20 +61,47 @@ export default function SettingsPanel() {
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [smsNotifications, setSmsNotifications] = useState(false);
 
-  const notifySuccess = (text) =>
-    Swal.fire({ icon: "success", title: t("Success"), text, timer: 1400, showConfirmButton: false });
+  useEffect(() => {
+    if (profile) {
+      setName(profile.name || user?.name || "");
+      setEmail(profile.email || user?.email || "");
+      setPhone(profile.phone || user?.phone || "");
+    }
+  }, [profileResponse, user]);
 
   const handleSaveProfile = (e) => {
     e.preventDefault();
-    notifySuccess(t("Your changes have been saved."));
+    if (isUpdating) return;
+    updateProfile({
+      user_id: user?.user_id,
+      name,
+      email,
+      phone,
+    });
   };
 
   const handleUpdatePassword = (e) => {
     e.preventDefault();
-    notifySuccess(t("Your password has been updated."));
-    setCurrentPassword("");
-    setNewPassword("");
-    setConfirmPassword("");
+    if (isUpdating) return;
+    if (newPassword !== confirmPassword) {
+      Swal.fire({ icon: "error", title: t("Error"), text: t("Passwords do not match") });
+      return;
+    }
+    updateProfile(
+      {
+        user_id: user?.user_id,
+        password: newPassword,
+      },
+      {
+        onSuccess: (res) => {
+          if (res?.status === "success") {
+            setCurrentPassword("");
+            setNewPassword("");
+            setConfirmPassword("");
+          }
+        },
+      }
+    );
   };
 
   const handleDeleteAccount = () => {
@@ -83,6 +115,14 @@ export default function SettingsPanel() {
       confirmButtonColor: "#ef4444",
     });
   };
+
+  if (isLoading) {
+    return (
+      <div className="py-20 flex justify-center items-center w-full">
+        <Loader2 className="animate-spin text-primary" size={32} />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-10">
@@ -158,7 +198,7 @@ export default function SettingsPanel() {
       </section>
 
       {/* Preferences */}
-      <section className="pt-8 border-t border-primary/15">
+      {/* <section className="pt-8 border-t border-primary/15">
         <h2 className="font-poppins font-semibold text-text mb-4">{t("Preferences")}</h2>
         <div className="space-y-3">
           <Toggle
@@ -176,10 +216,10 @@ export default function SettingsPanel() {
             description={t("Get text alerts for booking reminders.")}
           />
         </div>
-      </section>
+      </section> */}
 
       {/* Danger Zone */}
-      <section className="pt-8 border-t border-red-100">
+      {/* <section className="pt-8 border-t border-red-100">
         <h2 className="font-poppins font-semibold text-red-500 mb-4">{t("Danger Zone")}</h2>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-red-200 bg-red-50/50 px-5 py-4">
           <div>
@@ -198,7 +238,7 @@ export default function SettingsPanel() {
             {t("Delete Account")}
           </Button>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }

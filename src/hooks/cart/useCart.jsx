@@ -13,7 +13,9 @@ import {
 } from "../../services/cart/cart";
 
 const getErrorMessage = (err) =>
-  err?.response?.data?.message || err?.message || "Something went wrong, please try again.";
+  err?.response?.data?.message ||
+  err?.message ||
+  "Something went wrong, please try again.";
 
 export const useCart = (user_id) => {
   return useQuery({
@@ -32,6 +34,7 @@ export const useAddToCart = () => {
     mutationKey: [QUERY_KEYS.ADD_TO_CART],
     mutationFn: (data) => handleAddToCart(data),
     onSuccess: (res) => {
+      console.log("add to cart res", res);
       if (res?.status === "success") {
         toast.success(res?.message || "Added to cart");
         queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CART_DATA] });
@@ -49,7 +52,9 @@ export const useUpdateCart = () => {
     mutationKey: [QUERY_KEYS.UPDATE_CART],
     mutationFn: (data) => handleUpdateCart(data),
     onSuccess: (res) => {
+      console.log("update cart res", res);
       if (res?.status === "success") {
+        toast.success(res?.message || "Updated cart");
         queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CART_DATA] });
       } else {
         toast.error(res?.message || "Something went wrong, please try again.");
@@ -100,12 +105,13 @@ export const useAddToCartAction = () => {
   const user = useCurrentUser();
   const { mutate, mutateAsync, isPending } = useAddToCart();
 
-  const addToCart = (product_id, quantity = 1, options) => {
+  const addToCart = (product_id, quantity = 1, options, unit) => {
     if (!user) {
+      toast.error("Please login first.");
       router.push("/login");
       return;
     }
-    mutate({ user_id: user.user_id, product_id, quantity }, options);
+    mutate({ user_id: user.user_id, product_id, quantity, unit }, options);
   };
 
   return { addToCart, isAddingToCart: isPending, mutateAsync, user };

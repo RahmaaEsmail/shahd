@@ -8,6 +8,7 @@ import "sweetalert2/dist/sweetalert2.min.css";
 import LanguageCurrencySettings from "../components/layout/LanguageCurrencySettings";
 import LayoutProvider from "../components/layout/LayoutProvider";
 import DirectionProvider from "../components/shared/DirectionProvider";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,6 +44,7 @@ export default function RootLayout({ children }) {
             </div>
             <ChatbotIcon/>
           </div>
+          <Toaster richColors position="top-right" />
         </DirectionProvider>
         </LayoutProvider>
       </body>

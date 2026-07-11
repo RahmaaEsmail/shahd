@@ -304,8 +304,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useCurrentUser, logoutUser } from "@/hooks/auth/useCurrentUser";
 import { useCart } from "@/hooks/cart/useCart";
-import useWishlistStore from "@/zustandStore/WishlistStore";
 import { useTranslation } from "react-i18next";
+import { useWishlist } from "../../../../hooks/wishlist/useWishlist";
 
 // Animation variants
 const buttonVariants = {
@@ -350,13 +350,19 @@ const iconVariants = {
 export default function AuthButtons({ isScrolled }) {
   const { t, i18n } = useTranslation();
   const router = useRouter();
-  const { wishlist } = useWishlistStore();
   const user = useCurrentUser();
+  const { data: wishlistData } = useWishlist(user?.user_id);
   const { data: cartData } = useCart(user?.user_id);
 
-  const cartCount = Array.isArray(cartData?.data)
-    ? cartData.data.length
-    : cartData?.data?.items?.length || 0;
+  const wishlistItems = Array.isArray(wishlistData?.data)
+    ? wishlistData.data
+    : wishlistData?.data?.items || [];
+  const cartItems = Array.isArray(cartData?.data)
+    ? cartData.data
+    : cartData?.data?.items || [];
+
+  const wishlistCount = wishlistItems.length;
+  const cartCount = cartItems.length;
 
   const handleLogout = () => {
     logoutUser();
@@ -461,7 +467,7 @@ export default function AuthButtons({ isScrolled }) {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <motion.button
-                className={`relative z-10 flex items-center gap-1.5 whitespace-nowrap font-poppins ${i18n?.language == "de" ? "text-[12px] py-3 px-1" : "text-[14px] py-3 px-3"} font-normal capitalize tracking-wide rounded-full transition-all duration-300 ${
+                className={`relative z-40 flex items-center gap-1.5 whitespace-nowrap font-poppins ${i18n?.language == "de" ? "text-[12px] py-3 px-1" : "text-[14px] py-3 px-3"} font-normal capitalize tracking-wide rounded-full transition-all duration-300 ${
                   isScrolled
                     ? "text-primary hover:bg-primary/10"
                     : "text-gray-700 hover:bg-white/50"
@@ -520,9 +526,9 @@ export default function AuthButtons({ isScrolled }) {
                     <Heart size={16} />
                     <span>{t("Wishlist")}</span>
                   </div>
-                  {wishlist.length > 0 && (
+                  {wishlistCount > 0 && (
                     <span className="bg-primary text-white text-[10px] font-bold min-w-[20px] h-5 px-1.5 rounded-full flex items-center justify-center transition-all">
-                      {wishlist.length}
+                      {wishlistCount}
                     </span>
                   )}
                 </Link>

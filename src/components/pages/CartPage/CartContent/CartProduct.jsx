@@ -1,12 +1,12 @@
 "use client";
 
-import React from 'react';
-import Image from 'next/image';
-import { Minus, Plus, Trash2 } from 'lucide-react';
-import { motion } from 'framer-motion';
-import Swal from 'sweetalert2';
-import { useTranslation } from 'react-i18next';
-import { useDeleteCartItem, useUpdateCart } from '@/hooks/cart/useCart';
+import React from "react";
+import Image from "next/image";
+import { Minus, Plus, Trash2 } from "lucide-react";
+import { motion } from "framer-motion";
+import Swal from "sweetalert2";
+import { useTranslation } from "react-i18next";
+import { useDeleteCartItem, useUpdateCart } from "@/hooks/cart/useCart";
 
 // Animation variants - preserving exact design
 const productVariants = {
@@ -17,18 +17,18 @@ const productVariants = {
     transition: {
       delay: index * 0.1,
       duration: 0.4,
-      ease: "easeOut"
-    }
+      ease: "easeOut",
+    },
   }),
   hover: {
     scale: 1.02,
-    transition: { duration: 0.2 }
-  }
+    transition: { duration: 0.2 },
+  },
 };
 
 const buttonVariants = {
   hover: { scale: 1.1 },
-  tap: { scale: 0.9 }
+  tap: { scale: 0.9 },
 };
 
 export default function CartProduct({ item, index = 0 }) {
@@ -37,11 +37,11 @@ export default function CartProduct({ item, index = 0 }) {
   const { mutate: deleteCartItem, isPending: isDeleting } = useDeleteCartItem();
 
   const cartId = item?.cart_id ?? item?.id;
-  const name = item?.product_name || item?.name || item?.title || t("Product");
-  const image =
-    item?.image || item?.image_url || item?.img || "/SHAHD-IMAGE/Cart/Rectangle 43.webp";
+  const name = item?.name || t("Product");
+  const image = item?.image || "/SHAHD-IMAGE/Cart/Rectangle 43.webp";
   const price = Number(item?.price) || 0;
   const quantity = Number(item?.quantity) || 1;
+  const unit = item?.unit; // { size, price } — selected size
 
   const handleQuantityChange = (nextQuantity) => {
     if (nextQuantity < 1 || isUpdating) return;
@@ -83,63 +83,72 @@ export default function CartProduct({ item, index = 0 }) {
       <div className="flex items-center gap-6 w-full md:w-auto">
         {/* Product Image */}
         <div className="relative w-[100px] h-[100px] rounded-[24px] overflow-hidden bg-[#F5E8E6] shrink-0">
-          <Image
-            src={image}
-            alt={name}
-            fill
-            className="object-cover"
-          />
+          <Image src={image} alt={name} fill className="object-cover" />
         </div>
 
-        {/* Info on Mobile (Title + Price) */}
+        {/* Info on Mobile (Title + Size + Price) */}
         <div className="flex flex-col gap-1 md:hidden">
-            <h3 className="text-md font-normal text-[#1E1E1E]">
-                {name}
-            </h3>
-            <p className="text-sm font-semibold font-poppins text-primary">
-                {(price * quantity).toFixed(2)} S.R
-            </p>
+          <p className="text-xl! font-poppins! font-normal text-[#1E1E1E]">
+            {name}
+          </p>
+          {unit?.size && (
+            <span className="text-xs font-poppins text-white bg-primary/80 rounded-full px-2 py-0.5 w-fit">
+              {unit.size}
+            </span>
+          )}
+          <p className="text-xs font-semibold font-poppins text-primary">
+            {(price * quantity).toFixed(2)} S.R
+          </p>
         </div>
       </div>
 
-      {/* Description / Name - Hidden on mobile, handled above */}
-      <h3 className="hidden md:block text-sm font-normal text-[#1E1E1E] truncate">
-        {name}
-      </h3>
+      {/* Description / Name - Hidden on mobile */}
+      <div className="hidden md:flex flex-col gap-1">
+        <h3 className="text-md font-poppins! font-normal text-[#1E1E1E] w-[200px] truncate">
+          {name}
+        </h3>
+        {unit?.size && (
+          <span className="text-xs font-poppins text-white bg-primary/80 rounded-full px-2 py-0.5 w-fit">
+            {unit.size}
+          </span>
+        )}
+      </div>
 
       {/* Quantity Adjuster */}
       <div className="flex items-center justify-between w-full md:w-auto md:justify-start gap-4 px-2 md:px-0">
-        <span className="text-sm font-medium font-poppins text-[#6A6A6A] md:hidden">{t("Quantity")}:</span>
+        <span className="text-sm font-medium font-poppins text-[#6A6A6A] md:hidden">
+          {t("Quantity")}:
+        </span>
         <div className="flex items-center gap-4">
-            <motion.button
+          <motion.button
             onClick={() => handleQuantityChange(quantity - 1)}
             disabled={isUpdating || quantity <= 1}
             className="text-[#6A6A6A] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"
-            >
+          >
             <Minus size={18} />
-            </motion.button>
-            <motion.span
+          </motion.button>
+          <motion.span
             key={quantity}
             className="text-lg md:text-xl text-[#6A6A6A] font-medium font-poppins min-w-[20px] text-center"
             initial={{ scale: 1 }}
             whileInView={{ scale: [1, 1.1, 1] }}
             transition={{ duration: 0.2 }}
-            >
+          >
             {quantity}
-            </motion.span>
-            <motion.button
+          </motion.span>
+          <motion.button
             onClick={() => handleQuantityChange(quantity + 1)}
             disabled={isUpdating}
             className="text-[#6A6A6A] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"
-            >
+          >
             <Plus size={18} />
-            </motion.button>
+          </motion.button>
         </div>
       </div>
 
@@ -151,17 +160,17 @@ export default function CartProduct({ item, index = 0 }) {
       {/* Delete Action */}
       <div className="flex justify-between md:justify-end items-center w-full md:w-full px-2 md:px-0">
         <p className="text-lg font-semibold font-poppins text-primary md:hidden">
-            {t("TOTAL")}: {(price * quantity).toFixed(2)} S.R
+          {t("TOTAL")}: {(price * quantity).toFixed(2)} S.R
         </p>
         <motion.button
-            onClick={handleDelete}
-            disabled={isDeleting}
-            className="text-[#DDB2B5] hover:text-red-500 transition-colors bg-red-50 md:bg-transparent p-2 md:p-0 rounded-lg disabled:opacity-40 disabled:cursor-not-allowed"
-            variants={buttonVariants}
-            whileHover="hover"
-            whileTap="tap"
+          onClick={handleDelete}
+          disabled={isDeleting}
+          className="text-[#DDB2B5] hover:text-red-500 transition-colors bg-red-50 md:bg-transparent p-2 md:p-0 rounded-lg disabled:opacity-40 disabled:cursor-not-allowed"
+          variants={buttonVariants}
+          whileHover="hover"
+          whileTap="tap"
         >
-            <Trash2 size={20} />
+          <Trash2 size={20} />
         </motion.button>
       </div>
     </motion.div>

@@ -6,8 +6,8 @@ export const handleGetCart = async (user_id) => {
     return response.data;
 }
 
-export const handleAddToCart = async ({ user_id, product_id, quantity }) => {
-    const response = await apiInstance.post(userEndPoints.add_cart, { user_id, product_id, quantity });
+export const handleAddToCart = async ({ user_id, product_id, quantity, unit }) => {
+    const response = await apiInstance.post(userEndPoints.add_cart, { user_id, product_id, quantity, unit });
     return response.data;
 }
 
