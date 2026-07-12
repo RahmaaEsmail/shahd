@@ -68,6 +68,7 @@ export const sk = {
     "Your Wishlist is Empty": "Váš zoznam želaní je prázdny",
     "Save items you love and find them here anytime.": "Uložte si obľúbené produkty a nájdete ich tu kedykoľvek.",
     "Personal Information": "Osobné údaje",
+    "Please select a size first.": "Najprv vyberte veľkosť.",
     "Email Address": "E-mailová adresa",
     "Save Changes": "Uložiť zmeny",
     "Your changes have been saved.": "Vaše zmeny boli uložené.",

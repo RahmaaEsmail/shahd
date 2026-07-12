@@ -9,6 +9,7 @@ import {
   handleGetUserBookings,
   handleGetUserOrders,
 } from "../../services/profile/profile";
+import { updateCurrentUserInStorage } from "../auth/useCurrentUser";
 
 const getErrorMessage = (err) =>
   err?.response?.data?.message || err?.message || "Something went wrong, please try again.";
@@ -27,9 +28,17 @@ export const useUpdateProfile = () => {
   return useMutation({
     mutationKey: ["UPDATE_PROFILE"],
     mutationFn: (data) => handleEditProfileData(data),
-    onSuccess: (res) => {
+    onSuccess: (res, variables) => {
       if (res?.status === "success") {
         toast.success(res?.message || "Profile updated successfully");
+        
+        // Update local storage user data
+        const updatedData = res?.data || res?.user || {};
+        const name = updatedData.name || variables?.name;
+        const email = updatedData.email || variables?.email;
+        const phone = updatedData.phone || variables?.phone;
+        updateCurrentUserInStorage({ name, email, phone });
+
         queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.PROFILE_SETTINGS] });
       } else {
         toast.error(res?.message || "Something went wrong, please try again.");

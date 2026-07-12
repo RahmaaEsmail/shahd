@@ -14,6 +14,7 @@ import {
 import Toast from "../../../../shared/Toast";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 
 // Animation variants
 const containerVariants = {
@@ -205,7 +206,11 @@ export default function ProductDetailsContent({ data }) {
 
   const cartItem = cartItems.find(
     (item) =>
-      (item?.product?.id ?? item?.product_id ?? item?.id) == product?.id,
+      (item?.product?.id ?? item?.product_id ?? item?.id) == product?.id &&
+      (selectedSize && (
+        (typeof item?.unit === "string" && item.unit === selectedSize) ||
+        (item?.unit?.size === selectedSize)
+      )),
   );
   const cartItemId = cartItem?.cart_id ?? cartItem?.id;
   const cartQuantity = cartItem
@@ -220,7 +225,7 @@ export default function ProductDetailsContent({ data }) {
       ? sizesPriceList.map((item) => item.size)
       : ["30 ml", "60 ml", "80 ml", "100 ml"];
 
-  const [selectedSize, setSelectedSize] = useState(sizes[0] || "30 ml");
+  const [selectedSize, setSelectedSize] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [showAddedMessage, setShowAddedMessage] = useState(false);
   const router = useRouter();
@@ -291,9 +296,13 @@ export default function ProductDetailsContent({ data }) {
   const displayQuantity = cartItem ? cartQuantity : quantity;
 
   const handleAddToCart = () => {
+    if (!selectedSize) {
+      toast.error(t("Please select a size first."));
+      return;
+    }
     const unit = activeSizeObj
       ? { size: activeSizeObj.size, price: Number(activeSizeObj.price) }
-      : undefined;
+      : { size: selectedSize, price: Number(product.price) };
     addToCart(
       product.id,
       quantity,

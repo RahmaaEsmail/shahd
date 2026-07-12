@@ -211,6 +211,7 @@ import { cn, slugify } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { useAddToCartAction, useCart, useUpdateCart, useDeleteCartItem } from "@/hooks/cart/useCart";
 import { useWishlist, useToggleWishlistAction } from "@/hooks/wishlist/useWishlist";
+import { toast } from "sonner";
 
 // Card animation variants
 const cardVariants = {
@@ -331,7 +332,7 @@ export default function StoreProductCard({
     e.stopPropagation();
     if (isAddingToCart) return;
     if (hasSizes) {
-      setSelectedSize(parsedSizes[0]); // pre-select first size
+      setSelectedSize(null); // do not pre-select
       setShowSizeModal(true);
       return;
     }
@@ -350,7 +351,10 @@ export default function StoreProductCard({
   };
 
   const handleConfirmSize = () => {
-    if (!selectedSize) return;
+    if (!selectedSize) {
+      toast.error(t("Please select a size first."));
+      return;
+    }
     const unit = { size: selectedSize.size, price: Number(selectedSize.price) };
     addToCart(
       product?.id,
@@ -654,7 +658,7 @@ export default function StoreProductCard({
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               onClick={handleConfirmSize}
-              disabled={!selectedSize || isAddingToCart}
+              disabled={isAddingToCart}
               className="w-full h-12 rounded-full bg-gradient-to-r from-[#DDB2B5] to-[#EFD4CE] text-white font-medium flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-md cursor-pointer"
             >
               {isAddingToCart ? (

@@ -36,7 +36,9 @@ export default function ProfileShell({ title, children }) {
       <div
         className="absolute inset-0 z-0 bg-cover bg-center opacity-40 bg-no-repeat"
         style={{
-          backgroundImage: `url("/SHAHD-IMAGE/Untitled design.png")`,
+          backgroundImage: `url("/SHAHD-IMAGE/sh n.png")`,
+          backgroundPosition: "center",
+          backgroundSize: "fill",
         }}
       />
 
@@ -58,7 +60,9 @@ export default function ProfileShell({ title, children }) {
                 {user.name || t("My Profile")}
               </p>
               {user.email && (
-                <p className="font-poppins text-xs text-text/60 truncate">{user.email}</p>
+                <p className="font-poppins text-xs text-text/60 truncate">
+                  {user.email}
+                </p>
               )}
             </div>
           </div>

@@ -68,6 +68,7 @@ export const de = {
   "Your Wishlist is Empty": "Deine Wunschliste ist leer",
   "Save items you love and find them here anytime.": "Speichere Produkte, die dir gefallen, und finde sie hier jederzeit wieder.",
   "Personal Information": "Persönliche Informationen",
+  "Please select a size first.": "Bitte wählen Sie zuerst eine Größe.",
   "Email Address": "E-Mail-Adresse",
   "Save Changes": "Änderungen speichern",
   "Your changes have been saved.": "Deine Änderungen wurden gespeichert.",
