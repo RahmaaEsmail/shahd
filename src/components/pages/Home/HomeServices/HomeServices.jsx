@@ -1714,8 +1714,7 @@ function isRtlLanguage(language = "") {
 }
 
 function getVisualSide(side, isRTL) {
-  if (!isRTL) return side;
-  return side === "left" ? "right" : "left";
+  return side;
 }
 
 function getMobileLabelClass(hotspot, isRTL) {
@@ -1741,6 +1740,22 @@ function getMobileLabelClass(hotspot, isRTL) {
 
   return "-left-[118px] top-1 sm:-left-[145px] sm:top-1";
 }
+
+const resolveServiceImageUrl = (imgUrl, rawImg) => {
+  if (imgUrl && imgUrl.startsWith("http")) {
+    return imgUrl;
+  }
+  if (rawImg && rawImg.startsWith("http")) {
+    return rawImg;
+  }
+  if (rawImg) {
+    return `https://drshahdawad.com/ShahdAwad/uploads/services/${rawImg}`;
+  }
+  if (imgUrl) {
+    return `https://drshahdawad.com/ShahdAwad/uploads/services/${imgUrl}`;
+  }
+  return "";
+};
 
 export default function HomeServices({ data }) {
   const { t, i18n } = useTranslation();
@@ -1775,7 +1790,7 @@ export default function HomeServices({ data }) {
       (Array.isArray(sourceData) ? sourceData : []);
 
     if (!rawServices.length) {
-      return servicesData[activeTab] || [];
+      return [];
     }
 
     const getPositionDataForHoverKey = (hoverKey) => {
@@ -1819,7 +1834,7 @@ export default function HomeServices({ data }) {
         };
       }
       grouped[hk].images.push({
-        img: item.image_url || item.image || "",
+        img: resolveServiceImageUrl(item.image_url, item.image),
         title:
           item[titleField] ||
           item.label_en ||
@@ -1831,6 +1846,12 @@ export default function HomeServices({ data }) {
 
     return Object.values(grouped);
   }, [servicesResponse, data, activeTab, titleField]);
+
+  const activeHotspots = React.useMemo(() => {
+    return hotspots.filter((hotspot) =>
+      mappedServices.some((service) => service.hoverKey === hotspot.key)
+    );
+  }, [mappedServices]);
 
   const currentKey = selectedKey || hoveredKey;
   const isAllView = currentKey === "all";
@@ -1992,7 +2013,7 @@ export default function HomeServices({ data }) {
             />
 
             <AnimatePresence>
-              {hotspots.map((hotspot) => {
+              {activeHotspots.map((hotspot) => {
                 const isActive = currentKey === hotspot.key;
                 const isDimmed =
                   currentKey !== "all" && currentKey !== hotspot.key;
@@ -2199,7 +2220,7 @@ function SideCards({
   return (
     <motion.div
       className={cn(
-        "hidden min-[900px]:flex w-full h-full z-20 pointer-events-none",
+        "hidden min-[900px]:flex w-full h-full z-20 pointer-events-none relative",
         visualSide === "left" ? "justify-end" : "justify-start",
       )}
       initial={{ opacity: 0, x: visualSide === "left" ? -40 : 40 }}
@@ -2242,7 +2263,13 @@ function SideCards({
             initial={{ opacity: 0, x: visualSide === "left" ? -30 : 30 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: visualSide === "left" ? -30 : 30 }}
-            className="flex flex-col gap-4 justify-center w-full max-w-[420px]"
+            className="absolute flex flex-col gap-4 w-full max-w-[360px] xl:max-w-[400px] 2xl:max-w-[430px]"
+            style={{
+              top: activeService.images?.length > 1 ? "10%" : activeService.top,
+              transform: activeService.images?.length > 1 ? "" : (parseFloat(activeService.top) < 10 ? "translateY(0)" : "translateY(-50%)"),
+              right: visualSide === "left" ? 0 : "auto",
+              left: visualSide === "right" ? 0 : "auto",
+            }}
           >
             {activeService.images.map((image, index) => (
               <motion.div

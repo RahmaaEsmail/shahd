@@ -1,13 +1,78 @@
 "use client";
-import React, { useState } from 'react'
+import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Check } from 'lucide-react';
 import { cn } from '../../../../lib/utils';
 import { useTranslation } from 'react-i18next';
+import Swal from 'sweetalert2';
+import { apiInstance } from "@/api/apiInstance";
+import { userEndPoints } from "@/api/userEndPoints";
+import { useCurrentUser } from "@/hooks/auth/useCurrentUser";
+import { useRouter } from "next/navigation";
 
 export default function HairTherapyCard({ shouldScale, plan, setHoveredCard, index }) {
   const { t } = useTranslation();
+  const user = useCurrentUser();
+  const router = useRouter();
+
+  const handleSubscribe = async () => {
+    if (!user) {
+      Swal.fire({
+        icon: "warning",
+        title: t("Login Required"),
+        text: t("Please login first to subscribe to a plan."),
+        showCancelButton: true,
+        confirmButtonText: t("Login"),
+        cancelButtonText: t("Cancel"),
+        confirmButtonColor: "#DDB2B5",
+        cancelButtonColor: "#7189a2",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push("/login");
+        }
+      });
+      return;
+    }
+
+    Swal.fire({
+      title: t("Confirm Subscription"),
+      text: `${t("Are you sure you want to subscribe to")} ${plan.name}?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: t("Yes, Subscribe"),
+      cancelButtonText: t("Cancel"),
+      confirmButtonColor: "#DDB2B5",
+      cancelButtonColor: "#7189a2",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        Swal.showLoading();
+        try {
+          const payload = {
+            user_id: user?.user_id || user?.id || 1,
+            plan_id: plan.id,
+          };
+          const response = await apiInstance.post(userEndPoints.subscribe_plan, payload);
+          
+          Swal.fire({
+            icon: "success",
+            title: t("Subscribed Successfully"),
+            text: response.data?.message || t("You have successfully subscribed to the plan."),
+            confirmButtonColor: "#DDB2B5",
+          });
+        } catch (error) {
+          console.error("Subscription error:", error);
+          Swal.fire({
+            icon: "error",
+            title: t("Subscription Failed"),
+            text: error?.response?.data?.message || error?.message || t("An error occurred during subscription."),
+            confirmButtonColor: "#7189a2",
+          });
+        }
+      }
+    });
+  };
+
   return (
     <motion.div
       key={plan.id}
@@ -19,49 +84,87 @@ export default function HairTherapyCard({ shouldScale, plan, setHoveredCard, ind
       onHoverEnd={() => setHoveredCard(null)}
       style={shouldScale ? { boxShadow: "0px 0px 150px 10px #F7A5A5" } : {}}
       className={cn(
-        'bg-white p-4 border flex flex-col justify-between rounded-[30px] border-primary shadow-2xl relative transition-all duration-300',
-        shouldScale && 'scale-100 lg:scale-110 ring-2 ring-primary shadow-primary/20',
-        !shouldScale && 'scale-100'
+        "bg-white p-5 border rounded-[24px] md:rounded-[30px] border-[#FEF2F2] shadow-2xl relative transition-all duration-300 flex flex-col justify-between h-full w-full max-w-sm md:max-w-md lg:max-w-none",
+        shouldScale &&
+          "scale-100 md:scale-105 ring-2 ring-[#DDB2B5] shadow-[#DDB2B5]/20 z-10",
+        !shouldScale && "scale-100",
       )}
     >
-      {/* Plan Name */}
-      <div className="flex gap-[3px] items-center">
-        <Image src={plan.img} width={56} height={57} alt={t(plan.nameKey)} />
-        <h3 className='text-text text-[32px] font-normal'>{t(plan.nameKey)}</h3>
-      </div>
-
-      {/* Price */}
-      <div className='my-2 flex items-center gap-[6px]'>
-        <span className='text-[#2D2D2D] text-[40px] font-poppins font-medium'>{plan.price}</span>
-        <span className='text-[#9A9A9A] text-2xl font-normal font-poppins'>USD</span>
-      </div>
-
-      {/* Description */}
-      <p className='text-[#9A9A9A] text-base font-poppins lowercase mb-2 leading-relaxed'>
-        {t(plan.descriptionKey)}
-      </p>
-
-      {/* Features List */}
-      <ul className='space-y-2 mb-3'>
-        {plan.featuresKeys.map((featureKey, idx) => (
-          <li key={idx} className='flex items-center gap-2'>
-            <div className='bg-[#DDB2B5] w-6 h-6 rounded-full flex justify-center items-center'>
-              <Check color="#fff" size={16} className='font-bold' />
+      <div>
+        {/* Plan Name */}
+        <div className="flex gap-3 items-center mb-3">
+          <div className="relative w-10 h-10 md:w-14 md:h-14 shrink-0">
+            <Image
+              src={plan.img}
+              fill
+              alt={plan.name}
+              className="object-contain"
+            />
+          </div>
+          <h3 className="text-text text-lg md:text-2xl font-normal leading-tight">
+            {plan.name}
+          </h3>
+          {plan.popular && (
+            <div className="bg-secondary text-white text-[10px] md:text-xs px-2 py-0.5 rounded-full shrink-0">
+              {t("Popular")}
             </div>
-            <span className='text-[#2D2D2D] text-base font-normal font-poppins'>{t(featureKey)}</span>
-          </li>
-        ))}
-      </ul>
+          )}
+        </div>
+
+        {/* Price */}
+        <div className="mb-4 flex items-center justify-between flex-wrap gap-2">
+          <div className="flex items-baseline gap-1.5 md:gap-2">
+            <span className="text-[#2D2D2D] text-2xl md:text-4xl font-poppins font-semibold">
+              {plan.price}
+            </span>
+            <span className="text-[#9A9A9A] text-sm md:text-xl font-normal font-poppins uppercase tracking-wider">
+              {plan.currency}
+            </span>
+          </div>
+          {plan.num_of_sessions > 0 && (
+            <div className="bg-[#DDB2B5]/20 text-[#af7f73] text-xs md:text-sm px-3 py-1 rounded-full font-poppins font-medium">
+              {plan.num_of_sessions} {t("sessions")}
+            </div>
+          )}
+        </div>
+
+        {/* Description */}
+        <p className="text-[#9A9A9A] text-xs md:text-sm font-poppins lowercase mb-4 leading-relaxed">
+          {plan.description}
+        </p>
+
+        {/* Features List */}
+        <ul className="space-y-2 mb-6">
+          {plan.features?.map((feature, idx) => (
+            <li key={idx} className="flex items-start gap-2.5 md:gap-3">
+              <div className="bg-[#DDB2B5] w-4 h-4 md:w-5 md:h-5 rounded-full flex shrink-0 justify-center items-center mt-0.5">
+                <Check color="#fff" size={10} className="md:hidden" />
+                <Check
+                  color="#fff"
+                  size={12}
+                  className="hidden md:block font-bold"
+                />
+              </div>
+              <span className="text-[#2D2D2D] text-xs md:text-sm font-normal font-poppins leading-tight">
+                {feature}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       {/* Get Started Button */}
-      <button className={cn(
-        'w-full text-[24px] text-white mt-auto py-2 px-2 rounded-full  font-normal transition-all duration-300',
-        shouldScale
-          ? 'bg-secondary'
-          : 'bg-white text-secondary hover:bg-secondary hover:text-white border border-secondary'
-      )}>
-        {t("GET STARTED")}
+      <button
+        onClick={handleSubscribe}
+        className={cn(
+          "w-full text-base md:text-2xl lg:text-[26px] text-white py-3 rounded-full font-medium transition-all duration-300 uppercase tracking-wide mt-auto",
+          shouldScale
+            ? "bg-[#DDB2B5] hover:bg-[#c9a0a3] shadow-lg shadow-[#DDB2B5]/30"
+            : "bg-white text-primary hover:bg-primary hover:text-white border border-primary",
+        )}
+      >
+        {t("Choose Plan")}
       </button>
     </motion.div>
-  )
+  );
 }

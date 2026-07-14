@@ -32,7 +32,7 @@ export default function HairTherapyPage() {
       <HairTherapyPrePost data={[]} />
       <HairTherapyTransformation data={data?.data?.ht_transformation} />
       <HairTherapyBeforeAfter data={data?.data?.before_after} />
-      <HairTherapyPackage />
+      <HairTherapyPackage data={data?.data?.pricing} />
       <HairTherapyTeam data={data?.data?.team_members} />
     </div>
   );

@@ -17,9 +17,8 @@ const btns = [
 
 import { useTranslation } from 'react-i18next';
 
-export default function ServicePlanContent() {
+export default function ServicePlanContent({ activeTab, setActiveTab }) {
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState(1);
 
   const btns = [
     {

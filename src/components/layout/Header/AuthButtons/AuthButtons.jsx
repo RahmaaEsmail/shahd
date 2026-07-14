@@ -293,7 +293,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Heart, ShoppingCart, ChevronDown, User, LogOut } from "lucide-react";
+import { Heart, ShoppingCart, ChevronDown, User, LogOut, CreditCard } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -495,6 +495,16 @@ export default function AuthButtons({ isScrolled }) {
                 >
                   <User size={16} />
                   <span>{t("Profile")}</span>
+                </Link>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem asChild className="cursor-pointer rounded-xl">
+                <Link
+                  href="/profile/subscriptions"
+                  className="flex items-center gap-2 w-full"
+                >
+                  <CreditCard size={16} />
+                  <span>{t("Subscriptions")}</span>
                 </Link>
               </DropdownMenuItem>
 

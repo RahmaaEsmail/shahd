@@ -8,6 +8,7 @@ import {
   handleGetUserProfileOverview,
   handleGetUserBookings,
   handleGetUserOrders,
+  handleGetUserSubscriptions,
 } from "../../services/profile/profile";
 import { updateCurrentUserInStorage } from "../auth/useCurrentUser";
 
@@ -70,6 +71,15 @@ export const useUserOrders = (user_id) => {
   return useQuery({
     queryKey: [QUERY_KEYS.PROFILE_ORDERS, user_id],
     queryFn: () => handleGetUserOrders(user_id),
+    enabled: !!user_id,
+    staleTime: 1000 * 5 * 60,
+  });
+};
+
+export const useUserSubscriptions = (user_id) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.PROFILE_SUBSCRIPTIONS, user_id],
+    queryFn: () => handleGetUserSubscriptions(user_id),
     enabled: !!user_id,
     staleTime: 1000 * 5 * 60,
   });

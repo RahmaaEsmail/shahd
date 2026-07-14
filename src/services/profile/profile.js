@@ -25,3 +25,8 @@ export const handleGetUserOrders = async (user_id) => {
   const response = await apiInstance.get(userEndPoints.get_user_orders, { params: { user_id } });
   return response.data;
 };
+
+export const handleGetUserSubscriptions = async (user_id) => {
+  const response = await apiInstance.get(userEndPoints.get_my_subscriptions, { params: { user_id } });
+  return response.data;
+};

@@ -9,6 +9,9 @@ export const userEndPoints = {
     get_shop_data:"user/collection_requests/select_shop_data.php",
     get_weight_management_data:"user/collection_requests/select_weight_management_data.php",
     get_hair_therapy_data:"user/collection_requests/select_hair_therapy_data.php",
+    get_pricing:"user/home/pricing/get_pricing.php",
+    subscribe_plan:"user/home/pricing/subscribe.php",
+    get_my_subscriptions:"user/home/pricing/get_my_subscriptions.php",
     get_aesthetic_gynecology_data:"user/collection_requests/select_aesthetic_gynecology_data.php",
     get_services_data:"user/collection_requests/select_services_data.php",
 

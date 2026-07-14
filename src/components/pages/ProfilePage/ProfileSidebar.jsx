@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
-import { User, ShoppingBag, Heart, CalendarCheck, Bell, Settings } from "lucide-react";
+import { User, ShoppingBag, Heart, CalendarCheck, Bell, Settings, CreditCard } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { href: "/profile/wishlist", label: "My Wishlist", icon: Heart },
   { href: "/profile/bookings", label: "My Bookings", icon: CalendarCheck },
   { href: "/profile/notification", label: "Notifications", icon: Bell },
+  { href: "/profile/subscriptions", label: "My Subscriptions", icon: CreditCard },
   { href: "/profile/settings", label: "Settings", icon: Settings },
 ];
 

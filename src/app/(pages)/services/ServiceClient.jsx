@@ -32,7 +32,7 @@ export default function page() {
         lang={lang}
       />
       <ServiceOffers />
-      <ServicePlans data={[]} />
+      <ServicePlans data={data?.data?.service_pricing} />
     </div>
   );
 }
