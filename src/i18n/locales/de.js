@@ -971,4 +971,7 @@ export const de = {
   "Please wait while we process your payment...": "Bitte warten Sie, während wir Ihre Zahlung verarbeiten...",
   "Payment Completed": "Zahlung abgeschlossen",
   "Your payment has been successfully recorded. The clinic will review and activate your subscription shortly.": "Ihre Zahlung wurde erfolgreich aufgezeichnet. Die Klinik wird Ihr Abonnement in Kürze prüfen und aktivieren.",
+  "Subscription Required": "Abonnement erforderlich",
+  "Subscribed": "Abonniert",
+  "Login to Subscribe": "Anmelden zum Abonnieren",
 }

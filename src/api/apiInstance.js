@@ -11,7 +11,6 @@ export const apiInstance = axios.create({
 
 apiInstance.interceptors.request.use((req) => {
   const token = localStorage.getItem(config.localStorageTokenName) ? localStorage?.getItem(config.localStorageTokenName) : "";
-   console.log("i18n.language", i18n.language);
   const currentLang = i18n.language ? i18n.language.split("-")[0] : "en";
 
   if (token) {

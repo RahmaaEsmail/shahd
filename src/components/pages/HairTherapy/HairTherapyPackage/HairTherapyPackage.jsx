@@ -1,12 +1,16 @@
 "use client";
-import { useState } from 'react'
-import HairTherapyCard from './HairTherapyCard'
-import { useTranslation } from 'react-i18next';
-import Link from 'next/link';
+import { useState } from "react";
+import HairTherapyCard from "./HairTherapyCard";
+import { useTranslation } from "react-i18next";
+import Link from "next/link";
 
 export default function HairTherapyPackage({ data }) {
   const { t, i18n } = useTranslation();
-  const lang = i18n.language?.startsWith("ar") ? "ar" : i18n.language?.startsWith("sk") ? "sk" : "en";
+  const lang = i18n.language?.startsWith("ar")
+    ? "ar"
+    : i18n.language?.startsWith("sk")
+      ? "sk"
+      : "en";
   const [hoveredCard, setHoveredCard] = useState(null);
   const [activeCycle, setActiveCycle] = useState("monthly");
 
@@ -18,7 +22,7 @@ export default function HairTherapyPackage({ data }) {
       price: "$150",
       descriptionKey: "FRESH START Desc",
       featuresKeys: ["skin check", "hydra facial", "light botox", "aftercare"],
-      popular: false
+      popular: false,
     },
     {
       id: 2,
@@ -26,8 +30,13 @@ export default function HairTherapyPackage({ data }) {
       price: "$320",
       img: "/SHAHD-IMAGE/Services/f591c51b224049891c5e2235b64968fcddec3d88.webp",
       descriptionKey: "SIGNATURE BEAUTY Desc",
-      featuresKeys: ["full facial analysis", "botox forehead", "lip cheek filler", "skin glow"],
-      popular: true
+      featuresKeys: [
+        "full facial analysis",
+        "botox forehead",
+        "lip cheek filler",
+        "skin glow",
+      ],
+      popular: true,
     },
     {
       id: 3,
@@ -35,77 +44,110 @@ export default function HairTherapyPackage({ data }) {
       price: "$650",
       img: "/SHAHD-IMAGE/Services/c117c55556fe9873b9dca05f51eb50263ce8a7db.webp",
       descriptionKey: "TOTAL MAKEOVER Desc",
-      featuresKeys: ["full face design", "botox filler combo", "prp under eye", "premium skincare"],
-      popular: false
-    }
+      featuresKeys: [
+        "full face design",
+        "botox filler combo",
+        "prp under eye",
+        "premium skincare",
+      ],
+      popular: false,
+    },
   ];
 
-  const resolvedPlans = data && data.length > 0
-    ? data.map((item, idx) => {
-        const fallbackPlan = staticPlans[idx % staticPlans.length];
-        
-        // Resolve features list
-        let featuresList = [];
-        if (item.services_data && item.services_data.length > 0) {
-          featuresList = item.services_data.map(srv => srv.title || srv.name);
-        } else {
-          const langFeatures = item[`features_${lang}_array`] || item[`features_en_array`] || [];
-          if (langFeatures && langFeatures.length > 0) {
-            featuresList = langFeatures;
-          } else if (item.features) {
-            try {
-              const parsed = JSON.parse(item.features);
-              featuresList = Array.isArray(parsed) ? parsed : [parsed];
-            } catch (e) {
-              featuresList = item.features.split(/[\r\n]+/).map(f => f.trim()).filter(Boolean);
-            }
+  const resolvedPlans =
+    data && data.length > 0
+      ? data.map((item, idx) => {
+          const fallbackPlan = staticPlans[idx % staticPlans.length];
+
+          // Resolve features list
+          let featuresList = [];
+          if (item.services_data && item.services_data.length > 0) {
+            featuresList = item.services_data.map(
+              (srv) => srv.title || srv.name,
+            );
           } else {
-            featuresList = fallbackPlan ? fallbackPlan.featuresKeys : [];
+            const langFeatures =
+              item[`features_${lang}_array`] || item[`features_en_array`] || [];
+            if (langFeatures && langFeatures.length > 0) {
+              featuresList = langFeatures;
+            } else if (item.features) {
+              try {
+                const parsed = JSON.parse(item.features);
+                featuresList = Array.isArray(parsed) ? parsed : [parsed];
+              } catch (e) {
+                featuresList = item.features
+                  .split(/[\r\n]+/)
+                  .map((f) => f.trim())
+                  .filter(Boolean);
+              }
+            } else {
+              featuresList = fallbackPlan ? fallbackPlan.featuresKeys : [];
+            }
           }
-        }
 
-        // Clean HTML tags from features if any
-        featuresList = featuresList.map(feat => {
-          if (typeof feat === 'string') {
-            return feat.replace(/<\/?[^>]+(>|$)/g, "").trim();
+          // Clean HTML tags from features if any
+          featuresList = featuresList
+            .map((feat) => {
+              if (typeof feat === "string") {
+                return feat.replace(/<\/?[^>]+(>|$)/g, "").trim();
+              }
+              return feat;
+            })
+            .filter(Boolean);
+
+          // Normalize currency symbol
+          let currencySymbol = "$";
+          if (item.currency === "EUR" || item.price_currency === "EUR") {
+            currencySymbol = "€";
           }
-          return feat;
-        }).filter(Boolean);
 
-        // Normalize currency symbol
-        let currencySymbol = "$";
-        if (item.currency === "EUR" || item.price_currency === "EUR") {
-          currencySymbol = "€";
-        }
-
-        return {
-          id: item.id || idx + 1,
-          name: item.name || item.title || fallbackPlan?.nameKey || "",
-          price: item.price !== undefined ? `${currencySymbol}${item.price}` : (fallbackPlan?.price || "$150"),
-          currency: item.currency || "USD",
-          img: item.image_url || (item.image ? (item.image.startsWith("http") ? item.image : `https://drshahdawad.com/ShahdAwad/uploads/booking/${item.image}`) : null) || fallbackPlan?.img || "/SHAHD-IMAGE/Services/151784f3bce476935cf0d7f6c8fd712a8563af4a.webp",
-          description: item[`description_${lang}`] || item.description || fallbackPlan?.descriptionKey || "",
-          features: featuresList,
-          popular: idx === 1,
-          billing_cycle: (item.billing_cycle || "monthly").toLowerCase(),
-          num_of_sessions: item.num_of_sessions !== undefined ? Number(item.num_of_sessions) : null,
-        };
-      })
-    : staticPlans.map((plan, idx) => ({
-        id: plan.id,
-        name: t(plan.nameKey),
-        price: plan.price,
-        currency: "USD",
-        img: plan.img,
-        description: t(plan.descriptionKey),
-        features: plan.featuresKeys.map(k => t(k)),
-        popular: plan.popular,
-        billing_cycle: "monthly",
-      }));
+          return {
+            id: item.id || idx + 1,
+            name: item.name || item.title || fallbackPlan?.nameKey || "",
+            price:
+              item.price !== undefined
+                ? `${currencySymbol}${item.price}`
+                : fallbackPlan?.price || "$150",
+            currency: item.currency || "USD",
+            img:
+              item.image_url ||
+              (item.image
+                ? item.image.startsWith("http")
+                  ? item.image
+                  : `https://drshahdawad.com/ShahdAwad/uploads/booking/${item.image}`
+                : null) ||
+              fallbackPlan?.img ||
+              "/SHAHD-IMAGE/Services/151784f3bce476935cf0d7f6c8fd712a8563af4a.webp",
+            description:
+              item[`description_${lang}`] ||
+              item.description ||
+              fallbackPlan?.descriptionKey ||
+              "",
+            features: featuresList,
+            popular: idx === 1,
+            billing_cycle: (item.billing_cycle || "monthly").toLowerCase(),
+            num_of_sessions:
+              item.num_of_sessions !== undefined
+                ? Number(item.num_of_sessions)
+                : null,
+            is_own: item.is_own,
+          };
+        })
+      : staticPlans.map((plan, idx) => ({
+          id: plan.id,
+          name: t(plan.nameKey),
+          price: plan.price,
+          currency: "USD",
+          img: plan.img,
+          description: t(plan.descriptionKey),
+          features: plan.featuresKeys.map((k) => t(k)),
+          popular: plan.popular,
+          billing_cycle: "monthly",
+        }));
 
   // Filter packages based on active billing cycle
   const filteredPlans = resolvedPlans.filter(
-    (plan) => plan.billing_cycle === activeCycle
+    (plan) => plan.billing_cycle === activeCycle,
   );
 
   // Show only 3 packages on the main view
@@ -116,7 +158,8 @@ export default function HairTherapyPackage({ data }) {
     <div
       className="min-h-screen relative overflow-hidden"
       style={{
-        background: "url('/SHAHD-IMAGE/hair-therapy/246a05720eac4ca783057d77600768c1dc06e211.webp')",
+        background:
+          "url('/SHAHD-IMAGE/hair-therapy/246a05720eac4ca783057d77600768c1dc06e211.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -127,7 +170,6 @@ export default function HairTherapyPackage({ data }) {
 
       {/* Content Layer */}
       <div className="relative z-10 w-full py-12 md:py-20">
-        
         {/* Header Section */}
         <div className="flex flex-col justify-center items-center gap-2 mb-8 px-4">
           <p className="text-secondary text-center font-bold text-2xl font-poppins uppercase tracking-wider">
@@ -179,15 +221,15 @@ export default function HairTherapyPackage({ data }) {
                 const shouldScale = isHovered;
 
                 return (
-                  <div 
-                    key={plan.id} 
+                  <div
+                    key={plan.id}
                     className="flex justify-center w-full h-full"
                   >
-                    <HairTherapyCard 
-                      index={index} 
-                      shouldScale={shouldScale} 
-                      plan={plan} 
-                      setHoveredCard={setHoveredCard} 
+                    <HairTherapyCard
+                      index={index}
+                      shouldScale={shouldScale}
+                      plan={plan}
+                      setHoveredCard={setHoveredCard}
                     />
                   </div>
                 );
@@ -210,4 +252,4 @@ export default function HairTherapyPackage({ data }) {
       </div>
     </div>
   );
-}
+}

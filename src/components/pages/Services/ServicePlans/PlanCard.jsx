@@ -83,12 +83,12 @@ import { config } from "@/api/config";
 export default function PlanCard({ shouldScale, plan, setHoveredCard, index }) {
   const { t } = useTranslation();
   const router = useRouter();
+  const user = useCurrentUser();
+
+  console.log("plan", plan);
 
   const handleSubscribe = async () => {
-    const user = localStorage.getItem(config.localStorageUserData)
-      ? JSON.parse(localStorage.getItem(config.localStorageUserData))
-      : {};
-    if (!user) {
+    if (!user || !user.user_id) {
       Swal.fire({
         icon: "warning",
         title: t("Login Required"),
@@ -234,15 +234,22 @@ export default function PlanCard({ shouldScale, plan, setHoveredCard, index }) {
       {/* Get Started Button */}
       <button
         onClick={handleSubscribe}
+        disabled={plan.is_own}
         className={cn(
           // Adjusted padding and font size for mobile
           "w-full text-base md:text-2xl lg:text-[26px] text-white py-3 rounded-full font-medium transition-all duration-300 uppercase tracking-wide",
-          shouldScale
-            ? "bg-[#DDB2B5] hover:bg-[#c9a0a3] shadow-lg shadow-[#DDB2B5]/30"
-            : "bg-white text-primary hover:bg-primary hover:text-white border border-primary",
+          plan.is_own
+            ? "bg-gray-300 text-gray-500 cursor-not-allowed border border-gray-300"
+            : shouldScale
+              ? "bg-[#DDB2B5] hover:bg-[#c9a0a3] shadow-lg shadow-[#DDB2B5]/30"
+              : "bg-white text-primary hover:bg-primary hover:text-white border border-primary",
         )}
       >
-        {t("Choose Plan")}
+        {plan.is_own
+          ? t("Subscribed")
+          : !user || !user.user_id
+            ? t("Login to Subscribe")
+            : t("Choose Plan")}
       </button>
     </motion.div>
   );

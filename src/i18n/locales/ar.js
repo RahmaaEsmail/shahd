@@ -978,4 +978,7 @@ export const ar = {
   "Please wait while we process your payment...": "يرجى الانتظار أثناء معالجة عملية الدفع...",
   "Payment Completed": "تم الدفع بنجاح",
   "Your payment has been successfully recorded. The clinic will review and activate your subscription shortly.": "تم تسجيل دفعتك بنجاح. ستقوم العيادة بمراجعة وتفعيل اشتراكك قريباً.",
+  "Subscription Required": "الاشتراك مطلوب",
+  "Subscribed": "مشترك",
+  "Login to Subscribe": "سجل الدخول للاشتراك",
 }

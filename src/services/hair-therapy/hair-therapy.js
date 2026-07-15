@@ -6,7 +6,7 @@ export const handleGetAllHairTherapyData = async () => {
     return response.data
 }
 
-export const handleGetPricing = async (userId = 1) => {
+export const handleGetPricing = async (userId) => {
     const response = await apiInstance.get(userEndPoints.get_pricing, {
         params: { user_id: userId }
     })

@@ -1,10 +1,11 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "../../constants/query-constant";
-import { 
+import {
   handleGetAllHairTherapyData,
-  handleGetPricing 
+  handleGetPricing,
 } from "../../services/hair-therapy/hair-therapy";
+import { config } from "../../api/config";
 
 export const useHairTherapy = () => {
   return useQuery({
@@ -16,10 +17,12 @@ export const useHairTherapy = () => {
   });
 };
 
-export const usePricing = (userId = 1) => {
+export const usePricing = () => {
+  const userId =
+    JSON.parse(localStorage.getItem(config.localStorageUserData)) ?? "";
   return useQuery({
     queryKey: [QUERY_KEYS.HAIR_THERAPY_PRICING, userId],
-    queryFn: () => handleGetPricing(userId),
+    queryFn: () => handleGetPricing(userId?.user_id),
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     staleTime: 1000 * 5 * 60,

@@ -73,6 +73,26 @@ export default function BookingClient() {
     setSelectedTime(null);
   };
 
+  const handleRedirectToCheckout = (gateway) => {
+    if (!gateway?.checkout_url) return;
+    const form = document.createElement("form");
+    form.method = (gateway.method || "POST").toUpperCase();
+    form.action = gateway.checkout_url;
+
+    const params = gateway.required_params || {};
+    Object.keys(params).forEach((key) => {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = key;
+      input.value = params[key];
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+  };
+
   const handleBookNow = async () => {
     // 1. Safely extract local storage string
     const userDataStr = localStorage.getItem(config.localStorageUserData);
@@ -103,30 +123,86 @@ export default function BookingClient() {
                 "success",
               );
             } else {
+              const gateway = res?.payment_gateway || res?.data?.payment_gateway;
+              if (res?.code === "SUBSCRIPTION_REQUIRED" && gateway?.checkout_url) {
+                Swal.fire({
+                  icon: "warning",
+                  title: t("Subscription Required"),
+                  text: res?.message || t("You don't have an active subscription that covers this service."),
+                  showCancelButton: true,
+                  confirmButtonText: t("Proceed to Payment"),
+                  cancelButtonText: t("Cancel"),
+                  confirmButtonColor: "#DDB2B5",
+                  cancelButtonColor: "#7189a2",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    handleRedirectToCheckout(gateway);
+                  }
+                });
+              } else {
+                showAlert(
+                  t("Booking Failed"),
+                  res?.message || t("Something went wrong, please try again."),
+                  "error",
+                );
+              }
+            }
+          },
+          onError: (error) => {
+            const resData = error?.response?.data;
+            const gateway = resData?.payment_gateway || resData?.data?.payment_gateway;
+            if (resData?.code === "SUBSCRIPTION_REQUIRED" && gateway?.checkout_url) {
+              Swal.fire({
+                icon: "warning",
+                title: t("Subscription Required"),
+                text: resData?.message || t("You don't have an active subscription that covers this service."),
+                showCancelButton: true,
+                confirmButtonText: t("Proceed to Payment"),
+                cancelButtonText: t("Cancel"),
+                confirmButtonColor: "#DDB2B5",
+                cancelButtonColor: "#7189a2",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  handleRedirectToCheckout(gateway);
+                }
+              });
+            } else {
               showAlert(
                 t("Booking Failed"),
-                res?.message || t("Something went wrong, please try again."),
+                error?.response?.data?.message ||
+                  t("Something went wrong, please try again."),
                 "error",
               );
             }
           },
-          onError: (error) => {
-            showAlert(
-              t("Booking Failed"),
-              error?.response?.data?.message ||
-                t("Something went wrong, please try again."),
-              "error",
-            );
-          },
         },
       );
     } catch (error) {
-      showAlert(
-        t("Booking Failed"),
-        error?.response?.data?.message ||
-          t("Something went wrong, please try again."),
-        "error",
-      );
+      const resData = error?.response?.data;
+      const gateway = resData?.payment_gateway || resData?.data?.payment_gateway;
+      if (resData?.code === "SUBSCRIPTION_REQUIRED" && gateway?.checkout_url) {
+        Swal.fire({
+          icon: "warning",
+          title: t("Subscription Required"),
+          text: resData?.message || t("You don't have an active subscription that covers this service."),
+          showCancelButton: true,
+          confirmButtonText: t("Proceed to Payment"),
+          cancelButtonText: t("Cancel"),
+          confirmButtonColor: "#DDB2B5",
+          cancelButtonColor: "#7189a2",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            handleRedirectToCheckout(gateway);
+          }
+        });
+      } else {
+        showAlert(
+          t("Booking Failed"),
+          error?.response?.data?.message ||
+            t("Something went wrong, please try again."),
+          "error",
+        );
+      }
     }
   };
 

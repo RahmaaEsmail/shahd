@@ -11,8 +11,7 @@ import { useTranslation } from "react-i18next";
 
 export default function PackagesClient() {
   const { data: servicesData, isLoading: servicesLoading } = useServices();
-  const { data: hairPricingData, isLoading: hairPricingLoading } =
-    usePricing(1);
+  const { data: hairPricingData, isLoading: hairPricingLoading } = usePricing();
   const { t, i18n } = useTranslation();
   const lang = i18n.language?.startsWith("ar")
     ? "ar"
@@ -77,6 +76,7 @@ export default function PackagesClient() {
   const resolvedHairPlans =
     hairPricingData?.data && hairPricingData.data.length > 0
       ? hairPricingData.data.map((item, idx) => {
+          console.log("package item", item);
           const fallbackPlan = staticHairPlans[idx % staticHairPlans.length];
 
           let featuresList = [];
@@ -124,8 +124,8 @@ export default function PackagesClient() {
             price:
               item.price !== undefined
                 ? `${currencySymbol}${item.price}`
-                : fallbackPlan?.price || "$150",
-            currency: item.currency || "USD",
+                : fallbackPlan?.price || "150",
+            currency: item.currency || "EUR",
             img:
               item.image_url ||
               (item.image
@@ -143,14 +143,18 @@ export default function PackagesClient() {
             features: featuresList,
             popular: idx === 1,
             billing_cycle: (item.billing_cycle || "monthly").toLowerCase(),
-            num_of_sessions: item.num_of_sessions !== undefined ? Number(item.num_of_sessions) : null,
+            num_of_sessions:
+              item.num_of_sessions !== undefined
+                ? Number(item.num_of_sessions)
+                : null,
+            is_own: item.is_own,
           };
         })
       : staticHairPlans.map((plan, idx) => ({
           id: plan.id,
           name: t(plan.nameKey),
           price: plan.price,
-          currency: "USD",
+          currency: "EUR",
           img: plan.img,
           description: t(plan.descriptionKey),
           features: plan.featuresKeys.map((k) => t(k)),
@@ -236,7 +240,7 @@ export default function PackagesClient() {
           </div>
 
           {/* Grid View */}
-          <div className="max-w-7xl mx-auto px-4 md:px-8">
+          {/* <div className="max-w-7xl mx-auto px-4 md:px-8">
             {activeCategory === "services" ? (
               <ServicePlansGrid
                 data={servicesData?.data?.service_pricing}
@@ -273,6 +277,36 @@ export default function PackagesClient() {
                     })}
                   </div>
                 )}
+              </div>
+            )}
+          </div> */}
+          <div className="max-w-7xl mx-auto px-4 md:px-8">
+            {filteredHairPlans.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-12 w-full text-center">
+                <p className="text-secondary text-lg font-poppins font-medium">
+                  {t("No packages found for this billing cycle")}
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch justify-center">
+                {filteredHairPlans.map((plan, index) => {
+                  const isHovered = hoveredCard === plan.id;
+                  const shouldScale = isHovered;
+
+                  return (
+                    <div
+                      key={plan.id}
+                      className="flex justify-center w-full h-full"
+                    >
+                      <HairTherapyCard
+                        index={index}
+                        shouldScale={shouldScale}
+                        plan={plan}
+                        setHoveredCard={setHoveredCard}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>

@@ -37,7 +37,7 @@ export default function BannerMarquee({ data }) {
         {data.map((item) => (
           // Add margin/padding directly to the card wrapper for spacing
           <div key={item.id} className="mx-4 flex items-center">
-            <BannerMarqueeCard img={item.image_url} title={item.label} />
+            <BannerMarqueeCard img={item.image} title={item.label} />
           </div>
         ))}
       </Marquee>

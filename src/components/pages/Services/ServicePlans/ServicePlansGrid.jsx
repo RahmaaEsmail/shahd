@@ -54,6 +54,7 @@ export default function ServicePlansGrid({ data, activeTab = 1, limit = 3 }) {
       : "en";
   const [hoveredCard, setHoveredCard] = useState(null);
 
+  console.log("service plans grid", data);
   const staticPlans = [
     {
       id: 1,
@@ -148,6 +149,7 @@ export default function ServicePlansGrid({ data, activeTab = 1, limit = 3 }) {
             services: item?.services,
             services_data: item?.services_data,
             billing_cycle: (item.billing_cycle || "monthly").toLowerCase(),
+            is_own: item.is_own,
           };
         })
       : staticPlans;
@@ -155,7 +157,7 @@ export default function ServicePlansGrid({ data, activeTab = 1, limit = 3 }) {
   // Filter plans based on the active billing cycle
   const cycleKey = activeTab === 2 ? "yearly" : "monthly";
   const filteredPlans = resolvedPlans.filter(
-    (plan) => plan.billing_cycle === cycleKey
+    (plan) => plan.billing_cycle === cycleKey,
   );
 
   // Slice displayed plans

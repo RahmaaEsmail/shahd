@@ -968,4 +968,7 @@ export const sk = {
   "Please wait while we process your payment...": "Počkajte, kým spracujeme vašu platbu...",
   "Payment Completed": "Platba bola dokončená",
   "Your payment has been successfully recorded. The clinic will review and activate your subscription shortly.": "Vaša platba bola úspešne zaznamenaná. Klinika skontroluje a čoskoro aktivuje vaše predplatné.",
+  "Subscription Required": "Vyžaduje sa predplatné",
+  "Subscribed": "Predplatené",
+  "Login to Subscribe": "Prihláste sa na odber",
 }

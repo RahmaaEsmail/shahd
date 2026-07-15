@@ -70,4 +70,10 @@ export const userEndPoints = {
     edit_profile_data : "user/home/profile/edit_profile.php",
     get_user_profile_overview:"user/home/profile/user_overview.php",
     get_user_bookings:"user/home/profile/get_user_bookings.php",
+
+
+   //chatbot
+   start_session:"user/home/chatbot/start_session.php",
+   send_message:"user/home/chatbot/send_message.php",
+   get_history:"user/home/chatbot/get_history.php" 
 }
